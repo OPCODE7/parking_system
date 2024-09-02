@@ -84,7 +84,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(503, 361);
+            this.ClientSize = new System.Drawing.Size(503, 359);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TxtPwd);
             this.Controls.Add(this.label1);

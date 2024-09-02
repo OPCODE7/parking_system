@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Env.cs" />
+    <Compile Include="Config\User.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\DataBase.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -94,8 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
