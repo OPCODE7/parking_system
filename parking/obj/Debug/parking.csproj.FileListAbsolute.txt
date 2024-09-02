@@ -1,0 +1,10 @@
+C:\OPCODE\OP_APPS\parking\parking\bin\Debug\parking.exe.config
+C:\OPCODE\OP_APPS\parking\parking\bin\Debug\parking.exe
+C:\OPCODE\OP_APPS\parking\parking\bin\Debug\parking.pdb
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.AssemblyReference.cache
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Properties.Resources.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Auth.Login.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.GenerateResource.cache
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.CoreCompileInputs.cache
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
