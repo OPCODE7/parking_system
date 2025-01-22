@@ -26,6 +26,12 @@ namespace parking.Helpers
         }
         //Fin MsgSuccess
 
+        public void MsgError(string msg)
+        {
+
+            MessageBox.Show(msg, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
 
         //Metodo SanitizeStr
         public string SanitizeStr(string str)

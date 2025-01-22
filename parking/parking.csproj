@@ -33,8 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +57,72 @@
   <ItemGroup>
     <Compile Include="Config\Env.cs" />
     <Compile Include="Config\User.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Models\CLIENTS.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\CORRELATIVES.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataBase.cs" />
+    <Compile Include="Models\DataBase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EMPLOYEES.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HORARY.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JOB_POSITIONS.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOGBOOK_APP.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARKING_SPACE.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARKING_TYPES.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ROLE_PERMISSIONS.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SALARIES.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\USERS.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USER_PERMISSIONS.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USER_ROLES.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VEHICLE_TYPE.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Administration\AdminPanel.cs">
@@ -60,6 +130,42 @@
     </Compile>
     <Compile Include="Views\Administration\AdminPanel.Designer.cs">
       <DependentUpon>AdminPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmEmployees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmEmployees.Designer.cs">
+      <DependentUpon>FrmEmployees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmJobPositions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmJobPositions.Designer.cs">
+      <DependentUpon>FrmJobPositions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmHorary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmHorary.Designer.cs">
+      <DependentUpon>FrmHorary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmPermissions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmPermissions.Designer.cs">
+      <DependentUpon>FrmPermissions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmRoles.Designer.cs">
+      <DependentUpon>FrmRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Users\FrmUsers.Designer.cs">
+      <DependentUpon>FrmUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Auth\Login.cs">
       <SubType>Form</SubType>
@@ -79,9 +185,26 @@
     <EmbeddedResource Include="Views\Administration\AdminPanel.resx">
       <DependentUpon>AdminPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Users\FrmPermissions.resx">
+      <DependentUpon>FrmPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Users\FrmRoles.resx">
+      <DependentUpon>FrmRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Users\FrmUsers.resx">
+      <DependentUpon>FrmUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Auth\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
+    <EntityDeploy Include="Models\DataBase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\DataBase.edmx.diagram">
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,7 +219,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Icons\config-16px.png" />
+    <Content Include="Models\DataBase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DataBase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+      <LastGenOutput>DataBase1.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

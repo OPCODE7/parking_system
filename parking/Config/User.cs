@@ -12,7 +12,7 @@ namespace parking.Config
         //Propiedades del usuario logueado
         public static string userName;
         public static string realName;
-        public static string roleId;
+        public static int roleId;
 
       
     }

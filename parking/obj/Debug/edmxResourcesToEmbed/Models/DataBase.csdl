@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PARKINGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CLIENTS">
+    <Key>
+      <PropertyRef Name="CLIENT_CODE" />
+    </Key>
+    <Property Name="CLIENT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_DNI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_PHONE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CORRELATIVES">
+    <Key>
+      <PropertyRef Name="CORRELATIVE_CODE" />
+    </Key>
+    <Property Name="CORRELATIVE_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CORRELATIVE_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CORRELATIVE_COUNTER" Type="Int32" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="IS_DEL" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="EMPLOYEES">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_CODE" />
+    </Key>
+    <Property Name="EMPLOYEE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_DNI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_EMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_PHONE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="JOB_POSITION_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HORARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="SALARIES" Relationship="Self.FK_EMPLOYE_SALARY" FromRole="EMPLOYEES" ToRole="SALARIES" />
+    <NavigationProperty Name="HORARY" Relationship="Self.FK_HORARY_EMPLOYE" FromRole="EMPLOYEES" ToRole="HORARY" />
+    <NavigationProperty Name="JOB_POSITIONS" Relationship="Self.FK_JOB_POSITION_EMPLOYE" FromRole="EMPLOYEES" ToRole="JOB_POSITIONS" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK_USER_EMPLOYE" FromRole="EMPLOYEES" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="HORARY">
+    <Key>
+      <PropertyRef Name="HORARY_CODE" />
+    </Key>
+    <Property Name="HORARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HORARY_DESCRIPTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INITIAL_HOUR" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="FINAL_HOUR" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_HORARY_EMPLOYE" FromRole="HORARY" ToRole="EMPLOYEES" />
+  </EntityType>
+  <EntityType Name="JOB_POSITIONS">
+    <Key>
+      <PropertyRef Name="JOB_POSITION_CODE" />
+    </Key>
+    <Property Name="JOB_POSITION_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPTION_JOB_POSITION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_JOB_POSITION_EMPLOYE" FromRole="JOB_POSITIONS" ToRole="EMPLOYEES" />
+  </EntityType>
+  <EntityType Name="LOGBOOK_APP">
+    <Key>
+      <PropertyRef Name="LOG_ID" />
+    </Key>
+    <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LOG_DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PARKING_SPACE">
+    <Key>
+      <PropertyRef Name="PARKING_SPACE_CODE" />
+    </Key>
+    <Property Name="PARKING_SPACE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PARKING_SPACE_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="VEHICLE_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="STATE" Type="Boolean" />
+    <NavigationProperty Name="VEHICLE_TYPE" Relationship="Self.FK_VEHICLE_SPACE" FromRole="PARKING_SPACE" ToRole="VEHICLE_TYPE" />
+  </EntityType>
+  <EntityType Name="PARKING_TYPES">
+    <Key>
+      <PropertyRef Name="PARKING_TYPE_CODE" />
+    </Key>
+    <Property Name="PARKING_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPTION_PARKING_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PARKING_TYPE_PRICE" Type="Int32" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="SALARIES">
+    <Key>
+      <PropertyRef Name="SALARY_CODE" />
+    </Key>
+    <Property Name="SALARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BASE_SALARY" Type="Int32" Nullable="false" />
+    <Property Name="AUMENTO" Type="Int32" Nullable="false" />
+    <Property Name="TOTAL_SALARY" Type="Int32" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="EMPLOYEE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYE_SALARY" FromRole="SALARIES" ToRole="EMPLOYEES" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="USER_ROLES">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPTION_ROLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
+    <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="USER_CODE" />
+    </Key>
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="IS_DEL" Type="Boolean" />
+    <Property Name="USER_STATE" Type="Boolean" />
+    <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_USER_EMPLOYE" FromRole="USERS" ToRole="EMPLOYEES" />
+    <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
+  </EntityType>
+  <EntityType Name="VEHICLE_TYPE">
+    <Key>
+      <PropertyRef Name="VEHICLE_TYPE_CODE" />
+    </Key>
+    <Property Name="VEHICLE_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPTION_VEHICLE_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PARKING_SPACE" Relationship="Self.FK_VEHICLE_SPACE" FromRole="VEHICLE_TYPE" ToRole="PARKING_SPACE" />
+  </EntityType>
+  <Association Name="FK_EMPLOYE_SALARY">
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+    <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEES">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Principal>
+      <Dependent Role="SALARIES">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HORARY_EMPLOYE">
+    <End Role="HORARY" Type="Self.HORARY" Multiplicity="1" />
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HORARY">
+        <PropertyRef Name="HORARY_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEES">
+        <PropertyRef Name="HORARY_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JOB_POSITION_EMPLOYE">
+    <End Role="JOB_POSITIONS" Type="Self.JOB_POSITIONS" Multiplicity="1" />
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOB_POSITIONS">
+        <PropertyRef Name="JOB_POSITION_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEES">
+        <PropertyRef Name="JOB_POSITION_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_EMPLOYE">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEES">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VEHICLE_SPACE">
+    <End Role="VEHICLE_TYPE" Type="Self.VEHICLE_TYPE" Multiplicity="1" />
+    <End Role="PARKING_SPACE" Type="Self.PARKING_SPACE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VEHICLE_TYPE">
+        <PropertyRef Name="VEHICLE_TYPE_CODE" />
+      </Principal>
+      <Dependent Role="PARKING_SPACE">
+        <PropertyRef Name="VEHICLE_TYPE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_ROLE">
+    <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="1" />
+    <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER_ROLES">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="USERS">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PARKINGEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" />
+    <EntitySet Name="CORRELATIVES" EntityType="Self.CORRELATIVES" />
+    <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
+    <EntitySet Name="HORARY" EntityType="Self.HORARY" />
+    <EntitySet Name="JOB_POSITIONS" EntityType="Self.JOB_POSITIONS" />
+    <EntitySet Name="LOGBOOK_APP" EntityType="Self.LOGBOOK_APP" />
+    <EntitySet Name="PARKING_SPACE" EntityType="Self.PARKING_SPACE" />
+    <EntitySet Name="PARKING_TYPES" EntityType="Self.PARKING_TYPES" />
+    <EntitySet Name="SALARIES" EntityType="Self.SALARIES" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="USER_ROLES" EntityType="Self.USER_ROLES" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" />
+    <EntitySet Name="VEHICLE_TYPE" EntityType="Self.VEHICLE_TYPE" />
+    <AssociationSet Name="FK_EMPLOYE_SALARY" Association="Self.FK_EMPLOYE_SALARY">
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+      <End Role="SALARIES" EntitySet="SALARIES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HORARY_EMPLOYE" Association="Self.FK_HORARY_EMPLOYE">
+      <End Role="HORARY" EntitySet="HORARY" />
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JOB_POSITION_EMPLOYE" Association="Self.FK_JOB_POSITION_EMPLOYE">
+      <End Role="JOB_POSITIONS" EntitySet="JOB_POSITIONS" />
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_EMPLOYE" Association="Self.FK_USER_EMPLOYE">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VEHICLE_SPACE" Association="Self.FK_VEHICLE_SPACE">
+      <End Role="VEHICLE_TYPE" EntitySet="VEHICLE_TYPE" />
+      <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+      <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+    <EntitySet Name="ROLE_PERMISSIONS" EntityType="PARKINGModel.ROLE_PERMISSIONS" />
+    <EntitySet Name="USER_PERMISSIONS" EntityType="PARKINGModel.USER_PERMISSIONS" />
+    <AssociationSet Name="FK_PERMISSION_ID" Association="PARKINGModel.FK_PERMISSION_ID">
+      <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
+      <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_ID" Association="PARKINGModel.FK_ROLE_ID">
+      <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+      <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ROLE_PERMISSIONS">
+    <Key>
+      <PropertyRef Name="ROLE_PERMISSION_ID" />
+    </Key>
+    <Property Name="ROLE_PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="USER_PERMISSIONS" Relationship="PARKINGModel.FK_PERMISSION_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_PERMISSIONS" />
+    <NavigationProperty Name="USER_ROLES" Relationship="PARKINGModel.FK_ROLE_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_ROLES" />
+  </EntityType>
+  <EntityType Name="USER_PERMISSIONS">
+    <Key>
+      <PropertyRef Name="PERMISSION_ID" />
+    </Key>
+    <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PERMISSION_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PERMISSION_DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
+    <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK_PERMISSION_ID" FromRole="USER_PERMISSIONS" ToRole="ROLE_PERMISSIONS" />
+    <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_PERMISSION_ID">
+    <End Type="PARKINGModel.USER_PERMISSIONS" Role="USER_PERMISSIONS" Multiplicity="1" />
+    <End Type="PARKINGModel.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER_PERMISSIONS">
+        <PropertyRef Name="PERMISSION_ID" />
+      </Principal>
+      <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="PERMISSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_ID">
+    <End Type="PARKINGModel.USER_ROLES" Role="USER_ROLES" Multiplicity="1" />
+    <End Type="PARKINGModel.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER_ROLES">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
