@@ -39,10 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvPermissions = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtPermissionDescription = new System.Windows.Forms.TextBox();
             this.TxtPermissionName = new System.Windows.Forms.TextBox();
             this.TxtPermissionCode = new System.Windows.Forms.TextBox();
@@ -56,6 +52,11 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnCancel = new System.Windows.Forms.ToolStripButton();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPermissions)).BeginInit();
@@ -107,12 +108,12 @@
             this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtSearch.Location = new System.Drawing.Point(96, 245);
+            this.TxtSearch.Location = new System.Drawing.Point(96, 248);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSearch.Multiline = true;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(388, 30);
+            this.TxtSearch.Size = new System.Drawing.Size(388, 26);
             this.TxtSearch.TabIndex = 66;
+            this.TxtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyUp);
             // 
             // label3
             // 
@@ -176,44 +177,13 @@
             this.DgvPermissions.Location = new System.Drawing.Point(12, 293);
             this.DgvPermissions.Name = "DgvPermissions";
             this.DgvPermissions.ReadOnly = true;
+            this.DgvPermissions.RowHeadersVisible = false;
             this.DgvPermissions.RowHeadersWidth = 62;
             this.DgvPermissions.RowTemplate.Height = 28;
             this.DgvPermissions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvPermissions.Size = new System.Drawing.Size(568, 268);
             this.DgvPermissions.TabIndex = 58;
             this.DgvPermissions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPermissions_CellDoubleClick);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 50;
-            // 
-            // NOMBRE
-            // 
-            this.NOMBRE.HeaderText = "NOMBRE";
-            this.NOMBRE.MinimumWidth = 8;
-            this.NOMBRE.Name = "NOMBRE";
-            this.NOMBRE.ReadOnly = true;
-            this.NOMBRE.Width = 150;
-            // 
-            // DESCRIPCIÓN
-            // 
-            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
-            this.DESCRIPCIÓN.MinimumWidth = 8;
-            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
-            this.DESCRIPCIÓN.ReadOnly = true;
-            this.DESCRIPCIÓN.Width = 200;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
             // 
             // TxtPermissionDescription
             // 
@@ -279,7 +249,8 @@
             this.BtnDelete,
             this.toolStripSeparator3,
             this.BtnSave,
-            this.toolStripSeparator4});
+            this.toolStripSeparator4,
+            this.BtnCancel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(593, 42);
@@ -350,6 +321,49 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 42);
             // 
+            // BtnCancel
+            // 
+            this.BtnCancel.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCancel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("BtnCancel.Image")));
+            this.BtnCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Size = new System.Drawing.Size(110, 37);
+            this.BtnCancel.Text = "Cancelar";
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 50;
+            // 
+            // NOMBRE
+            // 
+            this.NOMBRE.HeaderText = "NOMBRE";
+            this.NOMBRE.MinimumWidth = 8;
+            this.NOMBRE.Name = "NOMBRE";
+            this.NOMBRE.ReadOnly = true;
+            this.NOMBRE.Width = 150;
+            // 
+            // DESCRIPCIÓN
+            // 
+            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
+            this.DESCRIPCIÓN.MinimumWidth = 8;
+            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
+            this.DESCRIPCIÓN.ReadOnly = true;
+            this.DESCRIPCIÓN.Width = 210;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 150;
+            // 
             // FrmPermissions
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -408,6 +422,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton BtnCancel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn NOMBRE;
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCIÓN;

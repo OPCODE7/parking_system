@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,6 +17,7 @@ namespace parking.Views.Administration.Employees
     public partial class FrmPermissions : Form
     {
         Helpers.Helpers h= new Helpers.Helpers();
+        Controllers.PermissionController permissionController = new Controllers.PermissionController();
         string permissionName, permissionDescription;
         int permissionId;
         public FrmPermissions()
@@ -42,13 +44,13 @@ namespace parking.Views.Administration.Employees
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnNew.Enabled = true;
+            BtnCancel.Enabled = false;
 
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = false;
                 Txt.Text = "";
             }
-
             TxtSearch.Enabled = true;
 
         }
@@ -66,6 +68,8 @@ namespace parking.Views.Administration.Employees
         {
             BtnDelete.Enabled = false;
             BtnSave.Enabled = true;
+            BtnCancel.Enabled = true;
+            
 
 
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
@@ -74,20 +78,15 @@ namespace parking.Views.Administration.Employees
 
             }
 
+            TxtPermissionCode.Enabled = false;
+            TxtPermissionName.Focus();
+
             using (PARKINGEntities db = new PARKINGEntities())
             {
-                var lst = db.USER_PERMISSIONS.Select(permission => permission.PERMISSION_ID).ToList();
+                var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('USER_PERMISSIONS')").FirstOrDefault() + 1;
+               
 
-                if(lst.Count > 0)
-                {
-                    permissionId = lst.Last() + 1;
-                }
-                else
-                {
-                    permissionId = 1;
-                }
-
-                TxtPermissionCode.Text = permissionId.ToString();
+                TxtPermissionCode.Text = nextId.ToString();
                 BtnNew.Enabled = false;
             }
 
@@ -103,53 +102,40 @@ namespace parking.Views.Administration.Employees
             {
                 setValues();
 
-                using (PARKINGEntities db = new PARKINGEntities())
+                USER_PERMISSIONS newPermission = new USER_PERMISSIONS();
+                newPermission.PERMISSION_NAME= permissionName;
+                newPermission.PERMISSION_DESCRIPTION = permissionDescription;
+                newPermission.INSERTED_AT= DateTime.Now;
+                    
+
+                int result= permissionController.savePermission(newPermission);
+                if (result > 0)
                 {
-                    try
-                    {
-
-                        USER_PERMISSIONS newPermission = new USER_PERMISSIONS();
-                        newPermission.PERMISSION_NAME= permissionName;
-                        newPermission.PERMISSION_DESCRIPTION = permissionDescription;
-                        newPermission.INSERTED_AT= DateTime.Now;
-                    
-
-                        db.USER_PERMISSIONS.Add(newPermission);
-                        if (db.SaveChanges() > 0)
-                        {
-                            h.MsgSuccess("El permiso ha sido guardado correctamente.");
-                            DgvPermissions.Rows.Clear();
-                            startForm();
-                        }
-                    }catch(Exception ex)
-                    {
-                        h.MsgWarning(ex.ToString());
-                    }
-                    
-
-
+                    h.MsgSuccess("El permiso ha sido guardado correctamente.");
+                    DgvPermissions.Rows.Clear();
+                    startForm();
                 }
             }
-
-
 
         }
 
         private int validateData()
         {
             int error = 0;
-            if (TxtPermissionName.Text.Trim().Length == 0)
+            string permissionNamePattern = "^[a-zA-Z\\s]+$";
+            string permissionDescriptionPattern = "^[a-zA-Z,.\\s]+$";
+            if (!Regex.Match(TxtPermissionName.Text,permissionNamePattern).Success)
             {
-                h.MsgWarning("Ingresar nombre del permiso.");
+                h.MsgWarning("Ingresar nombre del permiso correctamente. ¡Solo letras!");
                 TxtPermissionName.Focus();
                 error++;
                 return error;
 
             }
 
-            if (TxtPermissionDescription.Text.Trim().Length == 0)
+            if (!Regex.Match(TxtPermissionDescription.Text, permissionDescriptionPattern).Success)
             {
-                h.MsgWarning("Ingresar descripción del permiso.");
+                h.MsgWarning("Ingresar descripción del permiso correctamente. ¡Solo letras y signos de puntuación!");
                 TxtPermissionDescription.Focus();
                 error++;
                 return error;
@@ -174,23 +160,27 @@ namespace parking.Views.Administration.Employees
         {
             if(DgvPermissions.Rows.Count > 0)
             {
-                using (PARKINGEntities db= new PARKINGEntities())
-                {
-                    var permission = db.USER_PERMISSIONS
-                        .Find(Convert.ToInt32(DgvPermissions.CurrentRow.Cells[0].Value));
-                    TxtPermissionCode.Text = permission.PERMISSION_ID.ToString();
-                    TxtPermissionName.Text= permission.PERMISSION_NAME;
-                    TxtPermissionDescription.Text = permission.PERMISSION_DESCRIPTION;
-                    TxtPermissionName.Focus();
-                    TxtPermissionName.Enabled = true;
-                    TxtPermissionDescription.Enabled = true;
+                    USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(DgvPermissions.CurrentRow.Cells[0].Value));
 
-                    BtnEdit.Enabled = true;
-                    BtnDelete.Enabled= true;
-                    BtnNew.Enabled = false;
-                    BtnSave.Enabled = false;
+                 if(permission!= null) { 
+                    
+                        TxtPermissionCode.Text = permission.PERMISSION_ID.ToString();
+                        TxtPermissionName.Text= permission.PERMISSION_NAME;
+                        TxtPermissionDescription.Text = permission.PERMISSION_DESCRIPTION;
+                        TxtPermissionName.Focus();
+                        TxtPermissionName.Enabled = true;
+                        TxtPermissionDescription.Enabled = true;
 
-                }
+                        BtnEdit.Enabled = true;
+                        BtnDelete.Enabled= true;
+                        BtnNew.Enabled = false;
+                        BtnSave.Enabled = false;
+                        BtnCancel.Enabled = true;
+
+                 }else{
+                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
+                 }
+
             }
         }
 
@@ -202,12 +192,12 @@ namespace parking.Views.Administration.Employees
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    var permission = db.USER_PERMISSIONS.Find(Convert.ToInt32(TxtPermissionCode.Text));
+                    USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
                     permission.PERMISSION_NAME = permissionName;
                     permission.PERMISSION_DESCRIPTION = permissionDescription;
 
-                    db.Entry(permission).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
+                    int result= permissionController.updatePermission(permission);
+                    if (result > 0)
                     {
                         h.MsgSuccess("El permiso ha sido actualizado correctamente.");
                         DgvPermissions.Rows.Clear();
@@ -223,15 +213,13 @@ namespace parking.Views.Administration.Employees
         {
             using (PARKINGEntities db = new PARKINGEntities())
             {
-                var registro = new USER_PERMISSIONS { PERMISSION_ID = Convert.ToInt32(TxtPermissionCode.Text.Trim())};
-
-                db.USER_PERMISSIONS.Attach(registro);
-                db.USER_PERMISSIONS.Remove(registro);
+                USER_PERMISSIONS registro = new USER_PERMISSIONS { PERMISSION_ID = Convert.ToInt32(TxtPermissionCode.Text.Trim())};
 
                 if (h.MsgQuestion($"¿Esta seguro que desea eliminar el permiso {registro.PERMISSION_NAME} de la base de datos?") == "S")
                 {
+                   int result= permissionController.deletePermission(registro);
 
-                    if (db.SaveChanges() > 0)
+                    if (result > 0)
                     {
                         h.MsgSuccess("El permiso ha sido eliminado correctamente.");
                         DgvPermissions.Rows.Clear();
@@ -242,31 +230,38 @@ namespace parking.Views.Administration.Employees
             }
         }
 
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            startForm();
+        }
+
+        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) {
+                getPermissions(TxtSearch.Text);
+            }
+            
+        }
+
         private void getPermissions(string searchFilter)
         {
             DgvPermissions.Rows.Clear();
-            using(PARKINGEntities permissions = new PARKINGEntities())
+            List<USER_PERMISSIONS> lst = new List<USER_PERMISSIONS>();
+            lst= permissionController.getPermissions(searchFilter);
+
+            if(lst.Count == 0)
             {
-                if (searchFilter != "")
+                h.MsgWarning("No se encontraron registros en la base de datos.");
+                if(searchFilter != "")
                 {
-                    var lst = permissions.USER_PERMISSIONS.Where(permission => permission.PERMISSION_NAME.Contains(searchFilter)).ToList();
-
-                    foreach (var item in lst)
-                    {
-                        DgvPermissions.Rows.Add(item.PERMISSION_ID, item.PERMISSION_NAME, item.PERMISSION_DESCRIPTION, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
-                    }
+                    getPermissions("");
                 }
-                else
-                {
-                    var lst = permissions.USER_PERMISSIONS.Where(permission => permission.IS_DEL==false).ToList();
+                return;
+            }
 
-                    foreach(var item in lst)
-                    {
-                        DgvPermissions.Rows.Add(item.PERMISSION_ID, item.PERMISSION_NAME, item.PERMISSION_DESCRIPTION,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
-                    }
-
-
-                }
+            foreach (var item in lst)
+            {
+                DgvPermissions.Rows.Add(item.PERMISSION_ID, item.PERMISSION_NAME, item.PERMISSION_DESCRIPTION, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
 
         }
