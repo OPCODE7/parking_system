@@ -255,6 +255,8 @@
             // 
             // BtnRoles
             // 
+            this.BtnRoles.BackColor = System.Drawing.Color.Teal;
+            this.BtnRoles.ForeColor = System.Drawing.Color.White;
             this.BtnRoles.Name = "BtnRoles";
             this.BtnRoles.Size = new System.Drawing.Size(270, 34);
             this.BtnRoles.Text = "Roles";
@@ -262,6 +264,8 @@
             // 
             // BtnPermissions
             // 
+            this.BtnPermissions.BackColor = System.Drawing.Color.Teal;
+            this.BtnPermissions.ForeColor = System.Drawing.Color.White;
             this.BtnPermissions.Name = "BtnPermissions";
             this.BtnPermissions.Size = new System.Drawing.Size(270, 34);
             this.BtnPermissions.Text = "Permisos";
@@ -269,6 +273,8 @@
             // 
             // BtnUsers
             // 
+            this.BtnUsers.BackColor = System.Drawing.Color.Teal;
+            this.BtnUsers.ForeColor = System.Drawing.Color.White;
             this.BtnUsers.Name = "BtnUsers";
             this.BtnUsers.Size = new System.Drawing.Size(270, 34);
             this.BtnUsers.Text = "Usuarios";

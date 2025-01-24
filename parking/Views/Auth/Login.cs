@@ -70,7 +70,8 @@ namespace parking.Views.Auth
             bool result= userController.Login(userName, password);
             if (result)
             {
-                this.Hide();
+                Login login = new Login();
+                login.Close();
                 frmAdminPanel.ShowDialog();
             }
             else

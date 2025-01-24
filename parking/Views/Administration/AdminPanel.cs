@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace parking.Views.Administration
 {
@@ -28,6 +29,8 @@ namespace parking.Views.Administration
 
         private void BtnUsers_Click_1(object sender, EventArgs e)
         {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
             FrmUsers frmUsers = new FrmUsers();
             frmUsers.MdiParent = this;
             frmUsers.Show();
@@ -35,6 +38,8 @@ namespace parking.Views.Administration
 
         private void BtnPermissions_Click(object sender, EventArgs e)
         {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
             FrmPermissions frmPermissions= new FrmPermissions();
             frmPermissions.MdiParent = this;
             frmPermissions.Show();
@@ -42,6 +47,10 @@ namespace parking.Views.Administration
 
         private void BtnRoles_Click(object sender, EventArgs e)
         {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name!="AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+            
+
             FrmRoles frmRoles = new FrmRoles();
             frmRoles.MdiParent = this;
             frmRoles.Show();
