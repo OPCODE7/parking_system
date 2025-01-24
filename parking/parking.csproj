@@ -58,6 +58,7 @@
     <Compile Include="Config\Env.cs" />
     <Compile Include="Config\User.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Models\CLIENTS.cs">

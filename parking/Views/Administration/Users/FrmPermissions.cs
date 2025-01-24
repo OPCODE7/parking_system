@@ -190,8 +190,6 @@ namespace parking.Views.Administration.Employees
 
             if(validateData() == 0)
             {
-                using (PARKINGEntities db = new PARKINGEntities())
-                {
                     USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
                     permission.PERMISSION_NAME = permissionName;
                     permission.PERMISSION_DESCRIPTION = permissionDescription;
@@ -203,7 +201,6 @@ namespace parking.Views.Administration.Employees
                         DgvPermissions.Rows.Clear();
                         startForm();
                     }
-                }
             }
            
 
@@ -211,8 +208,6 @@ namespace parking.Views.Administration.Employees
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            using (PARKINGEntities db = new PARKINGEntities())
-            {
                 USER_PERMISSIONS registro = new USER_PERMISSIONS { PERMISSION_ID = Convert.ToInt32(TxtPermissionCode.Text.Trim())};
 
                 if (h.MsgQuestion($"¿Esta seguro que desea eliminar el permiso {registro.PERMISSION_NAME} de la base de datos?") == "S")
@@ -227,7 +222,6 @@ namespace parking.Views.Administration.Employees
                     }
                 }
 
-            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -251,7 +245,7 @@ namespace parking.Views.Administration.Employees
 
             if(lst.Count == 0)
             {
-                h.MsgWarning("No se encontraron registros en la base de datos.");
+                h.MsgInfo("No se encontraron registros en la base de datos.");
                 if(searchFilter != "")
                 {
                     getPermissions("");

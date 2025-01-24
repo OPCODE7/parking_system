@@ -39,5 +39,12 @@ namespace parking.Views.Administration
             frmPermissions.MdiParent = this;
             frmPermissions.Show();
         }
+
+        private void BtnRoles_Click(object sender, EventArgs e)
+        {
+            FrmRoles frmRoles = new FrmRoles();
+            frmRoles.MdiParent = this;
+            frmRoles.Show();
+        }
     }
 }

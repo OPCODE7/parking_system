@@ -119,6 +119,7 @@
     <EntitySetMapping Name="USER_ROLES">
       <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
         <MappingFragment StoreEntitySet="USER_ROLES">
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />

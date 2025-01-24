@@ -32,6 +32,12 @@ namespace parking.Helpers
             MessageBox.Show(msg, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        public void MsgInfo(string msg)
+        {
+            MessageBox.Show(msg, "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
 
         //Metodo SanitizeStr
         public string SanitizeStr(string str)

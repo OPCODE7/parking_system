@@ -134,9 +134,10 @@
             <PropertyRef Name="ROLE_ID" />
           </Key>
           <Property Name="ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ROLE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="ROLE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DESCRIPTION_ROLE" Type="text" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" />
+          <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+          <Property Name="IS_DEL" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="USERS">
           <Key>
@@ -426,10 +427,11 @@
           </Key>
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DESCRIPTION_ROLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
-          <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
+          <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="USERS">
           <Key>
@@ -745,6 +747,7 @@
           <EntitySetMapping Name="USER_ROLES">
             <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
               <MappingFragment StoreEntitySet="USER_ROLES">
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
                 <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
                 <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
                 <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />

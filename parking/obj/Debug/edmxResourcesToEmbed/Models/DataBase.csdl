@@ -119,10 +119,11 @@
     </Key>
     <Property Name="ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DESCRIPTION_ROLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" Nullable="false" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
-    <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
+    <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="USERS">
     <Key>

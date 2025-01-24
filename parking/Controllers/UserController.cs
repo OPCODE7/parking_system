@@ -40,16 +40,14 @@ namespace parking.Controllers
             bool result = false;
             using (PARKINGEntities db= new PARKINGEntities())
             {
-                var lst = db.USERS.Where(user => (user.USER_NAME == username && user.IS_DEL==false)).ToList();
+                USERS lst = db.USERS.FirstOrDefault(user => (user.USER_NAME == username && user.IS_DEL==false));
 
-                if (lst.Count>0)
+                if (lst!=null)
                 {
-                    foreach (var item in lst)
-                    {
-                        if (item.USER_NAME.ToString() == username && item.USER_PASSWORD.ToString() == password && item.USER_STATE==true)
+                        if (lst.USER_NAME.ToString() == username && lst.USER_PASSWORD.ToString() == password && lst.USER_STATE==true)
                         {
                             Config.User.userName = username;
-                            Config.User.roleId = item.ROLE_ID;
+                            Config.User.roleId = lst.ROLE_ID;
 
                             result= true;
                         }
@@ -58,7 +56,6 @@ namespace parking.Controllers
                             result= false;
 
                         }
-                    }
 
                 }
                 else

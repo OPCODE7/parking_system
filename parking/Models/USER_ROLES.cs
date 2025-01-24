@@ -23,8 +23,9 @@ namespace parking.Models
     
         public int ROLE_ID { get; set; }
         public string DESCRIPTION_ROLE { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
         public string ROLE_NAME { get; set; }
+        public bool IS_DEL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERS> USERS { get; set; }

@@ -258,6 +258,7 @@
             this.BtnRoles.Name = "BtnRoles";
             this.BtnRoles.Size = new System.Drawing.Size(270, 34);
             this.BtnRoles.Text = "Roles";
+            this.BtnRoles.Click += new System.EventHandler(this.BtnRoles_Click);
             // 
             // BtnPermissions
             // 
