@@ -24,7 +24,8 @@ namespace parking.Models
         public string HORARY_DESCRIPTION { get; set; }
         public System.TimeSpan INITIAL_HOUR { get; set; }
         public System.TimeSpan FINAL_HOUR { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public bool IS_DEL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEES> EMPLOYEES { get; set; }

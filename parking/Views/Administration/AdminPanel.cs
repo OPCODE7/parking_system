@@ -55,5 +55,17 @@ namespace parking.Views.Administration
             frmRoles.MdiParent = this;
             frmRoles.Show();
         }
+
+        private void BtnEmployees_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+
+            FrmEmployees frmEmployees= new FrmEmployees();
+            frmEmployees.MdiParent = this;
+            frmEmployees.Show();
+
+        }
     }
 }

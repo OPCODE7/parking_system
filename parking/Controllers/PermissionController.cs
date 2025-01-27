@@ -29,7 +29,7 @@ namespace parking.Controllers
                 {
                     if (searchFilter != "")
                     {
-                        lst = permissions.USER_PERMISSIONS.Where(permission => permission.PERMISSION_NAME.Contains(searchFilter)).ToList();
+                        lst = permissions.USER_PERMISSIONS.Where(permission => permission.PERMISSION_NAME.Contains(searchFilter) && permission.IS_DEL==false).ToList();
                     }
                     else
                     {

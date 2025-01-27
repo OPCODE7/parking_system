@@ -27,18 +27,19 @@ namespace parking.Models
     
         public virtual DbSet<CLIENTS> CLIENTS { get; set; }
         public virtual DbSet<CORRELATIVES> CORRELATIVES { get; set; }
+        public virtual DbSet<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         public virtual DbSet<EMPLOYEES> EMPLOYEES { get; set; }
         public virtual DbSet<HORARY> HORARY { get; set; }
         public virtual DbSet<JOB_POSITIONS> JOB_POSITIONS { get; set; }
         public virtual DbSet<LOGBOOK_APP> LOGBOOK_APP { get; set; }
         public virtual DbSet<PARKING_SPACE> PARKING_SPACE { get; set; }
         public virtual DbSet<PARKING_TYPES> PARKING_TYPES { get; set; }
+        public virtual DbSet<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
         public virtual DbSet<SALARIES> SALARIES { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<VEHICLE_TYPE> VEHICLE_TYPE { get; set; }
-        public virtual DbSet<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
-        public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
     }
 }

@@ -17,19 +17,19 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USERS()
         {
-            this.EMPLOYEES = new HashSet<EMPLOYEES>();
+            this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
         }
     
         public string USER_CODE { get; set; }
         public string USER_NAME { get; set; }
         public string USER_PASSWORD { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
         public int ROLE_ID { get; set; }
-        public Nullable<bool> IS_DEL { get; set; }
-        public Nullable<bool> USER_STATE { get; set; }
+        public bool IS_DEL { get; set; }
+        public bool USER_STATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EMPLOYEES> EMPLOYEES { get; set; }
+        public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         public virtual USER_ROLES USER_ROLES { get; set; }
     }
 }

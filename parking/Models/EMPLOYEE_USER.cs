@@ -12,12 +12,15 @@ namespace parking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CORRELATIVES
+    public partial class EMPLOYEE_USER
     {
-        public string CORRELATIVE_CODE { get; set; }
-        public string CORRELATIVE_DESCRIPTION { get; set; }
-        public int CORRELATIVE_COUNTER { get; set; }
+        public int EMPLOYEE_USER_ID { get; set; }
+        public string EMPLOYEE_CODE { get; set; }
+        public string USER_CODE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
-        public bool IS_DEL { get; set; }
+        public Nullable<bool> IS_DEL { get; set; }
+    
+        public virtual EMPLOYEES EMPLOYEES { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

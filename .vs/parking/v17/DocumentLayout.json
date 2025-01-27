@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\OPCODE\\OP_APPS\\parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\adminpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\adminpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|C:\\OPCODE\\OP_APPS\\parking\\parking\\views\\administration\\employees\\frmemployees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\employees\\frmemployees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\adminpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\adminpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|C:\\OPCODE\\OP_APPS\\parking\\parking\\views\\administration\\employees\\frmemployees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\employees\\frmemployees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\auth\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\auth\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\correlativescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\correlativescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\auth\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\auth\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,56 +26,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Login.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Auth\\Login.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Auth\\Login.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Auth\\Login.cs",
-              "RelativeToolTip": "parking\\Views\\Auth\\Login.cs",
-              "ViewState": "AQIAADoAAAAAAAAAAAAowEoAAAAoAAAA",
+              "Title": "CorrelativesController.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\CorrelativesController.cs",
+              "RelativeDocumentMoniker": "parking\\Controllers\\CorrelativesController.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\CorrelativesController.cs",
+              "RelativeToolTip": "parking\\Controllers\\CorrelativesController.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAawAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T03:35:53.029Z",
+              "WhenOpened": "2025-01-27T03:47:52.065Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Login.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Auth\\Login.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Auth\\Login.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Auth\\Login.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Auth\\Login.cs [Dise\u00F1o]",
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "parking\\Controllers\\EmployeeController.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\EmployeeController.cs",
+              "RelativeToolTip": "parking\\Controllers\\EmployeeController.cs",
+              "ViewState": "AQIAAHUAAAAAAAAAAAAswHoAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T03:34:58.464Z",
-              "EditorCaption": " [Dise\u00F1o]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdminPanel.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\AdminPanel.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\AdminPanel.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\AdminPanel.cs",
-              "RelativeToolTip": "parking\\Views\\Administration\\AdminPanel.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAowCAAAAAoAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T03:23:43.898Z",
+              "WhenOpened": "2025-01-27T03:44:39.289Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AdminPanel.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\AdminPanel.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\AdminPanel.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\AdminPanel.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Administration\\AdminPanel.cs [Dise\u00F1o]",
+              "Title": "FrmEmployees.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "RelativeToolTip": "parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "ViewState": "AQIAAEQBAAAAAAAAAAAswFwBAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T02:25:10.429Z",
+              "WhenOpened": "2025-01-26T16:47:41.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmEmployees.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Employees\\FrmEmployees.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Employees\\FrmEmployees.cs [Dise\u00F1o]",
+              "RelativeToolTip": "parking\\Views\\Administration\\Employees\\FrmEmployees.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T16:44:18.75Z",
               "EditorCaption": " [Dise\u00F1o]"
             }
           ]

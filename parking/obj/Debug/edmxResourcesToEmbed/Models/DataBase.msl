@@ -26,6 +26,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EMPLOYEE_USER">
+      <EntityTypeMapping TypeName="PARKINGModel.EMPLOYEE_USER">
+        <MappingFragment StoreEntitySet="EMPLOYEE_USER">
+          <ScalarProperty Name="EMPLOYEE_USER_ID" ColumnName="EMPLOYEE_USER_ID" />
+          <ScalarProperty Name="EMPLOYEE_CODE" ColumnName="EMPLOYEE_CODE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="EMPLOYEES">
       <EntityTypeMapping TypeName="PARKINGModel.EMPLOYEES">
         <MappingFragment StoreEntitySet="EMPLOYEES">
@@ -37,15 +48,16 @@
           <ScalarProperty Name="EMPLOYEE_PHONE" ColumnName="EMPLOYEE_PHONE" />
           <ScalarProperty Name="EMPLOYEE_ADDRESS" ColumnName="EMPLOYEE_ADDRESS" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="JOB_POSITION_CODE" ColumnName="JOB_POSITION_CODE" />
           <ScalarProperty Name="HORARY_CODE" ColumnName="HORARY_CODE" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="HORARY">
       <EntityTypeMapping TypeName="PARKINGModel.HORARY">
         <MappingFragment StoreEntitySet="HORARY">
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="HORARY_CODE" ColumnName="HORARY_CODE" />
           <ScalarProperty Name="HORARY_DESCRIPTION" ColumnName="HORARY_DESCRIPTION" />
           <ScalarProperty Name="INITIAL_HOUR" ColumnName="INITIAL_HOUR" />
@@ -57,6 +69,7 @@
     <EntitySetMapping Name="JOB_POSITIONS">
       <EntityTypeMapping TypeName="PARKINGModel.JOB_POSITIONS">
         <MappingFragment StoreEntitySet="JOB_POSITIONS">
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="JOB_POSITION_CODE" ColumnName="JOB_POSITION_CODE" />
           <ScalarProperty Name="DESCRIPTION_JOB_POSITION" ColumnName="DESCRIPTION_JOB_POSITION" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
@@ -93,6 +106,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ROLE_PERMISSIONS">
+      <EntityTypeMapping TypeName="PARKINGModel.ROLE_PERMISSIONS">
+        <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
+          <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SALARIES">
       <EntityTypeMapping TypeName="PARKINGModel.SALARIES">
         <MappingFragment StoreEntitySet="SALARIES">
@@ -116,14 +139,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="USER_PERMISSIONS">
+      <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
+        <MappingFragment StoreEntitySet="USER_PERMISSIONS">
+          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
+          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
+          <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="USER_ROLES">
       <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
         <MappingFragment StoreEntitySet="USER_ROLES">
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
           <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -146,27 +180,6 @@
           <ScalarProperty Name="VEHICLE_TYPE_CODE" ColumnName="VEHICLE_TYPE_CODE" />
           <ScalarProperty Name="DESCRIPTION_VEHICLE_TYPE" ColumnName="DESCRIPTION_VEHICLE_TYPE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ROLE_PERMISSIONS">
-      <EntityTypeMapping TypeName="PARKINGModel.ROLE_PERMISSIONS">
-        <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
-          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
-          <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="USER_PERMISSIONS">
-      <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
-        <MappingFragment StoreEntitySet="USER_PERMISSIONS">
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
-          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
-          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

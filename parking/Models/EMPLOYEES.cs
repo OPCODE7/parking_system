@@ -17,6 +17,7 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEES()
         {
+            this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
             this.SALARIES = new HashSet<SALARIES>();
         }
     
@@ -27,15 +28,16 @@ namespace parking.Models
         public string EMPLOYEE_EMAIL { get; set; }
         public string EMPLOYEE_PHONE { get; set; }
         public string EMPLOYEE_ADDRESS { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
-        public string USER_CODE { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
         public string JOB_POSITION_CODE { get; set; }
         public string HORARY_CODE { get; set; }
+        public bool IS_DEL { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SALARIES> SALARIES { get; set; }
         public virtual HORARY HORARY { get; set; }
         public virtual JOB_POSITIONS JOB_POSITIONS { get; set; }
-        public virtual USERS USERS { get; set; }
     }
 }

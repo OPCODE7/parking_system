@@ -17,3 +17,4 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.Up2Date
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.FrmUsers.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmPermissions.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmRoles.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmEmployees.resources

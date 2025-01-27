@@ -19,8 +19,18 @@
     </Key>
     <Property Name="CORRELATIVE_CODE" Type="varchar" MaxLength="4" Nullable="false" />
     <Property Name="CORRELATIVE_DESCRIPTION" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="CORRELATIVE_COUNTER" Type="int" />
-    <Property Name="INSERTED_AT" Type="datetime" />
+    <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMPLOYEE_USER">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_USER_ID" />
+    </Key>
+    <Property Name="EMPLOYEE_USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
     <Property Name="IS_DEL" Type="bit" />
   </EntityType>
   <EntityType Name="EMPLOYEES">
@@ -31,13 +41,13 @@
     <Property Name="EMPLOYEE_DNI" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="EMPLOYEE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="EMPLOYEE_LASTNAME" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="EMPLOYEE_EMAIL" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="EMPLOYEE_EMAIL" Type="varchar" MaxLength="200" />
     <Property Name="EMPLOYEE_PHONE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="EMPLOYEE_ADDRESS" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime" />
-    <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
     <Property Name="JOB_POSITION_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="HORARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="HORARY">
     <Key>
@@ -47,7 +57,8 @@
     <Property Name="HORARY_DESCRIPTION" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="INITIAL_HOUR" Type="time" Precision="7" Nullable="false" />
     <Property Name="FINAL_HOUR" Type="time" Precision="7" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="JOB_POSITIONS">
     <Key>
@@ -55,7 +66,8 @@
     </Key>
     <Property Name="JOB_POSITION_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="DESCRIPTION_JOB_POSITION" Type="varchar" MaxLength="150" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="LOGBOOK_APP">
     <Key>
@@ -141,10 +153,10 @@
     <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="USER_NAME" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="USER_PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime" />
+    <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
     <Property Name="ROLE_ID" Type="int" Nullable="false" />
-    <Property Name="IS_DEL" Type="bit" />
-    <Property Name="USER_STATE" Type="bit" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
+    <Property Name="USER_STATE" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="VEHICLE_TYPE">
     <Key>
@@ -162,6 +174,18 @@
         <PropertyRef Name="EMPLOYEE_CODE" />
       </Principal>
       <Dependent Role="SALARIES">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLOYEE">
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+    <End Role="EMPLOYEE_USER" Type="Self.EMPLOYEE_USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEES">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEE_USER">
         <PropertyRef Name="EMPLOYEE_CODE" />
       </Dependent>
     </ReferentialConstraint>
@@ -214,14 +238,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_USER_EMPLOYE">
+  <Association Name="FK_USER">
     <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
-    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+    <End Role="EMPLOYEE_USER" Type="Self.EMPLOYEE_USER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_CODE" />
       </Principal>
-      <Dependent Role="EMPLOYEES">
+      <Dependent Role="EMPLOYEE_USER">
         <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
@@ -253,6 +277,7 @@
   <EntityContainer Name="PARKINGModelStoreContainer">
     <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CORRELATIVES" EntityType="Self.CORRELATIVES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLOYEE_USER" EntityType="Self.EMPLOYEE_USER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HORARY" EntityType="Self.HORARY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="JOB_POSITIONS" EntityType="Self.JOB_POSITIONS" Schema="dbo" store:Type="Tables" />
@@ -270,6 +295,10 @@
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
       <End Role="SALARIES" EntitySet="SALARIES" />
     </AssociationSet>
+    <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+      <End Role="EMPLOYEE_USER" EntitySet="EMPLOYEE_USER" />
+    </AssociationSet>
     <AssociationSet Name="FK_HORARY_EMPLOYE" Association="Self.FK_HORARY_EMPLOYE">
       <End Role="HORARY" EntitySet="HORARY" />
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
@@ -286,9 +315,9 @@
       <End Role="USER_ROLES" EntitySet="USER_ROLES" />
       <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
     </AssociationSet>
-    <AssociationSet Name="FK_USER_EMPLOYE" Association="Self.FK_USER_EMPLOYE">
+    <AssociationSet Name="FK_USER" Association="Self.FK_USER">
       <End Role="USERS" EntitySet="USERS" />
-      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+      <End Role="EMPLOYEE_USER" EntitySet="EMPLOYEE_USER" />
     </AssociationSet>
     <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
       <End Role="USER_ROLES" EntitySet="USER_ROLES" />

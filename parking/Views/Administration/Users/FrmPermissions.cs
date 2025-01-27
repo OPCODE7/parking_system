@@ -83,11 +83,20 @@ namespace parking.Views.Administration.Employees
 
             using (PARKINGEntities db = new PARKINGEntities())
             {
-                var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('USER_PERMISSIONS')").FirstOrDefault() + 1;
-               
+                try
+                {
+                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('USER_PERMISSIONS')").FirstOrDefault();
 
-                TxtPermissionCode.Text = nextId.ToString();
-                BtnNew.Enabled = false;
+                    nextId = nextId == 1 ? 1 : nextId + 1;
+
+                    TxtPermissionCode.Text = nextId.ToString();
+                    BtnNew.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    h.MsgError(ex.ToString());
+                }
+
             }
 
         }

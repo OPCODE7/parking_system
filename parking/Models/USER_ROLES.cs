@@ -17,19 +17,19 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USER_ROLES()
         {
-            this.USERS = new HashSet<USERS>();
             this.ROLE_PERMISSIONS = new HashSet<ROLE_PERMISSIONS>();
+            this.USERS = new HashSet<USERS>();
         }
     
         public int ROLE_ID { get; set; }
+        public string ROLE_NAME { get; set; }
         public string DESCRIPTION_ROLE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
-        public string ROLE_NAME { get; set; }
         public bool IS_DEL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USERS> USERS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERS> USERS { get; set; }
     }
 }
