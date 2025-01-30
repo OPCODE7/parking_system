@@ -168,6 +168,11 @@ namespace parking.Views.Administration.Employees
 
         }
 
+        private void PbxSearch_Click(object sender, EventArgs e)
+        {
+            getEmployees(TxtSearch.Text);
+        }
+
         private void startForm()
         {
             getEmployees("");

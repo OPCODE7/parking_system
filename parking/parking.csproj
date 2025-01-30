@@ -216,6 +216,12 @@
     <EmbeddedResource Include="Views\Administration\Employees\FrmEmployees.resx">
       <DependentUpon>FrmEmployees.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Employees\FrmHorary.resx">
+      <DependentUpon>FrmHorary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Employees\FrmJobPositions.resx">
+      <DependentUpon>FrmJobPositions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Users\FrmPermissions.resx">
       <DependentUpon>FrmPermissions.cs</DependentUpon>
     </EmbeddedResource>

@@ -62,7 +62,7 @@
           <Property Name="HORARY_DESCRIPTION" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="INITIAL_HOUR" Type="time" Precision="7" Nullable="false" />
           <Property Name="FINAL_HOUR" Type="time" Precision="7" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="JOB_POSITIONS">
@@ -400,7 +400,7 @@
           <Property Name="HORARY_DESCRIPTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INITIAL_HOUR" Type="Time" Nullable="false" Precision="7" />
           <Property Name="FINAL_HOUR" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
           <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_HORARY_EMPLOYE" FromRole="HORARY" ToRole="EMPLOYEES" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
         </EntityType>

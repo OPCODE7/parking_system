@@ -63,7 +63,7 @@
     <Property Name="HORARY_DESCRIPTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INITIAL_HOUR" Type="Time" Nullable="false" Precision="7" />
     <Property Name="FINAL_HOUR" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
     <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_HORARY_EMPLOYE" FromRole="HORARY" ToRole="EMPLOYEES" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
   </EntityType>

@@ -67,5 +67,28 @@ namespace parking.Views.Administration
             frmEmployees.Show();
 
         }
+
+        private void BtnHorary_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+
+            FrmHorary frmHorary = new FrmHorary();
+            frmHorary.MdiParent = this;
+            frmHorary.Show();
+
+        }
+
+        private void BtnJobPositions_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmJobPositions frmJobPositions = new FrmJobPositions();
+            frmJobPositions.MdiParent = this;
+            frmJobPositions.Show();
+
+        }
     }
 }

@@ -108,6 +108,7 @@
             this.BtnHorary.TabIndex = 3;
             this.BtnHorary.Text = "Horarios";
             this.BtnHorary.UseVisualStyleBackColor = false;
+            this.BtnHorary.Click += new System.EventHandler(this.BtnHorary_Click);
             // 
             // BtnJobPositions
             // 
@@ -121,6 +122,7 @@
             this.BtnJobPositions.TabIndex = 4;
             this.BtnJobPositions.Text = "Cargos";
             this.BtnJobPositions.UseVisualStyleBackColor = false;
+            this.BtnJobPositions.Click += new System.EventHandler(this.BtnJobPositions_Click);
             // 
             // BtnVehicleType
             // 
