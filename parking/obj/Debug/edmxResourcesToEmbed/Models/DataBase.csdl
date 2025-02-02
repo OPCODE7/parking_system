@@ -27,11 +27,11 @@
     <Key>
       <PropertyRef Name="EMPLOYEE_USER_ID" />
     </Key>
-    <Property Name="EMPLOYEE_USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEE_USER_ID" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="EMPLOYEE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IS_DEL" Type="Boolean" />
+    <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEE" FromRole="EMPLOYEE_USER" ToRole="EMPLOYEES" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USER" FromRole="EMPLOYEE_USER" ToRole="USERS" />
   </EntityType>
@@ -166,7 +166,7 @@
       <PropertyRef Name="USER_CODE" />
     </Key>
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="USER_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_NAME" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USER_PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ROLE_ID" Type="Int32" Nullable="false" />

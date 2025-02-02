@@ -27,11 +27,11 @@
     <Key>
       <PropertyRef Name="EMPLOYEE_USER_ID" />
     </Key>
-    <Property Name="EMPLOYEE_USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_USER_ID" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
-    <Property Name="IS_DEL" Type="bit" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="EMPLOYEES">
     <Key>
@@ -151,7 +151,7 @@
       <PropertyRef Name="USER_CODE" />
     </Key>
     <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
-    <Property Name="USER_NAME" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="USER_NAME" Type="varchar" MaxLength="16" Nullable="false" />
     <Property Name="USER_PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
     <Property Name="ROLE_ID" Type="int" Nullable="false" />

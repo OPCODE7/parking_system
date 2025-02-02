@@ -5,8 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using parking.Controllers;
 using parking.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -16,12 +18,14 @@ namespace parking.Views.Administration
     public partial class FrmUsers : Form
     {
         Helpers.Helpers h = new Helpers.Helpers();
-        Controllers.UserController userController = new Controllers.UserController();
-        Controllers.CorrelativesController correlativesController = new Controllers.CorrelativesController();
-        Controllers.RoleController roleController = new Controllers.RoleController();
-        Controllers.EmployeeController employeeController = new Controllers.EmployeeController();
+        UserController userController = new UserController();
+        CorrelativesController correlativesController = new CorrelativesController();
+        RoleController roleController = new RoleController();
+        EmployeeController employeeController = new EmployeeController();
+        EmployeeUserController employeeUserController = new EmployeeUserController();
+        Helpers.PasswordHasher pwdHasher = new Helpers.PasswordHasher();
 
-        string userCode, userName, userPassword;
+        string userCode, userName, userPassword,employeeCode;
         bool userState;
         int roleId;
         public FrmUsers()
@@ -49,6 +53,7 @@ namespace parking.Views.Administration
             BtnSave.Enabled = false;
             BtnNew.Enabled = true;
             BtnCancel.Enabled = false;
+            ChkState.Enabled = false;
 
             foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
             {
@@ -67,10 +72,48 @@ namespace parking.Views.Administration
 
         private void setValues()
         {
+            userCode= TxtUserCode.Text.Trim();
             userName = h.SanitizeStr(TxtUserName.Text.Trim());
-            userPassword = h.SanitizeStr(TxtPwd.Text.Trim());
+            userPassword = pwdHasher.makeHash(TxtPwd.Text.Trim());
             userState = ChkState.Checked;
+            employeeCode = CmbEmployees.SelectedValue.ToString();
             roleId = Convert.ToInt32(CmbRole.SelectedValue);
+        }
+
+        private int validateData()
+        {
+            int error = 0;
+            string userName = "^[a-zA-Z0-9_]+$";
+            string userPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,15}";
+
+            if (!Regex.Match(TxtUserName.Text, userName).Success)
+            {
+                h.MsgError("El nombre de usuario no es válido. ¡Letras mayúsculas o minúsculas, números y guión bajo son permitidos!");
+                error++;
+                return error;
+            }
+
+            if (!Regex.Match(TxtPwd.Text, userPassword).Success)
+            {
+                h.MsgError("La contraseña no es válida. ¡Debe contener al menos una letra mayúscula, una minúscula, un número y un caracter especial!");
+                error++;
+                return error;
+            }
+
+            if (CmbRole.SelectedValue==null)
+            {
+                h.MsgError("Debe seleccionar un rol para el usuario.");
+                error++;
+                return error;
+            }
+
+            if (CmbEmployees.SelectedValue == null)
+            {
+                h.MsgError("Debe seleccionar un empleado para el usuario.");
+                error++;
+                return error;
+            }
+            return error;
         }
 
         private void getUsers(string searchFilter)
@@ -122,6 +165,7 @@ namespace parking.Views.Administration
             BtnDelete.Enabled = false;
             BtnSave.Enabled = true;
             BtnCancel.Enabled = true;
+            ChkState.Enabled = true;
 
             foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
             {
@@ -159,6 +203,46 @@ namespace parking.Views.Administration
 
         }
 
+        private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(DgvUsers.Rows.Count>0)
+            {
+                var user = userController.getUser(DgvUsers.CurrentRow.Cells[0].Value.ToString());
+
+                if(user != null)
+                {
+
+                    BtnEdit.Enabled = true;
+                    BtnDelete.Enabled = true;
+                    BtnNew.Enabled = false;
+                    BtnSave.Enabled = false;
+                    BtnCancel.Enabled = true;
+                    ChkState.Enabled = true;
+
+                    TxtUserCode.Enabled = false;
+                    TxtUserName.Enabled = true;
+                    TxtPwd.Enabled = true;
+                    CmbRole.Enabled = true;
+                    CmbEmployees.Enabled = true;
+
+                    TxtUserName.Focus();
+                    TxtUserCode.Text = user.USER_CODE;
+                    TxtUserName.Text = user.USER_NAME;
+                    TxtPwd.Text = user.USER_PASSWORD;
+                    CmbRole.Text = user.ROLE_NAME;
+                    ChkState.Checked = user.USER_STATE == true ? true : false;
+
+                    CmbEmployees.SelectedValue = user.EMPLOYEE_CODE;
+                    CmbRole.SelectedValue = user.ROLE_ID;
+                }
+                else
+                {
+                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
+                }
+            }
+
+        }
+
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
@@ -172,7 +256,39 @@ namespace parking.Views.Administration
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-
+            if (validateData() == 0)
+            {
+                setValues();
+                USERS user= new USERS();
+                user.USER_CODE = userCode;
+                user.USER_NAME = userName;
+                user.USER_PASSWORD = userPassword;
+                user.USER_STATE = userState;
+                user.ROLE_ID = roleId;
+                user.INSERTED_AT = DateTime.Now;
+               
+                if(userController.saveUser(user) > 0){
+                    var nextId = "EUS" + correlativesController.getNextId("EUS");
+                    EMPLOYEE_USER employeeUser= new EMPLOYEE_USER();
+                    employeeUser.EMPLOYEE_USER_ID = nextId;
+                    employeeUser.EMPLOYEE_CODE = employeeCode;
+                    employeeUser.USER_CODE = userCode;
+                    employeeUser.INSERTED_AT = DateTime.Now;
+                    if (employeeUserController.saveEmployeeUser(employeeUser) > 0)
+                    {
+                        h.MsgInfo("Usuario guardado correctamente.");
+                           startForm();
+                    }
+                    else
+                    {
+                        h.MsgError("Ocurrio un error el usuario no pudo ser asignado al empleado correctamente.");
+                    }
+                }
+                else
+                {
+                    h.MsgError("Ocurrio un error el usuario no pudo ser guardado correctamente.");
+                }
+            }
         }
     }
 }

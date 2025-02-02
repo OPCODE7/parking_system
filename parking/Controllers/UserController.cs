@@ -15,10 +15,13 @@ namespace parking.Controllers
     internal class UserController
     {
         private Models.UserModel userModel;
-        Helpers.Helpers h = new Helpers.Helpers();
+        Helpers.Helpers h;
+        Helpers.PasswordHasher pwdHasher;
         public UserController()
         {
             userModel = new Models.UserModel();
+            pwdHasher = new Helpers.PasswordHasher();
+            h = new Helpers.Helpers();
         }
 
         public bool Login(string username, string password)
@@ -30,7 +33,7 @@ namespace parking.Controllers
 
                 if (lst != null)
                 {
-                    if (lst.USER_NAME.ToString() == username && lst.USER_PASSWORD.ToString() == password && lst.USER_STATE == true)
+                    if (lst.USER_NAME.ToString() == username && pwdHasher.verifyPassword(password,lst.USER_PASSWORD) && lst.USER_STATE == true)
                     {
                         Config.User.userName = username;
                         Config.User.roleId = lst.ROLE_ID;
@@ -40,7 +43,6 @@ namespace parking.Controllers
                     else
                     {
                         result = false;
-
                     }
 
                 }
@@ -51,6 +53,48 @@ namespace parking.Controllers
             }
 
             return result;
+        }
+
+        public dynamic getUser(string id)
+        {
+            dynamic user = new USERS();
+            try
+            {
+                using(PARKINGEntities db= new PARKINGEntities())
+                {
+                    var query = from usr in db.USERS
+                                join rol in db.USER_ROLES
+                                on usr.ROLE_ID equals rol.ROLE_ID
+                                join empUsr in db.EMPLOYEE_USER
+                                on usr.USER_CODE equals empUsr.USER_CODE
+                                join emp in db.EMPLOYEES
+                                on empUsr.EMPLOYEE_CODE equals emp.EMPLOYEE_CODE
+                                select new
+                                {
+                                    USER_CODE= usr.USER_CODE,
+                                    USER_NAME= usr.USER_NAME,
+                                    USER_PASSWORD= usr.USER_PASSWORD,
+                                    USER_STATE= usr.USER_STATE,
+                                    ROLE_ID= usr.ROLE_ID,
+                                    ROLE_NAME= rol.ROLE_NAME,
+                                    EMPLOYEE_CODE= emp.EMPLOYEE_CODE,
+                                    EMPLOYEE_NAME= emp.EMPLOYEE_NAME,
+                                    INSERTED_AT= usr.INSERTED_AT,
+                                    IS_DEL= usr.IS_DEL
+                                   
+                                };
+                    h.MsgInfo(query.ToString());
+                    user = query.Where(u => u.IS_DEL == false && u.USER_CODE==id).FirstOrDefault();
+                }
+
+            }catch(Exception ex)
+            {
+               h.MsgError("Error al obtener usuario: " + ex.Message);
+            }
+
+            return user;
+
+            
         }
 
         public IEnumerable<dynamic> getUsers(string searchFilter)
@@ -72,7 +116,7 @@ namespace parking.Controllers
                              IS_DEL = user.IS_DEL,
                              INSERTED_AT = user.INSERTED_AT
                          })
-                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true && user.USER_NAME.Contains(searchFilter))).ToList();
+                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true && user.USER_NAME.Contains(searchFilter))).OrderBy(user => user.USER_CODE).ToList();
 
                     }
                     else
@@ -87,9 +131,7 @@ namespace parking.Controllers
                             IS_DEL = user.IS_DEL,
                             INSERTED_AT = user.INSERTED_AT
                         })
-                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true)).ToList();
-
-
+                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true)).OrderBy(user => user.USER_CODE).ToList();
                     }
 
 
@@ -103,6 +145,64 @@ namespace parking.Controllers
 
             return users;
 
+        }
+
+        public int saveUser(USERS user)
+        {
+            int result = 0;
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    db.USERS.Add(user);
+                    result = db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.ToString());
+            }
+
+            return result;
+        }
+
+        public int updateUser(USERS user)
+        {
+            int result = 0;
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    result = db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.Message);
+            }
+
+            return result;
+        }
+
+        public int deleteUser(USERS user)
+        {
+            int result = 0;
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    db.USERS.Attach(user);
+                    db.USERS.Remove(user);
+                    result = db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.Message);
+            }
+
+            return result;
         }
     }
 }

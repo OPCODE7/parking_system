@@ -49,6 +49,7 @@ namespace parking.Views.Administration.Employees
                         Txt.Enabled = true;
                     }
 
+                    MskPhoneNumber.Enabled = true;
                     TxtEmployeeCode.Enabled = false;
 
                     foreach(System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
@@ -328,7 +329,7 @@ namespace parking.Views.Administration.Employees
         private void fillCmbHoraries()
         {
             CmbHorary.DataSource = horaryController.getHoraries("");
-            CmbHorary.DisplayMember = "DESCRIPTION_HORARY";
+            CmbHorary.DisplayMember = "HORARY_DESCRIPTION";
             CmbHorary.ValueMember = "HORARY_CODE";
             CmbHorary.SelectedIndex = -1;
 
