@@ -20,3 +20,4 @@ C:\OPCODE\OP_APPS\parking\parking\bin\Debug\EntityFramework.SqlServer.xml
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.Up2Date
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.ParkingStructure.FrmParkingTypes.resources

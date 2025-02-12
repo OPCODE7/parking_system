@@ -25,6 +25,24 @@ namespace parking.Controllers
             
         }
 
+        public EMPLOYEE_USER getEmployeeUser(string id)
+        {   
+            EMPLOYEE_USER employeeUser = new EMPLOYEE_USER();
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    employeeUser = db.EMPLOYEE_USER.Where(e => e.USER_CODE==id).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.Message);
+            }
+
+            return employeeUser;
+        }
+
         public int saveEmployeeUser(EMPLOYEE_USER employeeUser)
         {
             int result = 0;
@@ -56,7 +74,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.Message);
+                h.MsgError(ex.ToString());
             }
 
             return result;
@@ -76,7 +94,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.Message);
+                h.MsgError(ex.ToString());
             }
 
             return result;

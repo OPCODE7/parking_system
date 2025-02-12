@@ -99,6 +99,7 @@
     <EntitySetMapping Name="PARKING_TYPES">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
         <MappingFragment StoreEntitySet="PARKING_TYPES">
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
           <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
           <ScalarProperty Name="PARKING_TYPE_PRICE" ColumnName="PARKING_TYPE_PRICE" />

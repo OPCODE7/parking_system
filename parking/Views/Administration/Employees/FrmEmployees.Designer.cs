@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEmployees));
             this.DgvEmployees = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +40,6 @@
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.LblName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -71,6 +70,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.CmbHorary = new System.Windows.Forms.ComboBox();
+            this.TxtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -84,11 +84,11 @@
             this.DgvEmployees.AllowUserToDeleteRows = false;
             this.DgvEmployees.AllowUserToResizeColumns = false;
             this.DgvEmployees.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.DgvEmployees.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -97,14 +97,14 @@
             this.CARGO,
             this.TELÉFONO,
             this.REGISTRO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle10;
             this.DgvEmployees.Location = new System.Drawing.Point(15, 389);
             this.DgvEmployees.Name = "DgvEmployees";
             this.DgvEmployees.ReadOnly = true;
@@ -193,18 +193,6 @@
             this.label6.Size = new System.Drawing.Size(74, 22);
             this.label6.TabIndex = 74;
             this.label6.Text = "Buscar:";
-            // 
-            // TxtSearch
-            // 
-            this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtSearch.Location = new System.Drawing.Point(94, 353);
-            this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSearch.Multiline = true;
-            this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(388, 30);
-            this.TxtSearch.TabIndex = 9;
             // 
             // label4
             // 
@@ -530,6 +518,17 @@
             this.CmbHorary.Size = new System.Drawing.Size(305, 28);
             this.CmbHorary.TabIndex = 8;
             // 
+            // TxtSearch
+            // 
+            this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtSearch.Location = new System.Drawing.Point(94, 354);
+            this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtSearch.Name = "TxtSearch";
+            this.TxtSearch.Size = new System.Drawing.Size(388, 26);
+            this.TxtSearch.TabIndex = 9;
+            // 
             // FrmEmployees
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -582,7 +581,6 @@
         private System.Windows.Forms.PictureBox PbxSearch;
         private System.Windows.Forms.PictureBox PbxCancel;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label LblName;
         private System.Windows.Forms.Label label2;
@@ -618,5 +616,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CARGO;
         private System.Windows.Forms.DataGridViewTextBoxColumn TELÉFONO;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.TextBox TxtSearch;
     }
 }

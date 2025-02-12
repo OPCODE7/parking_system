@@ -206,16 +206,12 @@ namespace parking.Views.Administration.Employees
             var employess = employeeController.getEmployees(searchFilter);
             if (searchFilter != "")
             {
-                DgvEmployees.Rows.Clear();
                 var users = employeeController.getEmployees(searchFilter);
 
                 if (users.Count() == 0)
                 {
                     h.MsgInfo("No se encontraron registros en la base de datos.");
-                    if (searchFilter != "")
-                    {
-                        getEmployees("");
-                    }
+                    getEmployees("");
                     return;
                 }
 

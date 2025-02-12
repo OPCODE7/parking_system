@@ -71,7 +71,7 @@ namespace parking.Views.Administration.Employees
             {
                 if (horaries.Count == 0)
                 {
-                    h.MsgInfo("No se encontraron resultados");
+                    h.MsgInfo("No se encontraron registros en la base de datos.");
                     getHoraries("");
                     return;
                 }

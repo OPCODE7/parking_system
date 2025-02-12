@@ -1,4 +1,5 @@
 ﻿using parking.Views.Administration.Employees;
+using parking.Views.Administration.ParkingStructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,6 +89,17 @@ namespace parking.Views.Administration
             FrmJobPositions frmJobPositions = new FrmJobPositions();
             frmJobPositions.MdiParent = this;
             frmJobPositions.Show();
+
+        }
+
+        private void BtnParkingType_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+           FrmParkingTypes frmParkingTypes = new FrmParkingTypes();
+            frmParkingTypes.MdiParent = this;
+            frmParkingTypes.Show();
 
         }
     }

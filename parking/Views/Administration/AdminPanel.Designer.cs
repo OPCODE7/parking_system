@@ -34,8 +34,9 @@
             this.BtnEmployees = new System.Windows.Forms.Button();
             this.BtnHorary = new System.Windows.Forms.Button();
             this.BtnJobPositions = new System.Windows.Forms.Button();
-            this.BtnVehicleType = new System.Windows.Forms.Button();
+            this.BtnParkingType = new System.Windows.Forms.Button();
             this.BtnParkingSpace = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
@@ -63,8 +64,9 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnEmployees);
             this.PnlAdminSideBar.Controls.Add(this.BtnHorary);
             this.PnlAdminSideBar.Controls.Add(this.BtnJobPositions);
-            this.PnlAdminSideBar.Controls.Add(this.BtnVehicleType);
+            this.PnlAdminSideBar.Controls.Add(this.BtnParkingType);
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingSpace);
+            this.PnlAdminSideBar.Controls.Add(this.label1);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.PnlAdminSideBar.Location = new System.Drawing.Point(0, 0);
             this.PnlAdminSideBar.Name = "PnlAdminSideBar";
@@ -124,18 +126,19 @@
             this.BtnJobPositions.UseVisualStyleBackColor = false;
             this.BtnJobPositions.Click += new System.EventHandler(this.BtnJobPositions_Click);
             // 
-            // BtnVehicleType
+            // BtnParkingType
             // 
-            this.BtnVehicleType.BackColor = System.Drawing.Color.Teal;
-            this.BtnVehicleType.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnVehicleType.ForeColor = System.Drawing.SystemColors.Control;
-            this.BtnVehicleType.Location = new System.Drawing.Point(3, 302);
-            this.BtnVehicleType.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.BtnVehicleType.Name = "BtnVehicleType";
-            this.BtnVehicleType.Size = new System.Drawing.Size(211, 54);
-            this.BtnVehicleType.TabIndex = 5;
-            this.BtnVehicleType.Text = "Tipo Vehículo";
-            this.BtnVehicleType.UseVisualStyleBackColor = false;
+            this.BtnParkingType.BackColor = System.Drawing.Color.Teal;
+            this.BtnParkingType.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnParkingType.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnParkingType.Location = new System.Drawing.Point(3, 302);
+            this.BtnParkingType.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnParkingType.Name = "BtnParkingType";
+            this.BtnParkingType.Size = new System.Drawing.Size(211, 54);
+            this.BtnParkingType.TabIndex = 5;
+            this.BtnParkingType.Text = "Tipo de parqueo";
+            this.BtnParkingType.UseVisualStyleBackColor = false;
+            this.BtnParkingType.Click += new System.EventHandler(this.BtnParkingType_Click);
             // 
             // BtnParkingSpace
             // 
@@ -149,6 +152,17 @@
             this.BtnParkingSpace.TabIndex = 6;
             this.BtnParkingSpace.Text = "Espacios de parqueo";
             this.BtnParkingSpace.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Location = new System.Drawing.Point(3, 646);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 220, 3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "label1";
             // 
             // PbxClose
             // 
@@ -261,7 +275,7 @@
             this.BtnRoles.BackColor = System.Drawing.Color.Teal;
             this.BtnRoles.ForeColor = System.Drawing.Color.White;
             this.BtnRoles.Name = "BtnRoles";
-            this.BtnRoles.Size = new System.Drawing.Size(187, 34);
+            this.BtnRoles.Size = new System.Drawing.Size(270, 34);
             this.BtnRoles.Text = "Roles";
             this.BtnRoles.Click += new System.EventHandler(this.BtnRoles_Click);
             // 
@@ -270,7 +284,7 @@
             this.BtnPermissions.BackColor = System.Drawing.Color.Teal;
             this.BtnPermissions.ForeColor = System.Drawing.Color.White;
             this.BtnPermissions.Name = "BtnPermissions";
-            this.BtnPermissions.Size = new System.Drawing.Size(187, 34);
+            this.BtnPermissions.Size = new System.Drawing.Size(270, 34);
             this.BtnPermissions.Text = "Permisos";
             this.BtnPermissions.Click += new System.EventHandler(this.BtnPermissions_Click);
             // 
@@ -279,7 +293,7 @@
             this.BtnUsers.BackColor = System.Drawing.Color.Teal;
             this.BtnUsers.ForeColor = System.Drawing.Color.White;
             this.BtnUsers.Name = "BtnUsers";
-            this.BtnUsers.Size = new System.Drawing.Size(187, 34);
+            this.BtnUsers.Size = new System.Drawing.Size(270, 34);
             this.BtnUsers.Text = "Usuarios";
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click_1);
             // 
@@ -319,7 +333,7 @@
         private System.Windows.Forms.Button BtnEmployees;
         private System.Windows.Forms.Button BtnHorary;
         private System.Windows.Forms.Button BtnJobPositions;
-        private System.Windows.Forms.Button BtnVehicleType;
+        private System.Windows.Forms.Button BtnParkingType;
         private System.Windows.Forms.Button BtnParkingSpace;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem facturaciónToolStripMenuItem;
@@ -329,5 +343,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnRoles;
         private System.Windows.Forms.ToolStripMenuItem BtnPermissions;
         private System.Windows.Forms.ToolStripMenuItem BtnUsers;
+        private System.Windows.Forms.Label label1;
     }
 }

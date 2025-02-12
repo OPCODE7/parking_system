@@ -83,7 +83,6 @@ namespace parking.Controllers
                                     IS_DEL= usr.IS_DEL
                                    
                                 };
-                    h.MsgInfo(query.ToString());
                     user = query.Where(u => u.IS_DEL == false && u.USER_CODE==id).FirstOrDefault();
                 }
 
@@ -116,7 +115,7 @@ namespace parking.Controllers
                              IS_DEL = user.IS_DEL,
                              INSERTED_AT = user.INSERTED_AT
                          })
-                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true && user.USER_NAME.Contains(searchFilter))).OrderBy(user => user.USER_CODE).ToList();
+                        .Where(user => (user.IS_DEL == false && user.USER_NAME.Contains(searchFilter))).OrderBy(user => user.USER_CODE).ToList();
 
                     }
                     else
@@ -131,7 +130,7 @@ namespace parking.Controllers
                             IS_DEL = user.IS_DEL,
                             INSERTED_AT = user.INSERTED_AT
                         })
-                        .Where(user => (user.IS_DEL == false && user.USER_STATE == true)).OrderBy(user => user.USER_CODE).ToList();
+                        .Where(user => (user.IS_DEL == false)).OrderBy(user => user.USER_CODE).ToList();
                     }
 
 
@@ -179,19 +178,20 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.Message);
+                h.MsgError(ex.ToString());
             }
 
             return result;
         }
 
-        public int deleteUser(USERS user)
+        public int deleteUser(string id)
         {
             int result = 0;
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    USERS user = db.USERS.Find(id);
                     db.USERS.Attach(user);
                     db.USERS.Remove(user);
                     result = db.SaveChanges();
@@ -199,7 +199,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.Message);
+                h.MsgError(ex.ToString());
             }
 
             return result;

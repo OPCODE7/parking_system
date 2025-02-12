@@ -16,7 +16,8 @@ namespace parking.Models
     {
         public string PARKING_TYPE_CODE { get; set; }
         public string DESCRIPTION_PARKING_TYPE { get; set; }
-        public int PARKING_TYPE_PRICE { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public decimal PARKING_TYPE_PRICE { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public bool IS_DEL { get; set; }
     }
 }

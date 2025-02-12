@@ -97,9 +97,10 @@
             <PropertyRef Name="PARKING_TYPE_CODE" />
           </Key>
           <Property Name="PARKING_TYPE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="DESCRIPTION_PARKING_TYPE" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="PARKING_TYPE_PRICE" Type="int" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" />
+          <Property Name="DESCRIPTION_PARKING_TYPE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PARKING_TYPE_PRICE" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IS_DEL" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ROLE_PERMISSIONS">
           <Key>
@@ -158,7 +159,7 @@
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="USER_NAME" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="USER_PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ROLE_ID" Type="int" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
           <Property Name="USER_STATE" Type="bit" Nullable="false" />
@@ -169,7 +170,7 @@
           </Key>
           <Property Name="VEHICLE_TYPE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="DESCRIPTION_VEHICLE_TYPE" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <Association Name="FK_EMPLOYE_SALARY">
           <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
@@ -438,9 +439,10 @@
             <PropertyRef Name="PARKING_TYPE_CODE" />
           </Key>
           <Property Name="PARKING_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DESCRIPTION_PARKING_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PARKING_TYPE_PRICE" Type="Int32" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+          <Property Name="DESCRIPTION_PARKING_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PARKING_TYPE_PRICE" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
+          <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ROLE_PERMISSIONS">
           <Key>
@@ -505,7 +507,7 @@
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="USER_NAME" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="USER_PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_STATE" Type="Boolean" Nullable="false" />
@@ -518,7 +520,7 @@
           </Key>
           <Property Name="VEHICLE_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPTION_VEHICLE_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+          <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
           <NavigationProperty Name="PARKING_SPACE" Relationship="Self.FK_VEHICLE_SPACE" FromRole="VEHICLE_TYPE" ToRole="PARKING_SPACE" />
         </EntityType>
         <Association Name="FK_EMPLOYEE">
@@ -787,6 +789,7 @@
           <EntitySetMapping Name="PARKING_TYPES">
             <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
               <MappingFragment StoreEntitySet="PARKING_TYPES">
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
                 <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
                 <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
                 <ScalarProperty Name="PARKING_TYPE_PRICE" ColumnName="PARKING_TYPE_PRICE" />

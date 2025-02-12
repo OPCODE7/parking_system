@@ -120,16 +120,16 @@ namespace parking.Views.Administration
         {
             DgvUsers.Rows.Clear();
             var users = userController.getUsers(searchFilter);
-
-            if (users.Count() ==0 )
+            if (searchFilter != "")
             {
-                h.MsgInfo("No se encontraron registros en la base de datos.");
-                if (searchFilter != "")
+                if (users.Count() ==0 )
                 {
+                    h.MsgInfo("No se encontraron registros en la base de datos.");
                     getUsers("");
+                    return;
                 }
-                return;
             }
+
 
             foreach (var item in users)
             {
@@ -194,15 +194,7 @@ namespace parking.Views.Administration
             getUsers(TxtSearch.Text.Trim());
         }
 
-        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                getUsers(TxtSearch.Text);
-            }
-
-        }
-
+       
         private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if(DgvUsers.Rows.Count>0)
@@ -228,7 +220,6 @@ namespace parking.Views.Administration
                     TxtUserName.Focus();
                     TxtUserCode.Text = user.USER_CODE;
                     TxtUserName.Text = user.USER_NAME;
-                    TxtPwd.Text = user.USER_PASSWORD;
                     CmbRole.Text = user.ROLE_NAME;
                     ChkState.Checked = user.USER_STATE == true ? true : false;
 
@@ -241,6 +232,72 @@ namespace parking.Views.Administration
                 }
             }
 
+        }
+
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if (validateData() == 0)
+            {
+                setValues();
+                var user = userController.getUser(TxtUserCode.Text);
+                USERS newUser= new USERS();
+                EMPLOYEE_USER empUser = employeeUserController.getEmployeeUser(TxtUserCode.Text);
+                newUser.USER_CODE = userCode;
+                newUser.USER_NAME = userName;
+                newUser.USER_PASSWORD = userPassword;
+                newUser.USER_STATE = userState;
+                newUser.ROLE_ID = roleId;
+                empUser.EMPLOYEE_CODE = employeeCode;
+                empUser.USER_CODE = userCode;
+
+
+                if (h.MsgQuestion($"¿Estás seguro que deseas editar los datos del usuario {user.USER_NAME}?") == "S")
+                {
+                    if (userController.updateUser(newUser) > 0 && employeeUserController.updateEmployeeUser(empUser) > 0)
+                    {
+                        h.MsgSuccess("Usuario actualizado correctamente.");
+                        startForm();
+                    }
+                    else
+                    {
+                        h.MsgError("Ocurrio un error el usuario no pudo ser actualizado correctamente.");
+                    }
+                }
+            }
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            var user= userController.getUser(TxtUserCode.Text);
+            EMPLOYEE_USER empUser= employeeUserController.getEmployeeUser(TxtUserCode.Text);
+            if (h.MsgQuestion($"¿Estás seguro que deseas eliminar el usuario {user.USER_NAME} seleccionado?") == "S")
+            {
+                if (employeeUserController.deleteEmployeeUser(empUser) > 0)
+                {
+                    if(userController.deleteUser(TxtUserCode.Text.Trim()) > 0)
+                    {
+                        h.MsgSuccess("Usuario eliminado correctamente.");
+                        startForm();
+                    }
+                    else
+                    {
+                        h.MsgError("Ocurrio un error el usuario no pudo ser eliminado correctamente.");
+                    }
+                }
+                else
+                {
+                    h.MsgError("Ocurrio un error el usuario no pudo ser eliminado correctamente.");
+                }
+            }
+
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                getUsers(TxtSearch.Text);
+            }
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
