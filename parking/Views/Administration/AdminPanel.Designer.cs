@@ -152,6 +152,7 @@
             this.BtnParkingSpace.TabIndex = 6;
             this.BtnParkingSpace.Text = "Espacios de parqueo";
             this.BtnParkingSpace.UseVisualStyleBackColor = false;
+            this.BtnParkingSpace.Click += new System.EventHandler(this.BtnParkingSpace_Click);
             // 
             // label1
             // 
@@ -275,7 +276,7 @@
             this.BtnRoles.BackColor = System.Drawing.Color.Teal;
             this.BtnRoles.ForeColor = System.Drawing.Color.White;
             this.BtnRoles.Name = "BtnRoles";
-            this.BtnRoles.Size = new System.Drawing.Size(270, 34);
+            this.BtnRoles.Size = new System.Drawing.Size(187, 34);
             this.BtnRoles.Text = "Roles";
             this.BtnRoles.Click += new System.EventHandler(this.BtnRoles_Click);
             // 
@@ -284,7 +285,7 @@
             this.BtnPermissions.BackColor = System.Drawing.Color.Teal;
             this.BtnPermissions.ForeColor = System.Drawing.Color.White;
             this.BtnPermissions.Name = "BtnPermissions";
-            this.BtnPermissions.Size = new System.Drawing.Size(270, 34);
+            this.BtnPermissions.Size = new System.Drawing.Size(187, 34);
             this.BtnPermissions.Text = "Permisos";
             this.BtnPermissions.Click += new System.EventHandler(this.BtnPermissions_Click);
             // 
@@ -293,7 +294,7 @@
             this.BtnUsers.BackColor = System.Drawing.Color.Teal;
             this.BtnUsers.ForeColor = System.Drawing.Color.White;
             this.BtnUsers.Name = "BtnUsers";
-            this.BtnUsers.Size = new System.Drawing.Size(270, 34);
+            this.BtnUsers.Size = new System.Drawing.Size(187, 34);
             this.BtnUsers.Text = "Usuarios";
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click_1);
             // 

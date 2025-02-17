@@ -37,6 +37,7 @@ namespace parking.Controllers
                     {
                         Config.User.userName = username;
                         Config.User.roleId = lst.ROLE_ID;
+                        Config.User.userId= lst.USER_CODE;
 
                         result = true;
                     }

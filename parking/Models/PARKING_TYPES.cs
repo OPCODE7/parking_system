@@ -14,10 +14,19 @@ namespace parking.Models
     
     public partial class PARKING_TYPES
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PARKING_TYPES()
+        {
+            this.PARKING_SPACE = new HashSet<PARKING_SPACE>();
+        }
+    
         public string PARKING_TYPE_CODE { get; set; }
         public string DESCRIPTION_PARKING_TYPE { get; set; }
         public decimal PARKING_TYPE_PRICE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PARKING_SPACE> PARKING_SPACE { get; set; }
     }
 }

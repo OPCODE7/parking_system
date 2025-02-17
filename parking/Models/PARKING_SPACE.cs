@@ -16,10 +16,12 @@ namespace parking.Models
     {
         public string PARKING_SPACE_CODE { get; set; }
         public int PARKING_SPACE_NUMBER { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
-        public string VEHICLE_TYPE_CODE { get; set; }
-        public Nullable<bool> STATE { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public bool STATE { get; set; }
+        public string USER_CODE { get; set; }
+        public bool DEL { get; set; }
+        public string PARKING_TYPE_CODE { get; set; }
     
-        public virtual VEHICLE_TYPE VEHICLE_TYPE { get; set; }
+        public virtual PARKING_TYPES PARKING_TYPES { get; set; }
     }
 }

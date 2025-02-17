@@ -91,10 +91,12 @@
     </Key>
     <Property Name="PARKING_SPACE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PARKING_SPACE_NUMBER" Type="Int32" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
-    <Property Name="VEHICLE_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="STATE" Type="Boolean" />
-    <NavigationProperty Name="VEHICLE_TYPE" Relationship="Self.FK_VEHICLE_SPACE" FromRole="PARKING_SPACE" ToRole="VEHICLE_TYPE" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
+    <Property Name="STATE" Type="Boolean" Nullable="false" />
+    <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DEL" Type="Boolean" Nullable="false" />
+    <Property Name="PARKING_TYPE_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PARKING_TYPES" Relationship="PARKINGModel.FK__PARKING_S__PARKI__6E8B6712" FromRole="PARKING_SPACE" ToRole="PARKING_TYPES" />
   </EntityType>
   <EntityType Name="PARKING_TYPES">
     <Key>
@@ -105,6 +107,7 @@
     <Property Name="PARKING_TYPE_PRICE" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
     <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PARKING_SPACE" Relationship="PARKINGModel.FK__PARKING_S__PARKI__6E8B6712" FromRole="PARKING_TYPES" ToRole="PARKING_SPACE" />
   </EntityType>
   <EntityType Name="ROLE_PERMISSIONS">
     <Key>
@@ -176,15 +179,6 @@
     <NavigationProperty Name="EMPLOYEE_USER" Relationship="Self.FK_USER" FromRole="USERS" ToRole="EMPLOYEE_USER" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
   </EntityType>
-  <EntityType Name="VEHICLE_TYPE">
-    <Key>
-      <PropertyRef Name="VEHICLE_TYPE_CODE" />
-    </Key>
-    <Property Name="VEHICLE_TYPE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="DESCRIPTION_VEHICLE_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
-    <NavigationProperty Name="PARKING_SPACE" Relationship="Self.FK_VEHICLE_SPACE" FromRole="VEHICLE_TYPE" ToRole="PARKING_SPACE" />
-  </EntityType>
   <Association Name="FK_EMPLOYEE">
     <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
     <End Role="EMPLOYEE_USER" Type="Self.EMPLOYEE_USER" Multiplicity="*" />
@@ -245,18 +239,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_VEHICLE_SPACE">
-    <End Role="VEHICLE_TYPE" Type="Self.VEHICLE_TYPE" Multiplicity="1" />
-    <End Role="PARKING_SPACE" Type="Self.PARKING_SPACE" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VEHICLE_TYPE">
-        <PropertyRef Name="VEHICLE_TYPE_CODE" />
-      </Principal>
-      <Dependent Role="PARKING_SPACE">
-        <PropertyRef Name="VEHICLE_TYPE_CODE" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PERMISSION_ID">
     <End Role="USER_PERMISSIONS" Type="Self.USER_PERMISSIONS" Multiplicity="1" />
     <End Role="ROLE_PERMISSIONS" Type="Self.ROLE_PERMISSIONS" Multiplicity="*" />
@@ -309,7 +291,6 @@
     <EntitySet Name="USER_PERMISSIONS" EntityType="Self.USER_PERMISSIONS" />
     <EntitySet Name="USER_ROLES" EntityType="Self.USER_ROLES" />
     <EntitySet Name="USERS" EntityType="Self.USERS" />
-    <EntitySet Name="VEHICLE_TYPE" EntityType="Self.VEHICLE_TYPE" />
     <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
       <End Role="EMPLOYEE_USER" EntitySet="EMPLOYEE_USER" />
@@ -330,10 +311,6 @@
       <End Role="JOB_POSITIONS" EntitySet="JOB_POSITIONS" />
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
     </AssociationSet>
-    <AssociationSet Name="FK_VEHICLE_SPACE" Association="Self.FK_VEHICLE_SPACE">
-      <End Role="VEHICLE_TYPE" EntitySet="VEHICLE_TYPE" />
-      <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
-    </AssociationSet>
     <AssociationSet Name="FK_PERMISSION_ID" Association="Self.FK_PERMISSION_ID">
       <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
       <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
@@ -346,5 +323,21 @@
       <End Role="USER_ROLES" EntitySet="USER_ROLES" />
       <End Role="USERS" EntitySet="USERS" />
     </AssociationSet>
+    <AssociationSet Name="FK__PARKING_S__PARKI__6E8B6712" Association="PARKINGModel.FK__PARKING_S__PARKI__6E8B6712">
+      <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
+      <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK__PARKING_S__PARKI__6E8B6712">
+    <End Type="PARKINGModel.PARKING_TYPES" Role="PARKING_TYPES" Multiplicity="1" />
+    <End Type="PARKINGModel.PARKING_SPACE" Role="PARKING_SPACE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARKING_TYPES">
+        <PropertyRef Name="PARKING_TYPE_CODE" />
+      </Principal>
+      <Dependent Role="PARKING_SPACE">
+        <PropertyRef Name="PARKING_TYPE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

@@ -88,10 +88,12 @@
     <EntitySetMapping Name="PARKING_SPACE">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_SPACE">
         <MappingFragment StoreEntitySet="PARKING_SPACE">
+          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
           <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="VEHICLE_TYPE_CODE" ColumnName="VEHICLE_TYPE_CODE" />
           <ScalarProperty Name="STATE" ColumnName="STATE" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -172,15 +174,6 @@
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="USER_STATE" ColumnName="USER_STATE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="VEHICLE_TYPE">
-      <EntityTypeMapping TypeName="PARKINGModel.VEHICLE_TYPE">
-        <MappingFragment StoreEntitySet="VEHICLE_TYPE">
-          <ScalarProperty Name="VEHICLE_TYPE_CODE" ColumnName="VEHICLE_TYPE_CODE" />
-          <ScalarProperty Name="DESCRIPTION_VEHICLE_TYPE" ColumnName="DESCRIPTION_VEHICLE_TYPE" />
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

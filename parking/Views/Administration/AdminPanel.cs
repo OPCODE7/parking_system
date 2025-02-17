@@ -102,5 +102,16 @@ namespace parking.Views.Administration
             frmParkingTypes.Show();
 
         }
+
+        private void BtnParkingSpace_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmParkingSpace frmParkingSpace = new FrmParkingSpace();
+            frmParkingSpace.MdiParent = this;
+            frmParkingSpace.Show();
+
+        }
     }
 }
