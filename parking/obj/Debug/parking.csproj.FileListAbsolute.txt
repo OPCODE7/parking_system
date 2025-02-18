@@ -22,3 +22,4 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.ParkingStructure.FrmParkingTypes.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.ParkingStructure.FrmParkingSpace.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.ParkingStructure.FrmParkingFee.resources

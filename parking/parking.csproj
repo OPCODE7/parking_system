@@ -80,6 +80,7 @@
     <Compile Include="Controllers\EmployeeUserController.cs" />
     <Compile Include="Controllers\HoraryController.cs" />
     <Compile Include="Controllers\JobPositionController.cs" />
+    <Compile Include="Controllers\ParkingFeeController.cs" />
     <Compile Include="Controllers\ParkingSpaceController.cs" />
     <Compile Include="Controllers\ParkingTypeController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
@@ -123,6 +124,9 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LOGBOOK_APP.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARKING_FEE.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PARKING_SPACE.cs">
@@ -175,6 +179,12 @@
     </Compile>
     <Compile Include="Views\Administration\Employees\FrmHorary.Designer.cs">
       <DependentUpon>FrmHorary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\ParkingStructure\FrmParkingFee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\ParkingStructure\FrmParkingFee.Designer.cs">
+      <DependentUpon>FrmParkingFee.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Administration\ParkingStructure\FrmParkingSpace.cs">
       <SubType>Form</SubType>
@@ -233,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Employees\FrmJobPositions.resx">
       <DependentUpon>FrmJobPositions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\ParkingStructure\FrmParkingFee.resx">
+      <DependentUpon>FrmParkingFee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\ParkingStructure\FrmParkingSpace.resx">
       <DependentUpon>FrmParkingSpace.cs</DependentUpon>

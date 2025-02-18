@@ -18,6 +18,7 @@ namespace parking.Models
         public USERS()
         {
             this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
+            this.PARKING_FEE = new HashSet<PARKING_FEE>();
         }
     
         public string USER_CODE { get; set; }
@@ -31,5 +32,7 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         public virtual USER_ROLES USER_ROLES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PARKING_FEE> PARKING_FEE { get; set; }
     }
 }

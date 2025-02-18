@@ -236,6 +236,7 @@
             this.BtnParkingFee.Name = "BtnParkingFee";
             this.BtnParkingFee.Size = new System.Drawing.Size(93, 36);
             this.BtnParkingFee.Text = "Tarifas";
+            this.BtnParkingFee.Click += new System.EventHandler(this.BtnParkingFee_Click);
             // 
             // toolStripSeparator2
             // 

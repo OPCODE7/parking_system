@@ -108,6 +108,7 @@
     <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PARKING_SPACE" Relationship="PARKINGModel.FK__PARKING_S__PARKI__6E8B6712" FromRole="PARKING_TYPES" ToRole="PARKING_SPACE" />
+    <NavigationProperty Name="PARKING_FEE" Relationship="PARKINGModel.FK_PARKING_TYPE" FromRole="PARKING_TYPES" ToRole="PARKING_FEE" />
   </EntityType>
   <EntityType Name="ROLE_PERMISSIONS">
     <Key>
@@ -178,6 +179,7 @@
     <Property Name="USER_STATE" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="EMPLOYEE_USER" Relationship="Self.FK_USER" FromRole="USERS" ToRole="EMPLOYEE_USER" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
+    <NavigationProperty Name="PARKING_FEE" Relationship="PARKINGModel.FK__PARKING_F__USER___0B27A5C0" FromRole="USERS" ToRole="PARKING_FEE" />
   </EntityType>
   <Association Name="FK_EMPLOYEE">
     <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
@@ -327,6 +329,15 @@
       <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
       <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
     </AssociationSet>
+    <EntitySet Name="PARKING_FEE" EntityType="PARKINGModel.PARKING_FEE" />
+    <AssociationSet Name="FK_PARKING_TYPE" Association="PARKINGModel.FK_PARKING_TYPE">
+      <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
+      <End Role="PARKING_FEE" EntitySet="PARKING_FEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PARKING_F__USER___0B27A5C0" Association="PARKINGModel.FK__PARKING_F__USER___0B27A5C0">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PARKING_FEE" EntitySet="PARKING_FEE" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK__PARKING_S__PARKI__6E8B6712">
     <End Type="PARKINGModel.PARKING_TYPES" Role="PARKING_TYPES" Multiplicity="1" />
@@ -337,6 +348,43 @@
       </Principal>
       <Dependent Role="PARKING_SPACE">
         <PropertyRef Name="PARKING_TYPE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PARKING_FEE">
+    <Key>
+      <PropertyRef Name="PARKING_FEE_CODE" />
+    </Key>
+    <Property Name="PARKING_FEE_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="PRICE_FOR_HOUR" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="PARKING_TYPE_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PARKING_TYPES" Relationship="PARKINGModel.FK_PARKING_TYPE" FromRole="PARKING_FEE" ToRole="PARKING_TYPES" />
+    <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__PARKING_F__USER___0B27A5C0" FromRole="PARKING_FEE" ToRole="USERS" />
+  </EntityType>
+  <Association Name="FK_PARKING_TYPE">
+    <End Type="PARKINGModel.PARKING_TYPES" Role="PARKING_TYPES" Multiplicity="1" />
+    <End Type="PARKINGModel.PARKING_FEE" Role="PARKING_FEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARKING_TYPES">
+        <PropertyRef Name="PARKING_TYPE_CODE" />
+      </Principal>
+      <Dependent Role="PARKING_FEE">
+        <PropertyRef Name="PARKING_TYPE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PARKING_F__USER___0B27A5C0">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+    <End Type="PARKINGModel.PARKING_FEE" Role="PARKING_FEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="PARKING_FEE">
+        <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

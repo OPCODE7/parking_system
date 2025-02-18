@@ -29,6 +29,9 @@
         <AssociationConnector Association="PARKINGModel.FK_ROLE_ID" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_USER_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK__PARKING_S__PARKI__6E8B6712" />
+        <EntityTypeShape EntityType="PARKINGModel.PARKING_FEE" Width="1.5" PointX="13" PointY="8.625" />
+        <AssociationConnector Association="PARKINGModel.FK_PARKING_TYPE" />
+        <AssociationConnector Association="PARKINGModel.FK__PARKING_F__USER___0B27A5C0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

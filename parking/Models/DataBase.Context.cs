@@ -40,5 +40,6 @@ namespace parking.Models
         public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
+        public virtual DbSet<PARKING_FEE> PARKING_FEE { get; set; }
     }
 }

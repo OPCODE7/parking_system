@@ -113,5 +113,16 @@ namespace parking.Views.Administration
             frmParkingSpace.Show();
 
         }
+
+        private void BtnParkingFee_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmParkingFee frmParkingFee = new FrmParkingFee();
+            frmParkingFee.MdiParent = this;
+            frmParkingFee.Show();
+
+        }
     }
 }
