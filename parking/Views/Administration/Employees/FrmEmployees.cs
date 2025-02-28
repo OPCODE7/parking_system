@@ -240,8 +240,8 @@ namespace parking.Views.Administration.Employees
         private int validateData()
         {
             int error = 0;
-            string onlyLetters = "^[a-zA-Z\\s]+$";
             string lettersNumbers = "^[a-zA-Z0-9\\s]+$";
+            string onlyLetters = "^[a-zA-Z\\s]+$";
             string address= "^[a-zA-Z0-9,.\\s]+$";
             string emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
 

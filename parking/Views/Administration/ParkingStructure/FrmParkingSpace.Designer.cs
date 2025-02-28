@@ -42,6 +42,11 @@
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.TxtNumberSpace = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ChkState = new System.Windows.Forms.CheckBox();
+            this.CmbParkingFee = new System.Windows.Forms.ComboBox();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,16 +54,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvParkingTypes = new System.Windows.Forms.DataGridView();
-            this.TxtNumberSpace = new System.Windows.Forms.TextBox();
-            this.TxtParkingSpaceCode = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.ChkState = new System.Windows.Forms.CheckBox();
-            this.CmbParkingTypes = new System.Windows.Forms.ComboBox();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NÚMERO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TxtPrice = new System.Windows.Forms.TextBox();
+            this.TxtParkingSpaceCode = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -176,19 +178,74 @@
             this.BtnCancel.Text = "Cancelar";
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.label5.Location = new System.Drawing.Point(177, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(86, 22);
+            this.label5.TabIndex = 147;
+            this.label5.Text = "Numero:";
+            // 
+            // TxtNumberSpace
+            // 
+            this.TxtNumberSpace.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtNumberSpace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtNumberSpace.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtNumberSpace.Location = new System.Drawing.Point(181, 104);
+            this.TxtNumberSpace.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtNumberSpace.Multiline = true;
+            this.TxtNumberSpace.Name = "TxtNumberSpace";
+            this.TxtNumberSpace.Size = new System.Drawing.Size(170, 30);
+            this.TxtNumberSpace.TabIndex = 146;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.label4.Location = new System.Drawing.Point(14, 148);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(281, 22);
+            this.label4.TabIndex = 145;
+            this.label4.Text = "Seleccionar tarifa de parqueo:";
+            // 
+            // ChkState
+            // 
+            this.ChkState.AutoSize = true;
+            this.ChkState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.ChkState.Location = new System.Drawing.Point(387, 110);
+            this.ChkState.Name = "ChkState";
+            this.ChkState.Size = new System.Drawing.Size(100, 24);
+            this.ChkState.TabIndex = 144;
+            this.ChkState.Text = "Ocupado";
+            this.ChkState.UseVisualStyleBackColor = true;
+            // 
+            // CmbParkingFee
+            // 
+            this.CmbParkingFee.BackColor = System.Drawing.SystemColors.Control;
+            this.CmbParkingFee.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.CmbParkingFee.FormattingEnabled = true;
+            this.CmbParkingFee.Location = new System.Drawing.Point(17, 179);
+            this.CmbParkingFee.Name = "CmbParkingFee";
+            this.CmbParkingFee.Size = new System.Drawing.Size(278, 28);
+            this.CmbParkingFee.TabIndex = 143;
+            this.CmbParkingFee.TextChanged += new System.EventHandler(this.CmbParkingFee_TextChanged);
+            // 
             // PbxSearch
             // 
             this.PbxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(503, 216);
+            this.PbxSearch.Location = new System.Drawing.Point(506, 219);
             this.PbxSearch.Name = "PbxSearch";
             this.PbxSearch.Size = new System.Drawing.Size(31, 30);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PbxSearch.TabIndex = 109;
+            this.PbxSearch.TabIndex = 142;
             this.PbxSearch.TabStop = false;
-            this.PbxSearch.Click += new System.EventHandler(this.PbxSearch_Click);
             // 
             // PbxCancel
             // 
@@ -196,23 +253,22 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(546, 216);
+            this.PbxCancel.Location = new System.Drawing.Point(549, 219);
             this.PbxCancel.Name = "PbxCancel";
             this.PbxCancel.Size = new System.Drawing.Size(31, 30);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PbxCancel.TabIndex = 108;
+            this.PbxCancel.TabIndex = 141;
             this.PbxCancel.TabStop = false;
-            this.PbxCancel.Click += new System.EventHandler(this.PbxCancel_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label6.Location = new System.Drawing.Point(11, 218);
+            this.label6.Location = new System.Drawing.Point(14, 221);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(74, 22);
-            this.label6.TabIndex = 107;
+            this.label6.TabIndex = 140;
             this.label6.Text = "Buscar:";
             // 
             // TxtSearch
@@ -220,33 +276,32 @@
             this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtSearch.Location = new System.Drawing.Point(96, 217);
+            this.TxtSearch.Location = new System.Drawing.Point(99, 220);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearch.Name = "TxtSearch";
             this.TxtSearch.Size = new System.Drawing.Size(388, 26);
-            this.TxtSearch.TabIndex = 101;
-            this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
+            this.TxtSearch.TabIndex = 135;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label2.Location = new System.Drawing.Point(172, 70);
+            this.label2.Location = new System.Drawing.Point(313, 146);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 22);
-            this.label2.TabIndex = 105;
-            this.label2.Text = "Número:";
+            this.label2.Size = new System.Drawing.Size(66, 22);
+            this.label2.TabIndex = 139;
+            this.label2.Text = "Costo:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label1.Location = new System.Drawing.Point(9, 69);
+            this.label1.Location = new System.Drawing.Point(11, 73);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(81, 22);
-            this.label1.TabIndex = 104;
+            this.label1.TabIndex = 138;
             this.label1.Text = "Código:";
             // 
             // DgvParkingTypes
@@ -276,7 +331,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DgvParkingTypes.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvParkingTypes.Location = new System.Drawing.Point(12, 262);
+            this.DgvParkingTypes.Location = new System.Drawing.Point(15, 265);
             this.DgvParkingTypes.Name = "DgvParkingTypes";
             this.DgvParkingTypes.ReadOnly = true;
             this.DgvParkingTypes.RowHeadersVisible = false;
@@ -284,65 +339,8 @@
             this.DgvParkingTypes.RowTemplate.Height = 28;
             this.DgvParkingTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvParkingTypes.Size = new System.Drawing.Size(568, 305);
-            this.DgvParkingTypes.TabIndex = 103;
+            this.DgvParkingTypes.TabIndex = 137;
             this.DgvParkingTypes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvParkingTypes_CellDoubleClick);
-            // 
-            // TxtNumberSpace
-            // 
-            this.TxtNumberSpace.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtNumberSpace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtNumberSpace.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtNumberSpace.Location = new System.Drawing.Point(176, 100);
-            this.TxtNumberSpace.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtNumberSpace.Multiline = true;
-            this.TxtNumberSpace.Name = "TxtNumberSpace";
-            this.TxtNumberSpace.Size = new System.Drawing.Size(170, 30);
-            this.TxtNumberSpace.TabIndex = 99;
-            // 
-            // TxtParkingSpaceCode
-            // 
-            this.TxtParkingSpaceCode.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingSpaceCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingSpaceCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingSpaceCode.Location = new System.Drawing.Point(13, 100);
-            this.TxtParkingSpaceCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingSpaceCode.Multiline = true;
-            this.TxtParkingSpaceCode.Name = "TxtParkingSpaceCode";
-            this.TxtParkingSpaceCode.ReadOnly = true;
-            this.TxtParkingSpaceCode.Size = new System.Drawing.Size(139, 30);
-            this.TxtParkingSpaceCode.TabIndex = 102;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label4.Location = new System.Drawing.Point(12, 144);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(270, 22);
-            this.label4.TabIndex = 114;
-            this.label4.Text = "Seleccionar tipo de parqueo:";
-            // 
-            // ChkState
-            // 
-            this.ChkState.AutoSize = true;
-            this.ChkState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.ChkState.Location = new System.Drawing.Point(384, 106);
-            this.ChkState.Name = "ChkState";
-            this.ChkState.Size = new System.Drawing.Size(100, 24);
-            this.ChkState.TabIndex = 113;
-            this.ChkState.Text = "Ocupado";
-            this.ChkState.UseVisualStyleBackColor = true;
-            // 
-            // CmbParkingTypes
-            // 
-            this.CmbParkingTypes.BackColor = System.Drawing.SystemColors.Control;
-            this.CmbParkingTypes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.CmbParkingTypes.FormattingEnabled = true;
-            this.CmbParkingTypes.Location = new System.Drawing.Point(15, 175);
-            this.CmbParkingTypes.Name = "CmbParkingTypes";
-            this.CmbParkingTypes.Size = new System.Drawing.Size(469, 28);
-            this.CmbParkingTypes.TabIndex = 112;
             // 
             // ID
             // 
@@ -358,6 +356,7 @@
             this.NÚMERO.MinimumWidth = 8;
             this.NÚMERO.Name = "NÚMERO";
             this.NÚMERO.ReadOnly = true;
+            this.NÚMERO.Width = 150;
             // 
             // TIPO_PARQUEO
             // 
@@ -373,6 +372,7 @@
             this.ESTADO.MinimumWidth = 8;
             this.ESTADO.Name = "ESTADO";
             this.ESTADO.ReadOnly = true;
+            this.ESTADO.Width = 150;
             // 
             // REGISTRO
             // 
@@ -380,17 +380,46 @@
             this.REGISTRO.MinimumWidth = 8;
             this.REGISTRO.Name = "REGISTRO";
             this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 150;
+            // 
+            // TxtPrice
+            // 
+            this.TxtPrice.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtPrice.Enabled = false;
+            this.TxtPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtPrice.Location = new System.Drawing.Point(317, 176);
+            this.TxtPrice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtPrice.Multiline = true;
+            this.TxtPrice.Name = "TxtPrice";
+            this.TxtPrice.ReadOnly = true;
+            this.TxtPrice.Size = new System.Drawing.Size(170, 30);
+            this.TxtPrice.TabIndex = 134;
+            // 
+            // TxtParkingSpaceCode
+            // 
+            this.TxtParkingSpaceCode.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtParkingSpaceCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtParkingSpaceCode.Enabled = false;
+            this.TxtParkingSpaceCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtParkingSpaceCode.Location = new System.Drawing.Point(15, 104);
+            this.TxtParkingSpaceCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtParkingSpaceCode.Multiline = true;
+            this.TxtParkingSpaceCode.Name = "TxtParkingSpaceCode";
+            this.TxtParkingSpaceCode.ReadOnly = true;
+            this.TxtParkingSpaceCode.Size = new System.Drawing.Size(139, 30);
+            this.TxtParkingSpaceCode.TabIndex = 136;
             // 
             // FrmParkingSpace
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(593, 579);
+            this.ClientSize = new System.Drawing.Size(593, 586);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.TxtNumberSpace);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ChkState);
-            this.Controls.Add(this.CmbParkingTypes);
-            this.Controls.Add(this.PbxClose);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.CmbParkingFee);
             this.Controls.Add(this.PbxSearch);
             this.Controls.Add(this.PbxCancel);
             this.Controls.Add(this.label6);
@@ -398,8 +427,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DgvParkingTypes);
-            this.Controls.Add(this.TxtNumberSpace);
+            this.Controls.Add(this.TxtPrice);
             this.Controls.Add(this.TxtParkingSpaceCode);
+            this.Controls.Add(this.PbxClose);
+            this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmParkingSpace";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -429,6 +460,11 @@
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton BtnCancel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox TxtNumberSpace;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox ChkState;
+        private System.Windows.Forms.ComboBox CmbParkingFee;
         private System.Windows.Forms.PictureBox PbxSearch;
         private System.Windows.Forms.PictureBox PbxCancel;
         private System.Windows.Forms.Label label6;
@@ -436,15 +472,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView DgvParkingTypes;
-        private System.Windows.Forms.TextBox TxtNumberSpace;
-        private System.Windows.Forms.TextBox TxtParkingSpaceCode;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox ChkState;
-        private System.Windows.Forms.ComboBox CmbParkingTypes;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn NÚMERO;
         private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
         private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.TextBox TxtPrice;
+        private System.Windows.Forms.TextBox TxtParkingSpaceCode;
     }
 }

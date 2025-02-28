@@ -14,6 +14,12 @@ namespace parking.Models
     
     public partial class PARKING_FEE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PARKING_FEE()
+        {
+            this.PARKING_SPACE = new HashSet<PARKING_SPACE>();
+        }
+    
         public string PARKING_FEE_CODE { get; set; }
         public decimal PRICE_FOR_HOUR { get; set; }
         public string PARKING_TYPE_CODE { get; set; }
@@ -21,7 +27,9 @@ namespace parking.Models
         public bool IS_DEL { get; set; }
         public string USER_CODE { get; set; }
     
-        public virtual PARKING_TYPES PARKING_TYPES { get; set; }
         public virtual USERS USERS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PARKING_SPACE> PARKING_SPACE { get; set; }
+        public virtual PARKING_TYPES PARKING_TYPES { get; set; }
     }
 }

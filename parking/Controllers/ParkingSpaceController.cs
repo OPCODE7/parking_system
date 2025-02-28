@@ -28,7 +28,8 @@ namespace parking.Controllers
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
                     var query = from ps in db.PARKING_SPACE
-                                join pt in db.PARKING_TYPES on ps.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
+                                join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE 
+                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
                                 select new
                                 {
                                     ps.PARKING_SPACE_CODE,
@@ -51,15 +52,56 @@ namespace parking.Controllers
 
             return parkingSpaces;
         }
-
-        public PARKING_SPACE getParkingSpace(string id)
+        public IEnumerable<dynamic> getParkingSpacesByParkingType(string parkingType)
         {
-            PARKING_SPACE ps = new PARKING_SPACE();
+            IEnumerable<dynamic> parkingSpaces = new List<PARKING_SPACE>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    ps = db.PARKING_SPACE.Find(id);
+                    var query = from ps in db.PARKING_SPACE
+                                join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
+                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE where pt.PARKING_TYPE_CODE == parkingType where ps.DEL == false
+                                select new
+                                {
+                                    ps.PARKING_SPACE_CODE,
+                                    ps.PARKING_SPACE_NUMBER,
+                                    IS_DEL = ps.DEL
+                                };
+                    parkingSpaces = query.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.ToString());
+            }
+
+            return parkingSpaces;
+        }
+
+
+        public dynamic getParkingSpace(string id)
+        {
+            dynamic psp = new PARKING_SPACE();
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    var query= from ps in db.PARKING_SPACE join
+                               pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
+                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
+                                 where ps.PARKING_SPACE_CODE == id
+                                 select new
+                                 {
+                                      ps.PARKING_SPACE_CODE,
+                                      ps.PARKING_SPACE_NUMBER,
+                                      ps.PARKING_FEE_CODE,
+                                      pf.PRICE_FOR_HOUR,
+                                      ps.STATE,
+                                      ps.INSERTED_AT,
+                                      pt.DESCRIPTION_PARKING_TYPE,
+                                      pt.PARKING_TYPE_CODE,
+                                 };
 
                 }
 
@@ -69,7 +111,7 @@ namespace parking.Controllers
                 h.MsgError(ex.ToString());
             }
 
-            return ps;
+            return psp;
         }
 
         public int saveParkingSpace(PARKING_SPACE ps)

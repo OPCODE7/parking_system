@@ -14,6 +14,12 @@ namespace parking.Models
     
     public partial class CLIENTS
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CLIENTS()
+        {
+            this.CHECK_IN = new HashSet<CHECK_IN>();
+        }
+    
         public string CLIENT_CODE { get; set; }
         public string CLIENT_DNI { get; set; }
         public string CLIENT_NAME { get; set; }
@@ -21,6 +27,12 @@ namespace parking.Models
         public string CLIENT_ADDRESS { get; set; }
         public string CLIENT_PHONE { get; set; }
         public string CLIENT_EMAIL { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public string USER_ID { get; set; }
+        public bool IS_DEL { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECK_IN> CHECK_IN { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

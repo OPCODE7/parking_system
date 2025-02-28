@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="Config\Env.cs" />
     <Compile Include="Config\User.cs" />
+    <Compile Include="Controllers\CheckInController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CorrelativesController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployeeUserController.cs" />
@@ -88,6 +90,15 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
+    <Compile Include="Models\BILL.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHECK_IN.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHECK_OUT.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CLIENTS.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -141,6 +152,12 @@
     <Compile Include="Models\SALARIES.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -162,6 +179,18 @@
     <Compile Include="Views\Administration\AdminPanel.Designer.cs">
       <DependentUpon>AdminPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Administration\Clients\FrmClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Clients\FrmClient.Designer.cs">
+      <DependentUpon>FrmClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Clients\FrmSearchClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Clients\FrmSearchClient.Designer.cs">
+      <DependentUpon>FrmSearchClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Administration\Employees\FrmEmployees.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +208,12 @@
     </Compile>
     <Compile Include="Views\Administration\Employees\FrmHorary.Designer.cs">
       <DependentUpon>FrmHorary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\ParkingStructure\FrmCheckIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\ParkingStructure\FrmCheckIn.Designer.cs">
+      <DependentUpon>FrmCheckIn.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Administration\ParkingStructure\FrmParkingFee.cs">
       <SubType>Form</SubType>
@@ -235,6 +270,12 @@
     <EmbeddedResource Include="Views\Administration\AdminPanel.resx">
       <DependentUpon>AdminPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Clients\FrmClient.resx">
+      <DependentUpon>FrmClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Clients\FrmSearchClient.resx">
+      <DependentUpon>FrmSearchClient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Employees\FrmEmployees.resx">
       <DependentUpon>FrmEmployees.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Employees\FrmJobPositions.resx">
       <DependentUpon>FrmJobPositions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\ParkingStructure\FrmCheckIn.resx">
+      <DependentUpon>FrmCheckIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\ParkingStructure\FrmParkingFee.resx">
       <DependentUpon>FrmParkingFee.cs</DependentUpon>
@@ -291,8 +335,8 @@
     <Content Include="Assets\Icons\config-16px.png" />
     <Content Include="Models\DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataBase.edmx</DependentUpon>
       <LastGenOutput>DataBase.Context.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
     </Content>
     <Content Include="Models\DataBase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

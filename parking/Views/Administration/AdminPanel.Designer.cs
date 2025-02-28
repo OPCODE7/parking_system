@@ -36,7 +36,6 @@
             this.BtnJobPositions = new System.Windows.Forms.Button();
             this.BtnParkingType = new System.Windows.Forms.Button();
             this.BtnParkingSpace = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
@@ -46,11 +45,15 @@
             this.BtnParkingFee = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCheckIn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnCheckout = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnRoles = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnPermissions = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnClients = new System.Windows.Forms.Button();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
@@ -66,7 +69,7 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnJobPositions);
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingType);
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingSpace);
-            this.PnlAdminSideBar.Controls.Add(this.label1);
+            this.PnlAdminSideBar.Controls.Add(this.BtnClients);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.PnlAdminSideBar.Location = new System.Drawing.Point(0, 0);
             this.PnlAdminSideBar.Name = "PnlAdminSideBar";
@@ -154,17 +157,6 @@
             this.BtnParkingSpace.UseVisualStyleBackColor = false;
             this.BtnParkingSpace.Click += new System.EventHandler(this.BtnParkingSpace_Click);
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(3, 646);
-            this.label1.Margin = new System.Windows.Forms.Padding(3, 220, 3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "label1";
-            // 
             // PbxClose
             // 
             this.PbxClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -191,8 +183,11 @@
             this.BtnParkingFee,
             this.toolStripSeparator2,
             this.BtnCheckIn,
+            this.toolStripSeparator5,
+            this.BtnCheckout,
             this.toolStripSeparator3,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.toolStripSeparator4});
             this.TstPrincipal.Location = new System.Drawing.Point(226, 0);
             this.TstPrincipal.Name = "TstPrincipal";
             this.TstPrincipal.Size = new System.Drawing.Size(904, 41);
@@ -252,6 +247,22 @@
             this.BtnCheckIn.Name = "BtnCheckIn";
             this.BtnCheckIn.Size = new System.Drawing.Size(121, 36);
             this.BtnCheckIn.Text = "Check-In";
+            this.BtnCheckIn.Click += new System.EventHandler(this.BtnCheckIn_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 41);
+            // 
+            // BtnCheckout
+            // 
+            this.BtnCheckout.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCheckout.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnCheckout.Image = ((System.Drawing.Image)(resources.GetObject("BtnCheckout.Image")));
+            this.BtnCheckout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnCheckout.Name = "BtnCheckout";
+            this.BtnCheckout.Size = new System.Drawing.Size(136, 36);
+            this.BtnCheckout.Text = "Check-Out";
             // 
             // toolStripSeparator3
             // 
@@ -299,6 +310,25 @@
             this.BtnUsers.Text = "Usuarios";
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click_1);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 41);
+            // 
+            // BtnClients
+            // 
+            this.BtnClients.BackColor = System.Drawing.Color.Teal;
+            this.BtnClients.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnClients.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnClients.Location = new System.Drawing.Point(3, 436);
+            this.BtnClients.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnClients.Name = "BtnClients";
+            this.BtnClients.Size = new System.Drawing.Size(211, 54);
+            this.BtnClients.TabIndex = 8;
+            this.BtnClients.Text = "Clientes";
+            this.BtnClients.UseVisualStyleBackColor = false;
+            this.BtnClients.Click += new System.EventHandler(this.BtnClients_Click);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -345,6 +375,9 @@
         private System.Windows.Forms.ToolStripMenuItem BtnRoles;
         private System.Windows.Forms.ToolStripMenuItem BtnPermissions;
         private System.Windows.Forms.ToolStripMenuItem BtnUsers;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton BtnCheckout;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.Button BtnClients;
     }
 }

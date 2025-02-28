@@ -124,5 +124,28 @@ namespace parking.Views.Administration
             frmParkingFee.Show();
 
         }
+
+        private void BtnCheckIn_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmCheckIn frmCheckIn = new FrmCheckIn();
+            frmCheckIn.MdiParent = this;
+            frmCheckIn.Show();
+        }
+
+        private void BtnClients_Click(object sender, EventArgs e)
+        {
+            
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            Clients.FrmClient frmClient = new Clients.FrmClient();
+            frmClient.MdiParent = this;
+            frmClient.Show();
+            
+
+        }
     }
 }

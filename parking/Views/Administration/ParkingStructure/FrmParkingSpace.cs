@@ -19,8 +19,8 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingSpaceController psc= new ParkingSpaceController();
         Helpers.Helpers h= new Helpers.Helpers();
         CorrelativesController correlativeController= new CorrelativesController();
-        ParkingTypeController parkingTypeController = new ParkingTypeController();
-        string psCode,parkingType,userId;
+        ParkingFeeController parkingFeeController= new ParkingFeeController();
+        string psCode,parkingFee,userId;
         int psNumber;
         bool psState;
         public FrmParkingSpace()
@@ -35,12 +35,12 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void FrmParkingSpace_Load(object sender, EventArgs e)
         {
-            fillCmbParkingTypes();
             startForm();
         }
 
         private void startForm()
         {
+            fillCmbParkingFee();
             getParkingSpaces("");
             BtnNew.Enabled = true;
             BtnEdit.Enabled = false;
@@ -55,9 +55,10 @@ namespace parking.Views.Administration.ParkingStructure
                 Txt.Enabled = false;
                 Txt.Clear();
             }
+            TxtPrice.Enabled = false;
 
-            CmbParkingTypes.Enabled = false;
-            CmbParkingTypes.SelectedIndex = -1;
+            CmbParkingFee.Enabled = false;
+            CmbParkingFee.SelectedIndex = -1;
 
             TxtSearch.Enabled = true;
             TxtSearch.Focus();
@@ -69,9 +70,10 @@ namespace parking.Views.Administration.ParkingStructure
             {
                 setValues();
                 PARKING_SPACE newPs= new PARKING_SPACE();
+               
                 newPs.PARKING_SPACE_CODE = psCode;
                 newPs.PARKING_SPACE_NUMBER = psNumber;
-                newPs.PARKING_TYPE_CODE = parkingType;
+                newPs.PARKING_FEE_CODE = parkingFee;
                 newPs.STATE = psState;
                 newPs.USER_CODE = userId;
                 newPs.INSERTED_AT = DateTime.Now;
@@ -92,7 +94,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             psCode= TxtParkingSpaceCode.Text;
             psNumber= Convert.ToInt32(h.SanitizeStr(TxtNumberSpace.Text.Trim()));
-            parkingType= CmbParkingTypes.SelectedValue.ToString();
+            parkingFee= CmbParkingFee.SelectedValue.ToString();
             psState = ChkState.Checked ? true : false;
             userId = Config.User.userId;
         }
@@ -102,9 +104,10 @@ namespace parking.Views.Administration.ParkingStructure
             BtnNew.Enabled = false;
             BtnSave.Enabled = true;
             BtnCancel.Enabled = true;
-            TxtNumberSpace.Enabled = true;
-            CmbParkingTypes.Enabled = true;
+            TxtPrice.Enabled = true;
+            CmbParkingFee.Enabled = true;
             ChkState.Enabled = true;
+            TxtNumberSpace.Enabled = true;
 
             TxtNumberSpace.Focus();
 
@@ -120,15 +123,15 @@ namespace parking.Views.Administration.ParkingStructure
             if (!Regex.Match(TxtNumberSpace.Text, onlyNumbers).Success) {
                 h.MsgError("Ingresar correctamente el número del espacio de parqueo. ¡Sólo números!");
                 error++;
-                TxtNumberSpace.Focus();
+                TxtPrice.Focus();
                 return error;
             }
 
-            if (CmbParkingTypes.SelectedValue == null)
+            if (CmbParkingFee.SelectedValue == null)
             {
                 h.MsgError("Seleccionar tipo de parqueo.");
                 error++; 
-                TxtNumberSpace.Focus();
+                TxtPrice.Focus();
                 return error;
 
             }
@@ -168,7 +171,7 @@ namespace parking.Views.Administration.ParkingStructure
                 {
                     setValues();
                     ps.PARKING_SPACE_NUMBER = psNumber;
-                    ps.PARKING_TYPE_CODE = parkingType;
+                    ps.PARKING_FEE_CODE = parkingFee;
                     ps.STATE = psState;
                     if (psc.updateParkingSpace(ps) > 0)
                     {
@@ -203,22 +206,38 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
+      
+
+        private void CmbParkingFee_TextChanged(object sender, EventArgs e)
+        {
+            if (CmbParkingFee.SelectedValue != null && CmbParkingFee.SelectedValue.GetType().ToString() == "System.String")
+            {
+                PARKING_FEE pf = parkingFeeController.getParkingFee(CmbParkingFee.SelectedValue.ToString());
+                if (pf != null) TxtPrice.Text = pf.PRICE_FOR_HOUR.ToString();
+            }
+        }
+
         private void DgvParkingTypes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            BtnNew.Enabled = false;
-            BtnEdit.Enabled = true;
-            BtnDelete.Enabled = true;
-            BtnCancel.Enabled = true;
-            BtnSave.Enabled = false;
-            TxtNumberSpace.Enabled = true;
-            CmbParkingTypes.Enabled = true;
-            ChkState.Enabled = true;
+            if (DgvParkingTypes.Rows.Count > 0) {
+                BtnNew.Enabled = false;
+                BtnEdit.Enabled = true;
+                BtnDelete.Enabled = true;
+                BtnCancel.Enabled = true;
+                BtnSave.Enabled = false;
+                CmbParkingFee.Enabled = true;
+                ChkState.Enabled = true;
+                TxtNumberSpace.Enabled = true;
 
-            PARKING_SPACE ps = psc.getParkingSpace(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
-            TxtParkingSpaceCode.Text = ps.PARKING_SPACE_CODE;
-            TxtNumberSpace.Text = ps.PARKING_SPACE_NUMBER.ToString();
-            CmbParkingTypes.SelectedValue = ps.PARKING_TYPE_CODE;
-            ChkState.Checked = (bool)ps.STATE;
+                dynamic ps = psc.getParkingSpace(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
+                TxtParkingSpaceCode.Text = ps.PARKING_SPACE_CODE;
+                TxtPrice.Text = ps.PARKING_SPACE_NUMBER.ToString();
+                CmbParkingFee.SelectedValue = ps.PARKING_FEE_CODE;
+                ChkState.Checked = (bool)ps.STATE;
+                TxtPrice.Text = ps.PRICE_FOR_NUMBER.ToString();
+                TxtNumberSpace.Focus();
+            }
+
         }
 
         private void getParkingSpaces(string searchFilter)
@@ -249,11 +268,11 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        public void fillCmbParkingTypes()
+        public void fillCmbParkingFee()
         {
-            CmbParkingTypes.DataSource = parkingTypeController.getParkingTypes("");
-            CmbParkingTypes.ValueMember = "PARKING_TYPE_CODE";
-            CmbParkingTypes.DisplayMember = "DESCRIPTION_PARKING_TYPE";
+            CmbParkingFee.DataSource = parkingFeeController.getParkingFees("").ToList();
+            CmbParkingFee.ValueMember = "PARKING_FEE_CODE";
+            CmbParkingFee.DisplayMember = "DESCRIPTION_PARKING_TYPE";
         }
     }
 }

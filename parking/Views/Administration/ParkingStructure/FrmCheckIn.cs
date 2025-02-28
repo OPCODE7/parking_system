@@ -1,0 +1,375 @@
+﻿using parking.Controllers;
+using parking.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace parking.Views.Administration.ParkingStructure
+{
+    public partial class FrmCheckIn : Form
+    {
+        Helpers.Helpers h= new Helpers.Helpers();
+        ParkingTypeController parkingTypeController = new ParkingTypeController();
+        ParkingFeeController parkingFeeController = new ParkingFeeController();
+        ParkingSpaceController parkingSpaceController = new ParkingSpaceController();
+        CorrelativesController correlativesController = new CorrelativesController();
+        CheckInController checkInController = new CheckInController();
+        string checkInCode, clientCode, observations,vehiclePlate, status,parkingSpaceCode;
+        public FrmCheckIn()
+        {
+            InitializeComponent();
+        }
+
+        private void FrmCheckIn_Load(object sender, EventArgs e)
+        {
+            startForm();
+        }
+
+        private void PbxClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void startForm()
+        {
+            fillCmbParkingFee();
+            getCheckIns();
+            BtnNew.Enabled = true;
+            BtnEdit.Enabled = false;
+            BtnDelete.Enabled = false;
+            BtnCancel.Enabled = false;
+            BtnSave.Enabled = false;
+            PbxSearchClient.Enabled = false;
+
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
+            {
+                Txt.Enabled = false;
+                Txt.Clear();
+            }
+
+            CmbParkingTypes.Enabled = false;
+            CmbParkingTypes.SelectedIndex = -1;
+            CmbParkingSpaces.Enabled = false;
+            CmbParkingSpaces.SelectedIndex = -1;
+
+            TxtSearch.Enabled = true;
+            TxtSearch.Focus();
+        }
+
+
+        private void fillCmbParkingFee()
+        {
+                CmbParkingTypes.DataSource = parkingFeeController.getParkingFees("").ToList();
+                CmbParkingTypes.ValueMember = "PARKING_FEE_CODE";
+                CmbParkingTypes.DisplayMember = "DESCRIPTION_PARKING_TYPE";
+        }
+
+        private void fillCmbParkingSpaces(string parkingType)
+        {
+            CmbParkingSpaces.DataSource = parkingSpaceController.getParkingSpacesByParkingType(parkingType).ToList();
+            CmbParkingSpaces.DisplayMember = "PARKING_SPACE_NUMBER";
+            CmbParkingSpaces.ValueMember = "PARKING_SPACE_CODE";
+
+        }
+
+        private void CmbParkingTypes_TextChanged(object sender, EventArgs e)
+        {
+            if (CmbParkingTypes.SelectedValue != null && CmbParkingTypes.SelectedValue.GetType().ToString() == "System.String")
+            {
+
+                PARKING_FEE pf = parkingFeeController.getParkingFee(CmbParkingTypes.SelectedValue.ToString());
+                if (pf != null) TxtPrice.Text = pf.PRICE_FOR_HOUR.ToString();
+
+                CmbParkingSpaces.Enabled = true;
+                fillCmbParkingSpaces(pf.PARKING_TYPE_CODE);
+            }
+
+        }
+
+        private void BtnNew_Click(object sender, EventArgs e)
+        {
+            BtnNew.Enabled = false;
+            BtnEdit.Enabled = false;
+            BtnDelete.Enabled = false;
+            BtnCancel.Enabled = true;
+            BtnSave.Enabled = true;
+            PbxSearchClient.Enabled = true;
+
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
+            {
+                Txt.Enabled = true;
+                Txt.Clear();
+            }
+
+            CmbParkingTypes.Enabled = true;
+            string newcode = "CIN" + correlativesController.getNextId("CIN");
+            TxtCheckInCode.Text = newcode;
+            TxtClientCode.Focus();
+
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            startForm();
+        }
+
+        private void PbxSearchClient_Click(object sender, EventArgs e)
+        {
+            Clients.FrmSearchClient frmSearchClient = new Clients.FrmSearchClient();
+            this.AddOwnedForm(frmSearchClient);
+            frmSearchClient.ShowDialog();
+        }
+        
+        public void getInfoClient(string clientCode)
+        {
+            ClientController clientController = new ClientController();
+            CLIENTS client = clientController.getClient(clientCode);
+            if (client != null)
+            {
+                TxtClientCode.Text = client.CLIENT_CODE;
+                TxtClientName.Text = client.CLIENT_NAME + " " + client.CLIENT_LASTNAME;
+                TxtClientPhone.Text = client.CLIENT_PHONE;
+            }
+            else
+            {
+                h.MsgInfo("Cliente no encontrado.");
+                TxtClientCode.Clear();
+                TxtClientName.Clear();
+                TxtClientPhone.Clear();
+                TxtClientCode.Focus();
+            
+            }
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode==Keys.Enter)
+            {
+                getCheckIns(TxtSearch.Text.Trim());
+            }
+        }
+
+        private void PbxCancel_Click(object sender, EventArgs e)
+        {
+            TxtSearch.Clear();
+            getCheckIns();
+        }
+
+        private void PbxSearch_Click(object sender, EventArgs e)
+        {
+            getCheckIns(TxtSearch.Text.Trim());
+        }
+
+        private void DgvCheckIns_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            BtnEdit.Enabled = true;
+            BtnDelete.Enabled = true;
+            BtnCancel.Enabled = true;
+            BtnNew.Enabled = false;
+            BtnSave.Enabled = false;
+            CmbParkingTypes.Enabled = true;
+
+            foreach(TextBox txt in this.Controls.OfType<TextBox>())
+            {
+                txt.Enabled = true;
+                txt.Clear();
+            }
+            TxtPrice.Enabled = false;
+            TxtClientName.Enabled = false;
+            TxtClientPhone.Enabled = false;
+            TxtCheckInCode.Enabled = false;
+            PbxSearchClient.Enabled = true;
+
+            var checkIn = checkInController.getCheckIn(DgvCheckIns.CurrentRow.Cells[0].Value.ToString());
+
+            if(checkIn!= null)
+            {
+                TxtCheckInCode.Text = checkIn.CHECK_IN_CODE;
+                TxtClientCode.Text= checkIn.CLIENT_DNI;
+                getInfoClient(checkIn.CLIENT_DNI);
+                CmbParkingTypes.SelectedValue= checkIn.PARKING_FEE_CODE;
+                CmbParkingSpaces.SelectedValue= checkIn.PARKING_SPACE_CODE;
+                TxtPrice.Text= checkIn.PRICE_FOR_HOUR.ToString();
+                TxtObservations.Text = checkIn.OBSERVATIONS;
+                TxtVehiclePlate.Text = checkIn.VEHICLE_PLATE;
+            }
+
+
+
+            
+
+        }
+
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if(h.MsgQuestion("¿Deseas actualizar el registro de la base de datos?") == "S")
+            {
+                if (validateData() == 0)
+                {
+                    setValues();
+                    CHECK_IN checkIn = new CHECK_IN();
+                    checkIn.CHECK_IN_CODE = checkInCode;
+                    checkIn.CLIENT_DNI = clientCode;
+                    checkIn.PARKING_SPACE_CODE = parkingSpaceCode;
+                    checkIn.OBSERVATIONS = observations;
+                    checkIn.VEHICLE_PLATE = vehiclePlate;
+
+                    if (checkInController.saveCheckIn(checkIn) > 0)
+                    {
+                        h.MsgInfo("Registro actualizado con éxito.");
+                        startForm();
+                    }
+                    else
+                    {
+                        h.MsgError("Error al actualizar el registro.");
+                    }
+
+                }
+            }
+        }
+
+        private void TxtClientCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode==Keys.Enter)
+            {
+                getInfoClient(TxtClientCode.Text.Trim());
+            }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            if (validateData() == 0)
+            {
+                setValues();
+                CHECK_IN checkIn = new CHECK_IN();
+                checkIn.CHECK_IN_CODE = checkInCode;
+                checkIn.CLIENT_DNI = clientCode;
+                checkIn.PARKING_SPACE_CODE = parkingSpaceCode;
+                checkIn.OBSERVATIONS= observations;
+                checkIn.VEHICLE_PLATE = vehiclePlate;
+                checkIn.CHECK_IN_TIME = DateTime.Now;
+                checkIn.INSERTED_AT = DateTime.Now;
+                checkIn.CHECK_IN_STATE = "ACTIVO";
+                checkIn.USER_CODE= Config.User.userId;
+
+                if (checkInController.saveCheckIn(checkIn)>0)
+                {
+                    PARKING_SPACE ps = parkingSpaceController.getParkingSpace(parkingSpaceCode);
+                    ps.STATE = true;
+                    h.MsgInfo("Registro guardado con éxito.");
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError("Error al guardar el registro.");
+                }
+
+            }
+        }
+
+        private void setValues()
+        {
+
+            checkInCode = TxtCheckInCode.Text.Trim();
+            clientCode = h.SanitizeStr(TxtClientCode.Text.Trim());
+            parkingSpaceCode = h.SanitizeStr(CmbParkingSpaces.SelectedValue.ToString());
+            observations= h.SanitizeStr(TxtObservations.Text.Trim());
+            vehiclePlate = h.SanitizeStr(TxtVehiclePlate.Text.Trim());
+        }
+
+        private int validateData()
+        {
+            int error = 0;
+            string decimals = "^\\d+(\\.\\d{2})?$";
+            string numbersAndLetters = "^[a-zA-Z0-9\\s]+$";
+
+            if(TxtClientCode.Text.Trim()!="")
+            {
+                ClientController clientController = new ClientController();
+                CLIENTS client = clientController.getClient(TxtClientCode.Text.Trim());
+
+                if (client == null)
+                {
+                    h.MsgError("Cliente no encontrado.");
+                    error++;
+                    TxtClientCode.Focus();
+                    return error;
+                }
+            }
+           
+
+            if (CmbParkingTypes.SelectedIndex == -1)
+            {
+                h.MsgError("Tipo de parqueo no válido.");
+                error++;
+                CmbParkingTypes.Focus();
+                return error;
+            }
+
+            if (CmbParkingSpaces.SelectedIndex == -1)
+            {
+                h.MsgError("Espacio de parqueo no válido.");
+                error++;
+                CmbParkingSpaces.Focus();
+                return error;
+            }
+
+
+            if (!Regex.Match(TxtPrice.Text,decimals).Success)
+            {
+                h.MsgError("Precio no válido.");
+                error++;
+                TxtPrice.Focus();
+                return error;
+            }
+
+            if (!Regex.Match(TxtObservations.Text, numbersAndLetters).Success)
+            {
+                h.MsgError("Observaciones no válidas.");
+                error++;
+                TxtObservations.Focus();
+                return error;
+            }
+           
+            if (!Regex.Match(TxtVehiclePlate.Text,numbersAndLetters).Success)
+            {
+                h.MsgError("Placa no válida.");
+                error++;
+                TxtVehiclePlate.Focus();
+                return error;
+            }
+
+            return error;
+        }
+
+        private void getCheckIns(string searchFilter="")
+        {
+            DgvCheckIns.Rows.Clear();
+            var checkIns = checkInController.getCheckIns(searchFilter);
+
+            if (checkIns.Count() == 0) {
+                h.MsgInfo("No se encontraron registros.");
+                if (searchFilter != "")
+                {
+                    getCheckIns();
+                }
+                return;
+            }
+
+            foreach (var checkIn in checkIns)
+            {
+                DgvCheckIns.Rows.Add(checkIn.CHECK_IN_CODE, checkIn.VEHICLE_PLATE, checkIn.PARKING_SPACE_NUMBER, checkIn.DESCRIPTION_PARKING_TYPE, checkIn.CHECK_IN_STATE, Convert.ToDateTime(checkIn.INSERTED_AT).ToShortDateString());
+            }
+        }
+
+
+
+    }
+}

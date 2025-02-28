@@ -14,10 +14,10 @@ namespace parking.Controllers
     internal class PermissionController
     {
 
-        private Models.USER_PERMISSIONS permission;
+        private USER_PERMISSIONS permission;
         Helpers.Helpers h= new Helpers.Helpers();
         public PermissionController() { 
-            permission= new Models.USER_PERMISSIONS();
+            permission= new USER_PERMISSIONS();
         }
 
         public List<USER_PERMISSIONS> getPermissions(string searchFilter)

@@ -15,9 +15,9 @@ namespace parking.Models
     public partial class SALARIES
     {
         public string SALARY_CODE { get; set; }
-        public int BASE_SALARY { get; set; }
-        public int AUMENTO { get; set; }
-        public int TOTAL_SALARY { get; set; }
+        public decimal BASE_SALARY { get; set; }
+        public decimal AUMENTO { get; set; }
+        public decimal TOTAL_SALARY { get; set; }
         public Nullable<System.DateTime> INSERTED_AT { get; set; }
         public string EMPLOYEE_CODE { get; set; }
     

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmParkingTypes));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
@@ -47,16 +47,14 @@
             this.label6 = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvParkingTypes = new System.Windows.Forms.DataGridView();
-            this.TxtParkingTypeDescription = new System.Windows.Forms.TextBox();
-            this.TxtParkingTypePrice = new System.Windows.Forms.TextBox();
-            this.TxtParkingTypeCode = new System.Windows.Forms.TextBox();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PRECIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TxtParkingTypeDescription = new System.Windows.Forms.TextBox();
+            this.TxtParkingTypeCode = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -236,17 +234,6 @@
             this.label3.TabIndex = 92;
             this.label3.Text = "Descripción:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label2.Location = new System.Drawing.Point(172, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 22);
-            this.label2.TabIndex = 91;
-            this.label2.Text = "Precio:";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -264,11 +251,11 @@
             this.DgvParkingTypes.AllowUserToDeleteRows = false;
             this.DgvParkingTypes.AllowUserToResizeColumns = false;
             this.DgvParkingTypes.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvParkingTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvParkingTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvParkingTypes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvParkingTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvParkingTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -276,14 +263,14 @@
             this.DESCRIPCIÓN,
             this.PRECIO,
             this.REGISTRO});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvParkingTypes.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvParkingTypes.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvParkingTypes.Location = new System.Drawing.Point(12, 306);
             this.DgvParkingTypes.Name = "DgvParkingTypes";
             this.DgvParkingTypes.ReadOnly = true;
@@ -295,50 +282,13 @@
             this.DgvParkingTypes.TabIndex = 89;
             this.DgvParkingTypes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvParkingTypes_CellDoubleClick);
             // 
-            // TxtParkingTypeDescription
-            // 
-            this.TxtParkingTypeDescription.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingTypeDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingTypeDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingTypeDescription.Location = new System.Drawing.Point(14, 173);
-            this.TxtParkingTypeDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingTypeDescription.MaxLength = 50;
-            this.TxtParkingTypeDescription.Multiline = true;
-            this.TxtParkingTypeDescription.Name = "TxtParkingTypeDescription";
-            this.TxtParkingTypeDescription.Size = new System.Drawing.Size(470, 64);
-            this.TxtParkingTypeDescription.TabIndex = 2;
-            // 
-            // TxtParkingTypePrice
-            // 
-            this.TxtParkingTypePrice.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingTypePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingTypePrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingTypePrice.Location = new System.Drawing.Point(176, 104);
-            this.TxtParkingTypePrice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingTypePrice.Multiline = true;
-            this.TxtParkingTypePrice.Name = "TxtParkingTypePrice";
-            this.TxtParkingTypePrice.Size = new System.Drawing.Size(308, 30);
-            this.TxtParkingTypePrice.TabIndex = 1;
-            // 
-            // TxtParkingTypeCode
-            // 
-            this.TxtParkingTypeCode.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingTypeCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingTypeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingTypeCode.Location = new System.Drawing.Point(13, 104);
-            this.TxtParkingTypeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingTypeCode.Multiline = true;
-            this.TxtParkingTypeCode.Name = "TxtParkingTypeCode";
-            this.TxtParkingTypeCode.ReadOnly = true;
-            this.TxtParkingTypeCode.Size = new System.Drawing.Size(118, 30);
-            this.TxtParkingTypeCode.TabIndex = 86;
-            // 
             // ID
             // 
             this.ID.HeaderText = "ID";
             this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
+            this.ID.Width = 150;
             // 
             // DESCRIPCIÓN
             // 
@@ -354,6 +304,7 @@
             this.PRECIO.MinimumWidth = 8;
             this.PRECIO.Name = "PRECIO";
             this.PRECIO.ReadOnly = true;
+            this.PRECIO.Width = 150;
             // 
             // REGISTRO
             // 
@@ -362,6 +313,32 @@
             this.REGISTRO.Name = "REGISTRO";
             this.REGISTRO.ReadOnly = true;
             this.REGISTRO.Width = 140;
+            // 
+            // TxtParkingTypeDescription
+            // 
+            this.TxtParkingTypeDescription.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtParkingTypeDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtParkingTypeDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtParkingTypeDescription.Location = new System.Drawing.Point(14, 173);
+            this.TxtParkingTypeDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtParkingTypeDescription.MaxLength = 50;
+            this.TxtParkingTypeDescription.Multiline = true;
+            this.TxtParkingTypeDescription.Name = "TxtParkingTypeDescription";
+            this.TxtParkingTypeDescription.Size = new System.Drawing.Size(470, 64);
+            this.TxtParkingTypeDescription.TabIndex = 2;
+            // 
+            // TxtParkingTypeCode
+            // 
+            this.TxtParkingTypeCode.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtParkingTypeCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtParkingTypeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtParkingTypeCode.Location = new System.Drawing.Point(13, 104);
+            this.TxtParkingTypeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtParkingTypeCode.Multiline = true;
+            this.TxtParkingTypeCode.Name = "TxtParkingTypeCode";
+            this.TxtParkingTypeCode.ReadOnly = true;
+            this.TxtParkingTypeCode.Size = new System.Drawing.Size(213, 30);
+            this.TxtParkingTypeCode.TabIndex = 86;
             // 
             // FrmParkingTypes
             // 
@@ -375,11 +352,9 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.TxtSearch);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DgvParkingTypes);
             this.Controls.Add(this.TxtParkingTypeDescription);
-            this.Controls.Add(this.TxtParkingTypePrice);
             this.Controls.Add(this.TxtParkingTypeCode);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmParkingTypes";
@@ -415,11 +390,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView DgvParkingTypes;
         private System.Windows.Forms.TextBox TxtParkingTypeDescription;
-        private System.Windows.Forms.TextBox TxtParkingTypePrice;
         private System.Windows.Forms.TextBox TxtParkingTypeCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCIÓN;

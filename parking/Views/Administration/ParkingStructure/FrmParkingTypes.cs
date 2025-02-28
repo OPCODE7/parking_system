@@ -18,7 +18,7 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingTypeController parkingTypeController = new ParkingTypeController();
         Helpers.Helpers h = new Helpers.Helpers();
         CorrelativesController correlativesController = new CorrelativesController();
-        string parkingTypeCode, parkingTypeDescription, parkingTypePrice;
+        string parkingTypeCode, parkingTypeDescription;
         public FrmParkingTypes()
         {
             InitializeComponent();
@@ -38,7 +38,6 @@ namespace parking.Views.Administration.ParkingStructure
         {
             parkingTypeCode = TxtParkingTypeCode.Text;
             parkingTypeDescription = h.SanitizeStr(TxtParkingTypeDescription.Text.Trim());
-            parkingTypePrice = h.SanitizeStr(TxtParkingTypePrice.Text.Trim());
         }
 
         private void startForm()
@@ -64,15 +63,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             int error = 0;
             string parkingTypeDescriptionPattern = "^[a-zA-Z\\s]+$";
-            string parkingTypePricePattern = "^[0-9.]+$";
 
-            if (!Regex.Match(TxtParkingTypePrice.Text, parkingTypePricePattern).Success)
-            {
-                h.MsgWarning("Ingresar precio del tipo de parqueo correctamente. ¡Solo números!");
-                TxtParkingTypePrice.Focus();
-                error++;
-                return error;
-            }
 
             if (!Regex.Match(TxtParkingTypeDescription.Text, parkingTypeDescriptionPattern).Success)
             {
@@ -97,7 +88,6 @@ namespace parking.Views.Administration.ParkingStructure
                 PARKING_TYPES parkingType = new PARKING_TYPES();
                 parkingType.PARKING_TYPE_CODE = parkingTypeCode;
                 parkingType.DESCRIPTION_PARKING_TYPE = parkingTypeDescription;
-                parkingType.PARKING_TYPE_PRICE = Convert.ToDecimal(parkingTypePrice);
                 parkingType.INSERTED_AT = DateTime.Now;
 
                 int result = parkingTypeController.saveParkingType(parkingType);
@@ -127,12 +117,11 @@ namespace parking.Views.Administration.ParkingStructure
                 Txt.Enabled = true;
             }
 
-            TxtParkingTypePrice.Focus();
+            TxtParkingTypeDescription.Focus();
 
            PARKING_TYPES parkingType= parkingTypeController.getParkingType(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
             TxtParkingTypeCode.Text = parkingType.PARKING_TYPE_CODE;
             TxtParkingTypeDescription.Text = parkingType.DESCRIPTION_PARKING_TYPE;
-            TxtParkingTypePrice.Text = parkingType.PARKING_TYPE_PRICE.ToString();
 
         }
 
@@ -188,7 +177,6 @@ namespace parking.Views.Administration.ParkingStructure
                     PARKING_TYPES parkingType = new PARKING_TYPES();
                     parkingType.PARKING_TYPE_CODE = parkingTypeCode;
                     parkingType.DESCRIPTION_PARKING_TYPE = parkingTypeDescription;
-                    parkingType.PARKING_TYPE_PRICE = Convert.ToDecimal(parkingTypePrice);
 
                     int result = parkingTypeController.updateParkingType(parkingType);
 
@@ -226,7 +214,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             foreach (var parkingType in parkingTypes)
             {
-                DgvParkingTypes.Rows.Add(parkingType.PARKING_TYPE_CODE, parkingType.DESCRIPTION_PARKING_TYPE, parkingType.PARKING_TYPE_PRICE,Convert.ToDateTime(parkingType.INSERTED_AT).ToShortDateString());
+                DgvParkingTypes.Rows.Add(parkingType.PARKING_TYPE_CODE, parkingType.DESCRIPTION_PARKING_TYPE,Convert.ToDateTime(parkingType.INSERTED_AT).ToShortDateString());
             }
 
            
@@ -242,7 +230,7 @@ namespace parking.Views.Administration.ParkingStructure
             {
                 Txt.Enabled = true;
             }
-            TxtParkingTypePrice.Focus();
+            TxtParkingTypeDescription.Focus();
 
             string newCode = "PTY" + correlativesController.getNextId("PTY");
             TxtParkingTypeCode.Text = newCode;

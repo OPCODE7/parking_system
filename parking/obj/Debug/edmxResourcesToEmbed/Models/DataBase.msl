@@ -1,6 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="PARKINGModelStoreContainer" CdmEntityContainer="PARKINGEntities">
+    <EntitySetMapping Name="BILL">
+      <EntityTypeMapping TypeName="PARKINGModel.BILL">
+        <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
+          <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
+          <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
+          <ScalarProperty Name="SUBTOTAL" ColumnName="SUBTOTAL" />
+          <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+          <ScalarProperty Name="ISV" ColumnName="ISV" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+          <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHECK_IN">
+      <EntityTypeMapping TypeName="PARKINGModel.CHECK_IN">
+        <MappingFragment StoreEntitySet="CHECK_IN">
+          <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+          <ScalarProperty Name="CLIENT_DNI" ColumnName="CLIENT_DNI" />
+          <ScalarProperty Name="VEHICLE_PLATE" ColumnName="VEHICLE_PLATE" />
+          <ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
+          <ScalarProperty Name="OBSERVATIONS" ColumnName="OBSERVATIONS" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="CHECK_IN_STATE" ColumnName="CHECK_IN_STATE" />
+          <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHECK_OUT">
+      <EntityTypeMapping TypeName="PARKINGModel.CHECK_OUT">
+        <MappingFragment StoreEntitySet="CHECK_OUT">
+          <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
+          <ScalarProperty Name="CHECK_OUT_TIME" ColumnName="CHECK_OUT_TIME" />
+          <ScalarProperty Name="TOTAL_TIME" ColumnName="TOTAL_TIME" />
+          <ScalarProperty Name="FULL_CHARGE" ColumnName="FULL_CHARGE" />
+          <ScalarProperty Name="CHECK_OUT_STATE" ColumnName="CHECK_OUT_STATE" />
+          <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CLIENTS">
       <EntityTypeMapping TypeName="PARKINGModel.CLIENTS">
         <MappingFragment StoreEntitySet="CLIENTS">
@@ -12,6 +56,8 @@
           <ScalarProperty Name="CLIENT_PHONE" ColumnName="CLIENT_PHONE" />
           <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -57,22 +103,22 @@
     <EntitySetMapping Name="HORARY">
       <EntityTypeMapping TypeName="PARKINGModel.HORARY">
         <MappingFragment StoreEntitySet="HORARY">
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="HORARY_CODE" ColumnName="HORARY_CODE" />
           <ScalarProperty Name="HORARY_DESCRIPTION" ColumnName="HORARY_DESCRIPTION" />
           <ScalarProperty Name="INITIAL_HOUR" ColumnName="INITIAL_HOUR" />
           <ScalarProperty Name="FINAL_HOUR" ColumnName="FINAL_HOUR" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="JOB_POSITIONS">
       <EntityTypeMapping TypeName="PARKINGModel.JOB_POSITIONS">
         <MappingFragment StoreEntitySet="JOB_POSITIONS">
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="JOB_POSITION_CODE" ColumnName="JOB_POSITION_CODE" />
           <ScalarProperty Name="DESCRIPTION_JOB_POSITION" ColumnName="DESCRIPTION_JOB_POSITION" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -85,27 +131,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PARKING_FEE">
+      <EntityTypeMapping TypeName="PARKINGModel.PARKING_FEE">
+        <MappingFragment StoreEntitySet="PARKING_FEE">
+          <ScalarProperty Name="PARKING_FEE_CODE" ColumnName="PARKING_FEE_CODE" />
+          <ScalarProperty Name="PRICE_FOR_HOUR" ColumnName="PRICE_FOR_HOUR" />
+          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PARKING_SPACE">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_SPACE">
         <MappingFragment StoreEntitySet="PARKING_SPACE">
-          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
-          <ScalarProperty Name="DEL" ColumnName="DEL" />
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
           <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="PARKING_FEE_CODE" ColumnName="PARKING_FEE_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PARKING_TYPES">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
         <MappingFragment StoreEntitySet="PARKING_TYPES">
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
           <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
-          <ScalarProperty Name="PARKING_TYPE_PRICE" ColumnName="PARKING_TYPE_PRICE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -177,17 +234,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PARKING_FEE">
-      <EntityTypeMapping TypeName="PARKINGModel.PARKING_FEE">
-        <MappingFragment StoreEntitySet="PARKING_FEE">
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
-          <ScalarProperty Name="PRICE_FOR_HOUR" ColumnName="PRICE_FOR_HOUR" />
-          <ScalarProperty Name="PARKING_FEE_CODE" ColumnName="PARKING_FEE_CODE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PARKINGModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PARKINGModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PARKINGModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PARKINGModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PARKINGModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
   </EntityContainerMapping>
 </Mapping>

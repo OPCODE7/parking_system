@@ -6,17 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using parking.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+
 
 namespace parking.Controllers
 {
     internal class CorrelativesController
     {
-        private Models.CORRELATIVES correlativesModel;
+        private CORRELATIVES correlativesModel;
         Helpers.Helpers h = new Helpers.Helpers();
         public CorrelativesController() { 
            
-            correlativesModel= new Models.CORRELATIVES();
+            correlativesModel= new CORRELATIVES();
         }
 
         public CORRELATIVES getCorrelative(string correlativeId)

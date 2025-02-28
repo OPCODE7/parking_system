@@ -14,14 +14,22 @@ namespace parking.Models
     
     public partial class PARKING_SPACE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PARKING_SPACE()
+        {
+            this.CHECK_IN = new HashSet<CHECK_IN>();
+        }
+    
         public string PARKING_SPACE_CODE { get; set; }
         public int PARKING_SPACE_NUMBER { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool STATE { get; set; }
         public string USER_CODE { get; set; }
         public bool DEL { get; set; }
-        public string PARKING_TYPE_CODE { get; set; }
+        public string PARKING_FEE_CODE { get; set; }
     
-        public virtual PARKING_TYPES PARKING_TYPES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECK_IN> CHECK_IN { get; set; }
+        public virtual PARKING_FEE PARKING_FEE { get; set; }
     }
 }

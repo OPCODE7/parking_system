@@ -64,6 +64,24 @@ namespace parking.Views.Auth
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
+        
+
+        private void PbxHidden_Click(object sender, EventArgs e)
+        {
+            TxtPwd.UseSystemPasswordChar = true;
+            PbxHidden.Visible = false;
+            PbxVisible.Visible = true;
+
+        }
+
+        private void PbxVisible_Click(object sender, EventArgs e)
+        {
+            TxtPwd.UseSystemPasswordChar = false;
+            PbxVisible.Visible = false;
+            PbxHidden.Visible = true;
+
+        }
+
         private void BtnLogin_Click(object sender, EventArgs e)
         {
             SetValues();

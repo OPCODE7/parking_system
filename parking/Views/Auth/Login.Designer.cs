@@ -38,7 +38,11 @@
             this.LblLogin = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.PbxVisible = new System.Windows.Forms.PictureBox();
+            this.PbxHidden = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxVisible)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxHidden)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnLogin
@@ -144,6 +148,31 @@
             this.label4.Text = "Derechos Reservados ©Darlin Avelar";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // PbxVisible
+            // 
+            this.PbxVisible.BackColor = System.Drawing.Color.White;
+            this.PbxVisible.Image = ((System.Drawing.Image)(resources.GetObject("PbxVisible.Image")));
+            this.PbxVisible.Location = new System.Drawing.Point(326, 280);
+            this.PbxVisible.Name = "PbxVisible";
+            this.PbxVisible.Size = new System.Drawing.Size(32, 20);
+            this.PbxVisible.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PbxVisible.TabIndex = 46;
+            this.PbxVisible.TabStop = false;
+            this.PbxVisible.Click += new System.EventHandler(this.PbxVisible_Click);
+            // 
+            // PbxHidden
+            // 
+            this.PbxHidden.BackColor = System.Drawing.Color.White;
+            this.PbxHidden.Image = ((System.Drawing.Image)(resources.GetObject("PbxHidden.Image")));
+            this.PbxHidden.Location = new System.Drawing.Point(324, 280);
+            this.PbxHidden.Name = "PbxHidden";
+            this.PbxHidden.Size = new System.Drawing.Size(32, 20);
+            this.PbxHidden.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PbxHidden.TabIndex = 47;
+            this.PbxHidden.TabStop = false;
+            this.PbxHidden.Visible = false;
+            this.PbxHidden.Click += new System.EventHandler(this.PbxHidden_Click);
+            // 
             // Login
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -151,6 +180,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.ClientSize = new System.Drawing.Size(397, 546);
             this.ControlBox = false;
+            this.Controls.Add(this.PbxHidden);
+            this.Controls.Add(this.PbxVisible);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.LblLogin);
@@ -168,6 +199,8 @@
             this.Load += new System.EventHandler(this.Login_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Login_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxVisible)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxHidden)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,5 +217,7 @@
         private System.Windows.Forms.Label LblLogin;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox PbxVisible;
+        private System.Windows.Forms.PictureBox PbxHidden;
     }
 }

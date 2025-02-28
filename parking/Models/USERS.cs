@@ -17,6 +17,10 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USERS()
         {
+            this.BILL = new HashSet<BILL>();
+            this.CHECK_IN = new HashSet<CHECK_IN>();
+            this.CHECK_OUT = new HashSet<CHECK_OUT>();
+            this.CLIENTS = new HashSet<CLIENTS>();
             this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
             this.PARKING_FEE = new HashSet<PARKING_FEE>();
         }
@@ -30,9 +34,17 @@ namespace parking.Models
         public bool USER_STATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BILL> BILL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECK_IN> CHECK_IN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECK_OUT> CHECK_OUT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLIENTS> CLIENTS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
-        public virtual USER_ROLES USER_ROLES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARKING_FEE> PARKING_FEE { get; set; }
+        public virtual USER_ROLES USER_ROLES { get; set; }
     }
 }
