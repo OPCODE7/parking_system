@@ -16,13 +16,15 @@ namespace parking.Models
     {
         public string BILL_CODE { get; set; }
         public System.DateTime DATE_OF_ISSUE { get; set; }
-        public int BILL_NUMBER { get; set; }
+        public string BILL_NUMBER { get; set; }
         public decimal SUBTOTAL { get; set; }
         public decimal DISCOUNT { get; set; }
-        public Nullable<decimal> ISV { get; set; }
+        public decimal ISV { get; set; }
         public decimal TOTAL { get; set; }
         public string CHECK_OUT_CODE { get; set; }
         public string USER_CODE { get; set; }
+        public string RTN { get; set; }
+        public string LETTERS { get; set; }
     
         public virtual CHECK_OUT CHECK_OUT { get; set; }
         public virtual USERS USERS { get; set; }

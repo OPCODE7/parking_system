@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheckIn));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label4 = new System.Windows.Forms.Label();
             this.CmbParkingSpaces = new System.Windows.Forms.ComboBox();
             this.PbxClose = new System.Windows.Forms.PictureBox();
@@ -55,8 +55,8 @@
             this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FECHAYHORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtClientCode = new System.Windows.Forms.TextBox();
             this.TxtCheckInCode = new System.Windows.Forms.TextBox();
             this.PbxSearchClient = new System.Windows.Forms.PictureBox();
@@ -69,9 +69,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.TxtClientName = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.TxtClientPhone = new System.Windows.Forms.TextBox();
             this.TxtVehiclePlate = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.MskClientPhone = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -177,6 +177,7 @@
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(99, 37);
             this.BtnDelete.Text = "Eliminar";
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // toolStripSeparator3
             // 
@@ -289,11 +290,11 @@
             this.DgvCheckIns.AllowUserToDeleteRows = false;
             this.DgvCheckIns.AllowUserToResizeColumns = false;
             this.DgvCheckIns.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvCheckIns.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvCheckIns.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.DgvCheckIns.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvCheckIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvCheckIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -301,16 +302,16 @@
             this.PLACA,
             this.NUMEROPARQUEO,
             this.TIPO_PARQUEO,
-            this.ESTADO,
-            this.REGISTRO});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCheckIns.DefaultCellStyle = dataGridViewCellStyle4;
+            this.FECHAYHORA,
+            this.ESTADO});
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCheckIns.DefaultCellStyle = dataGridViewCellStyle10;
             this.DgvCheckIns.Location = new System.Drawing.Point(24, 357);
             this.DgvCheckIns.Name = "DgvCheckIns";
             this.DgvCheckIns.ReadOnly = true;
@@ -354,6 +355,14 @@
             this.TIPO_PARQUEO.ReadOnly = true;
             this.TIPO_PARQUEO.Width = 220;
             // 
+            // FECHAYHORA
+            // 
+            this.FECHAYHORA.HeaderText = "FECHA Y HORA";
+            this.FECHAYHORA.MinimumWidth = 8;
+            this.FECHAYHORA.Name = "FECHAYHORA";
+            this.FECHAYHORA.ReadOnly = true;
+            this.FECHAYHORA.Width = 150;
+            // 
             // ESTADO
             // 
             this.ESTADO.HeaderText = "ESTADO";
@@ -361,14 +370,6 @@
             this.ESTADO.Name = "ESTADO";
             this.ESTADO.ReadOnly = true;
             this.ESTADO.Width = 150;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
             // 
             // TxtClientCode
             // 
@@ -516,23 +517,11 @@
             this.label10.TabIndex = 141;
             this.label10.Text = "Teléfono cliente:";
             // 
-            // TxtClientPhone
-            // 
-            this.TxtClientPhone.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtClientPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtClientPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtClientPhone.Location = new System.Drawing.Point(715, 92);
-            this.TxtClientPhone.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtClientPhone.Multiline = true;
-            this.TxtClientPhone.Name = "TxtClientPhone";
-            this.TxtClientPhone.ReadOnly = true;
-            this.TxtClientPhone.Size = new System.Drawing.Size(211, 30);
-            this.TxtClientPhone.TabIndex = 140;
-            // 
             // TxtVehiclePlate
             // 
             this.TxtVehiclePlate.BackColor = System.Drawing.SystemColors.Control;
             this.TxtVehiclePlate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtVehiclePlate.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtVehiclePlate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtVehiclePlate.Location = new System.Drawing.Point(632, 232);
             this.TxtVehiclePlate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -552,13 +541,24 @@
             this.label3.TabIndex = 131;
             this.label3.Text = "Placa del vehículo:";
             // 
+            // MskClientPhone
+            // 
+            this.MskClientPhone.BackColor = System.Drawing.SystemColors.Control;
+            this.MskClientPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MskClientPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.MskClientPhone.Location = new System.Drawing.Point(715, 95);
+            this.MskClientPhone.Mask = "0000-0000";
+            this.MskClientPhone.Name = "MskClientPhone";
+            this.MskClientPhone.Size = new System.Drawing.Size(211, 26);
+            this.MskClientPhone.TabIndex = 142;
+            // 
             // FrmCheckIn
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(946, 675);
+            this.Controls.Add(this.MskClientPhone);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.TxtClientPhone);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.TxtClientName);
             this.Controls.Add(this.label8);
@@ -634,14 +634,14 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox TxtClientName;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox TxtClientPhone;
         private System.Windows.Forms.TextBox TxtVehiclePlate;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLACA;
         private System.Windows.Forms.DataGridViewTextBoxColumn NUMEROPARQUEO;
         private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FECHAYHORA;
         private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.MaskedTextBox MskClientPhone;
     }
 }

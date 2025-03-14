@@ -21,8 +21,11 @@ namespace parking.Models
             this.CHECK_IN = new HashSet<CHECK_IN>();
             this.CHECK_OUT = new HashSet<CHECK_OUT>();
             this.CLIENTS = new HashSet<CLIENTS>();
+            this.DISCOUNT_TYPE = new HashSet<DISCOUNT_TYPE>();
+            this.DISCOUNTS = new HashSet<DISCOUNTS>();
             this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
             this.PARKING_FEE = new HashSet<PARKING_FEE>();
+            this.BILL_RANGE = new HashSet<BILL_RANGE>();
         }
     
         public string USER_CODE { get; set; }
@@ -42,9 +45,15 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTS> CLIENTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DISCOUNT_TYPE> DISCOUNT_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DISCOUNTS> DISCOUNTS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARKING_FEE> PARKING_FEE { get; set; }
         public virtual USER_ROLES USER_ROLES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BILL_RANGE> BILL_RANGE { get; set; }
     }
 }

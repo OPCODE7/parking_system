@@ -6,15 +6,17 @@
     </Key>
     <Property Name="BILL_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DATE_OF_ISSUE" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="BILL_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="BILL_NUMBER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="SUBTOTAL" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="DISCOUNT" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-    <Property Name="ISV" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="ISV" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="TOTAL" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="CHECK_OUT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_CHECKOUTBILL" FromRole="BILL" ToRole="CHECK_OUT" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USRBILL" FromRole="BILL" ToRole="USERS" />
+    <Property Name="LETTERS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="CHECK_IN">
     <Key>
@@ -41,11 +43,12 @@
     </Key>
     <Property Name="CHECK_OUT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CHECK_OUT_TIME" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="TOTAL_TIME" Type="Int32" Nullable="false" />
+    <Property Name="TOTAL_TIME" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="FULL_CHARGE" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-    <Property Name="CHECK_OUT_STATE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CHECK_OUT_STATE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CHECK_IN_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="BILL" Relationship="Self.FK_CHECKOUTBILL" FromRole="CHECK_OUT" ToRole="BILL" />
     <NavigationProperty Name="CHECK_IN" Relationship="Self.FK_CHECK_IN" FromRole="CHECK_OUT" ToRole="CHECK_IN" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USROUT" FromRole="CHECK_OUT" ToRole="USERS" />
@@ -67,6 +70,22 @@
     <NavigationProperty Name="CHECK_IN" Relationship="Self.FK_CLIENT" FromRole="CLIENTS" ToRole="CHECK_IN" />
     <NavigationProperty Name="USERS" Relationship="Self.FK__CLIENTS__USER_ID__3EA749C6" FromRole="CLIENTS" ToRole="USERS" />
   </EntityType>
+  <EntityType Name="COMPANY_DATA">
+    <Key>
+      <PropertyRef Name="COMPANY_RTN" />
+    </Key>
+    <Property Name="COMPANY_RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COMPANY_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COMPANY_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COMPANY_EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COMPANY_PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INITIAL_BILL" Type="Int32" Nullable="false" />
+    <Property Name="FINAL_BILL" Type="Int32" Nullable="false" />
+    <Property Name="LEGAL_FORM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DEL" Type="Boolean" Nullable="false" />
+    <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
   <EntityType Name="CORRELATIVES">
     <Key>
       <PropertyRef Name="CORRELATIVE_CODE" />
@@ -76,6 +95,46 @@
     <Property Name="CORRELATIVE_COUNTER" Type="Int32" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DISCOUNT_TYPE">
+    <Key>
+      <PropertyRef Name="DISCOUNT_TYPE_ID" />
+    </Key>
+    <Property Name="DISCOUNT_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="DEL" Type="Boolean" Nullable="false" />
+    <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__DISCOUNT___USER___39AD8A7F" FromRole="DISCOUNT_TYPE" ToRole="USERS" />
+    <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3AA1AEB8" FromRole="DISCOUNT_TYPE" ToRole="DISCOUNTS" />
+  </EntityType>
+  <EntityType Name="DISCOUNTS">
+    <Key>
+      <PropertyRef Name="DISCOUNT_ID" />
+    </Key>
+    <Property Name="DISCOUNT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DISCOUNT_VALUE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DISCOUNT_STATE" Type="Boolean" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="DEL" Type="Boolean" Nullable="false" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DISCOUNT_TYPE_ID" Type="Int32" Nullable="false" />
+    <Property Name="HOURS" Type="Int32" Nullable="false" />
+    <Property Name="FREQUENCY_DAYS" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DISCOUNT_TYPE" Relationship="Self.FK__DISCOUNTS__DISCO__3AA1AEB8" FromRole="DISCOUNTS" ToRole="DISCOUNT_TYPE" />
+    <NavigationProperty Name="DISCOUNTS_BILL" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS" ToRole="DISCOUNTS_BILL" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK_USER_DISCOUNT" FromRole="DISCOUNTS" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="DISCOUNTS_BILL">
+    <Key>
+      <PropertyRef Name="DISCOUNTS_BILL_ID" />
+    </Key>
+    <Property Name="DISCOUNTS_BILL_ID" Type="Int32" Nullable="false" />
+    <Property Name="DISCOUNT_ID" Type="Int32" Nullable="false" />
+    <Property Name="BILL_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="BIT" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
   </EntityType>
   <EntityType Name="EMPLOYEE_USER">
     <Key>
@@ -248,9 +307,12 @@
     <NavigationProperty Name="CHECK_IN" Relationship="Self.FK_USR" FromRole="USERS" ToRole="CHECK_IN" />
     <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_USROUT" FromRole="USERS" ToRole="CHECK_OUT" />
     <NavigationProperty Name="CLIENTS" Relationship="Self.FK__CLIENTS__USER_ID__3EA749C6" FromRole="USERS" ToRole="CLIENTS" />
+    <NavigationProperty Name="DISCOUNT_TYPE" Relationship="Self.FK__DISCOUNT___USER___39AD8A7F" FromRole="USERS" ToRole="DISCOUNT_TYPE" />
+    <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK_USER_DISCOUNT" FromRole="USERS" ToRole="DISCOUNTS" />
     <NavigationProperty Name="EMPLOYEE_USER" Relationship="Self.FK_USER" FromRole="USERS" ToRole="EMPLOYEE_USER" />
     <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK__PARKING_F__USER___0B27A5C0" FromRole="USERS" ToRole="PARKING_FEE" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
+    <NavigationProperty Name="BILL_RANGE" Relationship="PARKINGModel.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
   </EntityType>
   <Association Name="FK_CHECKOUTBILL">
     <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
@@ -345,6 +407,54 @@
       </Principal>
       <Dependent Role="CLIENTS">
         <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DISCOUNT___USER___39AD8A7F">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="DISCOUNT_TYPE" Type="Self.DISCOUNT_TYPE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="DISCOUNT_TYPE">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DISCOUNTS__DISCO__3AA1AEB8">
+    <End Role="DISCOUNT_TYPE" Type="Self.DISCOUNT_TYPE" Multiplicity="1" />
+    <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DISCOUNT_TYPE">
+        <PropertyRef Name="DISCOUNT_TYPE_ID" />
+      </Principal>
+      <Dependent Role="DISCOUNTS">
+        <PropertyRef Name="DISCOUNT_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DISCOUNTS__DISCO__3E723F9C">
+    <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="1" />
+    <End Role="DISCOUNTS_BILL" Type="Self.DISCOUNTS_BILL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DISCOUNTS">
+        <PropertyRef Name="DISCOUNT_ID" />
+      </Principal>
+      <Dependent Role="DISCOUNTS_BILL">
+        <PropertyRef Name="DISCOUNT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_DISCOUNT">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="DISCOUNTS">
+        <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -485,7 +595,11 @@
     <EntitySet Name="CHECK_IN" EntityType="Self.CHECK_IN" />
     <EntitySet Name="CHECK_OUT" EntityType="Self.CHECK_OUT" />
     <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" />
+    <EntitySet Name="COMPANY_DATA" EntityType="Self.COMPANY_DATA" />
     <EntitySet Name="CORRELATIVES" EntityType="Self.CORRELATIVES" />
+    <EntitySet Name="DISCOUNT_TYPE" EntityType="Self.DISCOUNT_TYPE" />
+    <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" />
+    <EntitySet Name="DISCOUNTS_BILL" EntityType="Self.DISCOUNTS_BILL" />
     <EntitySet Name="EMPLOYEE_USER" EntityType="Self.EMPLOYEE_USER" />
     <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
     <EntitySet Name="HORARY" EntityType="Self.HORARY" />
@@ -531,6 +645,22 @@
     <AssociationSet Name="FK__CLIENTS__USER_ID__3EA749C6" Association="Self.FK__CLIENTS__USER_ID__3EA749C6">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="CLIENTS" EntitySet="CLIENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DISCOUNT___USER___39AD8A7F" Association="Self.FK__DISCOUNT___USER___39AD8A7F">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="DISCOUNT_TYPE" EntitySet="DISCOUNT_TYPE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DISCOUNTS__DISCO__3AA1AEB8" Association="Self.FK__DISCOUNTS__DISCO__3AA1AEB8">
+      <End Role="DISCOUNT_TYPE" EntitySet="DISCOUNT_TYPE" />
+      <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DISCOUNTS__DISCO__3E723F9C" Association="Self.FK__DISCOUNTS__DISCO__3E723F9C">
+      <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
+      <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_DISCOUNT" Association="Self.FK_USER_DISCOUNT">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
     </AssociationSet>
     <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
@@ -606,6 +736,11 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="BILL_RANGE" EntityType="PARKINGModel.BILL_RANGE" />
+    <AssociationSet Name="LAYOUT" Association="PARKINGModel.LAYOUT">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="BILL_RANGE" EntitySet="BILL_RANGE" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -618,4 +753,33 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
+  <EntityType Name="BILL_RANGE">
+    <Key>
+      <PropertyRef Name="BILL_RANGE_ID" />
+    </Key>
+    <Property Name="BILL_RANGE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ESTABLISHMENT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="EMISSION_POINT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DOC_TYPE" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="INITIAL_RANGE" Type="Int32" Nullable="false" />
+    <Property Name="FINAL_RANGE" Type="Int32" Nullable="false" />
+    <Property Name="LAST_USED" Type="Int32" Nullable="false" />
+    <Property Name="BILL_RANGE_STATE" Type="Boolean" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DEL" Type="Boolean" />
+    <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
+  </EntityType>
+  <Association Name="LAYOUT">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+    <End Type="PARKINGModel.BILL_RANGE" Role="BILL_RANGE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="BILL_RANGE">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

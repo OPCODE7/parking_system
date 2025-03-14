@@ -163,17 +163,20 @@ namespace parking.Views.Administration.ParkingStructure
         }
 
         private void BtnEdit_Click(object sender, EventArgs e)
-        {
-            PARKING_SPACE ps = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+        { 
+            dynamic ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
+            
             if (h.MsgQuestion($"¿Estás seguro que deseas actualizar el espacio de parqueo número {ps.PARKING_SPACE_NUMBER} de la base de datos?")=="S")
             {
+                
                 if (validateData() == 0)
                 {
                     setValues();
-                    ps.PARKING_SPACE_NUMBER = psNumber;
-                    ps.PARKING_FEE_CODE = parkingFee;
-                    ps.STATE = psState;
-                    if (psc.updateParkingSpace(ps) > 0)
+                    PARKING_SPACE editPs = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+                    editPs.PARKING_SPACE_NUMBER = psNumber;
+                    editPs.PARKING_FEE_CODE = parkingFee;
+                    editPs.STATE = psState;
+                    if (psc.updateParkingSpace(editPs) > 0)
                     {
                         h.MsgInfo("Espacio de parqueo actualizado correctamente.");
                         startForm();
@@ -190,7 +193,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            PARKING_SPACE ps = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+            PARKING_SPACE ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
             if (h.MsgQuestion($"¿Estás seguro que deseas eliminar el espacio de parqueo número {ps.PARKING_SPACE_NUMBER} de la base de datos?") == "S")
             {
                 if(psc.deleteParkingSpace(ps.PARKING_SPACE_CODE) > 0)
@@ -229,12 +232,13 @@ namespace parking.Views.Administration.ParkingStructure
                 ChkState.Enabled = true;
                 TxtNumberSpace.Enabled = true;
 
-                dynamic ps = psc.getParkingSpace(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
+                var ps = psc.getInfoParkingSpace(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
+
                 TxtParkingSpaceCode.Text = ps.PARKING_SPACE_CODE;
-                TxtPrice.Text = ps.PARKING_SPACE_NUMBER.ToString();
+                TxtNumberSpace.Text = ps.PARKING_SPACE_NUMBER.ToString();
                 CmbParkingFee.SelectedValue = ps.PARKING_FEE_CODE;
                 ChkState.Checked = (bool)ps.STATE;
-                TxtPrice.Text = ps.PRICE_FOR_NUMBER.ToString();
+                TxtPrice.Text = ps.PRICE_FOR_HOUR.ToString();
                 TxtNumberSpace.Focus();
             }
 

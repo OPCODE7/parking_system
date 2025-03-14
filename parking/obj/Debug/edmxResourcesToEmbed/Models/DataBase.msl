@@ -4,6 +4,7 @@
     <EntitySetMapping Name="BILL">
       <EntityTypeMapping TypeName="PARKINGModel.BILL">
         <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
           <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
           <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
           <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
@@ -13,6 +14,7 @@
           <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
           <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="RTN" ColumnName="RTN" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -42,6 +44,7 @@
           <ScalarProperty Name="CHECK_OUT_STATE" ColumnName="CHECK_OUT_STATE" />
           <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -61,6 +64,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="COMPANY_DATA">
+      <EntityTypeMapping TypeName="PARKINGModel.COMPANY_DATA">
+        <MappingFragment StoreEntitySet="COMPANY_DATA">
+          <ScalarProperty Name="COMPANY_RTN" ColumnName="COMPANY_RTN" />
+          <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
+          <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />
+          <ScalarProperty Name="COMPANY_EMAIL" ColumnName="COMPANY_EMAIL" />
+          <ScalarProperty Name="COMPANY_PHONE" ColumnName="COMPANY_PHONE" />
+          <ScalarProperty Name="INITIAL_BILL" ColumnName="INITIAL_BILL" />
+          <ScalarProperty Name="FINAL_BILL" ColumnName="FINAL_BILL" />
+          <ScalarProperty Name="LEGAL_FORM" ColumnName="LEGAL_FORM" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CORRELATIVES">
       <EntityTypeMapping TypeName="PARKINGModel.CORRELATIVES">
         <MappingFragment StoreEntitySet="CORRELATIVES">
@@ -69,6 +89,43 @@
           <ScalarProperty Name="CORRELATIVE_COUNTER" ColumnName="CORRELATIVE_COUNTER" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DISCOUNT_TYPE">
+      <EntityTypeMapping TypeName="PARKINGModel.DISCOUNT_TYPE">
+        <MappingFragment StoreEntitySet="DISCOUNT_TYPE">
+          <ScalarProperty Name="DISCOUNT_TYPE_ID" ColumnName="DISCOUNT_TYPE_ID" />
+          <ScalarProperty Name="DISCOUNT_TYPE_DESCRIPTION" ColumnName="DISCOUNT_TYPE_DESCRIPTION" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DISCOUNTS">
+      <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS">
+        <MappingFragment StoreEntitySet="DISCOUNTS">
+          <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
+          <ScalarProperty Name="DISCOUNT_VALUE" ColumnName="DISCOUNT_VALUE" />
+          <ScalarProperty Name="DISCOUNT_STATE" ColumnName="DISCOUNT_STATE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="DISCOUNT_TYPE_ID" ColumnName="DISCOUNT_TYPE_ID" />
+          <ScalarProperty Name="HOURS" ColumnName="HOURS" />
+          <ScalarProperty Name="FREQUENCY_DAYS" ColumnName="FREQUENCY_DAYS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DISCOUNTS_BILL">
+      <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
+        <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+          <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
+          <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
+          <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="BIT" ColumnName="BIT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -258,5 +315,22 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="BILL_RANGE">
+      <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
+        <MappingFragment StoreEntitySet="BILL_RANGE">
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="BILL_RANGE_STATE" ColumnName="BILL_RANGE_STATE" />
+          <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
+          <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
+          <ScalarProperty Name="INITIAL_RANGE" ColumnName="INITIAL_RANGE" />
+          <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
+          <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
+          <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
+          <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

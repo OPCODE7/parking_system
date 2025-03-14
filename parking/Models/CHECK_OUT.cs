@@ -22,11 +22,12 @@ namespace parking.Models
     
         public string CHECK_OUT_CODE { get; set; }
         public System.DateTime CHECK_OUT_TIME { get; set; }
-        public int TOTAL_TIME { get; set; }
+        public decimal TOTAL_TIME { get; set; }
         public decimal FULL_CHARGE { get; set; }
         public string CHECK_OUT_STATE { get; set; }
         public string CHECK_IN_CODE { get; set; }
         public string USER_CODE { get; set; }
+        public bool DEL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILL> BILL { get; set; }

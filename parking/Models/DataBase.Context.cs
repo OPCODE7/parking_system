@@ -31,7 +31,11 @@ namespace parking.Models
         public virtual DbSet<CHECK_IN> CHECK_IN { get; set; }
         public virtual DbSet<CHECK_OUT> CHECK_OUT { get; set; }
         public virtual DbSet<CLIENTS> CLIENTS { get; set; }
+        public virtual DbSet<COMPANY_DATA> COMPANY_DATA { get; set; }
         public virtual DbSet<CORRELATIVES> CORRELATIVES { get; set; }
+        public virtual DbSet<DISCOUNT_TYPE> DISCOUNT_TYPE { get; set; }
+        public virtual DbSet<DISCOUNTS> DISCOUNTS { get; set; }
+        public virtual DbSet<DISCOUNTS_BILL> DISCOUNTS_BILL { get; set; }
         public virtual DbSet<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         public virtual DbSet<EMPLOYEES> EMPLOYEES { get; set; }
         public virtual DbSet<HORARY> HORARY { get; set; }
@@ -46,6 +50,7 @@ namespace parking.Models
         public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
+        public virtual DbSet<BILL_RANGE> BILL_RANGE { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

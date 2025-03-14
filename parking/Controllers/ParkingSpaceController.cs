@@ -61,11 +61,12 @@ namespace parking.Controllers
                 {
                     var query = from ps in db.PARKING_SPACE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
-                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE where pt.PARKING_TYPE_CODE == parkingType where ps.DEL == false
+                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE where pt.PARKING_TYPE_CODE == parkingType where ps.DEL == false 
                                 select new
                                 {
                                     ps.PARKING_SPACE_CODE,
                                     ps.PARKING_SPACE_NUMBER,
+                                    ps.STATE,
                                     IS_DEL = ps.DEL
                                 };
                     parkingSpaces = query.ToList();
@@ -80,7 +81,7 @@ namespace parking.Controllers
         }
 
 
-        public dynamic getParkingSpace(string id)
+        public dynamic getInfoParkingSpace(string id)
         {
             dynamic psp = new PARKING_SPACE();
             try
@@ -103,6 +104,7 @@ namespace parking.Controllers
                                       pt.PARKING_TYPE_CODE,
                                  };
 
+                    psp = query.FirstOrDefault();
                 }
 
             }
@@ -113,7 +115,25 @@ namespace parking.Controllers
 
             return psp;
         }
+        
+        public PARKING_SPACE getParkingSpace(string id)
+        {
+            PARKING_SPACE ps= new PARKING_SPACE();
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    ps = db.PARKING_SPACE.Find(id);
+                }
 
+            }
+            catch(Exception ex)
+            {
+                h.MsgError(ex.ToString());
+            }
+
+            return ps;
+        }
         public int saveParkingSpace(PARKING_SPACE ps)
         {
             int result = 0;

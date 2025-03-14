@@ -147,5 +147,16 @@ namespace parking.Views.Administration
             
 
         }
+
+        private void BtnCheckout_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            ParkingStructure.FrmCheckOut frmCheckOut = new ParkingStructure.FrmCheckOut();
+            frmCheckOut.MdiParent = this;
+            frmCheckOut.Show();
+
+        }
     }
 }

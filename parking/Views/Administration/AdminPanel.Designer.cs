@@ -36,6 +36,7 @@
             this.BtnJobPositions = new System.Windows.Forms.Button();
             this.BtnParkingType = new System.Windows.Forms.Button();
             this.BtnParkingSpace = new System.Windows.Forms.Button();
+            this.BtnClients = new System.Windows.Forms.Button();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
@@ -53,7 +54,6 @@
             this.BtnPermissions = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnClients = new System.Windows.Forms.Button();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
@@ -156,6 +156,20 @@
             this.BtnParkingSpace.Text = "Espacios de parqueo";
             this.BtnParkingSpace.UseVisualStyleBackColor = false;
             this.BtnParkingSpace.Click += new System.EventHandler(this.BtnParkingSpace_Click);
+            // 
+            // BtnClients
+            // 
+            this.BtnClients.BackColor = System.Drawing.Color.Teal;
+            this.BtnClients.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnClients.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnClients.Location = new System.Drawing.Point(3, 436);
+            this.BtnClients.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnClients.Name = "BtnClients";
+            this.BtnClients.Size = new System.Drawing.Size(211, 54);
+            this.BtnClients.TabIndex = 8;
+            this.BtnClients.Text = "Clientes";
+            this.BtnClients.UseVisualStyleBackColor = false;
+            this.BtnClients.Click += new System.EventHandler(this.BtnClients_Click);
             // 
             // PbxClose
             // 
@@ -263,6 +277,7 @@
             this.BtnCheckout.Name = "BtnCheckout";
             this.BtnCheckout.Size = new System.Drawing.Size(136, 36);
             this.BtnCheckout.Text = "Check-Out";
+            this.BtnCheckout.Click += new System.EventHandler(this.BtnCheckout_Click);
             // 
             // toolStripSeparator3
             // 
@@ -314,20 +329,6 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 41);
-            // 
-            // BtnClients
-            // 
-            this.BtnClients.BackColor = System.Drawing.Color.Teal;
-            this.BtnClients.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnClients.ForeColor = System.Drawing.SystemColors.Control;
-            this.BtnClients.Location = new System.Drawing.Point(3, 436);
-            this.BtnClients.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.BtnClients.Name = "BtnClients";
-            this.BtnClients.Size = new System.Drawing.Size(211, 54);
-            this.BtnClients.TabIndex = 8;
-            this.BtnClients.Text = "Clientes";
-            this.BtnClients.UseVisualStyleBackColor = false;
-            this.BtnClients.Click += new System.EventHandler(this.BtnClients_Click);
             // 
             // AdminPanel
             // 

@@ -137,19 +137,62 @@ namespace parking.Helpers
 
         //Fin Metodo ConvertDouble
 
-        //Metodo MakeHash
-        //Metodo para crear un Hash 
-        public string MakeHash(string Key)
+        //Metodo ConvertAmountToWords
+        //Convierte un monto en letras
+
+
+        public string ConvertAmountToWords(decimal amount, string currency = "lempiras", int centsFormat = 1)
         {
-            string hash = "";
-            SHA512 sha512 = new SHA512CryptoServiceProvider();
-            byte[] inputbytes = (new UnicodeEncoding()).GetBytes(Key);
-            byte[] result = sha512.ComputeHash(inputbytes);
-            hash = Convert.ToBase64String(result);
+            string[] units = { "cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez",
+                       "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve" };
 
-            return hash;
-        }
-        //Fin Metodo MakeHash
+            string[] tens = { "", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa" };
 
+            string[] hundreds = { "", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos",
+                          "setecientos", "ochocientos", "novecientos" };
+
+            string ConvertNumberToWords(long number)
+            {
+                if (number < 20) return units[number];
+                if (number < 100) return tens[number / 10] + (number % 10 == 0 ? "" : " y " + units[number % 10]);
+                if (number < 1000) return (number == 100 ? "cien" : hundreds[number / 100] + " " + ConvertNumberToWords(number % 100)).Trim();
+                if (number < 1000000) return (number / 1000 == 1 ? "mil" : ConvertNumberToWords(number / 1000) + " mil") +
+                                        (number % 1000 == 0 ? "" : " " + ConvertNumberToWords(number % 1000));
+                if (number < 1000000000) return ConvertNumberToWords(number / 1000000) + " millones" +
+                                        (number % 1000000 == 0 ? "" : " " + ConvertNumberToWords(number % 1000000));
+
+                return "Número fuera de rango";
+            }
+
+            if (amount == 0) return "cero";
+
+            long integerPart = (long)Math.Floor(amount);
+            int decimalPart = (int)((amount - integerPart) * 100);
+
+            string result = ConvertNumberToWords(integerPart).Trim();
+
+            if (decimalPart > 0)
+            {
+                result += " con ";
+                switch (centsFormat)
+                {
+                    case 1: // "con cincuenta y seis centavos"
+                        result += ConvertNumberToWords(decimalPart) + " centavos";
+                        break;
+                    case 2: // "con 56 centavos"
+                        result += decimalPart + " centavos";
+                        break;
+                    case 3: // "con 56/100"
+                    default:
+                        result += $"{decimalPart:D2}/100";
+                        break;
+                }
+            }
+
+            return result + $" {currency}";
+        } 
+    
+        //FinMetodoConvertAmountToWords
     }
 }
+
