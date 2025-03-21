@@ -100,6 +100,7 @@
     <Compile Include="Controllers\CheckInController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\CompanyDataController.cs" />
     <Compile Include="Controllers\CorrelativesController.cs" />
     <Compile Include="Controllers\DiscountsBillController.cs" />
     <Compile Include="Controllers\DiscountsController.cs" />
@@ -238,6 +239,12 @@
     <Compile Include="Views\Administration\Clients\FrmSearchClient.Designer.cs">
       <DependentUpon>FrmSearchClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Administration\Configuration\FrmCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Configuration\FrmCompany.Designer.cs">
+      <DependentUpon>FrmCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Administration\Employees\FrmEmployees.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -316,10 +323,18 @@
     <Compile Include="Views\Auth\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsGenerateBill.cs">
+      <DependentUpon>DtsGenerateBill.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DataSets\DtsGenerateBill.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsGenerateBill.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsGetCompanyData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\FrmGeneratedBillReport.cs">
       <SubType>Form</SubType>
@@ -348,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Clients\FrmSearchClient.resx">
       <DependentUpon>FrmSearchClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Configuration\FrmCompany.resx">
+      <DependentUpon>FrmCompany.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Employees\FrmEmployees.resx">
       <DependentUpon>FrmEmployees.cs</DependentUpon>
@@ -391,6 +409,7 @@
     <EmbeddedResource Include="Views\Reports\FrmGeneratedBillReport.resx">
       <DependentUpon>FrmGeneratedBillReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportGeneratedBill.rdlc" />
     <EntityDeploy Include="Models\DataBase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
@@ -419,6 +438,17 @@
     </None>
     <None Include="Views\Reports\DataSets\DtsGenerateBill.xss">
       <DependentUpon>DtsGenerateBill.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetCompanyData.xsc">
+      <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetCompanyData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsGetCompanyData.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetCompanyData.xss">
+      <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

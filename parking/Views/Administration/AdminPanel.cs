@@ -1,4 +1,5 @@
-﻿using parking.Views.Administration.Employees;
+﻿using parking.Views.Administration.Configuration;
+using parking.Views.Administration.Employees;
 using parking.Views.Administration.ParkingStructure;
 using System;
 using System.Collections.Generic;
@@ -157,6 +158,22 @@ namespace parking.Views.Administration
             frmCheckOut.MdiParent = this;
             frmCheckOut.Show();
 
+        }
+
+        private void AdminPanel_Load(object sender, EventArgs e)
+        {
+            this.Focus();
+            
+        }
+
+        private void BtnCompanyData_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmCompany frmCompany = new FrmCompany();
+            frmCompany.MdiParent = this;
+            frmCompany.Show();
         }
     }
 }

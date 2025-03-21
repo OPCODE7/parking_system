@@ -28,21 +28,21 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void FrmSearchCheckIn_Load(object sender, EventArgs e)
         {
-            getCheckIns();
+            getCheckIns("","ACTIVO");
 
         }
 
-        private void getCheckIns(string searchFilter = "")
+        private void getCheckIns(string searchFilter = "",string state="")
         {
             DgvCheckIns.Rows.Clear();
-            var checkIns = checkInController.getCheckIns(searchFilter);
+            var checkIns = checkInController.getCheckIns(searchFilter,"ACTIVO");
 
             if (checkIns.Count() == 0)
             {
                 h.MsgInfo("No se encontraron registros.");
                 if (searchFilter != "")
                 {
-                    getCheckIns();
+                    getCheckIns("","ACTIVO");
                 }
                 return;
             }

@@ -89,8 +89,6 @@
           <Property Name="COMPANY_ADDRESS" Type="text" Nullable="false" />
           <Property Name="COMPANY_EMAIL" Type="text" Nullable="false" />
           <Property Name="COMPANY_PHONE" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="INITIAL_BILL" Type="int" Nullable="false" />
-          <Property Name="FINAL_BILL" Type="int" Nullable="false" />
           <Property Name="LEGAL_FORM" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
           <Property Name="DEL" Type="bit" Nullable="false" />
@@ -111,7 +109,7 @@
             <PropertyRef Name="DISCOUNT_TYPE_ID" />
           </Key>
           <Property Name="DISCOUNT_TYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="varchar(max)" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="DEL" Type="bit" Nullable="false" />
           <Property Name="USER_ID" Type="varchar" MaxLength="15" />
@@ -134,7 +132,8 @@
           <Key>
             <PropertyRef Name="DISCOUNTS_BILL_ID" />
           </Key>
-          <Property Name="DISCOUNTS_BILL_ID" Type="int" Nullable="false" />
+          <Property Name="DISCOUNTS_BILL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DISCOUNT_AMOUNT" Type="decimal" Precision="10" Scale="2" />
           <Property Name="DISCOUNT_ID" Type="int" Nullable="false" />
           <Property Name="BILL_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
@@ -812,8 +811,6 @@
           <Property Name="COMPANY_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="COMPANY_EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="COMPANY_PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INITIAL_BILL" Type="Int32" Nullable="false" />
-          <Property Name="FINAL_BILL" Type="Int32" Nullable="false" />
           <Property Name="LEGAL_FORM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DEL" Type="Boolean" Nullable="false" />
@@ -834,7 +831,7 @@
             <PropertyRef Name="DISCOUNT_TYPE_ID" />
           </Key>
           <Property Name="DISCOUNT_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -868,6 +865,7 @@
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="BIT" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
+          <Property Name="DISCOUNT_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="EMPLOYEE_USER">
           <Key>
@@ -1592,8 +1590,6 @@
                 <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />
                 <ScalarProperty Name="COMPANY_EMAIL" ColumnName="COMPANY_EMAIL" />
                 <ScalarProperty Name="COMPANY_PHONE" ColumnName="COMPANY_PHONE" />
-                <ScalarProperty Name="INITIAL_BILL" ColumnName="INITIAL_BILL" />
-                <ScalarProperty Name="FINAL_BILL" ColumnName="FINAL_BILL" />
                 <ScalarProperty Name="LEGAL_FORM" ColumnName="LEGAL_FORM" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="DEL" ColumnName="DEL" />
@@ -1641,6 +1637,7 @@
           <EntitySetMapping Name="DISCOUNTS_BILL">
             <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
               <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+                <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
                 <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
                 <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
                 <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />

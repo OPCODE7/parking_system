@@ -19,6 +19,7 @@ namespace parking.Models
         public string BILL_CODE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool BIT { get; set; }
+        public Nullable<decimal> DISCOUNT_AMOUNT { get; set; }
     
         public virtual DISCOUNTS DISCOUNTS { get; set; }
     }

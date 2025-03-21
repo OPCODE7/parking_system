@@ -34,9 +34,9 @@
             // RptBill
             // 
             this.RptBill.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RptBill.LocalReport.ReportEmbeddedResource = "parking.Views.Reports.RDLC.ReportGeneratedBill.rdlc";
             this.RptBill.Location = new System.Drawing.Point(0, 0);
             this.RptBill.Name = "RptBill";
-            this.RptBill.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote;
             this.RptBill.ServerReport.BearerToken = null;
             this.RptBill.Size = new System.Drawing.Size(870, 647);
             this.RptBill.TabIndex = 0;
@@ -50,6 +50,7 @@
             this.Name = "FrmGeneratedBillReport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmGeneratedBillReport";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmGeneratedBillReport_Load);
             this.ResumeLayout(false);
 

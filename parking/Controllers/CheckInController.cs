@@ -30,7 +30,7 @@ namespace parking.Controllers
                                 join cli in db.CLIENTS on c.CLIENT_DNI equals cli.CLIENT_CODE
                                 where String.IsNullOrEmpty(searchFilter) ?
                                 c.IS_DEL == false &&
-                                string.IsNullOrEmpty(state) ? c.CHECK_IN_STATE == "ACTIVO" : c.CHECK_IN_STATE == state :
+                                string.IsNullOrEmpty(state) ? c.CHECK_IN_STATE == "ACTIVO" || c.CHECK_IN_STATE=="INACTIVO" || c.CHECK_IN_STATE=="FINALIZADO": c.CHECK_IN_STATE == state :
                      (c.CLIENT_DNI.Contains(searchFilter) || (cli.CLIENT_NAME + " " + cli.CLIENT_LASTNAME).Contains(searchFilter) || c.VEHICLE_PLATE.Contains(searchFilter) || c.OBSERVATIONS.Contains(searchFilter) || c.CHECK_IN_CODE.Contains(searchFilter) || c.CHECK_IN_STATE.Contains(searchFilter) || pt.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) || ps.PARKING_SPACE_NUMBER.ToString().Contains(searchFilter) || c.CHECK_IN_TIME.ToString().Contains(searchFilter)) && c.IS_DEL==false
                                select new
                                {
@@ -120,6 +120,8 @@ namespace parking.Controllers
             }
             return checkIn;
         }
+
+       
 
         public int saveCheckIn(CHECK_IN checkIn)
         {

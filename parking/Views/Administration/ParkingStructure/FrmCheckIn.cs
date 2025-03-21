@@ -31,6 +31,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void FrmCheckIn_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
             startForm();
         }
 
@@ -117,7 +118,9 @@ namespace parking.Views.Administration.ParkingStructure
                 Txt.Enabled = true;
                 Txt.Clear();
             }
-
+            TxtClientName.Enabled = false;
+            TxtPrice.Enabled = false;
+            MskClientPhone.Enabled = false;
             CmbParkingTypes.Enabled = true;
             string newcode = "CIN" + correlativesController.getNextId("CIN");
             TxtCheckInCode.Text = newcode;
@@ -201,6 +204,12 @@ namespace parking.Views.Administration.ParkingStructure
 
             if(checkIn!= null)
             {
+
+                if(checkIn.CHECK_IN_STATE=="FINALIZADO")
+                {
+                    BtnEdit.Enabled = false;
+                    BtnDelete.Enabled = false;
+                }
                 TxtCheckInCode.Text = checkIn.CHECK_IN_CODE;
                 TxtClientCode.Text= checkIn.CLIENT_DNI;
                 getInfoClient(checkIn.CLIENT_DNI);
@@ -335,7 +344,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             int error = 0;
             string decimals = "^\\d+(\\.\\d{2})?$";
-            string numbersAndLetters = "^[a-zA-Z0-9\\s]+$";
+            string numbersAndLetters = "^[a-zA-Z0-9,.\\s]+$";
 
             if(TxtClientCode.Text.Trim()!="")
             {
@@ -396,10 +405,10 @@ namespace parking.Views.Administration.ParkingStructure
             return error;
         }
 
-        private void getCheckIns(string searchFilter="")
+        private void getCheckIns(string searchFilter="",string state="")
         {
             DgvCheckIns.Rows.Clear();
-            var checkIns = checkInController.getCheckIns(searchFilter);
+            var checkIns = checkInController.getCheckIns(searchFilter,state);
 
             if (checkIns.Count() == 0) {
                 h.MsgInfo("No se encontraron registros.");
@@ -412,7 +421,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             foreach (var checkIn in checkIns)
             {
-                DgvCheckIns.Rows.Add(checkIn.CHECK_IN_CODE, checkIn.VEHICLE_PLATE, checkIn.PARKING_SPACE_NUMBER, checkIn.DESCRIPTION_PARKING_TYPE,checkIn.CHECK_IN_TIME, checkIn.CHECK_IN_STATE);
+                DgvCheckIns.Rows.Add(checkIn.CHECK_IN_CODE, checkIn.VEHICLE_PLATE, checkIn.PARKING_SPACE_NUMBER, checkIn.CLIENT_NAME + " " + checkIn.CLIENT_LASTNAME, checkIn.DESCRIPTION_PARKING_TYPE,checkIn.CHECK_IN_TIME, checkIn.CHECK_IN_STATE);
             }
         }
     }

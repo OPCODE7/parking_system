@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmParkingFee));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label4 = new System.Windows.Forms.Label();
             this.CmbParkingTypes = new System.Windows.Forms.ComboBox();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
@@ -92,7 +92,7 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(503, 222);
+            this.PbxSearch.Location = new System.Drawing.Point(544, 222);
             this.PbxSearch.Name = "PbxSearch";
             this.PbxSearch.Size = new System.Drawing.Size(31, 30);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -106,7 +106,7 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(546, 222);
+            this.PbxCancel.Location = new System.Drawing.Point(587, 222);
             this.PbxCancel.Name = "PbxCancel";
             this.PbxCancel.Size = new System.Drawing.Size(31, 30);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -165,11 +165,11 @@
             this.DgvParkingFees.AllowUserToDeleteRows = false;
             this.DgvParkingFees.AllowUserToResizeColumns = false;
             this.DgvParkingFees.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvParkingFees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvParkingFees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvParkingFees.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvParkingFees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvParkingFees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -178,14 +178,14 @@
             this.TIPO_PARQUEO,
             this.USUARIO,
             this.REGISTRO});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvParkingFees.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvParkingFees.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvParkingFees.Location = new System.Drawing.Point(12, 268);
             this.DgvParkingFees.Name = "DgvParkingFees";
             this.DgvParkingFees.ReadOnly = true;
@@ -193,7 +193,7 @@
             this.DgvParkingFees.RowHeadersWidth = 62;
             this.DgvParkingFees.RowTemplate.Height = 28;
             this.DgvParkingFees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvParkingFees.Size = new System.Drawing.Size(568, 305);
+            this.DgvParkingFees.Size = new System.Drawing.Size(608, 305);
             this.DgvParkingFees.TabIndex = 6;
             this.DgvParkingFees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvParkingFees_CellDoubleClick);
             // 
@@ -239,7 +239,7 @@
             this.PbxClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.PbxClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxClose.Image = ((System.Drawing.Image)(resources.GetObject("PbxClose.Image")));
-            this.PbxClose.Location = new System.Drawing.Point(563, 9);
+            this.PbxClose.Location = new System.Drawing.Point(604, 9);
             this.PbxClose.Name = "PbxClose";
             this.PbxClose.Size = new System.Drawing.Size(27, 26);
             this.PbxClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -264,7 +264,7 @@
             this.BtnCancel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(593, 42);
+            this.toolStrip1.Size = new System.Drawing.Size(634, 42);
             this.toolStrip1.TabIndex = 124;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -338,7 +338,6 @@
             this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
-            this.ID.Width = 130;
             // 
             // PRECIO_POR_HORA
             // 
@@ -346,7 +345,7 @@
             this.PRECIO_POR_HORA.MinimumWidth = 8;
             this.PRECIO_POR_HORA.Name = "PRECIO_POR_HORA";
             this.PRECIO_POR_HORA.ReadOnly = true;
-            this.PRECIO_POR_HORA.Width = 150;
+            this.PRECIO_POR_HORA.Width = 70;
             // 
             // TIPO_PARQUEO
             // 
@@ -362,7 +361,6 @@
             this.USUARIO.MinimumWidth = 8;
             this.USUARIO.Name = "USUARIO";
             this.USUARIO.ReadOnly = true;
-            this.USUARIO.Width = 150;
             // 
             // REGISTRO
             // 
@@ -370,13 +368,12 @@
             this.REGISTRO.MinimumWidth = 8;
             this.REGISTRO.Name = "REGISTRO";
             this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
             // 
             // FrmParkingFee
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(593, 579);
+            this.ClientSize = new System.Drawing.Size(634, 579);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.CmbParkingTypes);
             this.Controls.Add(this.PbxSearch);

@@ -23,6 +23,12 @@ namespace parking.Views.Administration.BillingModule
         CorrelativesController correlativesController = new CorrelativesController();
         Helpers.Helpers h = new Helpers.Helpers();
         CheckOutController checkOutController = new CheckOutController();
+        DiscountsBillController discountsBillController= new DiscountsBillController();
+        ParkingSpaceController pspController = new ParkingSpaceController();
+
+        public int discountIdFT,discountIdFF;
+        public double amountDiscountFT,amountDiscountFF;
+        public string psCode;
         public FrmGenerateBill()
         {
             InitializeComponent();
@@ -31,13 +37,15 @@ namespace parking.Views.Administration.BillingModule
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+            FrmCheckOut frmCheckOut = (FrmCheckOut)this.Owner;
+            frmCheckOut.BtnGenerateBill.Visible = true;
         }
 
         private void PbxClose_Click(object sender, EventArgs e)
         {
             this.Close();
             FrmCheckOut frmCheckOut = (FrmCheckOut)this.Owner;
-            frmCheckOut.startForm();
+            frmCheckOut.BtnGenerateBill.Visible = true;
         }
 
         private void BtnGenerateBill_Click(object sender, EventArgs e)
@@ -45,27 +53,70 @@ namespace parking.Views.Administration.BillingModule
             if (validateData() == 0)
             {
                 BILL newBill = new BILL();
-                newBill.BILL_CODE = "FAC" + correlativesController.getNextId("FAC");
+                string nextBillCode= "FAC" + correlativesController.getNextId("FAC");
+                newBill.BILL_CODE = nextBillCode;
                 newBill.DATE_OF_ISSUE = DateTime.Now;
-                newBill.BILL_NUMBER = billController.GenerateNextBillNumber();
-                newBill.SUBTOTAL = Convert.ToDecimal(Regex.Replace(TxtSubtotal.Text, @"[^\d]", ""));
-                newBill.DISCOUNT = Convert.ToDecimal(Regex.Replace(TxtDiscount.Text, @"[^\d]", ""));
+                newBill.BILL_NUMBER = billController.GenerateNextBillNumber(); ;
+                newBill.SUBTOTAL = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
+                newBill.DISCOUNT = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
                 newBill.ISV = Convert.ToDecimal(Regex.Replace(TxtISV.Text, "%", ""));
                 newBill.CHECK_OUT_CODE = TxtCheckOutCode.Text;
                 newBill.USER_CODE = Config.User.userId;
                 newBill.RTN = String.IsNullOrEmpty(TxtRTN.Text) ? null : TxtRTN.Text.Trim();
-                newBill.TOTAL = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"[^\d]", ""));
-                newBill.LETTERS = h.ConvertAmountToWords(Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"[^\d]", "")));
+                newBill.TOTAL = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
+                newBill.LETTERS = h.ConvertAmountToWords(Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", "")));
                 
 
                 if (billController.saveBill(newBill) > 0)
                 {
+                    DISCOUNTS_BILL discountBillFT = new DISCOUNTS_BILL(), discountBillFF= new DISCOUNTS_BILL();
+                    PARKING_SPACE ps = pspController.getParkingSpace(psCode);
+                    ps.STATE = false;
+
+                    if (pspController.updateParkingSpace(ps) <= 0)
+                    {
+                        h.MsgError("Ha ocurrido un error al actualizar el estado del parqueo");
+                        return;
+                    }
+
+                    if(discountIdFF!=0)
+                    {
+                        discountBillFF.BILL_CODE = nextBillCode;
+                        discountBillFF.DISCOUNT_ID = discountIdFF;
+                        discountBillFF.DISCOUNT_AMOUNT = Convert.ToDecimal(amountDiscountFF);
+                        discountBillFF.INSERTED_AT = DateTime.Now;
+
+                        if(discountsBillController.saveDiscountsBill(discountBillFF) <= 0)
+                        {
+                            h.MsgError("Ha ocurrido un error al guardar el descuento por frecuencia");
+                            return;
+                        }
+                    }
+
+                    if (discountIdFT != 0)
+                    {
+                        discountBillFT.BILL_CODE = nextBillCode;
+                        discountBillFT.DISCOUNT_ID = discountIdFT;
+                        discountBillFT.DISCOUNT_AMOUNT = Convert.ToDecimal(amountDiscountFT);
+                        discountBillFT.INSERTED_AT = DateTime.Now;
+
+                        if (discountsBillController.saveDiscountsBill(discountBillFT) <= 0)
+                        {
+                            h.MsgError("Ha ocurrido un error al guardar el descuento por tiempo");
+                            return;
+                        }
+                    }
+
                     h.MsgSuccess("La factura se ha generado correctamente");
-                    CHECK_OUT checkOut= checkOutController.getCheckOut(TxtCheckOutCode.Text);
+
+                    CHECK_OUT checkOut = checkOutController.getCheckOut(TxtCheckOutCode.Text);
                     checkOut.CHECK_OUT_STATE = "FACTURADO";
                     checkOutController.updateCheckOut(checkOut);
+                    FrmCheckOut frmCheckOut = (FrmCheckOut)this.Owner;
+                    frmCheckOut.startForm();
                     this.Close();
                     Reports.FrmGeneratedBillReport frmGeneratedBillReport = new Reports.FrmGeneratedBillReport();
+                    frmGeneratedBillReport.billCode = nextBillCode;
                     frmGeneratedBillReport.ShowDialog();
                 }
                 else
@@ -91,6 +142,11 @@ namespace parking.Views.Administration.BillingModule
                 }
             }
             return error;
-        } 
+        }
+
+        private void FrmGenerateBill_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

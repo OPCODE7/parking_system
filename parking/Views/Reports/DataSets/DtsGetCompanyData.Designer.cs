@@ -20,17 +20,17 @@ namespace parking.Views.Reports.DataSets {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("DtsGenerateBill")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DtsGetCompanyData")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class DtsGenerateBill : global::System.Data.DataSet {
+    public partial class DtsGetCompanyData : global::System.Data.DataSet {
         
-        private SP_REPORT_GENERATED_INVOICEDataTable tableSP_REPORT_GENERATED_INVOICE;
+        private SP_GET_COMPANY_DATADataTable tableSP_GET_COMPANY_DATA;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public DtsGenerateBill() {
+        public DtsGetCompanyData() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace parking.Views.Reports.DataSets {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        protected DtsGenerateBill(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DtsGetCompanyData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace parking.Views.Reports.DataSets {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["SP_REPORT_GENERATED_INVOICE"] != null)) {
-                    base.Tables.Add(new SP_REPORT_GENERATED_INVOICEDataTable(ds.Tables["SP_REPORT_GENERATED_INVOICE"]));
+                if ((ds.Tables["SP_GET_COMPANY_DATA"] != null)) {
+                    base.Tables.Add(new SP_GET_COMPANY_DATADataTable(ds.Tables["SP_GET_COMPANY_DATA"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace parking.Views.Reports.DataSets {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SP_REPORT_GENERATED_INVOICEDataTable SP_REPORT_GENERATED_INVOICE {
+        public SP_GET_COMPANY_DATADataTable SP_GET_COMPANY_DATA {
             get {
-                return this.tableSP_REPORT_GENERATED_INVOICE;
+                return this.tableSP_GET_COMPANY_DATA;
             }
         }
         
@@ -127,7 +127,7 @@ namespace parking.Views.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DtsGenerateBill cln = ((DtsGenerateBill)(base.Clone()));
+            DtsGetCompanyData cln = ((DtsGetCompanyData)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace parking.Views.Reports.DataSets {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["SP_REPORT_GENERATED_INVOICE"] != null)) {
-                    base.Tables.Add(new SP_REPORT_GENERATED_INVOICEDataTable(ds.Tables["SP_REPORT_GENERATED_INVOICE"]));
+                if ((ds.Tables["SP_GET_COMPANY_DATA"] != null)) {
+                    base.Tables.Add(new SP_GET_COMPANY_DATADataTable(ds.Tables["SP_GET_COMPANY_DATA"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace parking.Views.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableSP_REPORT_GENERATED_INVOICE = ((SP_REPORT_GENERATED_INVOICEDataTable)(base.Tables["SP_REPORT_GENERATED_INVOICE"]));
+            this.tableSP_GET_COMPANY_DATA = ((SP_GET_COMPANY_DATADataTable)(base.Tables["SP_GET_COMPANY_DATA"]));
             if ((initTable == true)) {
-                if ((this.tableSP_REPORT_GENERATED_INVOICE != null)) {
-                    this.tableSP_REPORT_GENERATED_INVOICE.InitVars();
+                if ((this.tableSP_GET_COMPANY_DATA != null)) {
+                    this.tableSP_GET_COMPANY_DATA.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace parking.Views.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "DtsGenerateBill";
+            this.DataSetName = "DtsGetCompanyData";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DtsGenerateBill.xsd";
+            this.Namespace = "http://tempuri.org/DtsGetCompanyData.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableSP_REPORT_GENERATED_INVOICE = new SP_REPORT_GENERATED_INVOICEDataTable();
-            base.Tables.Add(this.tableSP_REPORT_GENERATED_INVOICE);
+            this.tableSP_GET_COMPANY_DATA = new SP_GET_COMPANY_DATADataTable();
+            base.Tables.Add(this.tableSP_GET_COMPANY_DATA);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializeSP_REPORT_GENERATED_INVOICE() {
+        private bool ShouldSerializeSP_GET_COMPANY_DATA() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace parking.Views.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DtsGenerateBill ds = new DtsGenerateBill();
+            DtsGetCompanyData ds = new DtsGetCompanyData();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,53 +270,37 @@ namespace parking.Views.Reports.DataSets {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void SP_REPORT_GENERATED_INVOICERowChangeEventHandler(object sender, SP_REPORT_GENERATED_INVOICERowChangeEvent e);
+        public delegate void SP_GET_COMPANY_DATARowChangeEventHandler(object sender, SP_GET_COMPANY_DATARowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SP_REPORT_GENERATED_INVOICEDataTable : global::System.Data.TypedTableBase<SP_REPORT_GENERATED_INVOICERow> {
+        public partial class SP_GET_COMPANY_DATADataTable : global::System.Data.TypedTableBase<SP_GET_COMPANY_DATARow> {
             
-            private global::System.Data.DataColumn columnBILL_CODE;
+            private global::System.Data.DataColumn columnCOMPANY_RTN;
             
-            private global::System.Data.DataColumn columnBILL_NUMBER;
+            private global::System.Data.DataColumn columnCOMPANY_NAME;
             
-            private global::System.Data.DataColumn columnDATE_OF_ISSUE;
+            private global::System.Data.DataColumn columnCOMPANY_ADDRESS;
             
-            private global::System.Data.DataColumn columnCHECK_OUT_CODE;
+            private global::System.Data.DataColumn columnCOMPANY_EMAIL;
             
-            private global::System.Data.DataColumn columnDISCOUNT;
+            private global::System.Data.DataColumn columnCOMPANY_PHONE;
             
-            private global::System.Data.DataColumn columnISV;
+            private global::System.Data.DataColumn columnLEGAL_FORM;
             
-            private global::System.Data.DataColumn columnLETTERS;
+            private global::System.Data.DataColumn columnINSERTED_AT;
             
-            private global::System.Data.DataColumn columnRTN;
+            private global::System.Data.DataColumn columnDEL;
             
-            private global::System.Data.DataColumn columnSUBTOTAL;
-            
-            private global::System.Data.DataColumn columnTOTAL;
-            
-            private global::System.Data.DataColumn columnUSER_CODE;
-            
-            private global::System.Data.DataColumn columnCLIENT_NAME;
-            
-            private global::System.Data.DataColumn columnCLIENT_LASTNAME;
-            
-            private global::System.Data.DataColumn columnPARKING_SPACE_NUMBER;
-            
-            private global::System.Data.DataColumn columnDESCRIPTION_PARKING_TYPE;
-            
-            private global::System.Data.DataColumn columnPRICE_FOR_HOUR;
-            
-            private global::System.Data.DataColumn columnDISCOUNT_DETAILS;
+            private global::System.Data.DataColumn columnUSER_ID;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICEDataTable() {
-                this.TableName = "SP_REPORT_GENERATED_INVOICE";
+            public SP_GET_COMPANY_DATADataTable() {
+                this.TableName = "SP_GET_COMPANY_DATA";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -324,7 +308,7 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal SP_REPORT_GENERATED_INVOICEDataTable(global::System.Data.DataTable table) {
+            internal SP_GET_COMPANY_DATADataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -341,144 +325,80 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected SP_REPORT_GENERATED_INVOICEDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected SP_GET_COMPANY_DATADataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn BILL_CODEColumn {
+            public global::System.Data.DataColumn COMPANY_RTNColumn {
                 get {
-                    return this.columnBILL_CODE;
+                    return this.columnCOMPANY_RTN;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn BILL_NUMBERColumn {
+            public global::System.Data.DataColumn COMPANY_NAMEColumn {
                 get {
-                    return this.columnBILL_NUMBER;
+                    return this.columnCOMPANY_NAME;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn DATE_OF_ISSUEColumn {
+            public global::System.Data.DataColumn COMPANY_ADDRESSColumn {
                 get {
-                    return this.columnDATE_OF_ISSUE;
+                    return this.columnCOMPANY_ADDRESS;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn CHECK_OUT_CODEColumn {
+            public global::System.Data.DataColumn COMPANY_EMAILColumn {
                 get {
-                    return this.columnCHECK_OUT_CODE;
+                    return this.columnCOMPANY_EMAIL;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn DISCOUNTColumn {
+            public global::System.Data.DataColumn COMPANY_PHONEColumn {
                 get {
-                    return this.columnDISCOUNT;
+                    return this.columnCOMPANY_PHONE;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn ISVColumn {
+            public global::System.Data.DataColumn LEGAL_FORMColumn {
                 get {
-                    return this.columnISV;
+                    return this.columnLEGAL_FORM;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn LETTERSColumn {
+            public global::System.Data.DataColumn INSERTED_ATColumn {
                 get {
-                    return this.columnLETTERS;
+                    return this.columnINSERTED_AT;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn RTNColumn {
+            public global::System.Data.DataColumn DELColumn {
                 get {
-                    return this.columnRTN;
+                    return this.columnDEL;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn SUBTOTALColumn {
+            public global::System.Data.DataColumn USER_IDColumn {
                 get {
-                    return this.columnSUBTOTAL;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn TOTALColumn {
-                get {
-                    return this.columnTOTAL;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn USER_CODEColumn {
-                get {
-                    return this.columnUSER_CODE;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn CLIENT_NAMEColumn {
-                get {
-                    return this.columnCLIENT_NAME;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn CLIENT_LASTNAMEColumn {
-                get {
-                    return this.columnCLIENT_LASTNAME;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn PARKING_SPACE_NUMBERColumn {
-                get {
-                    return this.columnPARKING_SPACE_NUMBER;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn DESCRIPTION_PARKING_TYPEColumn {
-                get {
-                    return this.columnDESCRIPTION_PARKING_TYPE;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn PRICE_FOR_HOURColumn {
-                get {
-                    return this.columnPRICE_FOR_HOUR;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn DISCOUNT_DETAILSColumn {
-                get {
-                    return this.columnDISCOUNT_DETAILS;
+                    return this.columnUSER_ID;
                 }
             }
             
@@ -493,85 +413,60 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERow this[int index] {
+            public SP_GET_COMPANY_DATARow this[int index] {
                 get {
-                    return ((SP_REPORT_GENERATED_INVOICERow)(this.Rows[index]));
+                    return ((SP_GET_COMPANY_DATARow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event SP_REPORT_GENERATED_INVOICERowChangeEventHandler SP_REPORT_GENERATED_INVOICERowChanging;
+            public event SP_GET_COMPANY_DATARowChangeEventHandler SP_GET_COMPANY_DATARowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event SP_REPORT_GENERATED_INVOICERowChangeEventHandler SP_REPORT_GENERATED_INVOICERowChanged;
+            public event SP_GET_COMPANY_DATARowChangeEventHandler SP_GET_COMPANY_DATARowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event SP_REPORT_GENERATED_INVOICERowChangeEventHandler SP_REPORT_GENERATED_INVOICERowDeleting;
+            public event SP_GET_COMPANY_DATARowChangeEventHandler SP_GET_COMPANY_DATARowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event SP_REPORT_GENERATED_INVOICERowChangeEventHandler SP_REPORT_GENERATED_INVOICERowDeleted;
+            public event SP_GET_COMPANY_DATARowChangeEventHandler SP_GET_COMPANY_DATARowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddSP_REPORT_GENERATED_INVOICERow(SP_REPORT_GENERATED_INVOICERow row) {
+            public void AddSP_GET_COMPANY_DATARow(SP_GET_COMPANY_DATARow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERow AddSP_REPORT_GENERATED_INVOICERow(
-                        string BILL_CODE, 
-                        string BILL_NUMBER, 
-                        System.DateTime DATE_OF_ISSUE, 
-                        string CHECK_OUT_CODE, 
-                        decimal DISCOUNT, 
-                        decimal ISV, 
-                        string LETTERS, 
-                        string RTN, 
-                        decimal SUBTOTAL, 
-                        decimal TOTAL, 
-                        string USER_CODE, 
-                        string CLIENT_NAME, 
-                        string CLIENT_LASTNAME, 
-                        int PARKING_SPACE_NUMBER, 
-                        string DESCRIPTION_PARKING_TYPE, 
-                        decimal PRICE_FOR_HOUR, 
-                        string DISCOUNT_DETAILS) {
-                SP_REPORT_GENERATED_INVOICERow rowSP_REPORT_GENERATED_INVOICERow = ((SP_REPORT_GENERATED_INVOICERow)(this.NewRow()));
+            public SP_GET_COMPANY_DATARow AddSP_GET_COMPANY_DATARow(string COMPANY_RTN, string COMPANY_NAME, string COMPANY_ADDRESS, string COMPANY_EMAIL, string COMPANY_PHONE, string LEGAL_FORM, System.DateTime INSERTED_AT, bool DEL, string USER_ID) {
+                SP_GET_COMPANY_DATARow rowSP_GET_COMPANY_DATARow = ((SP_GET_COMPANY_DATARow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        BILL_CODE,
-                        BILL_NUMBER,
-                        DATE_OF_ISSUE,
-                        CHECK_OUT_CODE,
-                        DISCOUNT,
-                        ISV,
-                        LETTERS,
-                        RTN,
-                        SUBTOTAL,
-                        TOTAL,
-                        USER_CODE,
-                        CLIENT_NAME,
-                        CLIENT_LASTNAME,
-                        PARKING_SPACE_NUMBER,
-                        DESCRIPTION_PARKING_TYPE,
-                        PRICE_FOR_HOUR,
-                        DISCOUNT_DETAILS};
-                rowSP_REPORT_GENERATED_INVOICERow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSP_REPORT_GENERATED_INVOICERow);
-                return rowSP_REPORT_GENERATED_INVOICERow;
+                        COMPANY_RTN,
+                        COMPANY_NAME,
+                        COMPANY_ADDRESS,
+                        COMPANY_EMAIL,
+                        COMPANY_PHONE,
+                        LEGAL_FORM,
+                        INSERTED_AT,
+                        DEL,
+                        USER_ID};
+                rowSP_GET_COMPANY_DATARow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSP_GET_COMPANY_DATARow);
+                return rowSP_GET_COMPANY_DATARow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERow FindByBILL_CODE(string BILL_CODE) {
-                return ((SP_REPORT_GENERATED_INVOICERow)(this.Rows.Find(new object[] {
-                            BILL_CODE})));
+            public SP_GET_COMPANY_DATARow FindByCOMPANY_RTN(string COMPANY_RTN) {
+                return ((SP_GET_COMPANY_DATARow)(this.Rows.Find(new object[] {
+                            COMPANY_RTN})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                SP_REPORT_GENERATED_INVOICEDataTable cln = ((SP_REPORT_GENERATED_INVOICEDataTable)(base.Clone()));
+                SP_GET_COMPANY_DATADataTable cln = ((SP_GET_COMPANY_DATADataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -579,123 +474,89 @@ namespace parking.Views.Reports.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new SP_REPORT_GENERATED_INVOICEDataTable();
+                return new SP_GET_COMPANY_DATADataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
-                this.columnBILL_CODE = base.Columns["BILL_CODE"];
-                this.columnBILL_NUMBER = base.Columns["BILL_NUMBER"];
-                this.columnDATE_OF_ISSUE = base.Columns["DATE_OF_ISSUE"];
-                this.columnCHECK_OUT_CODE = base.Columns["CHECK_OUT_CODE"];
-                this.columnDISCOUNT = base.Columns["DISCOUNT"];
-                this.columnISV = base.Columns["ISV"];
-                this.columnLETTERS = base.Columns["LETTERS"];
-                this.columnRTN = base.Columns["RTN"];
-                this.columnSUBTOTAL = base.Columns["SUBTOTAL"];
-                this.columnTOTAL = base.Columns["TOTAL"];
-                this.columnUSER_CODE = base.Columns["USER_CODE"];
-                this.columnCLIENT_NAME = base.Columns["CLIENT_NAME"];
-                this.columnCLIENT_LASTNAME = base.Columns["CLIENT_LASTNAME"];
-                this.columnPARKING_SPACE_NUMBER = base.Columns["PARKING_SPACE_NUMBER"];
-                this.columnDESCRIPTION_PARKING_TYPE = base.Columns["DESCRIPTION_PARKING_TYPE"];
-                this.columnPRICE_FOR_HOUR = base.Columns["PRICE_FOR_HOUR"];
-                this.columnDISCOUNT_DETAILS = base.Columns["DISCOUNT_DETAILS"];
+                this.columnCOMPANY_RTN = base.Columns["COMPANY_RTN"];
+                this.columnCOMPANY_NAME = base.Columns["COMPANY_NAME"];
+                this.columnCOMPANY_ADDRESS = base.Columns["COMPANY_ADDRESS"];
+                this.columnCOMPANY_EMAIL = base.Columns["COMPANY_EMAIL"];
+                this.columnCOMPANY_PHONE = base.Columns["COMPANY_PHONE"];
+                this.columnLEGAL_FORM = base.Columns["LEGAL_FORM"];
+                this.columnINSERTED_AT = base.Columns["INSERTED_AT"];
+                this.columnDEL = base.Columns["DEL"];
+                this.columnUSER_ID = base.Columns["USER_ID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             private void InitClass() {
-                this.columnBILL_CODE = new global::System.Data.DataColumn("BILL_CODE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBILL_CODE);
-                this.columnBILL_NUMBER = new global::System.Data.DataColumn("BILL_NUMBER", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBILL_NUMBER);
-                this.columnDATE_OF_ISSUE = new global::System.Data.DataColumn("DATE_OF_ISSUE", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDATE_OF_ISSUE);
-                this.columnCHECK_OUT_CODE = new global::System.Data.DataColumn("CHECK_OUT_CODE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCHECK_OUT_CODE);
-                this.columnDISCOUNT = new global::System.Data.DataColumn("DISCOUNT", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDISCOUNT);
-                this.columnISV = new global::System.Data.DataColumn("ISV", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnISV);
-                this.columnLETTERS = new global::System.Data.DataColumn("LETTERS", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLETTERS);
-                this.columnRTN = new global::System.Data.DataColumn("RTN", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRTN);
-                this.columnSUBTOTAL = new global::System.Data.DataColumn("SUBTOTAL", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSUBTOTAL);
-                this.columnTOTAL = new global::System.Data.DataColumn("TOTAL", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTOTAL);
-                this.columnUSER_CODE = new global::System.Data.DataColumn("USER_CODE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnUSER_CODE);
-                this.columnCLIENT_NAME = new global::System.Data.DataColumn("CLIENT_NAME", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCLIENT_NAME);
-                this.columnCLIENT_LASTNAME = new global::System.Data.DataColumn("CLIENT_LASTNAME", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCLIENT_LASTNAME);
-                this.columnPARKING_SPACE_NUMBER = new global::System.Data.DataColumn("PARKING_SPACE_NUMBER", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPARKING_SPACE_NUMBER);
-                this.columnDESCRIPTION_PARKING_TYPE = new global::System.Data.DataColumn("DESCRIPTION_PARKING_TYPE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDESCRIPTION_PARKING_TYPE);
-                this.columnPRICE_FOR_HOUR = new global::System.Data.DataColumn("PRICE_FOR_HOUR", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPRICE_FOR_HOUR);
-                this.columnDISCOUNT_DETAILS = new global::System.Data.DataColumn("DISCOUNT_DETAILS", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDISCOUNT_DETAILS);
+                this.columnCOMPANY_RTN = new global::System.Data.DataColumn("COMPANY_RTN", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCOMPANY_RTN);
+                this.columnCOMPANY_NAME = new global::System.Data.DataColumn("COMPANY_NAME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCOMPANY_NAME);
+                this.columnCOMPANY_ADDRESS = new global::System.Data.DataColumn("COMPANY_ADDRESS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCOMPANY_ADDRESS);
+                this.columnCOMPANY_EMAIL = new global::System.Data.DataColumn("COMPANY_EMAIL", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCOMPANY_EMAIL);
+                this.columnCOMPANY_PHONE = new global::System.Data.DataColumn("COMPANY_PHONE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCOMPANY_PHONE);
+                this.columnLEGAL_FORM = new global::System.Data.DataColumn("LEGAL_FORM", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLEGAL_FORM);
+                this.columnINSERTED_AT = new global::System.Data.DataColumn("INSERTED_AT", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnINSERTED_AT);
+                this.columnDEL = new global::System.Data.DataColumn("DEL", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDEL);
+                this.columnUSER_ID = new global::System.Data.DataColumn("USER_ID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUSER_ID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnBILL_CODE}, true));
-                this.columnBILL_CODE.AllowDBNull = false;
-                this.columnBILL_CODE.Unique = true;
-                this.columnBILL_CODE.MaxLength = 15;
-                this.columnBILL_NUMBER.AllowDBNull = false;
-                this.columnBILL_NUMBER.MaxLength = 20;
-                this.columnDATE_OF_ISSUE.AllowDBNull = false;
-                this.columnCHECK_OUT_CODE.AllowDBNull = false;
-                this.columnCHECK_OUT_CODE.MaxLength = 15;
-                this.columnDISCOUNT.AllowDBNull = false;
-                this.columnISV.AllowDBNull = false;
-                this.columnLETTERS.AllowDBNull = false;
-                this.columnLETTERS.MaxLength = 2147483647;
-                this.columnRTN.MaxLength = 14;
-                this.columnSUBTOTAL.AllowDBNull = false;
-                this.columnTOTAL.AllowDBNull = false;
-                this.columnUSER_CODE.AllowDBNull = false;
-                this.columnUSER_CODE.MaxLength = 15;
-                this.columnCLIENT_NAME.AllowDBNull = false;
-                this.columnCLIENT_NAME.MaxLength = 50;
-                this.columnCLIENT_LASTNAME.AllowDBNull = false;
-                this.columnCLIENT_LASTNAME.MaxLength = 50;
-                this.columnPARKING_SPACE_NUMBER.AllowDBNull = false;
-                this.columnDESCRIPTION_PARKING_TYPE.AllowDBNull = false;
-                this.columnDESCRIPTION_PARKING_TYPE.MaxLength = 50;
-                this.columnPRICE_FOR_HOUR.AllowDBNull = false;
-                this.columnDISCOUNT_DETAILS.ReadOnly = true;
-                this.columnDISCOUNT_DETAILS.MaxLength = 2147483647;
+                                this.columnCOMPANY_RTN}, true));
+                this.columnCOMPANY_RTN.AllowDBNull = false;
+                this.columnCOMPANY_RTN.Unique = true;
+                this.columnCOMPANY_RTN.MaxLength = 14;
+                this.columnCOMPANY_NAME.AllowDBNull = false;
+                this.columnCOMPANY_NAME.MaxLength = 150;
+                this.columnCOMPANY_ADDRESS.AllowDBNull = false;
+                this.columnCOMPANY_ADDRESS.MaxLength = 2147483647;
+                this.columnCOMPANY_EMAIL.AllowDBNull = false;
+                this.columnCOMPANY_EMAIL.MaxLength = 2147483647;
+                this.columnCOMPANY_PHONE.AllowDBNull = false;
+                this.columnCOMPANY_PHONE.MaxLength = 10;
+                this.columnLEGAL_FORM.AllowDBNull = false;
+                this.columnLEGAL_FORM.MaxLength = 30;
+                this.columnINSERTED_AT.AllowDBNull = false;
+                this.columnDEL.AllowDBNull = false;
+                this.columnUSER_ID.AllowDBNull = false;
+                this.columnUSER_ID.MaxLength = 15;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERow NewSP_REPORT_GENERATED_INVOICERow() {
-                return ((SP_REPORT_GENERATED_INVOICERow)(this.NewRow()));
+            public SP_GET_COMPANY_DATARow NewSP_GET_COMPANY_DATARow() {
+                return ((SP_GET_COMPANY_DATARow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SP_REPORT_GENERATED_INVOICERow(builder);
+                return new SP_GET_COMPANY_DATARow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(SP_REPORT_GENERATED_INVOICERow);
+                return typeof(SP_GET_COMPANY_DATARow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.SP_REPORT_GENERATED_INVOICERowChanged != null)) {
-                    this.SP_REPORT_GENERATED_INVOICERowChanged(this, new SP_REPORT_GENERATED_INVOICERowChangeEvent(((SP_REPORT_GENERATED_INVOICERow)(e.Row)), e.Action));
+                if ((this.SP_GET_COMPANY_DATARowChanged != null)) {
+                    this.SP_GET_COMPANY_DATARowChanged(this, new SP_GET_COMPANY_DATARowChangeEvent(((SP_GET_COMPANY_DATARow)(e.Row)), e.Action));
                 }
             }
             
@@ -703,8 +564,8 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.SP_REPORT_GENERATED_INVOICERowChanging != null)) {
-                    this.SP_REPORT_GENERATED_INVOICERowChanging(this, new SP_REPORT_GENERATED_INVOICERowChangeEvent(((SP_REPORT_GENERATED_INVOICERow)(e.Row)), e.Action));
+                if ((this.SP_GET_COMPANY_DATARowChanging != null)) {
+                    this.SP_GET_COMPANY_DATARowChanging(this, new SP_GET_COMPANY_DATARowChangeEvent(((SP_GET_COMPANY_DATARow)(e.Row)), e.Action));
                 }
             }
             
@@ -712,8 +573,8 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.SP_REPORT_GENERATED_INVOICERowDeleted != null)) {
-                    this.SP_REPORT_GENERATED_INVOICERowDeleted(this, new SP_REPORT_GENERATED_INVOICERowChangeEvent(((SP_REPORT_GENERATED_INVOICERow)(e.Row)), e.Action));
+                if ((this.SP_GET_COMPANY_DATARowDeleted != null)) {
+                    this.SP_GET_COMPANY_DATARowDeleted(this, new SP_GET_COMPANY_DATARowChangeEvent(((SP_GET_COMPANY_DATARow)(e.Row)), e.Action));
                 }
             }
             
@@ -721,14 +582,14 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.SP_REPORT_GENERATED_INVOICERowDeleting != null)) {
-                    this.SP_REPORT_GENERATED_INVOICERowDeleting(this, new SP_REPORT_GENERATED_INVOICERowChangeEvent(((SP_REPORT_GENERATED_INVOICERow)(e.Row)), e.Action));
+                if ((this.SP_GET_COMPANY_DATARowDeleting != null)) {
+                    this.SP_GET_COMPANY_DATARowDeleting(this, new SP_GET_COMPANY_DATARowChangeEvent(((SP_GET_COMPANY_DATARow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemoveSP_REPORT_GENERATED_INVOICERow(SP_REPORT_GENERATED_INVOICERow row) {
+            public void RemoveSP_GET_COMPANY_DATARow(SP_GET_COMPANY_DATARow row) {
                 this.Rows.Remove(row);
             }
             
@@ -737,7 +598,7 @@ namespace parking.Views.Reports.DataSets {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DtsGenerateBill ds = new DtsGenerateBill();
+                DtsGetCompanyData ds = new DtsGetCompanyData();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -755,7 +616,7 @@ namespace parking.Views.Reports.DataSets {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SP_REPORT_GENERATED_INVOICEDataTable";
+                attribute2.FixedValue = "SP_GET_COMPANY_DATADataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -799,238 +660,114 @@ namespace parking.Views.Reports.DataSets {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class SP_REPORT_GENERATED_INVOICERow : global::System.Data.DataRow {
+        public partial class SP_GET_COMPANY_DATARow : global::System.Data.DataRow {
             
-            private SP_REPORT_GENERATED_INVOICEDataTable tableSP_REPORT_GENERATED_INVOICE;
+            private SP_GET_COMPANY_DATADataTable tableSP_GET_COMPANY_DATA;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal SP_REPORT_GENERATED_INVOICERow(global::System.Data.DataRowBuilder rb) : 
+            internal SP_GET_COMPANY_DATARow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableSP_REPORT_GENERATED_INVOICE = ((SP_REPORT_GENERATED_INVOICEDataTable)(this.Table));
+                this.tableSP_GET_COMPANY_DATA = ((SP_GET_COMPANY_DATADataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string BILL_CODE {
+            public string COMPANY_RTN {
                 get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.BILL_CODEColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.COMPANY_RTNColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.BILL_CODEColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.COMPANY_RTNColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string BILL_NUMBER {
+            public string COMPANY_NAME {
                 get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.BILL_NUMBERColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.COMPANY_NAMEColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.BILL_NUMBERColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.COMPANY_NAMEColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public System.DateTime DATE_OF_ISSUE {
+            public string COMPANY_ADDRESS {
                 get {
-                    return ((global::System.DateTime)(this[this.tableSP_REPORT_GENERATED_INVOICE.DATE_OF_ISSUEColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.COMPANY_ADDRESSColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.DATE_OF_ISSUEColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.COMPANY_ADDRESSColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string CHECK_OUT_CODE {
+            public string COMPANY_EMAIL {
                 get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.CHECK_OUT_CODEColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.COMPANY_EMAILColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.CHECK_OUT_CODEColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.COMPANY_EMAILColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal DISCOUNT {
+            public string COMPANY_PHONE {
                 get {
-                    return ((decimal)(this[this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNTColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.COMPANY_PHONEColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNTColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.COMPANY_PHONEColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal ISV {
+            public string LEGAL_FORM {
                 get {
-                    return ((decimal)(this[this.tableSP_REPORT_GENERATED_INVOICE.ISVColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.LEGAL_FORMColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.ISVColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.LEGAL_FORMColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string LETTERS {
+            public System.DateTime INSERTED_AT {
                 get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.LETTERSColumn]));
+                    return ((global::System.DateTime)(this[this.tableSP_GET_COMPANY_DATA.INSERTED_ATColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.LETTERSColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.INSERTED_ATColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string RTN {
+            public bool DEL {
                 get {
-                    try {
-                        return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.RTNColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'RTN\' de la tabla \'SP_REPORT_GENERATED_INVOICE\' es DBNull." +
-                                "", e);
-                    }
+                    return ((bool)(this[this.tableSP_GET_COMPANY_DATA.DELColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.RTNColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.DELColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal SUBTOTAL {
+            public string USER_ID {
                 get {
-                    return ((decimal)(this[this.tableSP_REPORT_GENERATED_INVOICE.SUBTOTALColumn]));
+                    return ((string)(this[this.tableSP_GET_COMPANY_DATA.USER_IDColumn]));
                 }
                 set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.SUBTOTALColumn] = value;
+                    this[this.tableSP_GET_COMPANY_DATA.USER_IDColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal TOTAL {
-                get {
-                    return ((decimal)(this[this.tableSP_REPORT_GENERATED_INVOICE.TOTALColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.TOTALColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string USER_CODE {
-                get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.USER_CODEColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.USER_CODEColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string CLIENT_NAME {
-                get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.CLIENT_NAMEColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.CLIENT_NAMEColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string CLIENT_LASTNAME {
-                get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.CLIENT_LASTNAMEColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.CLIENT_LASTNAMEColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int PARKING_SPACE_NUMBER {
-                get {
-                    return ((int)(this[this.tableSP_REPORT_GENERATED_INVOICE.PARKING_SPACE_NUMBERColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.PARKING_SPACE_NUMBERColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string DESCRIPTION_PARKING_TYPE {
-                get {
-                    return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.DESCRIPTION_PARKING_TYPEColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.DESCRIPTION_PARKING_TYPEColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public decimal PRICE_FOR_HOUR {
-                get {
-                    return ((decimal)(this[this.tableSP_REPORT_GENERATED_INVOICE.PRICE_FOR_HOURColumn]));
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.PRICE_FOR_HOURColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string DISCOUNT_DETAILS {
-                get {
-                    try {
-                        return ((string)(this[this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNT_DETAILSColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'DISCOUNT_DETAILS\' de la tabla \'SP_REPORT_GENERATED_INVOIC" +
-                                "E\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNT_DETAILSColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsRTNNull() {
-                return this.IsNull(this.tableSP_REPORT_GENERATED_INVOICE.RTNColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetRTNNull() {
-                this[this.tableSP_REPORT_GENERATED_INVOICE.RTNColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsDISCOUNT_DETAILSNull() {
-                return this.IsNull(this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNT_DETAILSColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetDISCOUNT_DETAILSNull() {
-                this[this.tableSP_REPORT_GENERATED_INVOICE.DISCOUNT_DETAILSColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1038,22 +775,22 @@ namespace parking.Views.Reports.DataSets {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class SP_REPORT_GENERATED_INVOICERowChangeEvent : global::System.EventArgs {
+        public class SP_GET_COMPANY_DATARowChangeEvent : global::System.EventArgs {
             
-            private SP_REPORT_GENERATED_INVOICERow eventRow;
+            private SP_GET_COMPANY_DATARow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERowChangeEvent(SP_REPORT_GENERATED_INVOICERow row, global::System.Data.DataRowAction action) {
+            public SP_GET_COMPANY_DATARowChangeEvent(SP_GET_COMPANY_DATARow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_REPORT_GENERATED_INVOICERow Row {
+            public SP_GET_COMPANY_DATARow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1069,7 +806,7 @@ namespace parking.Views.Reports.DataSets {
         }
     }
 }
-namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
+namespace parking.Views.Reports.DataSets.DtsGetCompanyDataTableAdapters {
     
     
     /// <summary>
@@ -1081,7 +818,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SP_REPORT_GENERATED_INVOICETableAdapter : global::System.ComponentModel.Component {
+    public partial class SP_GET_COMPANY_DATATableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1095,7 +832,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public SP_REPORT_GENERATED_INVOICETableAdapter() {
+        public SP_GET_COMPANY_DATATableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1192,24 +929,16 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SP_REPORT_GENERATED_INVOICE";
-            tableMapping.ColumnMappings.Add("BILL_CODE", "BILL_CODE");
-            tableMapping.ColumnMappings.Add("BILL_NUMBER", "BILL_NUMBER");
-            tableMapping.ColumnMappings.Add("DATE_OF_ISSUE", "DATE_OF_ISSUE");
-            tableMapping.ColumnMappings.Add("CHECK_OUT_CODE", "CHECK_OUT_CODE");
-            tableMapping.ColumnMappings.Add("DISCOUNT", "DISCOUNT");
-            tableMapping.ColumnMappings.Add("ISV", "ISV");
-            tableMapping.ColumnMappings.Add("LETTERS", "LETTERS");
-            tableMapping.ColumnMappings.Add("RTN", "RTN");
-            tableMapping.ColumnMappings.Add("SUBTOTAL", "SUBTOTAL");
-            tableMapping.ColumnMappings.Add("TOTAL", "TOTAL");
-            tableMapping.ColumnMappings.Add("USER_CODE", "USER_CODE");
-            tableMapping.ColumnMappings.Add("CLIENT_NAME", "CLIENT_NAME");
-            tableMapping.ColumnMappings.Add("CLIENT_LASTNAME", "CLIENT_LASTNAME");
-            tableMapping.ColumnMappings.Add("PARKING_SPACE_NUMBER", "PARKING_SPACE_NUMBER");
-            tableMapping.ColumnMappings.Add("DESCRIPTION_PARKING_TYPE", "DESCRIPTION_PARKING_TYPE");
-            tableMapping.ColumnMappings.Add("PRICE_FOR_HOUR", "PRICE_FOR_HOUR");
-            tableMapping.ColumnMappings.Add("DISCOUNT_DETAILS", "DISCOUNT_DETAILS");
+            tableMapping.DataSetTable = "SP_GET_COMPANY_DATA";
+            tableMapping.ColumnMappings.Add("COMPANY_RTN", "COMPANY_RTN");
+            tableMapping.ColumnMappings.Add("COMPANY_NAME", "COMPANY_NAME");
+            tableMapping.ColumnMappings.Add("COMPANY_ADDRESS", "COMPANY_ADDRESS");
+            tableMapping.ColumnMappings.Add("COMPANY_EMAIL", "COMPANY_EMAIL");
+            tableMapping.ColumnMappings.Add("COMPANY_PHONE", "COMPANY_PHONE");
+            tableMapping.ColumnMappings.Add("LEGAL_FORM", "LEGAL_FORM");
+            tableMapping.ColumnMappings.Add("INSERTED_AT", "INSERTED_AT");
+            tableMapping.ColumnMappings.Add("DEL", "DEL");
+            tableMapping.ColumnMappings.Add("USER_ID", "USER_ID");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1226,24 +955,17 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "dbo.SP_REPORT_GENERATED_INVOICE";
+            this._commandCollection[0].CommandText = "dbo.SP_GET_COMPANY_DATA";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@B_CODE", global::System.Data.SqlDbType.VarChar, 15, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DtsGenerateBill.SP_REPORT_GENERATED_INVOICEDataTable dataTable, string B_CODE) {
+        public virtual int Fill(DtsGetCompanyData.SP_GET_COMPANY_DATADataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((B_CODE == null)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(B_CODE));
-            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1255,15 +977,9 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual DtsGenerateBill.SP_REPORT_GENERATED_INVOICEDataTable GetData(string B_CODE) {
+        public virtual DtsGetCompanyData.SP_GET_COMPANY_DATADataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((B_CODE == null)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(B_CODE));
-            }
-            DtsGenerateBill.SP_REPORT_GENERATED_INVOICEDataTable dataTable = new DtsGenerateBill.SP_REPORT_GENERATED_INVOICEDataTable();
+            DtsGetCompanyData.SP_GET_COMPANY_DATADataTable dataTable = new DtsGetCompanyData.SP_GET_COMPANY_DATADataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1337,7 +1053,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateUpdatedRows(DtsGenerateBill dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(DtsGetCompanyData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1347,7 +1063,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateInsertedRows(DtsGenerateBill dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(DtsGetCompanyData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1357,7 +1073,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateDeletedRows(DtsGenerateBill dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(DtsGetCompanyData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1391,7 +1107,7 @@ namespace parking.Views.Reports.DataSets.DtsGenerateBillTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public virtual int UpdateAll(DtsGenerateBill dataSet) {
+        public virtual int UpdateAll(DtsGetCompanyData dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

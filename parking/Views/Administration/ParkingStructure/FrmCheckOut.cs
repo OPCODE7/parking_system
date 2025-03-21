@@ -21,17 +21,14 @@ namespace parking.Views.Administration.ParkingStructure
         CorrelativesController correlativesController = new CorrelativesController();
         DiscountsBillController discountsBillController = new DiscountsBillController();
         DiscountsController discountsController = new DiscountsController();
+        
+        DISCOUNTS discountFF, discountFT;
 
-        string checkInCode, checkOutState, userCode,formatTime;
+        string checkOutCode,checkInCode, checkOutState, userCode,formatTime;
         DateTime checkOutTime;
-        double fullCharge, finalDiscount, subtotal, isv= 15, totalHours, priceParkingFee,_totalHours,subtotalWithDiscount,discountForTime= 0,discountForFrequency=0;
+        double fullCharge, finalDiscount, subtotal, isvPercent= 15, isvCharge,totalHours, priceParkingFee,_totalHours,subtotalWithDiscount,discountForTime= 0,discountForFrequency=0;
 
-        private void DgvCheckIns_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            CHECK_OUT checkOut= checkOutController.getCheckOut(DgvCheckIns.CurrentRow.Cells[0].Value.ToString());
-            getInfoCheckIn(checkOut.CHECK_IN_CODE);
-            BtnSave.Enabled = false;
-        }
+       
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -39,6 +36,50 @@ namespace parking.Views.Administration.ParkingStructure
             {
                 getCheckOuts(TxtSearch.Text.Trim());
             }
+        }
+
+        private void BtnSearchCheckIn_Click(object sender, EventArgs e)
+        {
+            FrmSearchCheckIn searchCheckIn = new FrmSearchCheckIn();
+            this.AddOwnedForm(searchCheckIn);
+            searchCheckIn.ShowDialog();
+        }
+
+        private void BtnGenerateBill_Click(object sender, EventArgs e)
+        {
+            generateBill();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if(h.MsgQuestion("¿Estás seguro de eliminar este registro?")=="S")
+                {
+                if(checkOutController.deleteCheckOut(checkOutCode) > 0)
+                {
+                    h.MsgInfo("Registro eliminado correctamente.");
+                    startForm();
+                }
+            }
+
+        }
+
+        private void DgvCheckOuts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string _checkOutCode = DgvCheckOuts.CurrentRow.Cells[0].Value.ToString();
+            CHECK_OUT checkOut = checkOutController.getCheckOut(_checkOutCode);
+            if (checkOutController.thisIsBilled(_checkOutCode))
+            {
+                getInfoCheckOut(_checkOutCode);
+                BtnGenerateBill.Visible = false;
+            }
+            else
+            {
+                getInfoCheckIn(checkOut.CHECK_IN_CODE);
+                BtnGenerateBill.Visible = true;
+            }
+            checkOutCode = _checkOutCode;
+            BtnSave.Enabled = false;
+            BtnDelete.Enabled = true;
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
@@ -65,24 +106,19 @@ namespace parking.Views.Administration.ParkingStructure
             this.Close();
         }
 
-        private void BtnSearchCheckIn_Click(object sender, EventArgs e)
-        {
-            FrmSearchCheckIn searchCheckIn= new FrmSearchCheckIn();
-            this.AddOwnedForm(searchCheckIn);
-            searchCheckIn.ShowDialog();
-        }
-
         public void startForm()
         {
             getCheckOuts();
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
+            BtnGenerateBill.Visible = false;
             DtpCheckInTime.Format = DateTimePickerFormat.Custom;
             DtpCheckInTime.CustomFormat = "dd/MM/yyyy HH:mm";
 
             DtpCheckOutTime.Format = DateTimePickerFormat.Custom;
             DtpCheckOutTime.CustomFormat = "dd/MM/yyyy HH:mm";
+           
 
 
             foreach (TextBox txt in this.Controls.OfType<TextBox>())
@@ -90,7 +126,7 @@ namespace parking.Views.Administration.ParkingStructure
                 txt.Enabled = false;
                 txt.Clear();
             }
-
+            TxtSearch.Enabled = true;
             TxtSearch.Focus();
 
         }
@@ -114,7 +150,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             CHECK_IN checkIn = checkInController.getCheckIn(checkInCode);
             int totalVisits = checkOutController.getTotalVisitsClient(checkIn.CLIENT_DNI);
-            DISCOUNTS discountFT= discountsController.getDiscountForTime(hours);
+            discountFT= discountsController.getDiscountForTime(hours);
 
             
 
@@ -122,7 +158,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (checkIn.CLIENT_DNI != "CLI000001")
             {
-                DISCOUNTS discountFF = discountsController.getDiscountForFrequency(totalVisits);
+                discountFF = discountsController.getDiscountForFrequency(totalVisits);
               
                 if(discountFF!=null)
                 discountForFrequency = subtotal * (Convert.ToDouble(discountFF.DISCOUNT_VALUE.Replace("%", "")) / 100);
@@ -131,13 +167,14 @@ namespace parking.Views.Administration.ParkingStructure
 
             finalDiscount = discountForTime + discountForFrequency;
             subtotalWithDiscount = subtotal - finalDiscount;
-            fullCharge = subtotalWithDiscount + ((isv / 100) * subtotalWithDiscount);
+            isvCharge = ((isvPercent / 100) * subtotalWithDiscount);
+            fullCharge = subtotalWithDiscount + isvCharge;
             userCode = Config.User.userId;
         }
          
         public void getCheckOuts(string searchFilter="")
         {
-            DgvCheckIns.Rows.Clear();
+            DgvCheckOuts.Rows.Clear();
             var checkOuts= checkOutController.getCheckOuts(searchFilter);
 
             if(checkOuts.Count()==0)
@@ -153,7 +190,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             foreach (var checkOut in checkOuts)
             {
-                DgvCheckIns.Rows.Add(checkOut.CHECK_OUT_CODE, checkOut.VEHICLE_PLATE, checkOut.PARKING_SPACE_NUMBER,checkOut.DESCRIPTION_PARKING_TYPE,Convert.ToDateTime(checkOut.CHECK_OUT_TIME),checkOut.CHECK_OUT_STATE);
+                DgvCheckOuts.Rows.Add(checkOut.CHECK_OUT_CODE, checkOut.VEHICLE_PLATE, checkOut.PARKING_SPACE_NUMBER,checkOut.DESCRIPTION_PARKING_TYPE,Convert.ToDateTime(checkOut.CHECK_OUT_TIME),checkOut.CHECK_OUT_STATE);
             }
         }
         public void getInfoCheckIn(string checkInCode)
@@ -175,7 +212,7 @@ namespace parking.Views.Administration.ParkingStructure
                 TxtDiscount.Text = "L. "+finalDiscount.ToString();
                 TxtTotalTime.Text = formatTime;
                 TxtSubtotal.Text = "L. " + subtotal;
-                TxtISV.Text = "15%";
+                TxtISV.Text = isvCharge.ToString();
                 TxtTotal.Text = "L. " + fullCharge;
               
             }
@@ -185,6 +222,35 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
+        public void getInfoCheckOut(string checkOutCode)
+        {
+            dynamic checkOut = checkOutController.getInfoCheckOut(checkOutCode);
+            if (checkOut != null)
+            {
+
+                TxtCheckInCode.Text = checkOut.CHECK_IN_CODE;
+                TxtClientName.Text = checkOut.CLIENT_NAME + " " + checkOut.CLIENT_LASTNAME;
+                TxtParkingType.Text = checkOut.DESCRIPTION_PARKING_TYPE;
+                TxtPriceParkingFee.Text = checkOut.PRICE_FOR_HOUR.ToString();
+                TxtVehiclePlate.Text = checkOut.VEHICLE_PLATE;
+                DtpCheckInTime.Value = checkOut.CHECK_IN_TIME;
+                DtpCheckOutTime.Value = checkOut.CHECK_OUT_TIME;
+                setValues();
+
+                BtnSave.Enabled = true;
+
+                TxtTotalTime.Text = formatTime;
+                TxtDiscount.Text = "L. " + checkOut.DISCOUNT;
+                TxtSubtotal.Text = "L. " + checkOut.SUBTOTAL;
+                TxtISV.Text = checkOut.ISV.ToString();
+                TxtTotal.Text = "L. " + checkOut.TOTAL;
+
+            }
+            else
+            {
+                h.MsgInfo("No se encontró el registro");
+            }
+        }
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             startForm();
@@ -193,7 +259,8 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnSave_Click(object sender, EventArgs e)
         {
             CHECK_OUT newCheckOut = new CHECK_OUT();
-            newCheckOut.CHECK_OUT_CODE = "COUT" + correlativesController.getNextId("COUT");
+            checkOutCode= "COUT" + correlativesController.getNextId("COUT");
+            newCheckOut.CHECK_OUT_CODE = checkOutCode;
             newCheckOut.CHECK_IN_CODE = checkInCode;
             newCheckOut.CHECK_OUT_TIME = checkOutTime;
             newCheckOut.FULL_CHARGE = Convert.ToDecimal(fullCharge);
@@ -210,28 +277,41 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if(checkInController.updateCheckIn(checkInUpdate) > 0)
                 {
-                    BillingModule.FrmGenerateBill frmGenerateBill = new BillingModule.FrmGenerateBill();
-                    this.AddOwnedForm(frmGenerateBill);
-                    dynamic checkIn = checkInController.getInfoCheckIn(checkInCode);
-                    frmGenerateBill.TxtClientCode.Text = checkInCode;
-                    frmGenerateBill.TxtClientName.Text = TxtClientName.Text;
-                    frmGenerateBill.TxtCheckOutCode.Text = newCheckOut.CHECK_OUT_CODE;
-                    frmGenerateBill.TxtParkingNumber.Text = checkIn.PARKING_SPACE_NUMBER.ToString();
-                    frmGenerateBill.TxtVehiclePlate.Text = TxtVehiclePlate.Text;
-                    frmGenerateBill.TxtParkingType.Text = TxtParkingType.Text;
-                    frmGenerateBill.TxtCheckInDate.Text = DtpCheckInTime.Value.ToString();
-                    frmGenerateBill.TxtCheckOutDate.Text = DtpCheckOutTime.Value.ToString();
-                    frmGenerateBill.TxtParkingFee.Text = "L. " + priceParkingFee;
-                    frmGenerateBill.TxtSubtotal.Text = "L. " + subtotal;
-                    frmGenerateBill.TxtTotalHours.Text = hours.ToString();
-                    frmGenerateBill.TxtDiscount.Text = "L. " + finalDiscount;
-                    frmGenerateBill.TxtISV.Text = "15%";
-                    frmGenerateBill.LblFullCharge.Text += " L. " + fullCharge;
-
-
-                    frmGenerateBill.ShowDialog();
+                    BtnSave.Enabled = false;
+                    generateBill();
                 }
             }
+        }
+
+        public void generateBill()
+        {
+            BillingModule.FrmGenerateBill frmGenerateBill = new BillingModule.FrmGenerateBill();
+            this.AddOwnedForm(frmGenerateBill);
+            frmGenerateBill.discountIdFF = discountFF != null ? discountFF.DISCOUNT_ID : 0;
+            frmGenerateBill.discountIdFT = discountFT != null ? discountFT.DISCOUNT_ID : 0;
+            frmGenerateBill.amountDiscountFF = discountForFrequency;
+            frmGenerateBill.amountDiscountFT = discountForTime;
+
+
+            dynamic checkIn = checkInController.getInfoCheckIn(checkInCode);
+            frmGenerateBill.psCode = checkIn.PARKING_SPACE_CODE;
+            frmGenerateBill.TxtClientCode.Text = checkInCode;
+            frmGenerateBill.TxtClientName.Text = TxtClientName.Text;
+            frmGenerateBill.TxtCheckOutCode.Text = checkOutCode;
+            frmGenerateBill.TxtParkingNumber.Text = checkIn.PARKING_SPACE_NUMBER.ToString();
+            frmGenerateBill.TxtVehiclePlate.Text = TxtVehiclePlate.Text;
+            frmGenerateBill.TxtParkingType.Text = TxtParkingType.Text;
+            frmGenerateBill.TxtCheckInDate.Text = DtpCheckInTime.Value.ToString();
+            frmGenerateBill.TxtCheckOutDate.Text = DtpCheckOutTime.Value.ToString();
+            frmGenerateBill.TxtParkingFee.Text = "L. " + priceParkingFee;
+            frmGenerateBill.TxtSubtotal.Text = "L. " + subtotal;
+            frmGenerateBill.TxtTotalHours.Text = hours.ToString();
+            frmGenerateBill.TxtDiscount.Text = "L. " + finalDiscount;
+            frmGenerateBill.TxtISV.Text = isvCharge.ToString();
+            frmGenerateBill.LblFullCharge.Text += " L. " + fullCharge;
+
+
+            frmGenerateBill.ShowDialog();
         }
     }
 }

@@ -19,8 +19,6 @@ namespace parking.Models
         public string COMPANY_ADDRESS { get; set; }
         public string COMPANY_EMAIL { get; set; }
         public string COMPANY_PHONE { get; set; }
-        public int INITIAL_BILL { get; set; }
-        public int FINAL_BILL { get; set; }
         public string LEGAL_FORM { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool DEL { get; set; }

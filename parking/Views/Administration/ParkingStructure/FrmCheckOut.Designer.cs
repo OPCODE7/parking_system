@@ -40,9 +40,10 @@
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnSearchCheckIn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnSearchCheckIn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnGenerateBill = new System.Windows.Forms.ToolStripButton();
             this.label9 = new System.Windows.Forms.Label();
             this.TxtClientName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -67,7 +68,7 @@
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
-            this.DgvCheckIns = new System.Windows.Forms.DataGridView();
+            this.DgvCheckOuts = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,7 +83,7 @@
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCheckIns)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCheckOuts)).BeginInit();
             this.SuspendLayout();
             // 
             // PbxClose
@@ -112,9 +113,10 @@
             this.BtnSave,
             this.toolStripSeparator6,
             this.BtnCancel,
-            this.toolStripSeparator4,
+            this.toolStripSeparator5,
             this.BtnSearchCheckIn,
-            this.toolStripSeparator5});
+            this.toolStripSeparator4,
+            this.BtnGenerateBill});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(946, 42);
@@ -145,6 +147,7 @@
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(99, 37);
             this.BtnDelete.Text = "Eliminar";
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // toolStripSeparator3
             // 
@@ -178,10 +181,10 @@
             this.BtnCancel.Text = "Cancelar";
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // toolStripSeparator4
+            // toolStripSeparator5
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 42);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
             // 
             // BtnSearchCheckIn
             // 
@@ -194,10 +197,22 @@
             this.BtnSearchCheckIn.Text = "Buscar Entrada";
             this.BtnSearchCheckIn.Click += new System.EventHandler(this.BtnSearchCheckIn_Click);
             // 
-            // toolStripSeparator5
+            // toolStripSeparator4
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnGenerateBill
+            // 
+            this.BtnGenerateBill.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnGenerateBill.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnGenerateBill.Image = ((System.Drawing.Image)(resources.GetObject("BtnGenerateBill.Image")));
+            this.BtnGenerateBill.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnGenerateBill.Name = "BtnGenerateBill";
+            this.BtnGenerateBill.Size = new System.Drawing.Size(101, 37);
+            this.BtnGenerateBill.Text = "Facturar";
+            this.BtnGenerateBill.Visible = false;
+            this.BtnGenerateBill.Click += new System.EventHandler(this.BtnGenerateBill_Click);
             // 
             // label9
             // 
@@ -484,20 +499,20 @@
             this.TxtSearch.TabIndex = 170;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
-            // DgvCheckIns
+            // DgvCheckOuts
             // 
-            this.DgvCheckIns.AllowUserToAddRows = false;
-            this.DgvCheckIns.AllowUserToDeleteRows = false;
-            this.DgvCheckIns.AllowUserToResizeColumns = false;
-            this.DgvCheckIns.AllowUserToResizeRows = false;
+            this.DgvCheckOuts.AllowUserToAddRows = false;
+            this.DgvCheckOuts.AllowUserToDeleteRows = false;
+            this.DgvCheckOuts.AllowUserToResizeColumns = false;
+            this.DgvCheckOuts.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvCheckIns.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvCheckIns.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            this.DgvCheckIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvCheckIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvCheckOuts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvCheckOuts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.DgvCheckOuts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvCheckOuts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.PLACA,
             this.NUMEROPARQUEO,
@@ -511,17 +526,17 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCheckIns.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvCheckIns.Location = new System.Drawing.Point(30, 350);
-            this.DgvCheckIns.Name = "DgvCheckIns";
-            this.DgvCheckIns.ReadOnly = true;
-            this.DgvCheckIns.RowHeadersVisible = false;
-            this.DgvCheckIns.RowHeadersWidth = 62;
-            this.DgvCheckIns.RowTemplate.Height = 28;
-            this.DgvCheckIns.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvCheckIns.Size = new System.Drawing.Size(883, 313);
-            this.DgvCheckIns.TabIndex = 171;
-            this.DgvCheckIns.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCheckIns_CellDoubleClick);
+            this.DgvCheckOuts.DefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvCheckOuts.Location = new System.Drawing.Point(30, 350);
+            this.DgvCheckOuts.Name = "DgvCheckOuts";
+            this.DgvCheckOuts.ReadOnly = true;
+            this.DgvCheckOuts.RowHeadersVisible = false;
+            this.DgvCheckOuts.RowHeadersWidth = 62;
+            this.DgvCheckOuts.RowTemplate.Height = 28;
+            this.DgvCheckOuts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvCheckOuts.Size = new System.Drawing.Size(883, 313);
+            this.DgvCheckOuts.TabIndex = 171;
+            this.DgvCheckOuts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCheckOuts_CellDoubleClick);
             // 
             // ID
             // 
@@ -635,7 +650,7 @@
             this.Controls.Add(this.PbxCancel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TxtSearch);
-            this.Controls.Add(this.DgvCheckIns);
+            this.Controls.Add(this.DgvCheckOuts);
             this.Controls.Add(this.DtpCheckOutTime);
             this.Controls.Add(this.DtpCheckInTime);
             this.Controls.Add(this.label13);
@@ -669,7 +684,7 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCheckIns)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCheckOuts)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -685,7 +700,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton BtnSearchCheckIn;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox TxtClientName;
         private System.Windows.Forms.Label label1;
@@ -713,7 +727,7 @@
         private System.Windows.Forms.PictureBox PbxCancel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TxtSearch;
-        private System.Windows.Forms.DataGridView DgvCheckIns;
+        private System.Windows.Forms.DataGridView DgvCheckOuts;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLACA;
         private System.Windows.Forms.DataGridViewTextBoxColumn NUMEROPARQUEO;
@@ -724,5 +738,7 @@
         private System.Windows.Forms.TextBox TxtTotalTime;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TxtSubtotal;
+        private System.Windows.Forms.ToolStripButton BtnSearchCheckIn;
+        public System.Windows.Forms.ToolStripButton BtnGenerateBill;
     }
 }

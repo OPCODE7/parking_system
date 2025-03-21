@@ -79,8 +79,6 @@
     <Property Name="COMPANY_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="COMPANY_EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="COMPANY_PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="INITIAL_BILL" Type="Int32" Nullable="false" />
-    <Property Name="FINAL_BILL" Type="Int32" Nullable="false" />
     <Property Name="LEGAL_FORM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DEL" Type="Boolean" Nullable="false" />
@@ -101,7 +99,7 @@
       <PropertyRef Name="DISCOUNT_TYPE_ID" />
     </Key>
     <Property Name="DISCOUNT_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DISCOUNT_TYPE_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="DEL" Type="Boolean" Nullable="false" />
     <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -135,6 +133,7 @@
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="BIT" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
+    <Property Name="DISCOUNT_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
   </EntityType>
   <EntityType Name="EMPLOYEE_USER">
     <Key>

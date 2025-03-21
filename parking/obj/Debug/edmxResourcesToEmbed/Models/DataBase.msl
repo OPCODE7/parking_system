@@ -72,8 +72,6 @@
           <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />
           <ScalarProperty Name="COMPANY_EMAIL" ColumnName="COMPANY_EMAIL" />
           <ScalarProperty Name="COMPANY_PHONE" ColumnName="COMPANY_PHONE" />
-          <ScalarProperty Name="INITIAL_BILL" ColumnName="INITIAL_BILL" />
-          <ScalarProperty Name="FINAL_BILL" ColumnName="FINAL_BILL" />
           <ScalarProperty Name="LEGAL_FORM" ColumnName="LEGAL_FORM" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="DEL" ColumnName="DEL" />
@@ -121,6 +119,7 @@
     <EntitySetMapping Name="DISCOUNTS_BILL">
       <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
         <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+          <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
           <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
           <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
           <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />

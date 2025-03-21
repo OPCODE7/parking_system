@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\OPCODE\\OP_APPS\\parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\reports\\datasets\\dtsgeneratebill.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\reports\\datasets\\dtsgeneratebill.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\configuration\\frmcompany.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmcompany.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\reports\\frmgeneratedbillreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\reports\\frmgeneratedbillreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\configuration\\frmcompany.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmcompany.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,25 +23,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DtsGenerateBill.xsd",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\DataSets\\DtsGenerateBill.xsd",
-              "RelativeDocumentMoniker": "parking\\Views\\Reports\\DataSets\\DtsGenerateBill.xsd",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\DataSets\\DtsGenerateBill.xsd",
-              "RelativeToolTip": "parking\\Views\\Reports\\DataSets\\DtsGenerateBill.xsd",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
-              "WhenOpened": "2025-03-14T02:54:50.529Z",
+              "Title": "FrmCompany.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "ViewState": "AQIAAJcAAAAAAAAAAAAswKQAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T23:08:36.253Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FrmGeneratedBillReport.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmGeneratedBillReport.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Reports\\FrmGeneratedBillReport.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmGeneratedBillReport.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Reports\\FrmGeneratedBillReport.cs [Dise\u00F1o]",
+              "Title": "FrmCompany.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmCompany.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmCompany.cs [Dise\u00F1o]",
+              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmCompany.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T02:52:01.737Z",
+              "WhenOpened": "2025-03-20T22:50:14.537Z",
               "EditorCaption": " [Dise\u00F1o]"
             }
           ]
