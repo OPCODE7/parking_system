@@ -175,5 +175,16 @@ namespace parking.Views.Administration
             frmCompany.MdiParent = this;
             frmCompany.Show();
         }
+
+        private void BtnBillRanges_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmBillRanges frmBillRanges = new FrmBillRanges();
+            frmBillRanges.MdiParent = this;
+            frmBillRanges.Show();
+
+        }
     }
 }

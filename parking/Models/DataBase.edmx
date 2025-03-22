@@ -34,7 +34,7 @@
           <Property Name="LAST_USED" Type="int" Nullable="false" />
           <Property Name="BILL_RANGE_STATE" Type="bit" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
-          <Property Name="DEL" Type="bit" />
+          <Property Name="DEL" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="CHECK_IN">
@@ -1497,7 +1497,7 @@
           <Property Name="LAST_USED" Type="Int32" Nullable="false" />
           <Property Name="BILL_RANGE_STATE" Type="Boolean" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DEL" Type="Boolean" />
+          <Property Name="DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERS" Relationship="PARKINGModel.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
         </EntityType>

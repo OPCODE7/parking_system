@@ -29,7 +29,7 @@
     <Property Name="LAST_USED" Type="int" Nullable="false" />
     <Property Name="BILL_RANGE_STATE" Type="bit" Nullable="false" />
     <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
-    <Property Name="DEL" Type="bit" />
+    <Property Name="DEL" Type="bit" Nullable="false" />
     <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
   <EntityType Name="CHECK_IN">

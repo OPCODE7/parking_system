@@ -23,7 +23,7 @@ namespace parking.Models
         public int LAST_USED { get; set; }
         public bool BILL_RANGE_STATE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
-        public Nullable<bool> DEL { get; set; }
+        public bool DEL { get; set; }
         public string USER_CODE { get; set; }
     
         public virtual USERS USERS { get; set; }
