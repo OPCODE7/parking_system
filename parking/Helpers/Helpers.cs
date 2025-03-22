@@ -173,7 +173,7 @@ namespace parking.Helpers
 
             if (decimalPart > 0)
             {
-                result += " con ";
+                result += $" {currency} con ";
                 switch (centsFormat)
                 {
                     case 1: // "con cincuenta y seis centavos"
@@ -187,6 +187,7 @@ namespace parking.Helpers
                         result += $"{decimalPart:D2}/100";
                         break;
                 }
+                return result;
             }
 
             return result + $" {currency}";
