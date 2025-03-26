@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\OPCODE\\OP_APPS\\parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\helpers\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\helpers\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\configuration\\frmsetuserpermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmsetuserpermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\configuration\\frmbillranges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmbillranges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\rolepermissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\rolepermissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\configuration\\frmbillranges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmbillranges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\billrangecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\billrangecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|C:\\OPCODE\\OP_APPS\\parking\\parking\\views\\administration\\configuration\\frmsetuserpermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\configuration\\frmsetuserpermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +22,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Helpers.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Helpers\\Helpers.cs",
-              "RelativeDocumentMoniker": "parking\\Helpers\\Helpers.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Helpers\\Helpers.cs",
-              "RelativeToolTip": "parking\\Helpers\\Helpers.cs",
-              "ViewState": "AQIAAKMAAAAAAAAAAAAwwK8AAAAdAAAA",
+              "DocumentIndex": 1,
+              "Title": "RolePermissionsController.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\RolePermissionsController.cs",
+              "RelativeDocumentMoniker": "parking\\Controllers\\RolePermissionsController.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\RolePermissionsController.cs",
+              "RelativeToolTip": "parking\\Controllers\\RolePermissionsController.cs",
+              "ViewState": "AQIAAD4AAAAAAAAAAAAlwEkAAAB8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T03:59:17.632Z",
+              "WhenOpened": "2025-03-25T23:33:57.385Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BillRangeController.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\BillRangeController.cs",
-              "RelativeDocumentMoniker": "parking\\Controllers\\BillRangeController.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\BillRangeController.cs",
-              "RelativeToolTip": "parking\\Controllers\\BillRangeController.cs",
-              "ViewState": "AQIAAEEAAAAAAAAAAAAwwEoAAAAtAAAA",
+              "DocumentIndex": 0,
+              "Title": "FrmSetUserPermissions.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAlwIwAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T02:09:40.998Z",
+              "WhenOpened": "2025-03-25T21:55:47.013Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "FrmBillRanges.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "ViewState": "AQIAAD4AAAAAAAAAAAAkwFkAAAAQAAAA",
+              "Title": "FrmSetUserPermissions.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs [Dise\u00F1o]",
+              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmSetUserPermissions.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T23:58:54.827Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FrmBillRanges.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Administration\\Configuration\\FrmBillRanges.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T21:13:54.284Z",
+              "WhenOpened": "2025-03-23T00:56:25.526Z",
               "EditorCaption": " [Dise\u00F1o]"
             }
           ]

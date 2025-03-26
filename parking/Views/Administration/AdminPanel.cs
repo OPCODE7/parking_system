@@ -162,7 +162,9 @@ namespace parking.Views.Administration
 
         private void AdminPanel_Load(object sender, EventArgs e)
         {
-            this.Focus();
+            LblUserLogged.Text= Config.User.userName;
+            LblFecha.Text= DateTime.Now.ToLongDateString();
+            LblRole.Text= Config.User.roleName;
             
         }
 
@@ -184,6 +186,17 @@ namespace parking.Views.Administration
             FrmBillRanges frmBillRanges = new FrmBillRanges();
             frmBillRanges.MdiParent = this;
             frmBillRanges.Show();
+
+        }
+
+        private void BtnUserPermissions_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            FrmSetUserPermissions frmSetUserPermissions = new FrmSetUserPermissions();
+            frmSetUserPermissions.MdiParent = this;
+            frmSetUserPermissions.Show();
 
         }
     }

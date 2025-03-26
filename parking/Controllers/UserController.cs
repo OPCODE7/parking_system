@@ -36,8 +36,10 @@ namespace parking.Controllers
                     if (lst.USER_NAME.ToString() == username && pwdHasher.verifyPassword(password,lst.USER_PASSWORD) && lst.USER_STATE == true)
                     {
                         Config.User.userName = username;
+                        Config.User.realName= db.EMPLOYEES.Where(e => e.EMPLOYEE_CODE == db.EMPLOYEE_USER.Where(u => u.USER_CODE == lst.USER_CODE).Select(u => u.EMPLOYEE_CODE).FirstOrDefault()).Select(e => e.EMPLOYEE_NAME + " " + e.EMPLOYEE_LASTNAME).FirstOrDefault();
                         Config.User.roleId = lst.ROLE_ID;
                         Config.User.userId= lst.USER_CODE;
+                        Config.User.roleName= db.USER_ROLES.Where(r => r.ROLE_ID == lst.ROLE_ID).Select(r => r.ROLE_NAME).FirstOrDefault();
 
                         result = true;
                     }

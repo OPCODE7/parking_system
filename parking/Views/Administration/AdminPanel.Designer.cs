@@ -52,15 +52,24 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnRoles = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnPermissions = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnUserPermissions = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnCompanyData = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnBillRanges = new System.Windows.Forms.ToolStripMenuItem();
+            this.StPrincipal = new System.Windows.Forms.StatusStrip();
+            this.LblUserLogged = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.LblFecha = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.TstPrincipal.SuspendLayout();
+            this.StPrincipal.SuspendLayout();
             this.SuspendLayout();
             // 
             // PnlAdminSideBar
@@ -74,6 +83,8 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingSpace);
             this.PnlAdminSideBar.Controls.Add(this.BtnClients);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PnlAdminSideBar.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.PnlAdminSideBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.PnlAdminSideBar.Location = new System.Drawing.Point(0, 0);
             this.PnlAdminSideBar.Name = "PnlAdminSideBar";
             this.PnlAdminSideBar.Size = new System.Drawing.Size(226, 676);
@@ -293,7 +304,8 @@
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnRoles,
             this.BtnPermissions,
-            this.BtnUsers});
+            this.BtnUsers,
+            this.BtnUserPermissions});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
@@ -307,7 +319,7 @@
             this.BtnRoles.BackColor = System.Drawing.Color.Teal;
             this.BtnRoles.ForeColor = System.Drawing.Color.White;
             this.BtnRoles.Name = "BtnRoles";
-            this.BtnRoles.Size = new System.Drawing.Size(187, 34);
+            this.BtnRoles.Size = new System.Drawing.Size(287, 34);
             this.BtnRoles.Text = "Roles";
             this.BtnRoles.Click += new System.EventHandler(this.BtnRoles_Click);
             // 
@@ -316,16 +328,25 @@
             this.BtnPermissions.BackColor = System.Drawing.Color.Teal;
             this.BtnPermissions.ForeColor = System.Drawing.Color.White;
             this.BtnPermissions.Name = "BtnPermissions";
-            this.BtnPermissions.Size = new System.Drawing.Size(187, 34);
+            this.BtnPermissions.Size = new System.Drawing.Size(287, 34);
             this.BtnPermissions.Text = "Permisos";
             this.BtnPermissions.Click += new System.EventHandler(this.BtnPermissions_Click);
+            // 
+            // BtnUserPermissions
+            // 
+            this.BtnUserPermissions.BackColor = System.Drawing.Color.Teal;
+            this.BtnUserPermissions.ForeColor = System.Drawing.Color.White;
+            this.BtnUserPermissions.Name = "BtnUserPermissions";
+            this.BtnUserPermissions.Size = new System.Drawing.Size(287, 34);
+            this.BtnUserPermissions.Text = "Configurar permisos";
+            this.BtnUserPermissions.Click += new System.EventHandler(this.BtnUserPermissions_Click);
             // 
             // BtnUsers
             // 
             this.BtnUsers.BackColor = System.Drawing.Color.Teal;
             this.BtnUsers.ForeColor = System.Drawing.Color.White;
             this.BtnUsers.Name = "BtnUsers";
-            this.BtnUsers.Size = new System.Drawing.Size(187, 34);
+            this.BtnUsers.Size = new System.Drawing.Size(287, 34);
             this.BtnUsers.Text = "Usuarios";
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click_1);
             // 
@@ -365,11 +386,72 @@
             this.BtnBillRanges.Text = "Rangos Facturacion";
             this.BtnBillRanges.Click += new System.EventHandler(this.BtnBillRanges_Click);
             // 
+            // StPrincipal
+            // 
+            this.StPrincipal.AutoSize = false;
+            this.StPrincipal.BackColor = System.Drawing.Color.Teal;
+            this.StPrincipal.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.StPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LblUserLogged,
+            this.toolStripSeparator6,
+            this.LblFecha,
+            this.toolStripSeparator7,
+            this.LblRole,
+            this.toolStripSeparator8});
+            this.StPrincipal.Location = new System.Drawing.Point(226, 640);
+            this.StPrincipal.Name = "StPrincipal";
+            this.StPrincipal.Size = new System.Drawing.Size(1024, 36);
+            this.StPrincipal.TabIndex = 43;
+            this.StPrincipal.Text = "statusStrip1";
+            // 
+            // LblUserLogged
+            // 
+            this.LblUserLogged.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblUserLogged.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LblUserLogged.Image = ((System.Drawing.Image)(resources.GetObject("LblUserLogged.Image")));
+            this.LblUserLogged.Name = "LblUserLogged";
+            this.LblUserLogged.Size = new System.Drawing.Size(58, 29);
+            this.LblUserLogged.Text = "---";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 36);
+            // 
+            // LblFecha
+            // 
+            this.LblFecha.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblFecha.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LblFecha.Image = ((System.Drawing.Image)(resources.GetObject("LblFecha.Image")));
+            this.LblFecha.Name = "LblFecha";
+            this.LblFecha.Size = new System.Drawing.Size(58, 29);
+            this.LblFecha.Text = "---";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 36);
+            // 
+            // LblRole
+            // 
+            this.LblRole.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblRole.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LblRole.Image = ((System.Drawing.Image)(resources.GetObject("LblRole.Image")));
+            this.LblRole.Name = "LblRole";
+            this.LblRole.Size = new System.Drawing.Size(58, 29);
+            this.LblRole.Text = "---";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 36);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1250, 676);
+            this.Controls.Add(this.StPrincipal);
             this.Controls.Add(this.PbxClose);
             this.Controls.Add(this.TstPrincipal);
             this.Controls.Add(this.PnlAdminSideBar);
@@ -385,6 +467,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).EndInit();
             this.TstPrincipal.ResumeLayout(false);
             this.TstPrincipal.PerformLayout();
+            this.StPrincipal.ResumeLayout(false);
+            this.StPrincipal.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -419,5 +503,13 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
         private System.Windows.Forms.ToolStripMenuItem BtnCompanyData;
         private System.Windows.Forms.ToolStripMenuItem BtnBillRanges;
+        private System.Windows.Forms.StatusStrip StPrincipal;
+        private System.Windows.Forms.ToolStripStatusLabel LblUserLogged;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripStatusLabel LblFecha;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripStatusLabel LblRole;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem BtnUserPermissions;
     }
 }

@@ -47,6 +47,8 @@ namespace parking.Controllers
                 return lst;
         }
 
+       
+
         public USER_PERMISSIONS getPermission(int id)
         {
             USER_PERMISSIONS permission= new USER_PERMISSIONS();

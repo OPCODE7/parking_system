@@ -13,6 +13,7 @@ namespace parking.Config
         public static string userName;
         public static string realName;
         public static int roleId;
+        public static string roleName;
         public static string userId;
 
       

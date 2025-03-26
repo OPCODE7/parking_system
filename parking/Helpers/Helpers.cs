@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -191,9 +193,37 @@ namespace parking.Helpers
             }
 
             return result + $" {currency}";
-        } 
-    
+        }
+
         //FinMetodoConvertAmountToWords
+
+        //Metodo ConvertToDataTable
+        public DataTable ConvertToDataTable<T>(List<T> data)
+        {
+            DataTable dt = new DataTable(typeof(T).Name);
+
+            // Crear columnas basadas en las propiedades de la clase
+            PropertyInfo[] props = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in props)
+            {
+                dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            // Llenar filas con datos de la lista
+            foreach (T item in data)
+            {
+                DataRow row = dt.NewRow();
+                foreach (PropertyInfo prop in props)
+                {
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                }
+                dt.Rows.Add(row);
+            }
+
+            return dt;
+        }
+        //FinMetodoConvertToDataTable
+
     }
 }
 
