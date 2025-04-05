@@ -1,4 +1,6 @@
-﻿using parking.Models;
+﻿using parking.Config;
+using parking.DTO;
+using parking.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,8 +17,9 @@ namespace parking.Views.Administration.Configuration
     {
         Helpers.Helpers h = new Helpers.Helpers();
         Controllers.BillRangeController brc = new Controllers.BillRangeController();
-        string establishment, emissionPoint, doctype, userId;
-        int initialRange, finalRange,lastUsed;
+        string establishment, emissionPoint, doctype, userId, moduleId = "RFAC";
+        int initialRange, finalRange, lastUsed;
+        bool flagIsPaperbin = false;
         public FrmBillRanges()
         {
             InitializeComponent();
@@ -34,18 +37,22 @@ namespace parking.Views.Administration.Configuration
 
         private void startForm()
         {
-            getBillRanges();
+            getBillRanges("",false);
             BtnCancel.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
             BtnDelete.Enabled = false;
             MskInitialRange.Enabled = false;
             MskFinalRange.Enabled = false;
             MskInitialRange.Clear();
             MskFinalRange.Clear();
             TxtBillRangeId.Clear();
-
+            PbxDestroy.Visible = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Enabled = false;
+            flagIsPaperbin = false;
             MskInitialRange.Focus();
         }
 
@@ -65,19 +72,24 @@ namespace parking.Views.Administration.Configuration
         {
             if (DgvBillRanges.Rows.Count > 0)
             {
-                var billRange = brc.getBillRangeInfo(Convert.ToInt32(DgvBillRanges.CurrentRow.Cells[0].Value.ToString()));
+                BillRangeDTO billRange = brc.getBillRangeInfo(Convert.ToInt32(DgvBillRanges.CurrentRow.Cells[0].Value.ToString()));
 
-                
+
+                if (billRange == null)
+                {
+                    h.MsgError(Helpers.App.Msg0011);
+                    return;
+                }
 
                 BtnNew.Enabled = false;
                 BtnSave.Enabled = false;
-               
-                BtnDelete.Enabled = true;
+
+                BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
                 BtnCancel.Enabled = true;
 
-                if(billRange.BILL_RANGE_STATE == "ACTIVO")
+                if (billRange.BILL_RANGE_STATE == "ACTIVO")
                 {
-                    BtnEdit.Enabled = true;
+                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
                     MskInitialRange.Enabled = true;
                     MskFinalRange.Enabled = true;
                 }
@@ -87,20 +99,21 @@ namespace parking.Views.Administration.Configuration
                     MskInitialRange.Enabled = false;
                     MskFinalRange.Enabled = false;
                 }
-                
-                MskInitialRange.Focus();
 
-                
+                MskInitialRange.Focus();
+                BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                BtnDelete.Enabled = flagIsPaperbin ? false : true;
+                PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
                 TxtBillRangeId.Text = billRange.BILL_RANGE_ID.ToString();
                 MskInitialRange.Text = billRange.BILL_RANGE_START;
                 MskFinalRange.Text = billRange.BILL_RANGE_END;
             }
-
         }
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion("¿Estas seguro de actualizar este registro?")=="S")
+            if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
                 if (validateData() == 0)
                 {
@@ -114,47 +127,121 @@ namespace parking.Views.Administration.Configuration
 
                     if (brc.updateBillRange(updateBillRange) > 0)
                     {
-                        h.MsgInfo("Rango de factura actualizado correctamente.");
+                        h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al actualizar el rango de factura.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
 
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private void BtnPaperbin_Click(object sender, EventArgs e)
         {
-            if (h.MsgQuestion("¿Estas seguro de eliminar este registro?") == "S")
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            flagIsPaperbin = true;
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+
+            getBillRanges("",flagIsPaperbin);
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
-                if (brc.deleteBillRange(Convert.ToInt32(TxtBillRangeId.Text)) > 0)
+                BILL_RANGE br = brc.getBillRange(Convert.ToInt32(TxtBillRangeId.Text));
+                br.DEL = false;
+                if (brc.updateBillRange(br) > 0)
                 {
-                    h.MsgInfo("Rango de factura eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al eliminar el rango de factura.");
+                    h.MsgError(Helpers.App.Msg0019);
                 }
             }
 
         }
 
-        public void getBillRanges(string searchFilter="")
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                BILL_RANGE br = brc.getBillRange(Convert.ToInt32(TxtBillRangeId.Text));
+                br.DEL = true;
+                if (brc.deleteBillRange(br.BILL_RANGE_ID) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+
+
+        }
+
+        private void PbxSearch_Click(object sender, EventArgs e)
+        {
+            getBillRanges(TxtSearch.Text.Trim(), flagIsPaperbin);
+
+        }
+
+        private void PbxCancel_Click(object sender, EventArgs e)
+        {
+            startForm();
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                getBillRanges(TxtSearch.Text.Trim(), flagIsPaperbin);
+            }
+
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
+            {
+                BILL_RANGE br = brc.getBillRange(Convert.ToInt32(TxtBillRangeId.Text));
+                br.DEL = true;
+                if (brc.updateBillRange(br) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0005);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+
+        }
+
+        public void getBillRanges(string searchFilter = "", bool isDel= false)
         {
             DgvBillRanges.Rows.Clear();
-            var billRanges = brc.getBillRanges(searchFilter);
+            IEnumerable<BillRangeDTO> billRanges = brc.getBillRanges(searchFilter,isDel);
 
             if (billRanges.Count() == 0)
             {
-                h.MsgInfo("No se encontraron registros");
+                h.MsgInfo(Helpers.App.Msg0012);
 
                 if (searchFilter != "")
                 {
-                    getBillRanges();
+                    getBillRanges("",isDel);
+                    TxtSearch.Clear();
                 }
 
                 return;
@@ -162,7 +249,7 @@ namespace parking.Views.Administration.Configuration
 
             foreach (var item in billRanges)
             {
-                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END, item.BILL_RANGE_STATE,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END, item.BILL_RANGE_STATE, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
         }
 
@@ -173,7 +260,7 @@ namespace parking.Views.Administration.Configuration
 
             if (!MskInitialRange.MaskFull)
             {
-                h.MsgInfo("Debe ingresar el rango inicial en formato correcto.");
+                h.MsgInfo("DEBE INGRESAR EL RANGO INICIAL EN FORMATO CORRECTO.");
                 MskInitialRange.Focus();
                 error++;
                 return error;
@@ -181,7 +268,7 @@ namespace parking.Views.Administration.Configuration
 
             if (!MskFinalRange.MaskFull)
             {
-                h.MsgInfo("Debe ingresar el rango final en formato correcto.");
+                h.MsgInfo("DEBE INGRESAR EL RANGO FINAL EN FORMATO CORRECTO.");
                 MskFinalRange.Focus();
                 error++;
                 return error;
@@ -189,14 +276,14 @@ namespace parking.Views.Administration.Configuration
 
             if (brc.existBillRange(MskInitialRange.Text, MskFinalRange.Text))
             {
-                h.MsgInfo("El rango de factura ya existe.");
+                h.MsgInfo("EL RANGO DE FACTURA YA EXISTE.");
                 error++;
                 return error;
             }
 
             if (Convert.ToInt32(MskInitialRange.Text.Split('-')[3]) >= Convert.ToInt32(MskFinalRange.Text.Split('-')[3]))
             {
-                h.MsgInfo("El rango final debe ser mayor al rango inicial.");
+                h.MsgInfo("EL RANGO FINAL DEBE SER MAYOR AL RANGO INICIAL.");
                 error++;
                 return error;
             }
@@ -206,21 +293,13 @@ namespace parking.Views.Administration.Configuration
             {
                 if (Convert.ToInt32(MskInitialRange.Text.Split('-')[3]) <= lastBillRange.FINAL_RANGE)
                 {
-                    h.MsgInfo("El rango de factura inicial no puede ser menor o igual que el último rango configurado.");
+                    h.MsgInfo("EL RANGO DE FACTURA INICIAL NO PUEDE SER MENOR O IGUAL QUE EL ÚLTIMO RANGO CONFIGURADO.");
                     error++;
                     return error;
                 }
             }
-
-
-
-
             return error;
-
         }
-
-    
-
 
 
         private void setValues()
@@ -231,9 +310,9 @@ namespace parking.Views.Administration.Configuration
             doctype = billRange[2];
             initialRange = Convert.ToInt32(billRange[3]);
             finalRange = Convert.ToInt32(MskFinalRange.Text.Split('-')[3]);
-            lastUsed= initialRange - 1;
-            userId = Config.User.userId;
-            
+            lastUsed = initialRange - 1;
+            userId = User.userId;
+
 
         }
 
@@ -250,7 +329,7 @@ namespace parking.Views.Administration.Configuration
                 newBillRange.FINAL_RANGE = finalRange;
                 newBillRange.LAST_USED = lastUsed;
                 newBillRange.INSERTED_AT = DateTime.Now;
-                newBillRange.BILL_RANGE_STATE= true;
+                newBillRange.BILL_RANGE_STATE = true;
                 newBillRange.USER_CODE = userId;
                 BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange());
 
@@ -258,15 +337,15 @@ namespace parking.Views.Administration.Configuration
                 {
                     lastBillRange.BILL_RANGE_STATE = false;
 
-                    if(brc.updateBillRange(lastBillRange) > 0)
+                    if (brc.updateBillRange(lastBillRange) > 0)
                     {
-                        h.MsgInfo("Rango de factura guardado correctamente.");
+                        h.MsgInfo(Helpers.App.Msg0001);
                         startForm();
                     }
                 }
                 else
                 {
-                    h.MsgError("Error al guardar el rango de factura.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
 

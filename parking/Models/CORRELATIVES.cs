@@ -19,5 +19,6 @@ namespace parking.Models
         public int CORRELATIVE_COUNTER { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }
+        public string MODULE_ID { get; set; }
     }
 }

@@ -10,6 +10,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using parking.Models;
+using parking.Config;
+using parking.Helpers;
+using parking.DTO;
 
 namespace parking.Views.Administration.Clients
 {
@@ -18,9 +21,9 @@ namespace parking.Views.Administration.Clients
         CorrelativesController correlativesController = new CorrelativesController();
         ClientController clientController = new ClientController();
         Helpers.Helpers h = new Helpers.Helpers();
-        string userId, clientId, clientName, clientLastName, clientEmail,clientDni, clientAddress, clientPhone;
+        string userId, clientId, clientName, clientLastName, clientEmail,clientDni, clientAddress, clientPhone,moduleId= "CLI";
+        bool flagIsPaperbin = false;
 
-        public object TxtEmail { get; private set; }
 
         public FrmClient()
         {
@@ -40,11 +43,18 @@ namespace parking.Views.Administration.Clients
         private void startForm()
         {
             getClients("");
+            flagIsPaperbin = false;
             BtnCancel.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            PbxDestroy.Enabled= false;
+            PbxRecovery.Enabled = false;
+
             MskPhoneNumber.Enabled = false;
             MskPhoneNumber.Clear();
             
@@ -65,7 +75,7 @@ namespace parking.Views.Administration.Clients
             if (validateData() == 0)
             {
                 setValues();
-                if (h.MsgQuestion("¿Estás seguro de modificar este cliente?") == "S")
+                if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
                 {
                     CLIENTS editClient = clientController.getClient(TxtClientCode.Text);
                     editClient.CLIENT_DNI = clientDni;
@@ -77,40 +87,117 @@ namespace parking.Views.Administration.Clients
 
                     if (clientController.updateClient(editClient) > 0)
                     {
-                        h.MsgInfo("Cliente actualizado correctamente.");
+                        h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al actualizar cliente.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private void BtnPaperbin_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion("¿Estás seguro de eliminar este cliente?") == "S")
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            flagIsPaperbin = true;
+            PbxRecovery.Visible = true;
+            PbxDestroy.Visible = true;
+            getClients("", flagIsPaperbin);
+
+        }
+
+        private void PbxSearch_Click(object sender, EventArgs e)
+        {
+            getClients(TxtSearch.Text.Trim(), flagIsPaperbin);
+
+        }
+
+        private void PbxCancel_Click(object sender, EventArgs e)
+        {
+            TxtSearch.Clear();
+            getClients("",flagIsPaperbin);
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
-                if(clientController.deleteClient(TxtClientCode.Text.Trim()) > 0)
+                CLIENTS client = clientController.getClient(TxtClientCode.Text);
+                client.IS_DEL = false;
+
+                if (clientController.updateClient(client) > 0)
                 {
-                    h.MsgInfo("Cliente eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al eliminar cliente.");
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+            }
+
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                CLIENTS client = clientController.getClient(TxtClientCode.Text);
+
+                if (clientController.deleteClient(client.CLIENT_CODE) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                PbxSearch_Click(sender, e);
+            }
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if(h.MsgQuestion(Helpers.App.Msg0004) == "S")
+            {
+                CLIENTS client= clientController.getClient(TxtClientCode.Text);
+                client.IS_DEL = true;
+                if(clientController.updateClient(client) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0005);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
                 }
             }
         }
 
         private void DgvClients_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            BtnEdit.Enabled = true;
-            BtnDelete.Enabled = true;
+            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+            BtnEdit.Enabled = flagIsPaperbin ? false : true;
+            BtnDelete.Enabled = flagIsPaperbin ? false : true;
             BtnNew.Enabled = false;
             BtnSave.Enabled = false;
             BtnCancel.Enabled = true;
+            PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+            PbxDestroy.Enabled= PermissionManager.HasPermission("PAP", "Eliminar");
 
             MskPhoneNumber.Enabled = true;
             foreach (TextBox txt in this.Controls.OfType<TextBox>())
@@ -150,7 +237,7 @@ namespace parking.Views.Administration.Clients
             }
             TxtDni.Focus();
 
-            string newCode = "CLI" + correlativesController.getNextId("CLI");
+            string newCode = moduleId + correlativesController.getNextId(moduleId);
             TxtClientCode.Text = newCode;
         }
 
@@ -172,15 +259,14 @@ namespace parking.Views.Administration.Clients
 
                 if (clientController.saveClient(newClient) > 0)
                 {
-                    h.MsgInfo("Cliente guardado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al guardar cliente.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
-
         }
 
         private void setValues()
@@ -198,40 +284,35 @@ namespace parking.Views.Administration.Clients
         private int validateData()
         {
             int error = 0;
-            string onlyNumbers = "^[0-9]+$";
-            string onlyLetters = "^[a-zA-Z\\s]+$";
-            string address = "^[a-zA-Z0-9,.\\s]+$";
-            string emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
 
-            if (!Regex.Match(TxtDni.Text, onlyNumbers).Success)
+            if (!Regex.Match(TxtDni.Text, RegexPatterns.AlphanumericPattern).Success)
             {
                 
-                h.MsgWarning("Ingresar DNI de usuario correctamente. ¡Solo números!");
+                h.MsgWarning("INGRESAR DNI DE USUARIO CORRECTAMENTE. ¡SOLO NÚMEROS O LETRAS!");
                 error++;
                 TxtDni.Focus();
                 return error;
-
             }
 
-            if (!Regex.Match(TxtName.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtName.Text, RegexPatterns.AlphabeticPatternWithAccent).Success)
             {
-                h.MsgWarning("Ingresar nombre correctamente. ¡Solo letras!");
+                h.MsgWarning("INGRESAR NOMBRE CORRECTAMENTE. ¡SOLO LETRAS!");
                 error++;
                 TxtName.Focus();
                 return error;
             }
 
-            if (!Regex.Match(TxtLastName.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtLastName.Text, RegexPatterns.AlphabeticPatternWithAccent).Success)
             {
-                h.MsgWarning("Ingresar apellido correctamente. ¡Solo letras!");
+                h.MsgWarning("INGRESAR APELLIDO CORRECTAMENTE. ¡SOLO LETRAS!");
                 error++;
                 TxtLastName.Focus();
                 return error;
             }
 
-            if (!Regex.Match(TxtMail.Text, emailPattern).Success)
+            if (!Regex.Match(TxtMail.Text, RegexPatterns.EmailPattern).Success)
             {
-                h.MsgWarning("Ingresar email correctamente. ¡Formato de email incorrecto!");
+                h.MsgWarning("INGRESAR EMAIL CORRECTAMENTE. ¡FORMATO DE EMAIL INCORRECTO!");
                 error++;
                 TxtMail.Focus();
                 return error;
@@ -239,15 +320,15 @@ namespace parking.Views.Administration.Clients
 
             if (MskPhoneNumber.Text.Trim().Length==0)
             {
-                h.MsgWarning("Ingresar número telefónico.");
+                h.MsgWarning("INGRESAR NÚMERO TELEFÓNICO.");
                 error++;
                 MskPhoneNumber.Focus();
                 return error;
             }
 
-            if(!Regex.Match(TxtAddress.Text, address).Success)
+            if(!Regex.Match(TxtAddress.Text, RegexPatterns.AddressPattern).Success)
             {
-                h.MsgWarning("Ingresar dirección correctamente. ¡Solo letras y números!");
+                h.MsgWarning("INGRESAR DIRECCIÓN CORRECTAMENTE. ¡SOLO LETRAS Y NÚMEROS!");
                 error++;
                 TxtAddress.Focus();
                 return error;
@@ -255,28 +336,25 @@ namespace parking.Views.Administration.Clients
             return error;
         }
 
-        public void getClients(string searchFilter="")
+        public void getClients(string searchFilter="",bool isDel= false)
         {
             DgvClients.Rows.Clear();
-            var clients = clientController.getClients(searchFilter);
+            IEnumerable<ClientDTO> clients = clientController.getClients(searchFilter,isDel);
             if (clients.Count() == 0)
             {
-                h.MsgInfo("No se encontraron resultados.");
+                h.MsgInfo(Helpers.App.Msg0012);
 
                 if(searchFilter!="")
                 {
-                    getClients();
+                    getClients("",isDel);
                 }
                 return;
             }
 
             foreach(var client in clients)
             {
-                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.USER_NAME,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
+                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.CLIENT_DNI,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
             }
-
         }
-
-
     }
 }

@@ -1,4 +1,6 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,7 @@ namespace parking.Views.Administration.ParkingStructure
         Helpers.Helpers h= new Helpers.Helpers();
         CorrelativesController correlativeController= new CorrelativesController();
         ParkingFeeController parkingFeeController= new ParkingFeeController();
-        string psCode,parkingFee,userId;
+        string psCode,parkingFee,userId,moduleId= "PSP";
         int psNumber;
         bool psState;
         public FrmParkingSpace()
@@ -42,7 +44,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             fillCmbParkingFee();
             getParkingSpaces("");
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnCancel.Enabled = false;
@@ -80,12 +82,12 @@ namespace parking.Views.Administration.ParkingStructure
                 
                 if(psc.saveParkingSpace(newPs) > 0)
                 {
-                    h.MsgInfo("Espacio de parqueo guardado correctamente");
+                    h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("El espacio de parqueo no ha sido guardado correctamente.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
         }
@@ -111,17 +113,16 @@ namespace parking.Views.Administration.ParkingStructure
 
             TxtNumberSpace.Focus();
 
-            string nextPsCode = "PSP" + correlativeController.getNextId("PSP");
+            string nextPsCode = moduleId + correlativeController.getNextId(moduleId);
             TxtParkingSpaceCode.Text = nextPsCode;
         }
 
         private int validateData()
         {
             int error = 0;
-            string onlyNumbers = "^[0-9]+$";
 
-            if (!Regex.Match(TxtNumberSpace.Text, onlyNumbers).Success) {
-                h.MsgError("Ingresar correctamente el número del espacio de parqueo. ¡Sólo números!");
+            if (!Regex.Match(TxtNumberSpace.Text, RegexPatterns.NumberPattern).Success) {
+                h.MsgError("INGRESAR CORRECTAMENTE EL NÚMERO DEL ESPACIO DE PARQUEO. ¡SÓLO NÚMEROS!");
                 error++;
                 TxtPrice.Focus();
                 return error;
@@ -129,7 +130,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (CmbParkingFee.SelectedValue == null)
             {
-                h.MsgError("Seleccionar tipo de parqueo.");
+                h.MsgError("SELECCIONAR TIPO DE PARQUEO.");
                 error++; 
                 TxtPrice.Focus();
                 return error;
@@ -166,7 +167,7 @@ namespace parking.Views.Administration.ParkingStructure
         { 
             dynamic ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
             
-            if (h.MsgQuestion($"¿Estás seguro que deseas actualizar el espacio de parqueo número {ps.PARKING_SPACE_NUMBER} de la base de datos?")=="S")
+            if (h.MsgQuestion(Helpers.App.Msg0002)=="S")
             {
                 
                 if (validateData() == 0)
@@ -178,12 +179,12 @@ namespace parking.Views.Administration.ParkingStructure
                     editPs.STATE = psState;
                     if (psc.updateParkingSpace(editPs) > 0)
                     {
-                        h.MsgInfo("Espacio de parqueo actualizado correctamente.");
+                        h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("El espacio de parqueo no ha sido actualizado correctamente.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
             }
@@ -194,16 +195,16 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             PARKING_SPACE ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
-            if (h.MsgQuestion($"¿Estás seguro que deseas eliminar el espacio de parqueo número {ps.PARKING_SPACE_NUMBER} de la base de datos?") == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
                 if(psc.deleteParkingSpace(ps.PARKING_SPACE_CODE) > 0)
                 {
-                    h.MsgInfo("Espacio de parqueo eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("El espacio de parqueo no ha sido eliminado correctamente.");
+                    h.MsgError(Helpers.App.Msg0016);
                 }
 
             }
@@ -224,8 +225,8 @@ namespace parking.Views.Administration.ParkingStructure
         {
             if (DgvParkingTypes.Rows.Count > 0) {
                 BtnNew.Enabled = false;
-                BtnEdit.Enabled = true;
-                BtnDelete.Enabled = true;
+                BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
+                BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
                 BtnCancel.Enabled = true;
                 BtnSave.Enabled = false;
                 CmbParkingFee.Enabled = true;
@@ -251,7 +252,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (parkingSpaces.Count() == 0)
             {
-                h.MsgInfo("No se encontraron resultados para la búsqueda.");
+                h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
                     getParkingSpaces("");

@@ -37,7 +37,6 @@
             this.BtnParkingType = new System.Windows.Forms.Button();
             this.BtnParkingSpace = new System.Windows.Forms.Button();
             this.BtnClients = new System.Windows.Forms.Button();
-            this.PbxClose = new System.Windows.Forms.PictureBox();
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
             this.BtnReports = new System.Windows.Forms.ToolStripDropDownButton();
@@ -49,13 +48,13 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCheckout = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.BtnManageUsers = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnRoles = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnPermissions = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnUserPermissions = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnUserPermissions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.BtnConfig = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnCompanyData = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnBillRanges = new System.Windows.Forms.ToolStripMenuItem();
             this.StPrincipal = new System.Windows.Forms.StatusStrip();
@@ -65,11 +64,12 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.PbxLogout = new System.Windows.Forms.PictureBox();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.TstPrincipal.SuspendLayout();
             this.StPrincipal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxLogout)).BeginInit();
             this.SuspendLayout();
             // 
             // PnlAdminSideBar
@@ -185,20 +185,6 @@
             this.BtnClients.UseVisualStyleBackColor = false;
             this.BtnClients.Click += new System.EventHandler(this.BtnClients_Click);
             // 
-            // PbxClose
-            // 
-            this.PbxClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PbxClose.BackColor = System.Drawing.Color.Teal;
-            this.PbxClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PbxClose.Image = ((System.Drawing.Image)(resources.GetObject("PbxClose.Image")));
-            this.PbxClose.Location = new System.Drawing.Point(1212, 3);
-            this.PbxClose.Name = "PbxClose";
-            this.PbxClose.Size = new System.Drawing.Size(34, 33);
-            this.PbxClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PbxClose.TabIndex = 41;
-            this.PbxClose.TabStop = false;
-            this.PbxClose.Click += new System.EventHandler(this.PbxClose_Click);
-            // 
             // TstPrincipal
             // 
             this.TstPrincipal.AutoSize = false;
@@ -214,9 +200,9 @@
             this.toolStripSeparator5,
             this.BtnCheckout,
             this.toolStripSeparator3,
-            this.toolStripDropDownButton1,
+            this.BtnManageUsers,
             this.toolStripSeparator4,
-            this.toolStripDropDownButton2});
+            this.BtnConfig});
             this.TstPrincipal.Location = new System.Drawing.Point(226, 0);
             this.TstPrincipal.Name = "TstPrincipal";
             this.TstPrincipal.Size = new System.Drawing.Size(1024, 41);
@@ -299,20 +285,20 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 41);
             // 
-            // toolStripDropDownButton1
+            // BtnManageUsers
             // 
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnManageUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnRoles,
             this.BtnPermissions,
             this.BtnUsers,
             this.BtnUserPermissions});
-            this.toolStripDropDownButton1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(196, 36);
-            this.toolStripDropDownButton1.Text = "Gestión usuarios";
+            this.BtnManageUsers.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnManageUsers.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnManageUsers.Image = ((System.Drawing.Image)(resources.GetObject("BtnManageUsers.Image")));
+            this.BtnManageUsers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnManageUsers.Name = "BtnManageUsers";
+            this.BtnManageUsers.Size = new System.Drawing.Size(196, 36);
+            this.BtnManageUsers.Text = "Gestión usuarios";
             // 
             // BtnRoles
             // 
@@ -332,15 +318,6 @@
             this.BtnPermissions.Text = "Permisos";
             this.BtnPermissions.Click += new System.EventHandler(this.BtnPermissions_Click);
             // 
-            // BtnUserPermissions
-            // 
-            this.BtnUserPermissions.BackColor = System.Drawing.Color.Teal;
-            this.BtnUserPermissions.ForeColor = System.Drawing.Color.White;
-            this.BtnUserPermissions.Name = "BtnUserPermissions";
-            this.BtnUserPermissions.Size = new System.Drawing.Size(287, 34);
-            this.BtnUserPermissions.Text = "Configurar permisos";
-            this.BtnUserPermissions.Click += new System.EventHandler(this.BtnUserPermissions_Click);
-            // 
             // BtnUsers
             // 
             this.BtnUsers.BackColor = System.Drawing.Color.Teal;
@@ -350,23 +327,32 @@
             this.BtnUsers.Text = "Usuarios";
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click_1);
             // 
+            // BtnUserPermissions
+            // 
+            this.BtnUserPermissions.BackColor = System.Drawing.Color.Teal;
+            this.BtnUserPermissions.ForeColor = System.Drawing.Color.White;
+            this.BtnUserPermissions.Name = "BtnUserPermissions";
+            this.BtnUserPermissions.Size = new System.Drawing.Size(287, 34);
+            this.BtnUserPermissions.Text = "Configurar permisos";
+            this.BtnUserPermissions.Click += new System.EventHandler(this.BtnUserPermissions_Click);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 41);
             // 
-            // toolStripDropDownButton2
+            // BtnConfig
             // 
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnConfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnCompanyData,
             this.BtnBillRanges});
-            this.toolStripDropDownButton2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripDropDownButton2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(110, 36);
-            this.toolStripDropDownButton2.Text = "Config";
+            this.BtnConfig.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnConfig.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnConfig.Image = ((System.Drawing.Image)(resources.GetObject("BtnConfig.Image")));
+            this.BtnConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnConfig.Name = "BtnConfig";
+            this.BtnConfig.Size = new System.Drawing.Size(110, 36);
+            this.BtnConfig.Text = "Config";
             // 
             // BtnCompanyData
             // 
@@ -446,13 +432,27 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 36);
             // 
+            // PbxLogout
+            // 
+            this.PbxLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxLogout.BackColor = System.Drawing.Color.Teal;
+            this.PbxLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxLogout.Image = ((System.Drawing.Image)(resources.GetObject("PbxLogout.Image")));
+            this.PbxLogout.Location = new System.Drawing.Point(1213, 0);
+            this.PbxLogout.Name = "PbxLogout";
+            this.PbxLogout.Size = new System.Drawing.Size(30, 40);
+            this.PbxLogout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PbxLogout.TabIndex = 41;
+            this.PbxLogout.TabStop = false;
+            this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1250, 676);
             this.Controls.Add(this.StPrincipal);
-            this.Controls.Add(this.PbxClose);
+            this.Controls.Add(this.PbxLogout);
             this.Controls.Add(this.TstPrincipal);
             this.Controls.Add(this.PnlAdminSideBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -464,11 +464,11 @@
             this.Load += new System.EventHandler(this.AdminPanel_Load);
             this.PnlAdminSideBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).EndInit();
             this.TstPrincipal.ResumeLayout(false);
             this.TstPrincipal.PerformLayout();
             this.StPrincipal.ResumeLayout(false);
             this.StPrincipal.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxLogout)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -476,7 +476,6 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel PnlAdminSideBar;
-        private System.Windows.Forms.PictureBox PbxClose;
         private System.Windows.Forms.ToolStrip TstPrincipal;
         private System.Windows.Forms.ToolStripSeparator SprMiembros;
         private System.Windows.Forms.ToolStripDropDownButton BtnReports;
@@ -492,7 +491,7 @@
         private System.Windows.Forms.ToolStripMenuItem facturaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BtnCheckIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton BtnManageUsers;
         private System.Windows.Forms.ToolStripMenuItem BtnRoles;
         private System.Windows.Forms.ToolStripMenuItem BtnPermissions;
         private System.Windows.Forms.ToolStripMenuItem BtnUsers;
@@ -500,7 +499,7 @@
         private System.Windows.Forms.ToolStripButton BtnCheckout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Button BtnClients;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
+        private System.Windows.Forms.ToolStripDropDownButton BtnConfig;
         private System.Windows.Forms.ToolStripMenuItem BtnCompanyData;
         private System.Windows.Forms.ToolStripMenuItem BtnBillRanges;
         private System.Windows.Forms.StatusStrip StPrincipal;
@@ -511,5 +510,6 @@
         private System.Windows.Forms.ToolStripStatusLabel LblRole;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem BtnUserPermissions;
+        private System.Windows.Forms.PictureBox PbxLogout;
     }
 }

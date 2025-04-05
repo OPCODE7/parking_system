@@ -26,14 +26,17 @@ namespace parking.Controllers
                     var query = from rp in db.ROLE_PERMISSIONS
                                 join r in db.USER_ROLES on rp.ROLE_ID equals r.ROLE_ID
                                 join p in db.USER_PERMISSIONS on rp.PERMISSION_ID equals p.PERMISSION_ID
+                                join m in db.APP_MODULES on p.MODULE_ID equals m.MODULE_ID
                                 where rp.ROLE_ID == roleId
                                 select new
                                 {
                                     rp.ROLE_PERMISSION_ID,
                                     p.PERMISSION_ID,
-                                    p.PERMISSION_NAME,
+                                    p.MODULE_ID,
                                     r.ROLE_ID,
-                                    r.ROLE_NAME
+                                    r.ROLE_NAME,
+                                    m.MODULE_NAME,
+                                    p.ACTION
                                 };
                     lst = query.ToList();
                 }

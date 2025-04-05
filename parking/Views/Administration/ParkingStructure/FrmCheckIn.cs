@@ -1,4 +1,6 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,7 @@ namespace parking.Views.Administration.ParkingStructure
         CorrelativesController correlativesController = new CorrelativesController();
         CheckInController checkInController = new CheckInController();
         ClientController clientController = new ClientController();
-        string checkInCode, clientCode, observations,vehiclePlate, status,parkingSpaceCode;
+        string checkInCode, clientCode, observations,vehiclePlate, status,parkingSpaceCode,moduleId= "CIN";
         bool isMarkedToEdit= false;
         public FrmCheckIn()
         {
@@ -44,7 +46,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             fillCmbParkingFee();
             getCheckIns();
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnCancel.Enabled = false;
@@ -122,7 +124,7 @@ namespace parking.Views.Administration.ParkingStructure
             TxtPrice.Enabled = false;
             MskClientPhone.Enabled = false;
             CmbParkingTypes.Enabled = true;
-            string newcode = "CIN" + correlativesController.getNextId("CIN");
+            string newcode = moduleId + correlativesController.getNextId(moduleId);
             TxtCheckInCode.Text = newcode;
             TxtClientCode.Focus();
         }
@@ -151,7 +153,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
             else
             {
-                h.MsgInfo("Cliente no encontrado.");
+                h.MsgInfo(Helpers.App.Msg0012);
                 TxtClientCode.Clear();
                 TxtClientName.Clear();
                 MskClientPhone.Clear();
@@ -182,8 +184,8 @@ namespace parking.Views.Administration.ParkingStructure
         private void DgvCheckIns_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             isMarkedToEdit = true;
-            BtnEdit.Enabled = true;
-            BtnDelete.Enabled = true;
+            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
             BtnCancel.Enabled = true;
             BtnNew.Enabled = false;
             BtnSave.Enabled = false;
@@ -226,7 +228,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion("¿Deseas actualizar el registro de la base de datos?") == "S")
+            if(h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
                 if (validateData() == 0)
                 {
@@ -247,16 +249,16 @@ namespace parking.Views.Administration.ParkingStructure
                             newPs.STATE= true;
                             if (parkingSpaceController.updateParkingSpace(lastPs) < 0 || parkingSpaceController.updateParkingSpace(newPs) < 0)
                             {
-                                h.MsgError("Error al actualizar estado del espacio de parqueo.");
+                                h.MsgError(Helpers.App.Msg0017);
 
                             }
                         }
-                        h.MsgInfo("Registro actualizado con éxito.");
+                        h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al actualizar el registro.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
 
                 }
@@ -265,7 +267,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (h.MsgQuestion("¿Deseas eliminar el registro?") == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
                     CHECK_IN checkIn = checkInController.getCheckIn(TxtCheckInCode.Text);
 
@@ -275,14 +277,14 @@ namespace parking.Views.Administration.ParkingStructure
                         ps.STATE = false;
                         if (parkingSpaceController.updateParkingSpace(ps) < 0)
                         {
-                            h.MsgError("Error al actualizar estado del espacio de parqueo.");
+                            h.MsgError(Helpers.App.Msg0017);
                         }
-                    h.MsgInfo("Registro eliminado con éxito.");
+                    h.MsgInfo(Helpers.App.Msg0005);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al eliminar el registro.");
+                        h.MsgError(Helpers.App.Msg0016);
                     }
             }
         }
@@ -317,15 +319,15 @@ namespace parking.Views.Administration.ParkingStructure
                     ps.STATE = true;
                     if (parkingSpaceController.updateParkingSpace(ps) < 0)
                     {
-                        h.MsgError("Error al actualizar estado del espacio de parqueo.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
 
-                    h.MsgInfo("Registro guardado con éxito.");
+                    h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al guardar el registro.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
         }
@@ -343,8 +345,6 @@ namespace parking.Views.Administration.ParkingStructure
         private int validateData()
         {
             int error = 0;
-            string decimals = "^\\d+(\\.\\d{2})?$";
-            string numbersAndLetters = "^[a-zA-Z0-9,.\\s]+$";
 
             if(TxtClientCode.Text.Trim()!="")
             {
@@ -353,7 +353,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (client == null)
                 {
-                    h.MsgError("Cliente no encontrado.");
+                    h.MsgError("CLIENTE NO ENCONTRADO.");
                     error++;
                     TxtClientCode.Focus();
                     return error;
@@ -363,7 +363,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (CmbParkingTypes.SelectedIndex == -1)
             {
-                h.MsgError("Tipo de parqueo no válido.");
+                h.MsgError("TIPO DE PARQUEO NO VÁLIDO.");
                 error++;
                 CmbParkingTypes.Focus();
                 return error;
@@ -371,32 +371,32 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (CmbParkingSpaces.SelectedIndex == -1)
             {
-                h.MsgError("Espacio de parqueo no válido.");
+                h.MsgError("ESPACIO DE PARQUEO NO VÁLIDO.");
                 error++;
                 CmbParkingSpaces.Focus();
                 return error;
             }
 
 
-            if (!Regex.Match(TxtPrice.Text,decimals).Success)
+            if (!Regex.Match(TxtPrice.Text,RegexPatterns.DecimalPattern).Success)
             {
-                h.MsgError("Precio no válido.");
+                h.MsgError("PRECIO NO VÁLIDO.");
                 error++;
                 TxtPrice.Focus();
                 return error;
             }
 
-            if (!Regex.Match(TxtObservations.Text, numbersAndLetters).Success)
+            if (!Regex.Match(TxtObservations.Text, RegexPatterns.AlphanumericPattern).Success)
             {
-                h.MsgError("Observaciones no válidas.");
+                h.MsgError("OBSERVACIONES NO VÁLIDAS.");
                 error++;
                 TxtObservations.Focus();
                 return error;
             }
            
-            if (!Regex.Match(TxtVehiclePlate.Text,numbersAndLetters).Success)
+            if (!Regex.Match(TxtVehiclePlate.Text,RegexPatterns.LicensePlatePattern).Success)
             {
-                h.MsgError("Placa no válida.");
+                h.MsgError("PLACA NO VÁLIDA.");
                 error++;
                 TxtVehiclePlate.Focus();
                 return error;
@@ -411,7 +411,7 @@ namespace parking.Views.Administration.ParkingStructure
             var checkIns = checkInController.getCheckIns(searchFilter,state);
 
             if (checkIns.Count() == 0) {
-                h.MsgInfo("No se encontraron registros.");
+                h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
                     getCheckIns();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using parking.Models;
 
 namespace parking.Controllers
 {
-    internal class HoraryController
+    internal class HoraryController: DataBaseController
     {
         private HORARY horary;
         Helpers.Helpers h = new Helpers.Helpers();
@@ -17,26 +18,24 @@ namespace parking.Controllers
             horary = new HORARY();
         }
 
-        public List<HORARY> getHoraries(string searchFilter)
+        public List<HORARY> getHoraries(string searchFilter,bool isDel= false)
         {
             List<HORARY> horaries = new List<HORARY>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if (searchFilter != "")
-                    {
-                        horaries = db.HORARY.Where(hor => hor.HORARY_DESCRIPTION.Contains(searchFilter) && hor.IS_DEL == false).ToList();
-                    }
-                    else
-                    {
-                        horaries = db.HORARY.Where(hor => hor.IS_DEL == false).ToList();
-                    }
+                    horaries = db.HORARY.Where(h => !String.IsNullOrEmpty(searchFilter) ? (h.HORARY_CODE.Contains(searchFilter) || h.HORARY_DESCRIPTION.Contains(searchFilter) || h.INITIAL_HOUR.ToString().Contains(searchFilter) || h.FINAL_HOUR.ToString().Contains(searchFilter) || h.INSERTED_AT.ToString().Contains(searchFilter)) && h.IS_DEL==isDel : h.IS_DEL==isDel).ToList();
                 }
+            }
+            catch (SqlException ex )
+            {
+                h.MsgError("ERROR EN LA BASE DE DATOS: " + ex.Message.ToUpper());
+
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.Message);
+                h.MsgError("ERROR INESPERADO: "  + ex.Message.ToUpper());
             }
             return horaries;
         }
@@ -49,6 +48,11 @@ namespace parking.Controllers
                 {
                     horary = db.HORARY.Find(id);
                 }
+            }
+            catch (SqlException ex)
+            {
+                h.MsgError("ERROR EN LA BASE DE DATOS: " + ex.Message.ToUpper());
+
             }
             catch (Exception ex)
             {
@@ -70,7 +74,13 @@ namespace parking.Controllers
                     result= db.SaveChanges();
                 }
 
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                h.MsgError("ERROR EN LA BASE DE DATOS: " + ex.Message.ToUpper());
+
+            }
+            catch (Exception ex)
             {
                 h.MsgError(ex.ToString());
             }
@@ -89,7 +99,13 @@ namespace parking.Controllers
                     result = db.SaveChanges();
                 }
 
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                h.MsgError("ERROR EN LA BASE DE DATOS: " + ex.Message.ToUpper());
+
+            }
+            catch (Exception ex)
             {
                 h.MsgError(ex.ToString());
             }
@@ -104,10 +120,21 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    if(HasReferences(db,db.EMPLOYEES,e=> e.HORARY_CODE == horary.HORARY_CODE))
+                    {
+                        h.MsgError(Helpers.App.Msg0019);
+                        return 0;
+                    }
+
                     db.HORARY.Attach(horary);
                     db.HORARY.Remove(horary);
                     result = db.SaveChanges();
                 }
+            }
+            catch (SqlException ex)
+            {
+                h.MsgError("ERROR EN LA BASE DE DATOS: " + ex.Message.ToUpper());
+
             }
             catch (Exception ex)
             {

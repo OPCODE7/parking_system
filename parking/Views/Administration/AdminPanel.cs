@@ -1,6 +1,8 @@
-﻿using parking.Views.Administration.Configuration;
+﻿using parking.Config;
+using parking.Views.Administration.Configuration;
 using parking.Views.Administration.Employees;
 using parking.Views.Administration.ParkingStructure;
+using parking.Views.Auth;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,16 +18,39 @@ namespace parking.Views.Administration
 {
     public partial class AdminPanel : Form
     {
-
+        PermissionManager pm = new PermissionManager();
         public AdminPanel()
         {
             InitializeComponent();
         }
 
 
-        private void PbxClose_Click(object sender, EventArgs e)
+       
+        private void startForm()
         {
-            Application.Exit();
+
+            
+            BtnUsers.Enabled = PermissionManager.HasPermission("USR", "Acceso");
+            BtnManageUsers.Enabled = PermissionManager.HasPermission("USR", "Acceso");
+            BtnConfig.Enabled = PermissionManager.HasPermission("CFG", "Acceso");
+            BtnPermissions.Enabled = PermissionManager.HasPermission("PER", "Acceso");
+            BtnRoles.Enabled = PermissionManager.HasPermission("ROL", "Acceso");
+            BtnEmployees.Enabled = PermissionManager.HasPermission("EMP", "Acceso");
+            BtnHorary.Enabled = PermissionManager.HasPermission("HOR", "Acceso");
+            BtnParkingType.Enabled = PermissionManager.HasPermission("PTY", "Acceso");
+            BtnParkingSpace.Enabled = PermissionManager.HasPermission("PSP", "Acceso");
+            BtnParkingFee.Enabled = PermissionManager.HasPermission("PKF", "Acceso");
+            BtnCheckIn.Enabled = PermissionManager.HasPermission("CIN", "Acceso");
+            BtnClients.Enabled = PermissionManager.HasPermission("CLI", "Acceso");
+            BtnCheckout.Enabled = PermissionManager.HasPermission("COUT", "Acceso");
+            BtnCompanyData.Enabled = PermissionManager.HasPermission("COMP", "Acceso");
+            BtnBillRanges.Enabled = PermissionManager.HasPermission("RFAC", "Acceso");
+            BtnUserPermissions.Enabled = PermissionManager.HasPermission("UPER", "Acceso");
+            BtnReports.Enabled= PermissionManager.HasPermission("RPT", "Acceso");
+
+
+            BtnJobPositions.Enabled = PermissionManager.HasPermission("JPS", "Acceso");
+
 
         }
 
@@ -154,7 +179,7 @@ namespace parking.Views.Administration
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
 
-            ParkingStructure.FrmCheckOut frmCheckOut = new ParkingStructure.FrmCheckOut();
+            FrmCheckOut frmCheckOut = new FrmCheckOut();
             frmCheckOut.MdiParent = this;
             frmCheckOut.Show();
 
@@ -162,10 +187,12 @@ namespace parking.Views.Administration
 
         private void AdminPanel_Load(object sender, EventArgs e)
         {
-            LblUserLogged.Text= Config.User.userName;
+            LblUserLogged.Text= User.userName;
             LblFecha.Text= DateTime.Now.ToLongDateString();
-            LblRole.Text= Config.User.roleName;
-            
+            LblRole.Text= User.roleName;
+            startForm();
+
+
         }
 
         private void BtnCompanyData_Click(object sender, EventArgs e)
@@ -198,6 +225,13 @@ namespace parking.Views.Administration
             frmSetUserPermissions.MdiParent = this;
             frmSetUserPermissions.Show();
 
+        }
+
+        private void PbxLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Login login = new Login();
+            login.Show();
         }
     }
 }

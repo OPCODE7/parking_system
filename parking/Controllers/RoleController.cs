@@ -18,27 +18,20 @@ namespace parking.Controllers
 
         }
 
-        public List<USER_ROLES> getRoles(string searchFilter)
+        public List<USER_ROLES> getRoles(string searchFilter,bool isDel)
         {
             List<USER_ROLES> lst = new List<USER_ROLES>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if (searchFilter != "")
-                    {
-                        lst = db.USER_ROLES.Where(role => role.ROLE_NAME.Contains(searchFilter)).ToList();
-                    }
-                    else
-                    {
-                        lst = db.USER_ROLES.Where(role => role.IS_DEL == false).ToList();
-
-                    }
+                    lst = db.USER_ROLES.Where(r => String.IsNullOrEmpty(searchFilter) ? (r.ROLE_ID.ToString().Contains(searchFilter) || r.ROLE_NAME.Contains(searchFilter) || r.DESCRIPTION_ROLE.Contains(searchFilter) || r.INSERTED_AT.ToString().Contains(searchFilter)) && r.IS_DEL==isDel : r.IS_DEL==isDel).ToList();
                 }
             }
+            
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
 
             }
             return lst;
@@ -57,7 +50,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
             return role;
 
@@ -76,7 +69,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
             return result;
         }
@@ -94,7 +87,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
             return result;
         }
@@ -113,7 +106,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
             return result;
         }

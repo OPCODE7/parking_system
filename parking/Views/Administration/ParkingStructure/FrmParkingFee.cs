@@ -1,4 +1,6 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,7 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingFeeController parkingFeeController = new ParkingFeeController();
         ParkingTypeController parkingTypeController = new ParkingTypeController();
 
-        string pfCode, ptCode,userId;
+        string pfCode, ptCode,userId,moduleId= "PKF";
         decimal pfPrice;
         public FrmParkingFee()
         {
@@ -46,7 +48,7 @@ namespace parking.Views.Administration.ParkingStructure
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
 
             TxtParkingFeeCode.Enabled = false;
             TxtPrice.Enabled = false;
@@ -75,7 +77,7 @@ namespace parking.Views.Administration.ParkingStructure
             var parkingFees = parkingFeeController.getParkingFees(searchFilter);
             if (parkingFees.Count() == 0)
             {
-                h.MsgInfo("No hay registros en la base de datos.");
+                h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
                     getParkingFees("");
@@ -100,11 +102,10 @@ namespace parking.Views.Administration.ParkingStructure
         private int validateData()
         {
             int error = 0;
-            string decimals = "^\\d+(\\.\\d{2})?$";
 
-            if (!Regex.Match(TxtPrice.Text,decimals).Success)
+            if (!Regex.Match(TxtPrice.Text,RegexPatterns.DecimalPattern).Success)
             {
-                h.MsgWarning("Ingresar el precio correctamente. !Solo números enteros o decimales con dos cifras despúes del punto¡");
+                h.MsgWarning("INGRESAR EL PRECIO CORRECTAMENTE. !SOLO NÚMEROS ENTEROS O DECIMALES CON DOS CIFRAS DESPÚES DEL PUNTO¡");
                 error++;
                 TxtPrice.Focus();
                 return error;
@@ -112,7 +113,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (CmbParkingTypes.SelectedValue == null)
             {
-                h.MsgWarning("Seleccionar tipo de parqueo.");
+                h.MsgWarning("SELECCIONAR TIPO DE PARQUEO.");
                 error++;
                 CmbParkingTypes.Focus();
                 return error;
@@ -145,8 +146,8 @@ namespace parking.Views.Administration.ParkingStructure
             BtnNew.Enabled = false;
             BtnCancel.Enabled = true;
             BtnSave.Enabled = false;
-            BtnEdit.Enabled = true;
-            BtnDelete.Enabled = true;
+            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
 
             TxtPrice.Enabled = true;
             CmbParkingTypes.Enabled = true;
@@ -163,7 +164,7 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnEdit_Click(object sender, EventArgs e)
         {
             PARKING_FEE pf= parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
-            if (h.MsgQuestion($"¿Estás seguro de eliminar la tarifa?") == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
                 if (validateData() == 0)
                 {
@@ -174,13 +175,13 @@ namespace parking.Views.Administration.ParkingStructure
 
                     if (parkingFeeController.updateParkingFee(pf) > 0)
                     {
-                        h.MsgSuccess("La tarifa se actualizó correctamente");
+                        h.MsgSuccess(Helpers.App.Msg0003);
                         startForm();
 
                     }
                     else
                     {
-                        h.MsgError("La tarifa no pudo ser actualizada.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
                
@@ -193,16 +194,16 @@ namespace parking.Views.Administration.ParkingStructure
 
             PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
 
-            if (h.MsgQuestion("¿Estás seguro que deseas eliminar la tarifa?") == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
                 if (parkingFeeController.deleteParkingFee(pf) > 0)
                 {
-                    h.MsgSuccess("La tarifa se eliminó correctamente.");
+                    h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("La tarifa no pudo ser eliminada.");
+                    h.MsgError(Helpers.App.Msg0016);
                 }
 
             }
@@ -219,7 +220,7 @@ namespace parking.Views.Administration.ParkingStructure
             TxtPrice.Enabled = true;
             CmbParkingTypes.Enabled = true;
 
-            string nextCode = "PKF" + correlativeController.getNextId("PKF");
+            string nextCode = moduleId + correlativeController.getNextId(moduleId);
             TxtParkingFeeCode.Text = nextCode;
             TxtPrice.Focus();
         }
@@ -238,12 +239,12 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if(parkingFeeController.saveParkingFee(newPf) > 0)
                 {
-                    h.MsgSuccess("La tarifa de parqueo se guardó correctamente.");
+                    h.MsgSuccess(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("La tarifa de parqueo no se guardó correctamente.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
 

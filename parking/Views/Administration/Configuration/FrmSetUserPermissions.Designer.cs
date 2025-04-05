@@ -118,21 +118,25 @@
             // CmbRoles
             // 
             this.CmbRoles.BackColor = System.Drawing.SystemColors.Control;
+            this.CmbRoles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbRoles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.CmbRoles.FormattingEnabled = true;
             this.CmbRoles.Location = new System.Drawing.Point(12, 96);
             this.CmbRoles.Name = "CmbRoles";
-            this.CmbRoles.Size = new System.Drawing.Size(543, 28);
+            this.CmbRoles.Size = new System.Drawing.Size(543, 30);
             this.CmbRoles.TabIndex = 152;
             this.CmbRoles.TextChanged += new System.EventHandler(this.CmbRoles_TextChanged);
             // 
             // TrvPermissions
             // 
+            this.TrvPermissions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TrvPermissions.CheckBoxes = true;
-            this.TrvPermissions.Location = new System.Drawing.Point(13, 130);
+            this.TrvPermissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrvPermissions.Location = new System.Drawing.Point(13, 134);
             this.TrvPermissions.Name = "TrvPermissions";
             this.TrvPermissions.Size = new System.Drawing.Size(542, 457);
             this.TrvPermissions.TabIndex = 154;
+            this.TrvPermissions.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TrvPermissions_AfterCheck);
             // 
             // FrmSetUserPermissions
             // 

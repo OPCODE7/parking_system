@@ -53,6 +53,9 @@
         <AssociationConnector Association="PARKINGModel.FK_USER_ROLE" ManuallyRouted="false" />
         <EntityTypeShape EntityType="PARKINGModel.BILL_RANGE" Width="1.5" PointX="5.25" PointY="31.25" />
         <AssociationConnector Association="PARKINGModel.LAYOUT" />
+        <EntityTypeShape EntityType="PARKINGModel.APP_MODULES" Width="1.5" PointX="5.25" PointY="35.75" />
+        <AssociationConnector Association="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" />
+        <AssociationConnector Association="PARKINGModel.FK_USER_MODULES" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

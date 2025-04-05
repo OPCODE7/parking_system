@@ -1,4 +1,6 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace parking.Views.Administration.Configuration
 {
     public partial class FrmCompany : Form
     {
-        string rtn, companyName, companyAddress, companyPhone, companyEmail,legaForm;
+        string rtn, companyName, companyAddress, companyPhone, companyEmail,legaForm, moduleId= "COMP";
         bool exist= false;
 
         Helpers.Helpers h = new Helpers.Helpers();
@@ -38,11 +40,11 @@ namespace parking.Views.Administration.Configuration
 
                     if(cdc.updateCompanyData(companyData)>0)
                     {
-                        h.MsgSuccess("Datos de la empresa actualizados correctamente");
+                        h.MsgSuccess(App.Msg0003);
                     }
                     else
                     {
-                        h.MsgError("Error al actualizar los datos de la empresa");
+                        h.MsgError(App.Msg0017);
                     }
 
                 }
@@ -60,14 +62,13 @@ namespace parking.Views.Administration.Configuration
 
                     if (cdc.saveCompanyData(newCompanyData) > 0)
                     {
-                        h.MsgSuccess("Datos de la empresa guardados correctamente");
+                        h.MsgSuccess(App.Msg0001);
                     }
                     else
                     {
-                        h.MsgError("Error al guardar los datos de la empresa");
+                        h.MsgError(App.Msg0015);
                     }
                 }
-
             }
         }
 
@@ -105,51 +106,46 @@ namespace parking.Views.Administration.Configuration
         private int validateData()
         {
             int error = 0;
-            string onlyNumbers = "^[0-9]+$";
-            string onlyLetters = "^[a-zA-Z\\s]+$";
-            string address = "^[a-zA-Z0-9,.\\s]+$";
-            string emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
-
-            if (!Regex.Match(TxtRTN.Text, onlyNumbers).Success)
+            if (!Regex.Match(TxtRTN.Text, RegexPatterns.NumberPattern).Success)
             {
-                h.MsgError("Ingresar RTN correctamente");
+                h.MsgError("INGRESAR RTN CORRECTAMENTE ¡SOLO NUMEROS!");
                 error++;
                 return error;
             }
 
-            if (!Regex.Match(TxtCompanyName.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtCompanyName.Text, RegexPatterns.AlphabeticPattern).Success)
             {
-                h.MsgError("Ingresar nombre de la empresa correctamente");
+                h.MsgError("INGRESAR NOMBRE DE LA EMPRESA CORRECTAMENTE ¡SOLO LETRAS!");
                 error++;
                 return error;
             }
 
-            if (!Regex.Match(TxtEmail.Text, emailPattern).Success)
+            if (!Regex.Match(TxtEmail.Text, RegexPatterns.EmailPattern).Success)
             {
-                h.MsgError("Ingresar email de la empresa correctamente");
+                h.MsgError("INGRESAR EMAIL CORRECTAMENTE");
                 error++;
                 return error;
             }
 
-            if (!Regex.Match(TxtAddress.Text, address).Success)
+            if (!Regex.Match(TxtAddress.Text, RegexPatterns.AddressPattern).Success)
             {
-                h.MsgError("Ingresar dirección de la empresa correctamente");
+                h.MsgError("INGRESAR DIRECCION CORRECTAMENTE");
                 error++;
                 return error;
             }
 
             if (MskPhone.Text=="")
             {
-                h.MsgError("Ingresar número de teléfono de la empresa correctamente");
+                h.MsgError("INGRESAR NUMERO TELEFONICO");
                 error++;
                 return error;
             }
 
           
 
-            if (!Regex.Match(TxtLegalForm.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtLegalForm.Text, RegexPatterns.AlphabeticPattern).Success)
             {
-                h.MsgError("Ingresar forma legal de la empresa correctamente");
+                h.MsgError("INGRESAR FORMAL LEGAL CORRECTAMENTE ¡SOLO LETRAS!");
                 error++;
                 return error;
             }
@@ -174,6 +170,7 @@ namespace parking.Views.Administration.Configuration
 
             getInfoCompany(companies[0].COMPANY_RTN);
             exist = true;
+            BtnSave.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
 
         }
 
@@ -188,6 +185,10 @@ namespace parking.Views.Administration.Configuration
                 MskPhone.Text = companyData.COMPANY_PHONE;
                 TxtEmail.Text = companyData.COMPANY_EMAIL;
                 TxtLegalForm.Text = companyData.LEGAL_FORM;
+            }
+            else
+            {
+                h.MsgInfo(App.Msg0011);
             }
         }
     }

@@ -1,4 +1,6 @@
 ﻿using parking.Config;
+using parking.Controllers;
+using parking.DTO;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,10 +19,14 @@ namespace parking.Views.Administration.Employees
 {
     public partial class FrmPermissions : Form
     {
-        Helpers.Helpers h= new Helpers.Helpers();
+        Helpers.Helpers h = new Helpers.Helpers();
         Controllers.PermissionController permissionController = new Controllers.PermissionController();
-        string permissionName, permissionDescription;
+        DataBaseController dbController = new DataBaseController();
+        AppModulesController appModulesController = new AppModulesController();
+        string permissionDescription, moduleId, action, _moduleId = "PER";
         int permissionId;
+        bool flagIsPaperbin;
+        IEnumerable<dynamic> allModules;
         public FrmPermissions()
         {
             InitializeComponent();
@@ -33,19 +40,27 @@ namespace parking.Views.Administration.Employees
         private void FrmPermissions_Load(object sender, EventArgs e)
         {
             startForm();
-          
-
         }
 
         private void startForm()
         {
-            getPermissions("");
+            getPermissions("",false);
+            fillCmbModules();
+            flagIsPaperbin = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(_moduleId, "Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Enabled = false;
             BtnCancel.Enabled = false;
-
+            CmbActions.Enabled = false;
+            CmbActions.SelectedIndex = -1;
+            CmbModules.Enabled = false;
+            CmbModules.SelectedIndex = -1;
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = false;
@@ -58,9 +73,10 @@ namespace parking.Views.Administration.Employees
         private void setValues()
         {
 
-            permissionName = h.SanitizeStr(TxtPermissionName.Text.Trim().ToString());
-            permissionDescription= h.SanitizeStr(TxtPermissionDescription.Text.Trim().ToString());
-            
+            moduleId = CmbModules.SelectedValue.ToString();
+            permissionDescription = h.SanitizeStr(TxtPermissionDescription.Text.Trim().ToString());
+            action = CmbActions.SelectedItem.ToString();
+
         }
 
 
@@ -69,7 +85,10 @@ namespace parking.Views.Administration.Employees
             BtnDelete.Enabled = false;
             BtnSave.Enabled = true;
             BtnCancel.Enabled = true;
-            
+            CmbActions.Enabled = true;
+            CmbModules.Enabled = true;
+            BtnNew.Enabled = false;
+
 
 
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
@@ -79,30 +98,11 @@ namespace parking.Views.Administration.Employees
             }
 
             TxtPermissionCode.Enabled = false;
-            TxtPermissionName.Focus();
+            CmbModules.Focus();
 
-            using (PARKINGEntities db = new PARKINGEntities())
-            {
-                try
-                {
-                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('USER_PERMISSIONS')").FirstOrDefault();
-
-                    nextId = nextId == 1 ? 1 : nextId + 1;
-
-                    TxtPermissionCode.Text = nextId.ToString();
-                    BtnNew.Enabled = false;
-                }
-                catch (Exception ex)
-                {
-                    h.MsgError(ex.ToString());
-                }
-
-            }
+            TxtPermissionCode.Text = dbController.getNextIdModule("USER_PERMISSIONS").ToString();
 
         }
-
-
-    
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -112,15 +112,17 @@ namespace parking.Views.Administration.Employees
                 setValues();
 
                 USER_PERMISSIONS newPermission = new USER_PERMISSIONS();
-                newPermission.PERMISSION_NAME= permissionName;
                 newPermission.PERMISSION_DESCRIPTION = permissionDescription;
-                newPermission.INSERTED_AT= DateTime.Now;
-                    
+                newPermission.ACTION = CmbActions.SelectedItem.ToString();
+                newPermission.MODULE_ID = moduleId;
+                newPermission.INSERTED_AT = DateTime.Now;
+                newPermission.USER_ID = Config.User.userId;
 
-                int result= permissionController.savePermission(newPermission);
+
+                int result = permissionController.savePermission(newPermission);
                 if (result > 0)
                 {
-                    h.MsgSuccess("El permiso ha sido guardado correctamente.");
+                    h.MsgSuccess(Helpers.App.Msg0001);
                     DgvPermissions.Rows.Clear();
                     startForm();
                 }
@@ -131,105 +133,136 @@ namespace parking.Views.Administration.Employees
         private int validateData()
         {
             int error = 0;
-            string permissionNamePattern = "^[a-zA-Z\\s]+$";
-            string permissionDescriptionPattern = "^[a-zA-Z,.\\s]+$";
-            if (!Regex.Match(TxtPermissionName.Text,permissionNamePattern).Success)
+            if (CmbModules.SelectedItem == null)
             {
-                h.MsgWarning("Ingresar nombre del permiso correctamente. ¡Solo letras!");
-                TxtPermissionName.Focus();
+                h.MsgWarning("SELECCIONAR UN MODULO");
+                CmbModules.Focus();
                 error++;
                 return error;
-
             }
 
-            if (!Regex.Match(TxtPermissionDescription.Text, permissionDescriptionPattern).Success)
+            if (!Regex.Match(TxtPermissionDescription.Text, Helpers.RegexPatterns.AlphabeticPatternWithAccent).Success)
             {
-                h.MsgWarning("Ingresar descripción del permiso correctamente. ¡Solo letras y signos de puntuación!");
+                h.MsgWarning("INGRESAR DESCRIPCION DEL PERMISO CORRECTAMENTE. ¡SOLO LETRAS!");
                 TxtPermissionDescription.Focus();
                 error++;
                 return error;
             }
 
-            return error;
+            if (CmbActions.SelectedItem == null)
+            {
+                h.MsgWarning("SELECCIONAR UNA ACCIOsN");
+                CmbActions.Focus();
+                error++;
+                return error;
+            }
 
+            return error;
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getPermissions(TxtSearch.Text);
+            getPermissions(TxtSearch.Text,flagIsPaperbin);
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getPermissions("");
+            getPermissions("",flagIsPaperbin);
         }
 
         private void DgvPermissions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(DgvPermissions.Rows.Count > 0)
+            if (DgvPermissions.Rows.Count > 0)
             {
-                    USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(DgvPermissions.CurrentRow.Cells[0].Value));
+                var permission = permissionController.getPermissionInfo(Convert.ToInt32(DgvPermissions.CurrentRow.Cells[0].Value.ToString()));
 
-                 if(permission!= null) { 
-                    
-                        TxtPermissionCode.Text = permission.PERMISSION_ID.ToString();
-                        TxtPermissionName.Text= permission.PERMISSION_NAME;
-                        TxtPermissionDescription.Text = permission.PERMISSION_DESCRIPTION;
-                        TxtPermissionName.Focus();
-                        TxtPermissionName.Enabled = true;
-                        TxtPermissionDescription.Enabled = true;
+                if (permission != null)
+                {
 
-                        BtnEdit.Enabled = true;
-                        BtnDelete.Enabled= true;
-                        BtnNew.Enabled = false;
-                        BtnSave.Enabled = false;
-                        BtnCancel.Enabled = true;
+                    TxtPermissionCode.Text = permission.PERMISSION_ID.ToString();
+                    CmbModules.SelectedValue = permission.MODULE_ID;
+                    TxtPermissionDescription.Text = permission.PERMISSION_DESCRIPTION;
+                    CmbModules.Focus();
+                    CmbModules.Enabled = true;
+                    TxtPermissionDescription.Enabled = true;
+                    CmbActions.Enabled = true;
+                    CmbActions.SelectedItem = permission.ACTION;
 
-                 }else{
-                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
-                 }
+                    BtnEdit.Enabled = PermissionManager.HasPermission(_moduleId, "Modificar");
+                    BtnDelete.Enabled = PermissionManager.HasPermission(_moduleId, "Eliminar");
+                    BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                    BtnDelete.Enabled= flagIsPaperbin ? false : true;
+                    PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                    PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
+                    BtnNew.Enabled = false;
+                    BtnSave.Enabled = false;
+                    BtnCancel.Enabled = true;
+
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0011);
+                }
 
             }
         }
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            setValues();
 
-            if(validateData() == 0)
+            if (validateData() == 0)
             {
-                    USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
-                    permission.PERMISSION_NAME = permissionName;
-                    permission.PERMISSION_DESCRIPTION = permissionDescription;
 
-                    int result= permissionController.updatePermission(permission);
+                if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
+                {
+                    setValues();
+                    USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
+                    permission.MODULE_ID = moduleId;
+                    permission.PERMISSION_DESCRIPTION = permissionDescription;
+                    permission.ACTION = CmbActions.SelectedItem.ToString();
+
+                    int result = permissionController.updatePermission(permission);
                     if (result > 0)
                     {
-                        h.MsgSuccess("El permiso ha sido actualizado correctamente.");
+                        h.MsgSuccess(Helpers.App.Msg0003);
                         DgvPermissions.Rows.Clear();
                         startForm();
                     }
-            }
-           
 
+                }
+            }
         }
+
+        private void fillCmbModules()
+        {
+
+            allModules = appModulesController.getModules();
+            CmbModules.DataSource = allModules;
+            CmbModules.ValueMember = "MODULE_ID";
+            CmbModules.DisplayMember = "MODULE_NAME";
+            CmbModules.SelectedIndex = -1;
+        }
+
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-                USER_PERMISSIONS registro = new USER_PERMISSIONS { PERMISSION_ID = Convert.ToInt32(TxtPermissionCode.Text.Trim())};
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
+            {
+                USER_PERMISSIONS registro = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
+                registro.IS_DEL= true;
+                int result = permissionController.updatePermission(registro);
 
-                if (h.MsgQuestion($"¿Esta seguro que desea eliminar el permiso {registro.PERMISSION_NAME} de la base de datos?") == "S")
+                if (result > 0)
                 {
-                   int result= permissionController.deletePermission(registro);
-
-                    if (result > 0)
-                    {
-                        h.MsgSuccess("El permiso ha sido eliminado correctamente.");
-                        DgvPermissions.Rows.Clear();
-                        startForm();
-                    }
+                    h.MsgSuccess(Helpers.App.Msg0005);
+                    startForm();
                 }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
 
         }
 
@@ -238,33 +271,139 @@ namespace parking.Views.Administration.Employees
             startForm();
         }
 
-        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+
+
+        private void CmbModules_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) {
-                getPermissions(TxtSearch.Text);
+
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                return;
             }
-            
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (CmbModules.Items.Count > 0)
+                {
+                    var item = (dynamic)CmbModules.SelectedItem;
+                    CmbModules.Text = item.MODULE_NAME;
+                    CmbModules.SelectionStart = CmbModules.Text.Length;
+                }
+                return;
+            }
+
+            filterCmbModules();
+
         }
 
-        private void getPermissions(string searchFilter)
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            BtnCancel.Enabled = true;
+            BtnNew.Enabled = false;
+            PbxRecovery.Visible = true;
+            PbxDestroy.Visible = true;
+            flagIsPaperbin = true;
+            getPermissions("", flagIsPaperbin);
+
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                USER_PERMISSIONS registro = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
+                registro.IS_DEL = false;
+                if (permissionController.updatePermission(registro) > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+            }
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                USER_PERMISSIONS registro = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
+                int result = permissionController.deletePermission(registro);
+                if (result > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                PbxSearch_Click(sender, e);
+            }
+
+        }
+
+        private void filterCmbModules()
+        {
+            string text = CmbModules.Text.ToLower();
+            int cursorPos = CmbModules.SelectionStart;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                fillCmbModules();
+                CmbModules.SelectedIndex = -1;
+            }
+            else
+            {
+                var filtrados = allModules
+                    .Where(m => m.MODULE_NAME.ToLower().Contains(text))
+                    .ToList();
+
+
+
+                CmbModules.DataSource = filtrados;
+                CmbModules.ValueMember = "MODULE_ID";
+                CmbModules.DisplayMember = "MODULE_NAME";
+                CmbModules.DroppedDown = true;
+
+                CmbModules.Text = text;
+                CmbModules.SelectionStart = cursorPos;
+                CmbModules.SelectionLength = 0;
+            }
+
+        }
+
+        private void getPermissions(string searchFilter,bool isDel)
         {
             DgvPermissions.Rows.Clear();
-            List<USER_PERMISSIONS> lst = new List<USER_PERMISSIONS>();
-            lst= permissionController.getPermissions(searchFilter);
 
-            if(lst.Count == 0)
+            IEnumerable<PermissionDTO> lst = permissionController.getPermissions(searchFilter,isDel);
+
+            if (lst.Count() == 0)
             {
-                h.MsgInfo("No se encontraron registros en la base de datos.");
-                if(searchFilter != "")
+                h.MsgInfo(Helpers.App.Msg0012);
+                if (searchFilter != "")
                 {
-                    getPermissions("");
+                    getPermissions("",isDel);
+                    TxtSearch.Clear();
                 }
                 return;
             }
 
             foreach (var item in lst)
             {
-                DgvPermissions.Rows.Add(item.PERMISSION_ID, item.PERMISSION_NAME, item.PERMISSION_DESCRIPTION, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvPermissions.Rows.Add(item.PERMISSION_ID, item.MODULE_NAME, item.PERMISSION_DESCRIPTION, item.ACTION, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
 
         }

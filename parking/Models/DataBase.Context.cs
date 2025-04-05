@@ -51,6 +51,7 @@ namespace parking.Models
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<BILL_RANGE> BILL_RANGE { get; set; }
+        public virtual DbSet<APP_MODULES> APP_MODULES { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

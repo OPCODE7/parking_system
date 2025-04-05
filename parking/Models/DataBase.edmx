@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="PARKINGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APP_MODULES">
+          <Key>
+            <PropertyRef Name="MODULE_ID" />
+          </Key>
+          <Property Name="MODULE_ID" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="MODULE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
+          <Property Name="IS_DEL" Type="bit" />
+          <Property Name="USER_ID" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="BILL">
           <Key>
             <PropertyRef Name="BILL_CODE" />
@@ -43,7 +53,7 @@
           </Key>
           <Property Name="CHECK_IN_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="CLIENT_DNI" Type="varchar" MaxLength="15" />
-          <Property Name="VEHICLE_PLATE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="VEHICLE_PLATE" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CHECK_IN_TIME" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="OBSERVATIONS" Type="text" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
@@ -103,6 +113,7 @@
           <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
+          <Property Name="MODULE_ID" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="DISCOUNT_TYPE">
           <Key>
@@ -232,7 +243,7 @@
           <Property Name="ROLE_PERMISSION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ROLE_ID" Type="int" Nullable="false" />
           <Property Name="PERMISSION_ID" Type="int" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="SALARIES">
           <Key>
@@ -260,10 +271,12 @@
             <PropertyRef Name="PERMISSION_ID" />
           </Key>
           <Property Name="PERMISSION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PERMISSION_NAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PERMISSION_DESCRIPTION" Type="text" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar" MaxLength="15" />
           <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
+          <Property Name="ACTION" Type="varchar" MaxLength="30" />
+          <Property Name="MODULE_ID" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="USER_ROLES">
           <Key>
@@ -356,6 +369,18 @@
             </Principal>
             <Dependent Role="PARKING_SPACE">
               <PropertyRef Name="PARKING_FEE_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_PERM__MODUL__45DE573A">
+          <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="0..1" />
+          <End Role="USER_PERMISSIONS" Type="Self.USER_PERMISSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_MODULES">
+              <PropertyRef Name="MODULE_ID" />
+            </Principal>
+            <Dependent Role="USER_PERMISSIONS">
+              <PropertyRef Name="MODULE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -515,6 +540,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_USER_MODULES">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="APP_MODULES">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USER_ROLE">
           <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="1" />
           <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
@@ -607,6 +644,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="PARKINGModelStoreContainer">
+          <EntitySet Name="APP_MODULES" EntityType="Self.APP_MODULES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BILL" EntityType="Self.BILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BILL_RANGE" EntityType="Self.BILL_RANGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHECK_IN" EntityType="Self.CHECK_IN" Schema="dbo" store:Type="Tables" />
@@ -654,6 +692,10 @@
           <AssociationSet Name="FK__PARKING_S__PARKI__30592A6F" Association="Self.FK__PARKING_S__PARKI__30592A6F">
             <End Role="PARKING_FEE" EntitySet="PARKING_FEE" />
             <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="Self.FK__USER_PERM__MODUL__45DE573A">
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+            <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
           </AssociationSet>
           <AssociationSet Name="FK_CHECK_IN" Association="Self.FK_CHECK_IN">
             <End Role="CHECK_IN" EntitySet="CHECK_IN" />
@@ -707,6 +749,10 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
           </AssociationSet>
+          <AssociationSet Name="FK_USER_MODULES" Association="Self.FK_USER_MODULES">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+          </AssociationSet>
           <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
             <End Role="USER_ROLES" EntitySet="USER_ROLES" />
             <End Role="USERS" EntitySet="USERS" />
@@ -756,7 +802,7 @@
           </Key>
           <Property Name="CHECK_IN_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CLIENT_DNI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="VEHICLE_PLATE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VEHICLE_PLATE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CHECK_IN_TIME" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="OBSERVATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
@@ -825,6 +871,7 @@
           <Property Name="CORRELATIVE_COUNTER" Type="Int32" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+          <Property Name="MODULE_ID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DISCOUNT_TYPE">
           <Key>
@@ -974,7 +1021,7 @@
           <Property Name="ROLE_PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+          <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
           <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_PERMISSIONS" />
           <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_ROLE_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_ROLES" />
         </EntityType>
@@ -1005,11 +1052,14 @@
             <PropertyRef Name="PERMISSION_ID" />
           </Key>
           <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PERMISSION_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="USER_PERMISSIONS" ToRole="ROLE_PERMISSIONS" />
+          <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ACTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="USER_PERMISSIONS" ToRole="APP_MODULES" />
         </EntityType>
         <EntityType Name="USER_ROLES">
           <Key>
@@ -1044,6 +1094,7 @@
           <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK__PARKING_F__USER___0B27A5C0" FromRole="USERS" ToRole="PARKING_FEE" />
           <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
           <NavigationProperty Name="BILL_RANGE" Relationship="PARKINGModel.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
+          <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="USERS" ToRole="APP_MODULES" />
         </EntityType>
         <Association Name="FK_CHECKOUTBILL">
           <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
@@ -1472,6 +1523,15 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="BILL_RANGE" EntitySet="BILL_RANGE" />
           </AssociationSet>
+          <EntitySet Name="APP_MODULES" EntityType="PARKINGModel.APP_MODULES" />
+          <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="PARKINGModel.FK__USER_PERM__MODUL__45DE573A">
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+            <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_MODULES" Association="PARKINGModel.FK_USER_MODULES">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1510,6 +1570,42 @@
             </Principal>
             <Dependent Role="BILL_RANGE">
               <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="APP_MODULES">
+          <Key>
+            <PropertyRef Name="MODULE_ID" />
+          </Key>
+          <Property Name="MODULE_ID" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="MODULE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IS_DEL" Type="Boolean" />
+          <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USER_PERMISSIONS" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
+          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK__USER_PERM__MODUL__45DE573A">
+          <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="0..1" />
+          <End Type="PARKINGModel.USER_PERMISSIONS" Role="USER_PERMISSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_MODULES">
+              <PropertyRef Name="MODULE_ID" />
+            </Principal>
+            <Dependent Role="USER_PERMISSIONS">
+              <PropertyRef Name="MODULE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_MODULES">
+          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="APP_MODULES">
+              <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1600,6 +1696,7 @@
           <EntitySetMapping Name="CORRELATIVES">
             <EntityTypeMapping TypeName="PARKINGModel.CORRELATIVES">
               <MappingFragment StoreEntitySet="CORRELATIVES">
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
                 <ScalarProperty Name="CORRELATIVE_CODE" ColumnName="CORRELATIVE_CODE" />
                 <ScalarProperty Name="CORRELATIVE_DESCRIPTION" ColumnName="CORRELATIVE_DESCRIPTION" />
                 <ScalarProperty Name="CORRELATIVE_COUNTER" ColumnName="CORRELATIVE_COUNTER" />
@@ -1776,8 +1873,10 @@
           <EntitySetMapping Name="USER_PERMISSIONS">
             <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
               <MappingFragment StoreEntitySet="USER_PERMISSIONS">
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
-                <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
                 <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
@@ -1846,6 +1945,17 @@
                 <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
                 <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
                 <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APP_MODULES">
+            <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
+              <MappingFragment StoreEntitySet="APP_MODULES">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

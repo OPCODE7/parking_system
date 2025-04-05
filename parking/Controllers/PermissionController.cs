@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using parking.DTO;
 using parking.Models;
 
 namespace parking.Controllers
 {
-    internal class PermissionController
+    internal class PermissionController: DataBaseController
     {
 
         private USER_PERMISSIONS permission;
@@ -20,34 +21,80 @@ namespace parking.Controllers
             permission= new USER_PERMISSIONS();
         }
 
-        public List<USER_PERMISSIONS> getPermissions(string searchFilter)
+        public IEnumerable<PermissionDTO> getPermissions(string searchFilter = "", bool isDel = false)
         {
-            List<USER_PERMISSIONS> lst= new List<USER_PERMISSIONS>();
             try
             {
-                using (PARKINGEntities permissions = new PARKINGEntities())
+                using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if (searchFilter != "")
-                    {
-                        lst = permissions.USER_PERMISSIONS.Where(permission => permission.PERMISSION_NAME.Contains(searchFilter) && permission.IS_DEL==false).ToList();
-                    }
-                    else
-                    {
-                        lst = permissions.USER_PERMISSIONS.Where(permission => permission.IS_DEL == false).ToList();
+                    var query = from p in db.USER_PERMISSIONS
+                                join m in db.APP_MODULES on p.MODULE_ID equals m.MODULE_ID
+                                where p.IS_DEL == isDel
+                                select new PermissionDTO
+                                {
+                                    PERMISSION_ID = p.PERMISSION_ID,
+                                    PERMISSION_DESCRIPTION = p.PERMISSION_DESCRIPTION,
+                                    MODULE_ID = p.MODULE_ID,
+                                    MODULE_NAME = m.MODULE_NAME,
+                                    ACTION = p.ACTION,
+                                    INSERTED_AT = p.INSERTED_AT,
+                                    IS_DEL = p.IS_DEL
+                                };
 
+                    if (!string.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(p =>
+                            p.PERMISSION_DESCRIPTION.Contains(searchFilter) ||
+                            p.MODULE_NAME.Contains(searchFilter) ||
+                            p.ACTION.Contains(searchFilter) ||
+                            p.PERMISSION_ID.ToString().Contains(searchFilter) ||
+                            p.INSERTED_AT.ToString().Contains(searchFilter));
                     }
+
+                    return query.OrderBy(p => p.PERMISSION_ID).ToList();
                 }
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
-                
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
-                return lst;
+
+            return Enumerable.Empty<PermissionDTO>();
         }
 
-       
+
+        public PermissionDTO getPermissionInfo(int id)
+        {
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    var query = from p in db.USER_PERMISSIONS
+                                join m in db.APP_MODULES on p.MODULE_ID equals m.MODULE_ID
+                                where p.PERMISSION_ID == id
+                                select new PermissionDTO
+                                {
+                                    PERMISSION_ID = p.PERMISSION_ID,
+                                    PERMISSION_DESCRIPTION = p.PERMISSION_DESCRIPTION,
+                                    MODULE_ID = p.MODULE_ID,
+                                    MODULE_NAME = m.MODULE_NAME,
+                                    ACTION = p.ACTION,
+                                    INSERTED_AT = p.INSERTED_AT,
+                                    IS_DEL = p.IS_DEL
+                                };
+
+                    return query.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
+                return null;
+            }
+        }
+
+
+
 
         public USER_PERMISSIONS getPermission(int id)
         {

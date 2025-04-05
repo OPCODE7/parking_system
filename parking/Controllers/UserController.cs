@@ -1,4 +1,6 @@
-﻿using parking.Models;
+﻿using parking.Config;
+using parking.DTO;
+using parking.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +10,15 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Controllers
 {
-    internal class UserController
+    internal class UserController: DataBaseController
     {
         private Models.UserModel userModel;
         Helpers.Helpers h;
         Helpers.PasswordHasher pwdHasher;
+        RolePermissionsController rpc= new RolePermissionsController();
         public UserController()
         {
             userModel = new Models.UserModel();
@@ -41,6 +43,9 @@ namespace parking.Controllers
                         Config.User.userId= lst.USER_CODE;
                         Config.User.roleName= db.USER_ROLES.Where(r => r.ROLE_ID == lst.ROLE_ID).Select(r => r.ROLE_NAME).FirstOrDefault();
 
+
+                        PermissionManager.UserPermissions= rpc.getPermissionsByRole(lst.ROLE_ID);
+
                         result = true;
                     }
                     else
@@ -58,73 +63,69 @@ namespace parking.Controllers
             return result;
         }
 
-        public dynamic getUser(string id)
+        public USERS getUser(string userId)
         {
-            dynamic user = new USERS();
-            try
-            {
-                using(PARKINGEntities db= new PARKINGEntities())
-                {
-                    var query = from usr in db.USERS
-                                join rol in db.USER_ROLES
-                                on usr.ROLE_ID equals rol.ROLE_ID
-                                join empUsr in db.EMPLOYEE_USER
-                                on usr.USER_CODE equals empUsr.USER_CODE
-                                join emp in db.EMPLOYEES
-                                on empUsr.EMPLOYEE_CODE equals emp.EMPLOYEE_CODE
-                                select new
-                                {
-                                    USER_CODE= usr.USER_CODE,
-                                    USER_NAME= usr.USER_NAME,
-                                    USER_PASSWORD= usr.USER_PASSWORD,
-                                    USER_STATE= usr.USER_STATE,
-                                    ROLE_ID= usr.ROLE_ID,
-                                    ROLE_NAME= rol.ROLE_NAME,
-                                    EMPLOYEE_CODE= emp.EMPLOYEE_CODE,
-                                    EMPLOYEE_NAME= emp.EMPLOYEE_NAME,
-                                    INSERTED_AT= usr.INSERTED_AT,
-                                    IS_DEL= usr.IS_DEL
-                                   
-                                };
-                    user = query.Where(u => u.IS_DEL == false && u.USER_CODE==id).FirstOrDefault();
-                }
 
-            }catch(Exception ex)
-            {
-               h.MsgError("Error al obtener usuario: " + ex.Message);
-            }
-
-            return user;
-
-            
-        }
-
-        public IEnumerable<dynamic> getUsers(string searchFilter)
-        {
-           IEnumerable<dynamic> users= new List<dynamic>();
+           USERS user = new USERS();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if (searchFilter != "")
-                    {
-                       users= db.USERS
-                        .Join(db.USER_ROLES, user => user.ROLE_ID, role =>    role.ROLE_ID, (user, role) => new
-                         {
-                             USER_CODE = user.USER_CODE,
-                             USER_NAME = user.USER_NAME,
-                             ROLE_NAME = role.ROLE_NAME,
-                             USER_STATE = user.USER_STATE,
-                             IS_DEL = user.IS_DEL,
-                             INSERTED_AT = user.INSERTED_AT
-                         })
-                        .Where(user => (user.IS_DEL == false && user.USER_NAME.Contains(searchFilter))).OrderBy(user => user.USER_CODE).ToList();
+                    user = db.USERS.Find(userId);
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError(ex.ToString());
+            }
 
-                    }
-                    else
-                    {
-                        users = db.USERS
-                        .Join(db.USER_ROLES, user => user.ROLE_ID, role => role.ROLE_ID, (user, role) => new
+            return user;
+        }
+
+        public UserDTO getInfoUser(string id)
+        {
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    var query = db.USERS
+                        .Join(db.USER_ROLES, usr => usr.ROLE_ID, rol => rol.ROLE_ID, (usr, rol) => new { usr, rol })
+                        .Join(db.EMPLOYEE_USER, ur => ur.usr.USER_CODE, empUsr => empUsr.USER_CODE, (ur, empUsr) => new { ur.usr, ur.rol, empUsr })
+                        .Join(db.EMPLOYEES, ure => ure.empUsr.EMPLOYEE_CODE, emp => emp.EMPLOYEE_CODE, (ure, emp) => new UserDTO
+                        {
+                            USER_CODE = ure.usr.USER_CODE,
+                            USER_NAME = ure.usr.USER_NAME,
+                            USER_PASSWORD = ure.usr.USER_PASSWORD,
+                            USER_STATE = ure.usr.USER_STATE,
+                            ROLE_ID = ure.usr.ROLE_ID,
+                            ROLE_NAME = ure.rol.ROLE_NAME,
+                            EMPLOYEE_CODE = emp.EMPLOYEE_CODE,
+                            EMPLOYEE_NAME = emp.EMPLOYEE_NAME,
+                            INSERTED_AT = ure.usr.INSERTED_AT,
+                            IS_DEL = ure.usr.IS_DEL
+                        })
+                        .FirstOrDefault(u => u.USER_CODE == id);
+
+                    return query ?? new UserDTO(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
+            }
+
+            return new UserDTO(); 
+        }
+
+
+        public IEnumerable<UserDTO> getUsers(string searchFilter = "", bool isDel = false)
+        {
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    var query = db.USERS
+                        .Join(db.USER_ROLES, user => user.ROLE_ID, role => role.ROLE_ID, (user, role) => new UserDTO
                         {
                             USER_CODE = user.USER_CODE,
                             USER_NAME = user.USER_NAME,
@@ -133,21 +134,24 @@ namespace parking.Controllers
                             IS_DEL = user.IS_DEL,
                             INSERTED_AT = user.INSERTED_AT
                         })
-                        .Where(user => (user.IS_DEL == false)).OrderBy(user => user.USER_CODE).ToList();
+                        .Where(user => user.IS_DEL == isDel);
+
+                    if (!string.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(user => user.USER_NAME.Contains(searchFilter));
                     }
 
-
+                    return query.OrderBy(user => user.USER_CODE).ToList();
                 }
-
             }
             catch (Exception ex)
             {
-                h.MsgError("Error al obtener usuarios: " + ex.Message);
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
 
-            return users;
-
+            return Enumerable.Empty<UserDTO>(); 
         }
+
 
         public int saveUser(USERS user)
         {
@@ -162,7 +166,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
 
             return result;
@@ -181,7 +185,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
 
             return result;
@@ -194,6 +198,10 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    if(HasReferences(db,db.EMPLOYEE_USER, e=> e.USER_CODE==id)){
+                        h.MsgError(Helpers.App.Msg0019);
+                        return 0;
+                    }
                     USERS user = db.USERS.Find(id);
                     db.USERS.Attach(user);
                     db.USERS.Remove(user);
@@ -202,7 +210,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
             }
 
             return result;

@@ -1,4 +1,7 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.DTO;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,13 +19,14 @@ namespace parking.Views.Administration.Employees
 {
     public partial class FrmEmployees : Form
     {
-        Controllers.CorrelativesController correlativesController = new Controllers.CorrelativesController();
+        CorrelativesController correlativesController = new CorrelativesController();
         Helpers.Helpers h= new Helpers.Helpers();
-        Controllers.EmployeeController employeeController = new Controllers.EmployeeController();
+        EmployeeController employeeController = new EmployeeController();
         JobPositionController jobPositionController = new JobPositionController();
         HoraryController horaryController = new HoraryController();
 
-        string dni,name,lastname,phone,email,address,employeeCode,jobPositionCode,horaryCode;
+        string dni,name,lastname,phone,email,address,employeeCode,jobPositionCode,horaryCode,moduleId= "EMP";
+        bool flagIsPaperBin = false;
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
@@ -41,10 +46,8 @@ namespace parking.Views.Administration.Employees
 
                 if (employee != null)
                 {
-
-                    
                     TxtDni.Focus();
-                    foreach(System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+                    foreach(TextBox Txt in this.Controls.OfType<TextBox>())
                     {
                         Txt.Enabled = true;
                     }
@@ -52,10 +55,12 @@ namespace parking.Views.Administration.Employees
                     MskPhoneNumber.Enabled = true;
                     TxtEmployeeCode.Enabled = false;
 
-                    foreach(System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
+                    foreach(ComboBox Cmb in this.Controls.OfType<ComboBox>())
                     {
                         Cmb.Enabled = true;
                     }
+                    PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                    PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
 
                     TxtEmployeeCode.Text = employee.EMPLOYEE_CODE;
                     TxtDni.Text = employee.EMPLOYEE_DNI;
@@ -68,8 +73,10 @@ namespace parking.Views.Administration.Employees
                     CmbHorary.SelectedValue = employee.HORARY_CODE;
 
 
-                    BtnEdit.Enabled = true;
-                    BtnDelete.Enabled = true;
+                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
+                    BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+                    BtnEdit.Enabled = flagIsPaperBin ? false : true;
+                    BtnDelete.Enabled = flagIsPaperBin ? false : true;
                     BtnNew.Enabled = false;
                     BtnSave.Enabled = false;
                     BtnCancel.Enabled = true;
@@ -77,7 +84,7 @@ namespace parking.Views.Administration.Employees
                 }
                 else
                 {
-                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
+                    h.MsgError(App.Msg0011);
                 }
 
             }
@@ -103,12 +110,12 @@ namespace parking.Views.Administration.Employees
 
                 if (employeeController.saveEmployee(newEmployee) > 0)
                 {
-                    h.MsgInfo("Empleado guardado correctamente.");
+                    h.MsgInfo(App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al guardar empleado.");
+                    h.MsgError(App.Msg0015);
                 }
             }
         }
@@ -123,102 +130,171 @@ namespace parking.Views.Administration.Employees
         {
             if(validateData() == 0)
             {
-                setValues();
-                EMPLOYEES newEmployee = employeeController.getEmployee(TxtEmployeeCode.Text.Trim());
-                newEmployee.EMPLOYEE_CODE = employeeCode;
-                newEmployee.EMPLOYEE_DNI = dni;
-                newEmployee.EMPLOYEE_NAME = name;
-                newEmployee.EMPLOYEE_LASTNAME = lastname;
-                newEmployee.EMPLOYEE_PHONE = phone;
-                newEmployee.EMPLOYEE_EMAIL = email;
-                newEmployee.EMPLOYEE_ADDRESS = address;
-                newEmployee.JOB_POSITION_CODE = jobPositionCode;
-                newEmployee.HORARY_CODE = horaryCode;
+               if(h.MsgQuestion(App.Msg0002)=="S")
+               {
+                    setValues();
+                    EMPLOYEES newEmployee = employeeController.getEmployee(TxtEmployeeCode.Text.Trim());
+                    newEmployee.EMPLOYEE_CODE = employeeCode;
+                    newEmployee.EMPLOYEE_DNI = dni;
+                    newEmployee.EMPLOYEE_NAME = name;
+                    newEmployee.EMPLOYEE_LASTNAME = lastname;
+                    newEmployee.EMPLOYEE_PHONE = phone;
+                    newEmployee.EMPLOYEE_EMAIL = email;
+                    newEmployee.EMPLOYEE_ADDRESS = address;
+                    newEmployee.JOB_POSITION_CODE = jobPositionCode;
+                    newEmployee.HORARY_CODE = horaryCode;
 
-                if (employeeController.updateEmployee(newEmployee) > 0)
-                {
-                    h.MsgInfo("Empleado actualizado correctamente.");
-                    startForm();
-                }
-                else
-                {
-                    h.MsgError("Error al actualizar empleado.");
-                }
+                    if (employeeController.updateEmployee(newEmployee) > 0)
+                    {
+                        h.MsgInfo(App.Msg0003);
+                        startForm();
+                    }
+                    else
+                    {
+                        h.MsgError(App.Msg0017);
+                    }
+               }
             }
 
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
+            EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
 
+            employee.IS_DEL = true;
 
-            EMPLOYEES registro = new EMPLOYEES { EMPLOYEE_CODE = TxtEmployeeCode.Text.Trim().ToString()};
-
-            if (h.MsgQuestion($"¿Esta seguro que desea eliminar el permiso {registro.EMPLOYEE_NAME+" "+ registro.EMPLOYEE_LASTNAME} de la base de datos?") == "S")
+            if (h.MsgQuestion(App.Msg0004)=="S")
             {
-                if (employeeController.deleteEmployee(registro) > 0)
+                if (employeeController.updateEmployee(employee) > 0)
                 {
-                    h.MsgInfo("Empleado eliminado correctamente.");
+                    h.MsgInfo(App.Msg0005);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al eliminar empleado.");
+                    h.MsgError(App.Msg0016);
                 }
             }
 
         }
 
+        private void PbxCancel_Click(object sender, EventArgs e)
+        {
+            TxtSearch.Clear();
+            getEmployees("",flagIsPaperBin);
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                getEmployees(TxtSearch.Text.Trim(), flagIsPaperBin);
+            }
+        }
+
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            flagIsPaperBin = true;
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            getEmployees("", true);
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
+
+
+            if (h.MsgQuestion(App.Msg0007) == "S")
+            {
+                if (employeeController.deleteEmployee(employee) > 0)
+                {
+                    h.MsgInfo(App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(App.Msg0015);
+                }
+            }
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
+            employee.IS_DEL = false;
+
+            if (h.MsgQuestion(App.Msg0009) == "S")
+            {
+                if (employeeController.updateEmployee(employee) > 0)
+                {
+                    h.MsgInfo(App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(App.Msg0019);
+                }
+            }
+        }
+
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getEmployees(TxtSearch.Text);
+            getEmployees(TxtSearch.Text, flagIsPaperBin);
         }
 
         private void startForm()
         {
+            flagIsPaperBin = false;
             getEmployees("");
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnCancel.Enabled = false;
             BtnEdit.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Enabled = false;
 
-            foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = false;
                 Txt.Clear();
             }
 
-            foreach (System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
+            foreach (ComboBox Cmb in this.Controls.OfType<ComboBox>())
             {
                 Cmb.Enabled = false;
                 Cmb.SelectedIndex = -1;
             }
             MskPhoneNumber.Enabled = false;
             MskPhoneNumber.Clear();
-            TxtEmployeeName.Enabled = true;
-
+            TxtDni.Focus();
+            TxtSearch.Enabled = true;
         }
 
-        private void getEmployees(string searchFilter)
+        private void getEmployees(string searchFilter="",bool isDel=false)
         {
             DgvEmployees.Rows.Clear();
-            var employess = employeeController.getEmployees(searchFilter);
-            if (searchFilter != "")
+            IEnumerable<EmployeeDTO> employess = employeeController.getEmployees(searchFilter,isDel);
+            if (employess.Count() == 0)
             {
-                var users = employeeController.getEmployees(searchFilter);
-
-                if (users.Count() == 0)
+                h.MsgInfo(Helpers.App.Msg0012);
+                if (searchFilter != "")
                 {
-                    h.MsgInfo("No se encontraron registros en la base de datos.");
-                    getEmployees("");
-                    return;
+                    getEmployees("", isDel);
                 }
-
+                return;
             }
-            
 
-            foreach(var item in employess)
+
+            foreach (var item in employess)
             {
                 DgvEmployees.Rows.Add(item.EMPLOYEE_CODE,item.EMPLOYEE_NAME+" " +item.EMPLOYEE_LASTNAME,item.DESCRIPTION_JOB_POSITION,item.EMPLOYEE_PHONE,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
@@ -240,12 +316,8 @@ namespace parking.Views.Administration.Employees
         private int validateData()
         {
             int error = 0;
-            string lettersNumbers = "^[a-zA-Z0-9\\s]+$";
-            string onlyLetters = "^[a-zA-Z\\s]+$";
-            string address= "^[a-zA-Z0-9,.\\s]+$";
-            string emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
 
-            if (!Regex.Match(TxtDni.Text, lettersNumbers).Success)
+            if (!Regex.Match(TxtDni.Text, RegexPatterns.DNIPattern).Success)
             {
                 h.MsgWarning("Ingresar DNI correctamente. ¡Solo letras y números!");
                 TxtDni.Focus();
@@ -253,7 +325,7 @@ namespace parking.Views.Administration.Employees
                 return error;
             }
 
-            if(MskPhoneNumber.Text.Trim().Length==0)
+            if(!MskPhoneNumber.MaskFull)
             {
                 h.MsgWarning("Ingresar número de teléfono correctamente.");
                 MskPhoneNumber.Focus();
@@ -261,24 +333,24 @@ namespace parking.Views.Administration.Employees
                 return error;
             }
 
-            if (!Regex.Match(TxtEmployeeName.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtEmployeeName.Text, RegexPatterns.AlphabeticPattern).Success)
             {
-                h.MsgWarning("Ingresar nombre correctamente. ¡Solo letras!");
+                h.MsgWarning("Ingresar nombre correctamente. ¡Solo letras sin acentos!");
                 TxtEmployeeName.Focus();
                 error++;
                 return error;
 
             }
 
-            if (!Regex.Match(TxtLastName.Text, onlyLetters).Success)
+            if (!Regex.Match(TxtLastName.Text,RegexPatterns.AlphabeticPattern).Success)
             {
-                h.MsgWarning("Ingresar apellido correctamente. ¡Solo letras!");
+                h.MsgWarning("Ingresar apellido correctamente. ¡Solo letras sin acentos!");
                 TxtLastName.Focus();
                 error++;
                 return error;
             }
 
-            if(!Regex.Match(TxtEmail.Text,emailPattern).Success)
+            if(!Regex.Match(TxtEmail.Text,RegexPatterns.EmailPattern).Success)
             {
                 h.MsgWarning("Ingresar correo electrónico correctamente.");
                 TxtEmail.Focus();
@@ -286,9 +358,9 @@ namespace parking.Views.Administration.Employees
                 return error;
             }
 
-            if(!Regex.Match(TxtAddress.Text, address).Success)
+            if(!Regex.Match(TxtAddress.Text, RegexPatterns.AddressPattern).Success)
             {
-                h.MsgWarning("Ingresar dirección correctamente. ¡Solo letras y números!");
+                h.MsgWarning("Ingresar dirección correctamente. ¡Solo letras, números, puntos y guiones!");
                 TxtAddress.Focus();
                 error++;
                 return error;
@@ -316,7 +388,7 @@ namespace parking.Views.Administration.Employees
 
         private void fillCmbJobPosition()
         {
-            CmbJobPosition.DataSource = jobPositionController.getJobPositions("");
+            CmbJobPosition.DataSource = jobPositionController.getJobPositions("",false);
             CmbJobPosition.DisplayMember = "DESCRIPTION_JOB_POSITION";
             CmbJobPosition.ValueMember = "JOB_POSITION_CODE";
             CmbJobPosition.SelectedIndex= -1;
@@ -328,22 +400,21 @@ namespace parking.Views.Administration.Employees
             CmbHorary.DisplayMember = "HORARY_DESCRIPTION";
             CmbHorary.ValueMember = "HORARY_CODE";
             CmbHorary.SelectedIndex = -1;
-
         }
+
         private void BtnNew_Click(object sender, EventArgs e)
         {
             BtnCancel.Enabled = true;
             BtnSave.Enabled = true;
             BtnNew.Enabled = false;
-            BtnEdit.Enabled = false;
 
-            foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = true;
                 Txt.Clear();
             }
 
-            foreach (System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
+            foreach (ComboBox Cmb in this.Controls.OfType<ComboBox>())
             {
                 Cmb.Enabled = true;
             }
@@ -353,7 +424,7 @@ namespace parking.Views.Administration.Employees
             TxtDni.Focus();
 
 
-            var nextId = "EMP" + correlativesController.getNextId("EMP");
+            string nextId = moduleId + correlativesController.getNextId(moduleId);
 
             TxtEmployeeCode.Text = nextId;
             BtnNew.Enabled = false;

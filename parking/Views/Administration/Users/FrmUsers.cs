@@ -8,7 +8,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using parking.Config;
 using parking.Controllers;
+using parking.DTO;
+using parking.Helpers;
 using parking.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -25,8 +28,8 @@ namespace parking.Views.Administration
         EmployeeUserController employeeUserController = new EmployeeUserController();
         Helpers.PasswordHasher pwdHasher = new Helpers.PasswordHasher();
 
-        string userCode, userName, userPassword,employeeCode;
-        bool userState;
+        string userCode, userName, userPassword, employeeCode, moduleId = "USR";
+        bool userState, isEdit = false, flagIsPaperbin = false;
         int roleId;
         public FrmUsers()
         {
@@ -47,13 +50,19 @@ namespace parking.Views.Administration
 
         private void startForm()
         {
-            getUsers("");
+            getUsers("", false);
+            flagIsPaperbin = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
             BtnCancel.Enabled = false;
             ChkState.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            PbxRecovery.Enabled = false;
+            PbxDestroy.Enabled = false;
 
             foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
             {
@@ -61,18 +70,18 @@ namespace parking.Views.Administration
                 Txt.Text = "";
             }
 
-            foreach(System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
+            foreach (System.Windows.Forms.ComboBox Cmb in this.Controls.OfType<System.Windows.Forms.ComboBox>())
             {
                 Cmb.Enabled = false;
                 Cmb.SelectedIndex = -1;
             }
-            
+
             TxtSearch.Enabled = true;
         }
 
         private void setValues()
         {
-            userCode= TxtUserCode.Text.Trim();
+            userCode = TxtUserCode.Text.Trim();
             userName = h.SanitizeStr(TxtUserName.Text.Trim());
             userPassword = pwdHasher.makeHash(TxtPwd.Text.Trim());
             userState = ChkState.Checked;
@@ -83,57 +92,65 @@ namespace parking.Views.Administration
         private int validateData()
         {
             int error = 0;
-            string userName = "^[a-zA-Z0-9_]+$";
-            string userPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,15}";
 
-            if (!Regex.Match(TxtUserName.Text, userName).Success)
+            if (!Regex.Match(TxtUserName.Text, RegexPatterns.UsernamePattern).Success)
             {
-                h.MsgError("El nombre de usuario no es válido. ¡Letras mayúsculas o minúsculas, números y guión bajo son permitidos!");
+                h.MsgError("EL NOMBRE DE USUARIO NO ES VÁLIDO. ¡LETRAS MAYÚSCULAS O MINÚSCULAS, NÚMEROS Y GUIÓN BAJO SON PERMITIDOS!");
+                TxtUserName.Focus();
                 error++;
                 return error;
             }
 
-            if (!Regex.Match(TxtPwd.Text, userPassword).Success)
+            if (isEdit == false)
             {
-                h.MsgError("La contraseña no es válida. ¡Debe contener al menos una letra mayúscula, una minúscula, un número y un caracter especial!");
-                error++;
-                return error;
+                if (!Regex.Match(TxtPwd.Text, RegexPatterns.PasswordPattern).Success)
+                {
+                    h.MsgError("LA CONTRASEÑA NO ES VÁLIDA. ¡DEBE CONTENER AL MENOS UNA LETRA MAYÚSCULA, UNA MINÚSCULA, UN NÚMERO Y UN CARACTER ESPECIAL!");
+                    TxtPwd.Focus();
+                    error++;
+                    return error;
+                }
             }
 
-            if (CmbRole.SelectedValue==null)
+            if (CmbRole.SelectedValue == null)
             {
-                h.MsgError("Debe seleccionar un rol para el usuario.");
+                h.MsgError("DEBE SELECCIONAR UN ROL PARA EL USUARIO.");
+                CmbRole.Focus();
                 error++;
                 return error;
             }
 
             if (CmbEmployees.SelectedValue == null)
             {
-                h.MsgError("Debe seleccionar un empleado para el usuario.");
+                h.MsgError("DEBE SELECCIONAR UN EMPLEADO PARA EL USUARIO.");
+                CmbEmployees.Focus();
                 error++;
                 return error;
             }
             return error;
         }
 
-        private void getUsers(string searchFilter)
+        private void getUsers(string searchFilter, bool isDel)
         {
             DgvUsers.Rows.Clear();
-            var users = userController.getUsers(searchFilter);
-            if (searchFilter != "")
+            IEnumerable<UserDTO> users = userController.getUsers(searchFilter, isDel);
+
+            if (users.Count() == 0)
             {
-                if (users.Count() ==0 )
+                h.MsgInfo(Helpers.App.Msg0012);
+                if (searchFilter != "")
                 {
-                    h.MsgInfo("No se encontraron registros en la base de datos.");
-                    getUsers("");
-                    return;
+                    getUsers("", isDel);
+                    TxtSearch.Clear();
                 }
+                return;
             }
+
 
 
             foreach (var item in users)
             {
-                DgvUsers.Rows.Add(item.USER_CODE, item.USER_NAME,item.ROLE_NAME, item.USER_STATE ? "ACTIVO" : "INACTIVO" ,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvUsers.Rows.Add(item.USER_CODE, item.USER_NAME, item.ROLE_NAME, item.USER_STATE ? "ACTIVO" : "INACTIVO", Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
 
 
@@ -141,11 +158,11 @@ namespace parking.Views.Administration
 
         private void fillCmbEmployees()
         {
-            var employees= employeeController.getEmployees("");
+            var employees = employeeController.getEmployees("");
 
             CmbEmployees.DataSource = employees;
-            CmbEmployees.DisplayMember = "EMPLOYEE_NAME"; 
-            CmbEmployees.ValueMember = "EMPLOYEE_CODE";  
+            CmbEmployees.DisplayMember = "EMPLOYEE_NAME";
+            CmbEmployees.ValueMember = "EMPLOYEE_CODE";
             CmbEmployees.SelectedIndex = -1;
 
 
@@ -153,7 +170,7 @@ namespace parking.Views.Administration
 
         private void fillCmbRoles()
         {
-            List<USER_ROLES> lst = roleController.getRoles("");
+            List<USER_ROLES> lst = roleController.getRoles("", false);
 
             CmbRole.DataSource = lst;
             CmbRole.DisplayMember = "ROLE_NAME";
@@ -182,34 +199,38 @@ namespace parking.Views.Administration
 
 
 
-            var nextId = "USR" + correlativesController.getNextId("USR");
+            var nextId = moduleId + correlativesController.getNextId(moduleId);
 
             TxtUserCode.Text = nextId;
             BtnNew.Enabled = false;
-        
+
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getUsers(TxtSearch.Text.Trim());
+            getUsers(TxtSearch.Text.Trim(), flagIsPaperbin);
         }
 
-       
+
         private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(DgvUsers.Rows.Count>0)
+            if (DgvUsers.Rows.Count > 0)
             {
-                var user = userController.getUser(DgvUsers.CurrentRow.Cells[0].Value.ToString());
+                UserDTO user = userController.getInfoUser(DgvUsers.CurrentRow.Cells[0].Value.ToString());
 
-                if(user != null)
+                if (user != null)
                 {
-
-                    BtnEdit.Enabled = true;
-                    BtnDelete.Enabled = true;
+                    isEdit = true;
+                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+                    BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+                    BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                    BtnDelete.Enabled = flagIsPaperbin ? false : true;
                     BtnNew.Enabled = false;
                     BtnSave.Enabled = false;
                     BtnCancel.Enabled = true;
                     ChkState.Enabled = true;
+                    PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                    PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
 
                     TxtUserCode.Enabled = false;
                     TxtUserName.Enabled = true;
@@ -228,7 +249,7 @@ namespace parking.Views.Administration
                 }
                 else
                 {
-                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
+                    h.MsgError(Helpers.App.Msg0011);
                 }
             }
 
@@ -239,71 +260,111 @@ namespace parking.Views.Administration
             if (validateData() == 0)
             {
                 setValues();
-                var user = userController.getUser(TxtUserCode.Text);
-                USERS newUser= new USERS();
-                EMPLOYEE_USER empUser = employeeUserController.getEmployeeUser(TxtUserCode.Text);
-                newUser.USER_CODE = userCode;
-                newUser.USER_NAME = userName;
-                newUser.USER_PASSWORD = userPassword;
-                newUser.USER_STATE = userState;
-                newUser.ROLE_ID = roleId;
-                empUser.EMPLOYEE_CODE = employeeCode;
-                empUser.USER_CODE = userCode;
 
-
-                if (h.MsgQuestion($"¿Estás seguro que deseas editar los datos del usuario {user.USER_NAME}?") == "S")
+                if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
                 {
+                    USERS newUser = userController.getUser(TxtUserCode.Text);
+                    EMPLOYEE_USER empUser = employeeUserController.getEmployeeUser(TxtUserCode.Text);
+                    newUser.USER_CODE = userCode;
+                    newUser.USER_NAME = userName;
+                    if (!String.IsNullOrEmpty(userPassword)) newUser.USER_PASSWORD = userPassword;
+                    newUser.USER_STATE = userState;
+                    newUser.ROLE_ID = roleId;
+                    empUser.EMPLOYEE_CODE = employeeCode;
+                    empUser.USER_CODE = userCode;
                     if (userController.updateUser(newUser) > 0 && employeeUserController.updateEmployeeUser(empUser) > 0)
                     {
-                        h.MsgSuccess("Usuario actualizado correctamente.");
+                        h.MsgSuccess(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Ocurrio un error el usuario no pudo ser actualizado correctamente.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private void PbxDestroy_Click(object sender, EventArgs e)
         {
-            var user= userController.getUser(TxtUserCode.Text);
-            EMPLOYEE_USER empUser= employeeUserController.getEmployeeUser(TxtUserCode.Text);
-            if (h.MsgQuestion($"¿Estás seguro que deseas eliminar el usuario {user.USER_NAME} seleccionado?") == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
-                if (employeeUserController.deleteEmployeeUser(empUser) > 0)
+                USERS user = userController.getUser(TxtUserCode.Text);
+
+                if (userController.deleteUser(user.USER_CODE) > 0)
                 {
-                    if(userController.deleteUser(TxtUserCode.Text.Trim()) > 0)
-                    {
-                        h.MsgSuccess("Usuario eliminado correctamente.");
-                        startForm();
-                    }
-                    else
-                    {
-                        h.MsgError("Ocurrio un error el usuario no pudo ser eliminado correctamente.");
-                    }
+                    h.MsgSuccess(Helpers.App.Msg0008);
+                    startForm();
                 }
                 else
                 {
-                    h.MsgError("Ocurrio un error el usuario no pudo ser eliminado correctamente.");
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+
+            }
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                USERS user = userController.getUser(TxtUserCode.Text);
+                user.IS_DEL = false;
+                if (userController.updateUser(user) > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
                 }
             }
+        }
 
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            flagIsPaperbin = true;
+            PbxRecovery.Visible = true;
+            PbxDestroy.Visible = true;
+            getUsers("", flagIsPaperbin);
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
+            {
+                USERS user = userController.getUser(TxtUserCode.Text);
+                user.IS_DEL = true;
+                if (userController.updateUser(user) > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0005);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+
+            }
         }
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                getUsers(TxtSearch.Text);
+                getUsers(TxtSearch.Text, flagIsPaperbin);
             }
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getUsers("");
+            getUsers("", flagIsPaperbin);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -316,34 +377,35 @@ namespace parking.Views.Administration
             if (validateData() == 0)
             {
                 setValues();
-                USERS user= new USERS();
+                USERS user = new USERS();
                 user.USER_CODE = userCode;
                 user.USER_NAME = userName;
                 user.USER_PASSWORD = userPassword;
                 user.USER_STATE = userState;
                 user.ROLE_ID = roleId;
                 user.INSERTED_AT = DateTime.Now;
-               
-                if(userController.saveUser(user) > 0){
+
+                if (userController.saveUser(user) > 0)
+                {
                     var nextId = "EUS" + correlativesController.getNextId("EUS");
-                    EMPLOYEE_USER employeeUser= new EMPLOYEE_USER();
+                    EMPLOYEE_USER employeeUser = new EMPLOYEE_USER();
                     employeeUser.EMPLOYEE_USER_ID = nextId;
                     employeeUser.EMPLOYEE_CODE = employeeCode;
                     employeeUser.USER_CODE = userCode;
                     employeeUser.INSERTED_AT = DateTime.Now;
                     if (employeeUserController.saveEmployeeUser(employeeUser) > 0)
                     {
-                        h.MsgInfo("Usuario guardado correctamente.");
-                           startForm();
+                        h.MsgInfo(Helpers.App.Msg0001);
+                        startForm();
                     }
                     else
                     {
-                        h.MsgError("Ocurrio un error el usuario no pudo ser asignado al empleado correctamente.");
+                        h.MsgError("OCURRIO UN ERROR EL USUARIO NO PUDO SER ASIGNADO AL EMPLEADO CORRECTAMENTE.");
                     }
                 }
                 else
                 {
-                    h.MsgError("Ocurrio un error el usuario no pudo ser guardado correctamente.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
         }

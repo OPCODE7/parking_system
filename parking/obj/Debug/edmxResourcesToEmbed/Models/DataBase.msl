@@ -82,6 +82,7 @@
     <EntitySetMapping Name="CORRELATIVES">
       <EntityTypeMapping TypeName="PARKINGModel.CORRELATIVES">
         <MappingFragment StoreEntitySet="CORRELATIVES">
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
           <ScalarProperty Name="CORRELATIVE_CODE" ColumnName="CORRELATIVE_CODE" />
           <ScalarProperty Name="CORRELATIVE_DESCRIPTION" ColumnName="CORRELATIVE_DESCRIPTION" />
           <ScalarProperty Name="CORRELATIVE_COUNTER" ColumnName="CORRELATIVE_COUNTER" />
@@ -258,8 +259,10 @@
     <EntitySetMapping Name="USER_PERMISSIONS">
       <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
         <MappingFragment StoreEntitySet="USER_PERMISSIONS">
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+          <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
-          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
           <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
@@ -328,6 +331,17 @@
           <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
           <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
           <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="APP_MODULES">
+      <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
+        <MappingFragment StoreEntitySet="APP_MODULES">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

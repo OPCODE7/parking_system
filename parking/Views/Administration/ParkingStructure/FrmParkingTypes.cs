@@ -1,4 +1,6 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
+using parking.Helpers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingTypeController parkingTypeController = new ParkingTypeController();
         Helpers.Helpers h = new Helpers.Helpers();
         CorrelativesController correlativesController = new CorrelativesController();
-        string parkingTypeCode, parkingTypeDescription;
+        string parkingTypeCode, parkingTypeDescription,moduleId= "PTY";
         public FrmParkingTypes()
         {
             InitializeComponent();
@@ -46,7 +48,7 @@ namespace parking.Views.Administration.ParkingStructure
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnNew.Enabled = true;
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
             BtnCancel.Enabled = false;
 
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
@@ -62,12 +64,10 @@ namespace parking.Views.Administration.ParkingStructure
         private int validateData()
         {
             int error = 0;
-            string parkingTypeDescriptionPattern = "^[a-zA-Z\\s]+$";
 
-
-            if (!Regex.Match(TxtParkingTypeDescription.Text, parkingTypeDescriptionPattern).Success)
+            if (!Regex.Match(TxtParkingTypeDescription.Text, RegexPatterns.AlphabeticPatternWithAccent).Success)
             {
-                h.MsgWarning("Ingresar descripción del tipo de parqueo correctamente. ¡Solo letras!");
+                h.MsgWarning("INGRESAR DESCRIPCIÓN DEL TIPO DE PARQUEO CORRECTAMENTE. ¡SOLO LETRAS!");
                 TxtParkingTypeDescription.Focus();
                 error++;
                 return error;
@@ -94,34 +94,43 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (result > 0)
                 {
-                    h.MsgInfo("Tipo de parqueo guardado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al guardar el tipo de parqueo.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
         }
 
         private void DgvParkingTypes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            BtnEdit.Enabled = true;
-            BtnDelete.Enabled = true;
-            BtnSave.Enabled = false;
-            BtnNew.Enabled = false;
-            BtnCancel.Enabled = true;
-
-            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
+            PARKING_TYPES parkingType = parkingTypeController.getParkingType(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
+            if (parkingType != null)
             {
-                Txt.Enabled = true;
+
+                BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+                BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+                BtnSave.Enabled = false;
+                BtnNew.Enabled = false;
+                BtnCancel.Enabled = true;
+
+                foreach (TextBox Txt in this.Controls.OfType<TextBox>())
+                {
+                    Txt.Enabled = true;
+                }
+
+                TxtParkingTypeDescription.Focus();
+
+
+                TxtParkingTypeCode.Text = parkingType.PARKING_TYPE_CODE;
+                TxtParkingTypeDescription.Text = parkingType.DESCRIPTION_PARKING_TYPE;
             }
-
-            TxtParkingTypeDescription.Focus();
-
-           PARKING_TYPES parkingType= parkingTypeController.getParkingType(DgvParkingTypes.CurrentRow.Cells[0].Value.ToString());
-            TxtParkingTypeCode.Text = parkingType.PARKING_TYPE_CODE;
-            TxtParkingTypeDescription.Text = parkingType.DESCRIPTION_PARKING_TYPE;
+            else
+            {
+                h.MsgError(Helpers.App.Msg0011);
+            }
 
         }
 
@@ -147,18 +156,18 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             PARKING_TYPES parkingType= parkingTypeController.getParkingType(TxtParkingTypeCode.Text);
-            if (h.MsgQuestion($"¿Estás seguro que deseas eliminar {parkingType.DESCRIPTION_PARKING_TYPE} de la base de datos?")=="S")
+            if (h.MsgQuestion(Helpers.App.Msg0004)=="S")
             {
                 int result = parkingTypeController.deleteParkingType(TxtParkingTypeCode.Text);
 
                 if (result > 0)
                 {
-                    h.MsgInfo("Tipo de parqueo eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al eliminar el tipo de parqueo.");
+                    h.MsgError(Helpers.App.Msg0016);
                 }
 
             }
@@ -172,7 +181,7 @@ namespace parking.Views.Administration.ParkingStructure
                 setValues();
                 PARKING_TYPES currentPTY= parkingTypeController.getParkingType(parkingTypeCode);
 
-                if (h.MsgQuestion($"¿Estás seguro de actualizar {currentPTY.DESCRIPTION_PARKING_TYPE}?")=="S")
+                if (h.MsgQuestion(Helpers.App.Msg0002)=="S")
                 {
                     PARKING_TYPES parkingType = new PARKING_TYPES();
                     parkingType.PARKING_TYPE_CODE = parkingTypeCode;
@@ -182,12 +191,12 @@ namespace parking.Views.Administration.ParkingStructure
 
                     if (result > 0)
                     {
-                        h.MsgInfo("Tipo de parqueo actualizado correctamente.");
+                        h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al actualizar el tipo de parqueo.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
                 }
             }
@@ -203,7 +212,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if (parkingTypes.Count == 0)
             {
-                h.MsgInfo("No hay registros de tipos de parqueo");
+                h.MsgInfo(Helpers.App.Msg0012);
 
                 if (searchFilter != "")
                 {
@@ -232,7 +241,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
             TxtParkingTypeDescription.Focus();
 
-            string newCode = "PTY" + correlativesController.getNextId("PTY");
+            string newCode = moduleId + correlativesController.getNextId(moduleId);
             TxtParkingTypeCode.Text = newCode;
 
         }

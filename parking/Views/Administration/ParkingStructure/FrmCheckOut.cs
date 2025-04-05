@@ -1,4 +1,5 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,13 @@ namespace parking.Views.Administration.ParkingStructure
         
         DISCOUNTS discountFF, discountFT;
 
-        string checkOutCode,checkInCode, checkOutState, userCode,formatTime;
+        string checkOutCode,checkInCode, checkOutState, userCode,formatTime,moduleId= "COUT";
         DateTime checkOutTime;
         double fullCharge, finalDiscount, subtotal, isvPercent= 15, isvCharge,totalHours, priceParkingFee,_totalHours,subtotalWithDiscount,discountForTime= 0,discountForFrequency=0;
+        TimeSpan difference;
+        int hours;
 
-       
+
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -52,12 +55,16 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion("¿Estás seguro de eliminar este registro?")=="S")
+            if(h.MsgQuestion(Helpers.App.Msg0004)=="S")
                 {
                 if(checkOutController.deleteCheckOut(checkOutCode) > 0)
                 {
-                    h.MsgInfo("Registro eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
                 }
             }
 
@@ -79,7 +86,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
             checkOutCode = _checkOutCode;
             BtnSave.Enabled = false;
-            BtnDelete.Enabled = true;
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
@@ -93,8 +100,7 @@ namespace parking.Views.Administration.ParkingStructure
             getCheckOuts(TxtSearch.Text.Trim());
         }
 
-        TimeSpan difference;
-        int hours;
+        
                 
         public FrmCheckOut()
         {
@@ -113,7 +119,8 @@ namespace parking.Views.Administration.ParkingStructure
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
             BtnGenerateBill.Visible = false;
-            DtpCheckInTime.Format = DateTimePickerFormat.Custom;
+            BtnSearchCheckIn.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
+;            DtpCheckInTime.Format = DateTimePickerFormat.Custom;
             DtpCheckInTime.CustomFormat = "dd/MM/yyyy HH:mm";
 
             DtpCheckOutTime.Format = DateTimePickerFormat.Custom;
@@ -179,7 +186,7 @@ namespace parking.Views.Administration.ParkingStructure
 
             if(checkOuts.Count()==0)
             {
-                h.MsgInfo("No se encontraron registros");
+                h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
                     getCheckOuts();
@@ -218,7 +225,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
             else
             {
-                h.MsgInfo("No se encontró el registro");
+                h.MsgInfo(Helpers.App.Msg0011);
             }
         }
 
@@ -248,7 +255,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
             else
             {
-                h.MsgInfo("No se encontró el registro");
+                h.MsgInfo(Helpers.App.Msg0011);
             }
         }
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -259,7 +266,7 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnSave_Click(object sender, EventArgs e)
         {
             CHECK_OUT newCheckOut = new CHECK_OUT();
-            checkOutCode= "COUT" + correlativesController.getNextId("COUT");
+            checkOutCode= moduleId + correlativesController.getNextId(moduleId);
             newCheckOut.CHECK_OUT_CODE = checkOutCode;
             newCheckOut.CHECK_IN_CODE = checkInCode;
             newCheckOut.CHECK_OUT_TIME = checkOutTime;

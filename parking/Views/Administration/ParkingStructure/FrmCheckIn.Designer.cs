@@ -52,6 +52,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvCheckIns = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FECHAYHORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtClientCode = new System.Windows.Forms.TextBox();
             this.TxtCheckInCode = new System.Windows.Forms.TextBox();
             this.PbxSearchClient = new System.Windows.Forms.PictureBox();
@@ -67,13 +74,6 @@
             this.TxtVehiclePlate = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.MskClientPhone = new System.Windows.Forms.MaskedTextBox();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FECHAYHORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -334,6 +334,62 @@
             this.DgvCheckIns.TabIndex = 8;
             this.DgvCheckIns.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCheckIns_CellDoubleClick);
             // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 150;
+            // 
+            // PLACA
+            // 
+            this.PLACA.HeaderText = "NO. PLACA";
+            this.PLACA.MinimumWidth = 8;
+            this.PLACA.Name = "PLACA";
+            this.PLACA.ReadOnly = true;
+            this.PLACA.Width = 120;
+            // 
+            // NUMEROPARQUEO
+            // 
+            this.NUMEROPARQUEO.HeaderText = "NÚMERO DE PARQUEO";
+            this.NUMEROPARQUEO.MinimumWidth = 8;
+            this.NUMEROPARQUEO.Name = "NUMEROPARQUEO";
+            this.NUMEROPARQUEO.ReadOnly = true;
+            this.NUMEROPARQUEO.Width = 70;
+            // 
+            // CLIENTE
+            // 
+            this.CLIENTE.HeaderText = "CLIENTE";
+            this.CLIENTE.MinimumWidth = 8;
+            this.CLIENTE.Name = "CLIENTE";
+            this.CLIENTE.ReadOnly = true;
+            this.CLIENTE.Width = 150;
+            // 
+            // TIPO_PARQUEO
+            // 
+            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
+            this.TIPO_PARQUEO.MinimumWidth = 8;
+            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
+            this.TIPO_PARQUEO.ReadOnly = true;
+            this.TIPO_PARQUEO.Width = 230;
+            // 
+            // FECHAYHORA
+            // 
+            this.FECHAYHORA.HeaderText = "FECHA Y HORA";
+            this.FECHAYHORA.MinimumWidth = 8;
+            this.FECHAYHORA.Name = "FECHAYHORA";
+            this.FECHAYHORA.ReadOnly = true;
+            this.FECHAYHORA.Width = 120;
+            // 
+            // ESTADO
+            // 
+            this.ESTADO.HeaderText = "ESTADO";
+            this.ESTADO.MinimumWidth = 8;
+            this.ESTADO.Name = "ESTADO";
+            this.ESTADO.ReadOnly = true;
+            this.ESTADO.Width = 90;
+            // 
             // TxtClientCode
             // 
             this.TxtClientCode.BackColor = System.Drawing.SystemColors.Control;
@@ -488,6 +544,7 @@
             this.TxtVehiclePlate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtVehiclePlate.Location = new System.Drawing.Point(632, 232);
             this.TxtVehiclePlate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtVehiclePlate.MaxLength = 10;
             this.TxtVehiclePlate.Multiline = true;
             this.TxtVehiclePlate.Name = "TxtVehiclePlate";
             this.TxtVehiclePlate.Size = new System.Drawing.Size(292, 30);
@@ -514,61 +571,6 @@
             this.MskClientPhone.Name = "MskClientPhone";
             this.MskClientPhone.Size = new System.Drawing.Size(211, 26);
             this.MskClientPhone.TabIndex = 142;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // PLACA
-            // 
-            this.PLACA.HeaderText = "NO. PLACA";
-            this.PLACA.MinimumWidth = 8;
-            this.PLACA.Name = "PLACA";
-            this.PLACA.ReadOnly = true;
-            this.PLACA.Width = 120;
-            // 
-            // NUMEROPARQUEO
-            // 
-            this.NUMEROPARQUEO.HeaderText = "NÚMERO DE PARQUEO";
-            this.NUMEROPARQUEO.MinimumWidth = 8;
-            this.NUMEROPARQUEO.Name = "NUMEROPARQUEO";
-            this.NUMEROPARQUEO.ReadOnly = true;
-            this.NUMEROPARQUEO.Width = 70;
-            // 
-            // CLIENTE
-            // 
-            this.CLIENTE.HeaderText = "CLIENTE";
-            this.CLIENTE.MinimumWidth = 8;
-            this.CLIENTE.Name = "CLIENTE";
-            this.CLIENTE.ReadOnly = true;
-            this.CLIENTE.Width = 150;
-            // 
-            // TIPO_PARQUEO
-            // 
-            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
-            this.TIPO_PARQUEO.MinimumWidth = 8;
-            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
-            this.TIPO_PARQUEO.ReadOnly = true;
-            this.TIPO_PARQUEO.Width = 230;
-            // 
-            // FECHAYHORA
-            // 
-            this.FECHAYHORA.HeaderText = "FECHA Y HORA";
-            this.FECHAYHORA.MinimumWidth = 8;
-            this.FECHAYHORA.Name = "FECHAYHORA";
-            this.FECHAYHORA.ReadOnly = true;
-            this.FECHAYHORA.Width = 120;
-            // 
-            // ESTADO
-            // 
-            this.ESTADO.HeaderText = "ESTADO";
-            this.ESTADO.MinimumWidth = 8;
-            this.ESTADO.Name = "ESTADO";
-            this.ESTADO.ReadOnly = true;
-            this.ESTADO.Width = 90;
             // 
             // FrmCheckIn
             // 

@@ -1,4 +1,5 @@
-﻿using parking.Controllers;
+﻿using parking.Config;
+using parking.Controllers;
 using parking.Models;
 using parking.Views.Administration.Employees;
 using parking.Views.Administration.ParkingStructure;
@@ -28,7 +29,7 @@ namespace parking.Views.Administration.BillingModule
 
         public int discountIdFT,discountIdFF;
         public double amountDiscountFT,amountDiscountFF;
-        public string psCode;
+        public string psCode, moduleId= "FAC";
         public FrmGenerateBill()
         {
             InitializeComponent();
@@ -53,7 +54,7 @@ namespace parking.Views.Administration.BillingModule
             if (validateData() == 0)
             {
                 BILL newBill = new BILL();
-                string nextBillCode= "FAC" + correlativesController.getNextId("FAC");
+                string nextBillCode= moduleId + correlativesController.getNextId(moduleId);
                 newBill.BILL_CODE = nextBillCode;
                 newBill.DATE_OF_ISSUE = DateTime.Now;
                 newBill.BILL_NUMBER = billController.GenerateNextBillNumber(); ;
@@ -75,7 +76,7 @@ namespace parking.Views.Administration.BillingModule
 
                     if (pspController.updateParkingSpace(ps) <= 0)
                     {
-                        h.MsgError("Ha ocurrido un error al actualizar el estado del parqueo");
+                        h.MsgError("HA OCURRIDO UN ERROR AL ACTUALIZAR EL ESTADO DEL PARQUEO");
                         return;
                     }
 
@@ -88,7 +89,7 @@ namespace parking.Views.Administration.BillingModule
 
                         if(discountsBillController.saveDiscountsBill(discountBillFF) <= 0)
                         {
-                            h.MsgError("Ha ocurrido un error al guardar el descuento por frecuencia");
+                            h.MsgError("HA OCURRIDO UN ERROR AL GUARDAR EL DESCUENTO POR FRECUENCIA");
                             return;
                         }
                     }
@@ -102,12 +103,12 @@ namespace parking.Views.Administration.BillingModule
 
                         if (discountsBillController.saveDiscountsBill(discountBillFT) <= 0)
                         {
-                            h.MsgError("Ha ocurrido un error al guardar el descuento por tiempo");
+                            h.MsgError("HA OCURRIDO UN ERROR AL GUARDAR EL DESCUENTO POR TIEMPO");
                             return;
                         }
                     }
 
-                    h.MsgSuccess("La factura se ha generado correctamente");
+                    h.MsgSuccess("LA FACTURA SE HA GENERADO CORRECTAMENTE");
 
                     CHECK_OUT checkOut = checkOutController.getCheckOut(TxtCheckOutCode.Text);
                     checkOut.CHECK_OUT_STATE = "FACTURADO";
@@ -121,7 +122,7 @@ namespace parking.Views.Administration.BillingModule
                 }
                 else
                 {
-                    h.MsgError("Ha ocurrido un error al generar la factura");
+                    h.MsgError("HA OCURRIDO UN ERROR AL GENERAR LA FACTURA");
                 }
             }
 
@@ -130,13 +131,12 @@ namespace parking.Views.Administration.BillingModule
         public int validateData()
         {
             int error = 0;
-            string rtnRegex = @"^\d{14}$";
 
             if (!String.IsNullOrEmpty(TxtRTN.Text))
             {
-                if (!Regex.IsMatch(TxtRTN.Text, rtnRegex))
+                if (!Regex.IsMatch(TxtRTN.Text, Helpers.RegexPatterns.RTNPattern))
                 {
-                    h.MsgError("El RTN debe contener 14 dígitos");
+                    h.MsgError("EL RTN DEBE CONTENER 14 DIGITOS");
                     error++;
                     return error;
                 }
@@ -146,7 +146,9 @@ namespace parking.Views.Administration.BillingModule
 
         private void FrmGenerateBill_Load(object sender, EventArgs e)
         {
-
+            BtnGenerateBill.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
         }
+
+        
     }
 }

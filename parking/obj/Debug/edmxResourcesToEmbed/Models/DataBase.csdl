@@ -24,7 +24,7 @@
     </Key>
     <Property Name="CHECK_IN_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CLIENT_DNI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="VEHICLE_PLATE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VEHICLE_PLATE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CHECK_IN_TIME" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="OBSERVATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
@@ -93,6 +93,7 @@
     <Property Name="CORRELATIVE_COUNTER" Type="Int32" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+    <Property Name="MODULE_ID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="DISCOUNT_TYPE">
     <Key>
@@ -242,7 +243,7 @@
     <Property Name="ROLE_PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
     <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
     <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_PERMISSIONS" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_ROLE_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_ROLES" />
   </EntityType>
@@ -273,11 +274,14 @@
       <PropertyRef Name="PERMISSION_ID" />
     </Key>
     <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PERMISSION_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="USER_PERMISSIONS" ToRole="ROLE_PERMISSIONS" />
+    <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="ACTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="USER_PERMISSIONS" ToRole="APP_MODULES" />
   </EntityType>
   <EntityType Name="USER_ROLES">
     <Key>
@@ -312,6 +316,7 @@
     <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK__PARKING_F__USER___0B27A5C0" FromRole="USERS" ToRole="PARKING_FEE" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
     <NavigationProperty Name="BILL_RANGE" Relationship="PARKINGModel.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
+    <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="USERS" ToRole="APP_MODULES" />
   </EntityType>
   <Association Name="FK_CHECKOUTBILL">
     <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
@@ -740,6 +745,15 @@
       <End Role="USERS" EntitySet="USERS" />
       <End Role="BILL_RANGE" EntitySet="BILL_RANGE" />
     </AssociationSet>
+    <EntitySet Name="APP_MODULES" EntityType="PARKINGModel.APP_MODULES" />
+    <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="PARKINGModel.FK__USER_PERM__MODUL__45DE573A">
+      <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+      <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_MODULES" Association="PARKINGModel.FK_USER_MODULES">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -778,6 +792,42 @@
       </Principal>
       <Dependent Role="BILL_RANGE">
         <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="APP_MODULES">
+    <Key>
+      <PropertyRef Name="MODULE_ID" />
+    </Key>
+    <Property Name="MODULE_ID" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="MODULE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IS_DEL" Type="Boolean" />
+    <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USER_PERMISSIONS" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
+  </EntityType>
+  <Association Name="FK__USER_PERM__MODUL__45DE573A">
+    <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="0..1" />
+    <End Type="PARKINGModel.USER_PERMISSIONS" Role="USER_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="APP_MODULES">
+        <PropertyRef Name="MODULE_ID" />
+      </Principal>
+      <Dependent Role="USER_PERMISSIONS">
+        <PropertyRef Name="MODULE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_MODULES">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+    <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="APP_MODULES">
+        <PropertyRef Name="USER_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

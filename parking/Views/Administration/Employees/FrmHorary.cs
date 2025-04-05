@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using parking.Config;
 using parking.Controllers;
 using parking.Models;
 using System;
@@ -19,8 +20,9 @@ namespace parking.Views.Administration.Employees
         HoraryController horaryController= new HoraryController();
         Helpers.Helpers h = new Helpers.Helpers();
         CorrelativesController correlativesController = new CorrelativesController();
-        string horaryCode,description;
+        string horaryCode,description,moduleId= "HOR";
         TimeSpan inititalHour, finalHour;
+        bool flagIsPaperBin = false;
         public FrmHorary()
         {
             InitializeComponent();
@@ -33,14 +35,19 @@ namespace parking.Views.Administration.Employees
 
         private void startForm()
         {
-            getHoraries("");
+            flagIsPaperBin = false;
+            getHoraries("",false);
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnCancel.Enabled = false;
             BtnEdit.Enabled = false;
-            BtnNew.Enabled = true;
-
-            foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = false;
                 Txt.Clear();
@@ -62,20 +69,23 @@ namespace parking.Views.Administration.Employees
             
         }
 
-        private void getHoraries(string searchFilter)
+        private void getHoraries(string searchFilter,bool isDel)
         {
             DgvHoraries.Rows.Clear();
-            List<HORARY> horaries = horaryController.getHoraries(searchFilter);
+            List<HORARY> horaries = horaryController.getHoraries(searchFilter,isDel);
 
-            if (searchFilter != "")
-            {
-                if (horaries.Count == 0)
+           
+                if (horaries.Count() == 0)
                 {
-                    h.MsgInfo("No se encontraron registros en la base de datos.");
-                    getHoraries("");
+                    h.MsgInfo(Helpers.App.Msg0012);
+                    if (searchFilter != "")
+                    {
+                        getHoraries("", isDel);
+                    }
+                    TxtSearch.Clear();
                     return;
                 }
-            }
+            
 
             foreach (HORARY horary in horaries)
             {
@@ -86,21 +96,21 @@ namespace parking.Views.Administration.Employees
         private int validateData()
         {
             int count = 0;
-            string onlyLetters = "^[a-zA-Z\\s]+$";
-
-            if (!Regex.Match(TxtDescription.Text.Trim(), onlyLetters).Success)
+            if (!Regex.Match(TxtDescription.Text.Trim(), Helpers.RegexPatterns.AlphabeticPatternWithAccent).Success)
             {
-                h.MsgWarning("Ingresar descripción del horario correctamente. ¡Solo letras!");
+                h.MsgWarning("INGRESAR DESCRIPCIÓN DEL HORARIO CORRECTAMENTE. ¡SOLO LETRAS!");
                 count++;
                 return count;
             }
 
             if (DtpInitialHour.Value.TimeOfDay >= DtpFinalHour.Value.TimeOfDay)
             {
-                h.MsgWarning("La hora de inicio no puede ser mayor o igual a la hora de fin");
+                h.MsgWarning("LA HORA DE INICIO NO PUEDE SER MAYOR O IGUAL A LA HORA DE FIN");
                 count++;
                 return count;
             }
+
+
 
             return count;
 
@@ -117,7 +127,7 @@ namespace parking.Views.Administration.Employees
             BtnNew.Enabled = false;
             BtnEdit.Enabled = false;
 
-            foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+            foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = true;
                 Txt.Clear();
@@ -127,7 +137,7 @@ namespace parking.Views.Administration.Employees
             DtpInitialHour.Enabled = true;
             DtpFinalHour.Enabled = true;
 
-            var nextId = "HOR" + correlativesController.getNextId("HOR");
+            var nextId = moduleId + correlativesController.getNextId(moduleId);
 
             TxtHoraryCode.Text = nextId;
             BtnNew.Enabled = false;
@@ -136,22 +146,23 @@ namespace parking.Views.Administration.Employees
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getHoraries("");
+            getHoraries("", flagIsPaperBin);
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             HORARY horary = horaryController.getHorary(TxtHoraryCode.Text);
-            if (h.MsgQuestion($"¿Esta seguro que desea eliminar el permiso {horary.HORARY_DESCRIPTION} de la base de datos?") == "S")
+            horary.IS_DEL = true;
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
-                if (horaryController.deleteHorary(horary) > 0)
+                if (horaryController.updateHorary(horary) > 0)
                 {
-                    h.MsgInfo("Horario eliminado correctamente.");
+                    h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al eliminar horario.");
+                    h.MsgError(Helpers.App.Msg0016);
                 }
             }
 
@@ -161,26 +172,28 @@ namespace parking.Views.Administration.Employees
         {
             if (validateData() == 0)
             {
-                setValues();
-                HORARY horary = new HORARY()
-                {
-                    HORARY_CODE = horaryCode,
-                    HORARY_DESCRIPTION = description,
-                    INITIAL_HOUR = inititalHour,
-                    FINAL_HOUR = finalHour
-                };
 
-                if (h.MsgQuestion($"¿Esta seguro que desea modificar el horario {horary.HORARY_DESCRIPTION}?") == "S")
+                if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
                 {
+                    setValues();
+                    HORARY horary = new HORARY()
+                    {
+                        HORARY_CODE = horaryCode,
+                        HORARY_DESCRIPTION = description,
+                        INITIAL_HOUR = inititalHour,
+                        FINAL_HOUR = finalHour
+                    };
                     if (horaryController.updateHorary(horary) > 0)
                     {
-                        h.MsgSuccess("Horario modificado correctamente.");
+                        h.MsgSuccess(Helpers.App.Msg0003);
                         startForm();
                     }
                     else
                     {
-                        h.MsgError("Error al modificar horario.");
+                        h.MsgError(Helpers.App.Msg0017);
                     }
+
+
                 }
             }
 
@@ -195,7 +208,7 @@ namespace parking.Views.Administration.Employees
                 if (horary != null)
                 {
                     TxtDescription.Focus();
-                    foreach (System.Windows.Forms.TextBox Txt in this.Controls.OfType<System.Windows.Forms.TextBox>())
+                    foreach (TextBox Txt in this.Controls.OfType<TextBox>())
                     {
                         Txt.Enabled = true;
                     }
@@ -208,9 +221,13 @@ namespace parking.Views.Administration.Employees
                     DtpFinalHour.Text = horary.FINAL_HOUR.ToString();
                     DtpInitialHour.Enabled = true;
                     DtpFinalHour.Enabled = true;
+                    PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                    PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
 
-                    BtnEdit.Enabled = true;
-                    BtnDelete.Enabled = true;
+                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
+                    BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+                    BtnEdit.Enabled= flagIsPaperBin ? false : true;
+                    BtnDelete.Enabled = flagIsPaperBin ? false : true;
                     BtnNew.Enabled = false;
                     BtnSave.Enabled = false;
                     BtnCancel.Enabled = true;
@@ -218,7 +235,7 @@ namespace parking.Views.Administration.Employees
                 }
                 else
                 {
-                    h.MsgError("El registro no ha sido encontrado en la base de datos.");
+                    h.MsgError(Helpers.App.Msg0011);
                 }
 
             }
@@ -231,14 +248,60 @@ namespace parking.Views.Administration.Employees
 
         }
 
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            flagIsPaperBin = true;
+            getHoraries("", true);
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            HORARY horary = horaryController.getHorary(TxtHoraryCode.Text);
+            horary.IS_DEL = false;
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                if (horaryController.updateHorary(horary) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0019);
+                }
+            }
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            HORARY horary = horaryController.getHorary(TxtHoraryCode.Text);
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                if (horaryController.deleteHorary(horary) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+        }
+
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) getHoraries(TxtSearch.Text.Trim());
+            if (e.KeyCode == Keys.Enter) getHoraries(TxtSearch.Text.Trim(), flagIsPaperBin);
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getHoraries(TxtSearch.Text);
+            getHoraries(TxtSearch.Text,flagIsPaperBin);
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -259,12 +322,12 @@ namespace parking.Views.Administration.Employees
                 int result = horaryController.saveHorary(horary);
                 if(result > 0)
                 {
-                    h.MsgSuccess("Horario guardado correctamente.");
+                    h.MsgSuccess(Helpers.App.Msg0001);
                     startForm();
                 }
                 else
                 {
-                    h.MsgError("Error al guardar el horario.");
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
 

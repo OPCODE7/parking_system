@@ -26,6 +26,7 @@ namespace parking.Models
             this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
             this.PARKING_FEE = new HashSet<PARKING_FEE>();
             this.BILL_RANGE = new HashSet<BILL_RANGE>();
+            this.APP_MODULES = new HashSet<APP_MODULES>();
         }
     
         public string USER_CODE { get; set; }
@@ -55,5 +56,7 @@ namespace parking.Models
         public virtual USER_ROLES USER_ROLES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILL_RANGE> BILL_RANGE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<APP_MODULES> APP_MODULES { get; set; }
     }
 }
