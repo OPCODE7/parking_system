@@ -3,48 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using parking.DTO;
 using parking.Models;
 
 namespace parking.Controllers
 {
-    internal class ParkingFeeController
+    internal class ParkingFeeController: DataBaseController
     {
         private PARKINGEntities db;
         private Helpers.Helpers h;
         public ParkingFeeController() {
             h = new Helpers.Helpers();
         }
-        
-        public IEnumerable<dynamic> getParkingFees(string searchFilter)
+
+        public IEnumerable<ParkingFeeDTO> getParkingFees(string searchFilter, bool isDel = false)
         {
-            IEnumerable<dynamic> parkingFees= new List<PARKING_FEE>();
+            IEnumerable<ParkingFeeDTO> parkingFees = new List<ParkingFeeDTO>();
 
             try
             {
-                using (db = new PARKINGEntities())
+                using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    var query= from pf in db.PARKING_FEE
-                               join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                               join u in db.USERS on pf.USER_CODE equals u.USER_CODE
-                               select new
-                               {
-                                   pf.PARKING_FEE_CODE,
-                                   pt.DESCRIPTION_PARKING_TYPE,
-                                   pf.PRICE_FOR_HOUR,
-                                   pf.INSERTED_AT,
-                                   pf.IS_DEL,
-                                   u.USER_CODE,
-                                   u.USER_NAME
-                               };
-                    parkingFees = string.IsNullOrEmpty(searchFilter) ?
-                        query.ToList().Where(pf => pf.IS_DEL==false) :
-                        query.ToList().Where(pf => pf.IS_DEL == false && (pf.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) || pf.PRICE_FOR_HOUR.ToString().Contains(searchFilter)));
+                    var query = from pf in db.PARKING_FEE
+                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
+                                join u in db.USERS on pf.USER_CODE equals u.USER_CODE
+                                where (string.IsNullOrEmpty(searchFilter) ?
+                                       pf.IS_DEL == isDel :
+                                       (pt.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) ||
+                                       pf.PRICE_FOR_HOUR.ToString().Contains(searchFilter)) &&
+                                       pf.IS_DEL == isDel)
+                                select new ParkingFeeDTO
+                                {
+                                    PARKING_FEE_CODE = pf.PARKING_FEE_CODE,
+                                    DESCRIPTION_PARKING_TYPE = pt.DESCRIPTION_PARKING_TYPE,
+                                    PARKING_TYPE_CODE = pf.PARKING_TYPE_CODE,
+                                    PRICE_FOR_HOUR = pf.PRICE_FOR_HOUR,
+                                    INSERTED_AT = pf.INSERTED_AT,
+                                    IS_DEL = pf.IS_DEL,
+                                    USER_CODE = u.USER_CODE,
+                                    USER_NAME = u.USER_NAME
+                                };
+
+                    parkingFees = query.ToList();
                 }
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
+
             return parkingFees;
         }
 
@@ -60,7 +67,7 @@ namespace parking.Controllers
 
             }catch(Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return parkingFee;
@@ -80,7 +87,7 @@ namespace parking.Controllers
 
             }catch(Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
         }
@@ -98,7 +105,7 @@ namespace parking.Controllers
                 }
             }catch(Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return result;
@@ -112,6 +119,11 @@ namespace parking.Controllers
             {
                 using (db = new PARKINGEntities())
                 {
+                    if(HasReferences(db,db.PARKING_SPACE,e => e.PARKING_FEE_CODE == pf.PARKING_FEE_CODE))
+                    {
+                        h.MsgError(Helpers.App.Msg0019);
+                        return 0;
+                    }
                     db.PARKING_FEE.Attach(pf);
                     db.PARKING_FEE.Remove(pf);
                     result = db.SaveChanges();
@@ -119,7 +131,7 @@ namespace parking.Controllers
 
             }catch(Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
 

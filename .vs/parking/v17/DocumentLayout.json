@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\OPCODE\\OP_APPS\\parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\parkingstructure\\frmparkingfee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\parkingstructure\\frmparkingfee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\parkingtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\parkingtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\parkingstructure\\frmparkingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\parkingstructure\\frmparkingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\parkingstructure\\frmparkingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\parkingstructure\\frmparkingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClientController.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\ClientController.cs",
-              "RelativeDocumentMoniker": "parking\\Controllers\\ClientController.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\ClientController.cs",
-              "RelativeToolTip": "parking\\Controllers\\ClientController.cs",
-              "ViewState": "AQIAAHUAAAAAAAAAAAAswIUAAAAhAAAA",
+              "Title": "FrmParkingFee.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingFee.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingFee.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingFee.cs",
+              "RelativeToolTip": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingFee.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAAAjwEUAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T02:02:56.496Z",
+              "WhenOpened": "2025-04-06T01:49:40.158Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmParkingTypes.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "RelativeToolTip": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAswAYBAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T01:47:16.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ParkingTypeController.cs",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\ParkingTypeController.cs",
+              "RelativeDocumentMoniker": "parking\\Controllers\\ParkingTypeController.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\ParkingTypeController.cs",
+              "RelativeToolTip": "parking\\Controllers\\ParkingTypeController.cs",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAswGYAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T01:37:09.647Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FrmParkingTypes.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "RelativeDocumentMoniker": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs [Dise\u00F1o]",
+              "RelativeToolTip": "parking\\Views\\Administration\\ParkingStructure\\FrmParkingTypes.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T01:31:26.983Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }

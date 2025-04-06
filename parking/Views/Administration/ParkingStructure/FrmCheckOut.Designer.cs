@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheckOut));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnEdit = new System.Windows.Forms.ToolStripButton();
@@ -79,11 +80,19 @@
             this.TxtTotalTime = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.TxtSubtotal = new System.Windows.Forms.TextBox();
+            this.PbxDestroy = new System.Windows.Forms.PictureBox();
+            this.PbxRecovery = new System.Windows.Forms.PictureBox();
+            this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.TspBill = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvCheckOuts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
             this.SuspendLayout();
             // 
             // PbxClose
@@ -116,7 +125,9 @@
             this.toolStripSeparator5,
             this.BtnSearchCheckIn,
             this.toolStripSeparator4,
-            this.BtnGenerateBill});
+            this.BtnGenerateBill,
+            this.TspBill,
+            this.BtnPaperbin});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(946, 42);
@@ -211,7 +222,6 @@
             this.BtnGenerateBill.Name = "BtnGenerateBill";
             this.BtnGenerateBill.Size = new System.Drawing.Size(101, 37);
             this.BtnGenerateBill.Text = "Facturar";
-            this.BtnGenerateBill.Visible = false;
             this.BtnGenerateBill.Click += new System.EventHandler(this.BtnGenerateBill_Click);
             // 
             // label9
@@ -454,9 +464,9 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(597, 309);
+            this.PbxSearch.Location = new System.Drawing.Point(854, 312);
             this.PbxSearch.Name = "PbxSearch";
-            this.PbxSearch.Size = new System.Drawing.Size(31, 30);
+            this.PbxSearch.Size = new System.Drawing.Size(26, 27);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxSearch.TabIndex = 174;
             this.PbxSearch.TabStop = false;
@@ -468,9 +478,9 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(640, 309);
+            this.PbxCancel.Location = new System.Drawing.Point(887, 312);
             this.PbxCancel.Name = "PbxCancel";
-            this.PbxCancel.Size = new System.Drawing.Size(31, 30);
+            this.PbxCancel.Size = new System.Drawing.Size(26, 27);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxCancel.TabIndex = 173;
             this.PbxCancel.TabStop = false;
@@ -505,11 +515,11 @@
             this.DgvCheckOuts.AllowUserToDeleteRows = false;
             this.DgvCheckOuts.AllowUserToResizeColumns = false;
             this.DgvCheckOuts.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvCheckOuts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvCheckOuts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.DgvCheckOuts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvCheckOuts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvCheckOuts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -519,14 +529,14 @@
             this.TIPO_PARQUEO,
             this.FECHAYHORA,
             this.ESTADO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCheckOuts.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCheckOuts.DefaultCellStyle = dataGridViewCellStyle10;
             this.DgvCheckOuts.Location = new System.Drawing.Point(30, 350);
             this.DgvCheckOuts.Name = "DgvCheckOuts";
             this.DgvCheckOuts.ReadOnly = true;
@@ -638,11 +648,71 @@
             this.TxtSubtotal.Size = new System.Drawing.Size(177, 30);
             this.TxtSubtotal.TabIndex = 176;
             // 
+            // PbxDestroy
+            // 
+            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
+            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
+            this.PbxDestroy.Location = new System.Drawing.Point(821, 312);
+            this.PbxDestroy.Name = "PbxDestroy";
+            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
+            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxDestroy.TabIndex = 179;
+            this.PbxDestroy.TabStop = false;
+            this.TtpDestroy.SetToolTip(this.PbxDestroy, "Destruir registro definitivamente de la base de datos");
+            this.PbxDestroy.Visible = false;
+            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
+            // 
+            // PbxRecovery
+            // 
+            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
+            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
+            this.PbxRecovery.Location = new System.Drawing.Point(785, 312);
+            this.PbxRecovery.Name = "PbxRecovery";
+            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
+            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxRecovery.TabIndex = 178;
+            this.PbxRecovery.TabStop = false;
+            this.TtpRecovery.SetToolTip(this.PbxRecovery, "Recuperar registro de la papelera");
+            this.PbxRecovery.Visible = false;
+            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
+            // 
+            // TtpRecovery
+            // 
+            this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpRecovery.ToolTipTitle = "Recuperar ";
+            // 
+            // TtpDestroy
+            // 
+            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpDestroy.ToolTipTitle = "Destruir";
+            // 
+            // TspBill
+            // 
+            this.TspBill.Name = "TspBill";
+            this.TspBill.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // FrmCheckOut
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(946, 675);
+            this.Controls.Add(this.PbxDestroy);
+            this.Controls.Add(this.PbxRecovery);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.TxtSubtotal);
             this.Controls.Add(this.TxtTotalTime);
@@ -685,6 +755,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvCheckOuts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -740,5 +812,11 @@
         private System.Windows.Forms.TextBox TxtSubtotal;
         private System.Windows.Forms.ToolStripButton BtnSearchCheckIn;
         public System.Windows.Forms.ToolStripButton BtnGenerateBill;
+        private System.Windows.Forms.PictureBox PbxDestroy;
+        private System.Windows.Forms.PictureBox PbxRecovery;
+        private System.Windows.Forms.ToolTip TtpRecovery;
+        private System.Windows.Forms.ToolTip TtpDestroy;
+        private System.Windows.Forms.ToolStripSeparator TspBill;
+        private System.Windows.Forms.ToolStripButton BtnPaperbin;
     }
 }

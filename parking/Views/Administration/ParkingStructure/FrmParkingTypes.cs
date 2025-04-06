@@ -21,6 +21,7 @@ namespace parking.Views.Administration.ParkingStructure
         Helpers.Helpers h = new Helpers.Helpers();
         CorrelativesController correlativesController = new CorrelativesController();
         string parkingTypeCode, parkingTypeDescription,moduleId= "PTY";
+        bool flagIsPaperbin;
         public FrmParkingTypes()
         {
             InitializeComponent();
@@ -44,11 +45,17 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void startForm()
         {
-            getparkingTypes("");
+            getparkingTypes("",false);
+            flagIsPaperbin = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Enabled = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
             BtnCancel.Enabled = false;
 
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
@@ -112,6 +119,10 @@ namespace parking.Views.Administration.ParkingStructure
 
                 BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
                 BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+                BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                BtnDelete.Enabled = flagIsPaperbin ? false : true;
+                PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+                PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
                 BtnSave.Enabled = false;
                 BtnNew.Enabled = false;
                 BtnCancel.Enabled = true;
@@ -136,29 +147,31 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getparkingTypes(TxtSearch.Text.Trim());
+            getparkingTypes(TxtSearch.Text.Trim(), flagIsPaperbin);
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getparkingTypes("");
+            getparkingTypes("",flagIsPaperbin);
         }
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
             {
-                getparkingTypes(TxtSearch.Text.Trim());
+                getparkingTypes(TxtSearch.Text.Trim(),flagIsPaperbin);
             }
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            PARKING_TYPES parkingType= parkingTypeController.getParkingType(TxtParkingTypeCode.Text);
+           
             if (h.MsgQuestion(Helpers.App.Msg0004)=="S")
             {
-                int result = parkingTypeController.deleteParkingType(TxtParkingTypeCode.Text);
+                PARKING_TYPES parkingType = parkingTypeController.getParkingType(TxtParkingTypeCode.Text);
+                parkingType.IS_DEL = true;
+                int result = parkingTypeController.updateParkingType(parkingType);
 
                 if (result > 0)
                 {
@@ -203,12 +216,62 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void getparkingTypes(string searchFilter)
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            BtnCancel.Enabled = true;
+            BtnNew.Enabled = false;
+            PbxRecovery.Visible = true;
+            PbxDestroy.Visible = true;
+            flagIsPaperbin = true;
+            getparkingTypes("", flagIsPaperbin);
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                PARKING_TYPES parkingType = parkingTypeController.getParkingType(TxtParkingTypeCode.Text);
+                parkingType.IS_DEL = false;
+                int result = parkingTypeController.updateParkingType(parkingType);
+                if (result > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+
+            }
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                int result = parkingTypeController.deleteParkingType(TxtParkingTypeCode.Text);
+                if (result > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+
+            }
+        }
+
+        private void getparkingTypes(string searchFilter,bool isDel)
         {
             DgvParkingTypes.Rows.Clear();
          
             
-            List<PARKING_TYPES> parkingTypes = parkingTypeController.getParkingTypes(searchFilter);
+            List<PARKING_TYPES> parkingTypes = parkingTypeController.getParkingTypes(searchFilter,isDel);
 
             if (parkingTypes.Count == 0)
             {
@@ -216,7 +279,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (searchFilter != "")
                 {
-                    getparkingTypes("");
+                    getparkingTypes("",isDel);
                 }
                 return;
             }

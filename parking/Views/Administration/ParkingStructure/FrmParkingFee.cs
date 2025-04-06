@@ -24,6 +24,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         string pfCode, ptCode,userId,moduleId= "PKF";
         decimal pfPrice;
+        bool flagIsPaperbin;
         public FrmParkingFee()
         {
             InitializeComponent();
@@ -43,13 +44,18 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void startForm()
         {
-            getParkingFees("");
+            getParkingFees("",false);
+            flagIsPaperbin = false;
             BtnCancel.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
-
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Enabled = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
             TxtParkingFeeCode.Enabled = false;
             TxtPrice.Enabled = false;
             TxtPrice.Clear();
@@ -61,7 +67,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void fillCmbParkingTypes()
         {
-            CmbParkingTypes.DataSource = parkingTypeController.getParkingTypes("");
+            CmbParkingTypes.DataSource = parkingTypeController.getParkingTypes("",false);
             CmbParkingTypes.DisplayMember = "DESCRIPTION_PARKING_TYPE";
             CmbParkingTypes.ValueMember = "PARKING_TYPE_CODE";
         }
@@ -71,16 +77,16 @@ namespace parking.Views.Administration.ParkingStructure
             startForm();
         }
 
-        private void getParkingFees(string searchFilter)
+        private void getParkingFees(string searchFilter,bool isDel)
         {
             DgvParkingFees.Rows.Clear();
-            var parkingFees = parkingFeeController.getParkingFees(searchFilter);
+            var parkingFees = parkingFeeController.getParkingFees(searchFilter,isDel);
             if (parkingFees.Count() == 0)
             {
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getParkingFees("");
+                    getParkingFees("",isDel);
                 }
                 return;
             }
@@ -119,25 +125,33 @@ namespace parking.Views.Administration.ParkingStructure
                 return error;
 
             }
+
+            if (CmbParkingTypes.SelectedValue != null && parkingFeeController.getParkingFees("", false).Any(pf => pf.PARKING_TYPE_CODE == CmbParkingTypes.SelectedValue.ToString())==true){
+               
+                h.MsgWarning("YA EXISTE UNA TARIFA ASOCIADA A ESTE TIPO DE PARQUEO!");
+                error++;
+                CmbParkingTypes.Focus();
+                return error;
+            }
             return error;
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getParkingFees(TxtSearch.Text.Trim());
+            getParkingFees(TxtSearch.Text.Trim(), flagIsPaperbin);
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getParkingFees("");
+            getParkingFees("",flagIsPaperbin);
         }
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                getParkingFees(TxtSearch.Text.Trim());
+                getParkingFees(TxtSearch.Text.Trim(),flagIsPaperbin);
             }
         }
 
@@ -148,6 +162,12 @@ namespace parking.Views.Administration.ParkingStructure
             BtnSave.Enabled = false;
             BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
             BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+            BtnEdit.Enabled = flagIsPaperbin ? false : true;
+            BtnDelete.Enabled= flagIsPaperbin ? false : true;
+            PbxRecovery.Enabled = PermissionManager.HasPermission("PAP","Modificar");
+            PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
+
+
 
             TxtPrice.Enabled = true;
             CmbParkingTypes.Enabled = true;
@@ -189,14 +209,63 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private void BtnPaperbin_Click(object sender, EventArgs e)
         {
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            PbxRecovery.Visible = true;
+            PbxDestroy.Visible = true;
+            flagIsPaperbin = true;
+            getParkingFees("", flagIsPaperbin);
+            
+        }
 
-            PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+                pf.IS_DEL = false;
+                if (parkingFeeController.updateParkingFee(pf) > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
 
+            }
+
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+                if (parkingFeeController.deleteParkingFee(pf) > 0)
+                {
+                    h.MsgSuccess(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+
+            }
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        { 
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
-                if (parkingFeeController.deleteParkingFee(pf) > 0)
+                PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+                pf.IS_DEL = true;
+                if (parkingFeeController.updateParkingFee(pf) > 0)
                 {
                     h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();

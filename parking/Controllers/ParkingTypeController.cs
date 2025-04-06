@@ -7,38 +7,32 @@ using parking.Models;
 
 namespace parking.Controllers
 {
-    internal class ParkingTypeController
+    internal class ParkingTypeController: DataBaseController
     {
         private PARKING_TYPES parkingType;
         private Helpers.Helpers h;
-        public ParkingTypeController() { 
+        public ParkingTypeController()
+        {
             parkingType = new PARKING_TYPES();
             h = new Helpers.Helpers();
         }
 
-        public List<PARKING_TYPES> getParkingTypes(string searchFilter)
+        public List<PARKING_TYPES> getParkingTypes(string searchFilter, bool isDel)
         {
-            List<PARKING_TYPES> parkingTypes= new List<PARKING_TYPES>();
+            List<PARKING_TYPES> parkingTypes = new List<PARKING_TYPES>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if (searchFilter != "")
-                    {
-                        parkingTypes= db.PARKING_TYPES.Where(x => x.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) && x.IS_DEL==false).ToList();
-                    }
-                    else
-                    {
-                        parkingTypes= db.PARKING_TYPES.Where(x => x.IS_DEL==false).ToList();
-                    }
+                    parkingTypes = db.PARKING_TYPES.Where(e => String.IsNullOrEmpty(searchFilter) ? e.IS_DEL == isDel : e.PARKING_TYPE_CODE.Contains(searchFilter) || e.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) || e.INSERTED_AT.ToString().Contains(searchFilter)).ToList();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
-            return parkingTypes; 
+            return parkingTypes;
         }
 
         public PARKING_TYPES getParkingType(string id)
@@ -53,7 +47,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return parkingType;
@@ -72,7 +66,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return result;
@@ -91,7 +85,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return result;
@@ -104,6 +98,11 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    if(HasReferences(db,db.PARKING_FEE,e => e.PARKING_TYPE_CODE == id))
+                    {
+                        h.MsgError(Helpers.App.Msg0019);
+                        return 0;
+                    }
                     PARKING_TYPES parkingType = db.PARKING_TYPES.Find(id);
                     db.PARKING_TYPES.Attach(parkingType);
                     db.PARKING_TYPES.Remove(parkingType);
@@ -112,7 +111,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return result;

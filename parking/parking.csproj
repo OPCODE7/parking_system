@@ -120,8 +120,12 @@
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\BillRangeDTO.cs" />
+    <Compile Include="DTO\CheckInDTO.cs" />
+    <Compile Include="DTO\CheckOutDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
     <Compile Include="DTO\EmployeeDTO.cs" />
+    <Compile Include="DTO\ParkingFeeDTO.cs" />
+    <Compile Include="DTO\ParkingSpaceDTO.cs" />
     <Compile Include="DTO\PermissionDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Helpers\App.cs" />

@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheckIn));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label4 = new System.Windows.Forms.Label();
             this.CmbParkingSpaces = new System.Windows.Forms.ComboBox();
             this.PbxClose = new System.Windows.Forms.PictureBox();
@@ -52,13 +53,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvCheckIns = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FECHAYHORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtClientCode = new System.Windows.Forms.TextBox();
             this.TxtCheckInCode = new System.Windows.Forms.TextBox();
             this.PbxSearchClient = new System.Windows.Forms.PictureBox();
@@ -74,12 +68,27 @@
             this.TxtVehiclePlate = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.MskClientPhone = new System.Windows.Forms.MaskedTextBox();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLACA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NUMEROPARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FECHAYHORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PbxDestroy = new System.Windows.Forms.PictureBox();
+            this.PbxRecovery = new System.Windows.Forms.PictureBox();
+            this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvCheckIns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearchClient)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
             this.SuspendLayout();
             // 
             // label4
@@ -131,7 +140,9 @@
             this.toolStripSeparator3,
             this.BtnSave,
             this.toolStripSeparator4,
-            this.BtnCancel});
+            this.BtnCancel,
+            this.toolStripSeparator5,
+            this.BtnPaperbin});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(946, 42);
@@ -219,9 +230,9 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(591, 320);
+            this.PbxSearch.Location = new System.Drawing.Point(866, 278);
             this.PbxSearch.Name = "PbxSearch";
-            this.PbxSearch.Size = new System.Drawing.Size(31, 30);
+            this.PbxSearch.Size = new System.Drawing.Size(26, 27);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxSearch.TabIndex = 123;
             this.PbxSearch.TabStop = false;
@@ -233,9 +244,9 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(634, 320);
+            this.PbxCancel.Location = new System.Drawing.Point(899, 278);
             this.PbxCancel.Name = "PbxCancel";
-            this.PbxCancel.Size = new System.Drawing.Size(31, 30);
+            this.PbxCancel.Size = new System.Drawing.Size(26, 27);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxCancel.TabIndex = 122;
             this.PbxCancel.TabStop = false;
@@ -246,7 +257,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label6.Location = new System.Drawing.Point(23, 323);
+            this.label6.Location = new System.Drawing.Point(20, 283);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(74, 22);
             this.label6.TabIndex = 121;
@@ -257,10 +268,10 @@
             this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtSearch.Location = new System.Drawing.Point(108, 322);
+            this.TxtSearch.Location = new System.Drawing.Point(105, 282);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(471, 26);
+            this.TxtSearch.Size = new System.Drawing.Size(507, 26);
             this.TxtSearch.TabIndex = 7;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -292,20 +303,20 @@
             this.DgvCheckIns.AllowUserToDeleteRows = false;
             this.DgvCheckIns.AllowUserToResizeColumns = false;
             this.DgvCheckIns.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvCheckIns.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvCheckIns.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.DgvCheckIns.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvCheckIns.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvCheckIns.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.DgvCheckIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvCheckIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
@@ -315,80 +326,24 @@
             this.TIPO_PARQUEO,
             this.FECHAYHORA,
             this.ESTADO});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCheckIns.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvCheckIns.Location = new System.Drawing.Point(24, 357);
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCheckIns.DefaultCellStyle = dataGridViewCellStyle15;
+            this.DgvCheckIns.Location = new System.Drawing.Point(21, 317);
             this.DgvCheckIns.Name = "DgvCheckIns";
             this.DgvCheckIns.ReadOnly = true;
             this.DgvCheckIns.RowHeadersVisible = false;
             this.DgvCheckIns.RowHeadersWidth = 62;
             this.DgvCheckIns.RowTemplate.Height = 28;
             this.DgvCheckIns.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvCheckIns.Size = new System.Drawing.Size(902, 313);
+            this.DgvCheckIns.Size = new System.Drawing.Size(905, 313);
             this.DgvCheckIns.TabIndex = 8;
             this.DgvCheckIns.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCheckIns_CellDoubleClick);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 150;
-            // 
-            // PLACA
-            // 
-            this.PLACA.HeaderText = "NO. PLACA";
-            this.PLACA.MinimumWidth = 8;
-            this.PLACA.Name = "PLACA";
-            this.PLACA.ReadOnly = true;
-            this.PLACA.Width = 120;
-            // 
-            // NUMEROPARQUEO
-            // 
-            this.NUMEROPARQUEO.HeaderText = "NÚMERO DE PARQUEO";
-            this.NUMEROPARQUEO.MinimumWidth = 8;
-            this.NUMEROPARQUEO.Name = "NUMEROPARQUEO";
-            this.NUMEROPARQUEO.ReadOnly = true;
-            this.NUMEROPARQUEO.Width = 70;
-            // 
-            // CLIENTE
-            // 
-            this.CLIENTE.HeaderText = "CLIENTE";
-            this.CLIENTE.MinimumWidth = 8;
-            this.CLIENTE.Name = "CLIENTE";
-            this.CLIENTE.ReadOnly = true;
-            this.CLIENTE.Width = 150;
-            // 
-            // TIPO_PARQUEO
-            // 
-            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
-            this.TIPO_PARQUEO.MinimumWidth = 8;
-            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
-            this.TIPO_PARQUEO.ReadOnly = true;
-            this.TIPO_PARQUEO.Width = 230;
-            // 
-            // FECHAYHORA
-            // 
-            this.FECHAYHORA.HeaderText = "FECHA Y HORA";
-            this.FECHAYHORA.MinimumWidth = 8;
-            this.FECHAYHORA.Name = "FECHAYHORA";
-            this.FECHAYHORA.ReadOnly = true;
-            this.FECHAYHORA.Width = 120;
-            // 
-            // ESTADO
-            // 
-            this.ESTADO.HeaderText = "ESTADO";
-            this.ESTADO.MinimumWidth = 8;
-            this.ESTADO.Name = "ESTADO";
-            this.ESTADO.ReadOnly = true;
-            this.ESTADO.Width = 90;
             // 
             // TxtClientCode
             // 
@@ -451,7 +406,7 @@
             this.TxtObservations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtObservations.Multiline = true;
             this.TxtObservations.Name = "TxtObservations";
-            this.TxtObservations.Size = new System.Drawing.Size(594, 59);
+            this.TxtObservations.Size = new System.Drawing.Size(594, 30);
             this.TxtObservations.TabIndex = 5;
             // 
             // label7
@@ -572,11 +527,124 @@
             this.MskClientPhone.Size = new System.Drawing.Size(211, 26);
             this.MskClientPhone.TabIndex = 142;
             // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // PLACA
+            // 
+            this.PLACA.HeaderText = "NO. PLACA";
+            this.PLACA.MinimumWidth = 8;
+            this.PLACA.Name = "PLACA";
+            this.PLACA.ReadOnly = true;
+            this.PLACA.Width = 120;
+            // 
+            // NUMEROPARQUEO
+            // 
+            this.NUMEROPARQUEO.HeaderText = "NÚMERO DE PARQUEO";
+            this.NUMEROPARQUEO.MinimumWidth = 8;
+            this.NUMEROPARQUEO.Name = "NUMEROPARQUEO";
+            this.NUMEROPARQUEO.ReadOnly = true;
+            this.NUMEROPARQUEO.Width = 87;
+            // 
+            // CLIENTE
+            // 
+            this.CLIENTE.HeaderText = "CLIENTE";
+            this.CLIENTE.MinimumWidth = 8;
+            this.CLIENTE.Name = "CLIENTE";
+            this.CLIENTE.ReadOnly = true;
+            this.CLIENTE.Width = 150;
+            // 
+            // TIPO_PARQUEO
+            // 
+            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
+            this.TIPO_PARQUEO.MinimumWidth = 8;
+            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
+            this.TIPO_PARQUEO.ReadOnly = true;
+            this.TIPO_PARQUEO.Width = 230;
+            // 
+            // FECHAYHORA
+            // 
+            this.FECHAYHORA.HeaderText = "FECHA Y HORA";
+            this.FECHAYHORA.MinimumWidth = 8;
+            this.FECHAYHORA.Name = "FECHAYHORA";
+            this.FECHAYHORA.ReadOnly = true;
+            this.FECHAYHORA.Width = 120;
+            // 
+            // ESTADO
+            // 
+            this.ESTADO.HeaderText = "ESTADO";
+            this.ESTADO.MinimumWidth = 8;
+            this.ESTADO.Name = "ESTADO";
+            this.ESTADO.ReadOnly = true;
+            this.ESTADO.Width = 90;
+            // 
+            // PbxDestroy
+            // 
+            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
+            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
+            this.PbxDestroy.Location = new System.Drawing.Point(833, 279);
+            this.PbxDestroy.Name = "PbxDestroy";
+            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
+            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxDestroy.TabIndex = 171;
+            this.PbxDestroy.TabStop = false;
+            this.PbxDestroy.Visible = false;
+            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
+            // 
+            // PbxRecovery
+            // 
+            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
+            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
+            this.PbxRecovery.Location = new System.Drawing.Point(797, 279);
+            this.PbxRecovery.Name = "PbxRecovery";
+            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
+            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxRecovery.TabIndex = 170;
+            this.PbxRecovery.TabStop = false;
+            this.PbxRecovery.Visible = false;
+            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
+            // 
+            // TtpRecovery
+            // 
+            this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpRecovery.ToolTipTitle = "Recuperar ";
+            // 
+            // TtpDestroy
+            // 
+            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpDestroy.ToolTipTitle = "Destruir";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // FrmCheckIn
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(946, 675);
+            this.ClientSize = new System.Drawing.Size(946, 644);
+            this.Controls.Add(this.PbxDestroy);
+            this.Controls.Add(this.PbxRecovery);
             this.Controls.Add(this.MskClientPhone);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -615,6 +683,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvCheckIns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearchClient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -664,5 +734,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
         private System.Windows.Forms.DataGridViewTextBoxColumn FECHAYHORA;
         private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
+        private System.Windows.Forms.PictureBox PbxDestroy;
+        private System.Windows.Forms.PictureBox PbxRecovery;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolTip TtpRecovery;
+        private System.Windows.Forms.ToolTip TtpDestroy;
+        private System.Windows.Forms.ToolStripButton BtnPaperbin;
     }
 }

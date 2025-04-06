@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using parking.DTO;
 using parking.Models;
 
 namespace parking.Controllers
@@ -19,97 +20,102 @@ namespace parking.Controllers
             h = new Helpers.Helpers();
         }
 
-        public IEnumerable<dynamic> getCheckOuts(string searchFilter)
+        public IEnumerable<CheckOutDTO> getCheckOuts(string searchFilter, bool isDel = false)
         {
-            IEnumerable<dynamic> checkOuts = new List<CHECK_OUT>();
+            IEnumerable<CheckOutDTO> checkOuts = new List<CheckOutDTO>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    var query = from cout in db.CHECK_OUT 
+                    var query = from cout in db.CHECK_OUT
                                 join cin in db.CHECK_IN on cout.CHECK_IN_CODE equals cin.CHECK_IN_CODE
                                 join ps in db.PARKING_SPACE on cin.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                              
-                                where String.IsNullOrEmpty(searchFilter) ?
-                                cout.DEL == false : cout.CHECK_OUT_CODE.Contains(searchFilter) || cout.CHECK_IN_CODE.Contains(searchFilter) || cout.CHECK_OUT_TIME.ToString().Contains(searchFilter) || cout.CHECK_OUT_STATE.Contains(searchFilter) || cout.FULL_CHARGE.ToString().Contains(searchFilter)
-                                select new
+                                where (string.IsNullOrEmpty(searchFilter) ?
+                                      cout.DEL == isDel :
+                                      (cout.CHECK_OUT_CODE.Contains(searchFilter) ||
+                                       cout.CHECK_IN_CODE.Contains(searchFilter) ||
+                                       cout.CHECK_OUT_TIME.ToString().Contains(searchFilter) ||
+                                       cout.CHECK_OUT_STATE.Contains(searchFilter) ||
+                                       cout.FULL_CHARGE.ToString().Contains(searchFilter)) &&
+                                      cout.DEL == isDel)
+                                select new CheckOutDTO
                                 {
-                                    cout.CHECK_OUT_CODE,
-                                    cout.CHECK_IN_CODE,
-                                    cout.CHECK_OUT_TIME,
-                                    cout.CHECK_OUT_STATE,
-                                    cout.FULL_CHARGE,
-                                    cout.USER_CODE,
-                                    cout.TOTAL_TIME,
-                                    cin.VEHICLE_PLATE,
-                                    ps.PARKING_SPACE_NUMBER,
-                                    pt.DESCRIPTION_PARKING_TYPE
+                                    CHECK_OUT_CODE = cout.CHECK_OUT_CODE,
+                                    CHECK_IN_CODE = cout.CHECK_IN_CODE,
+                                    CHECK_OUT_TIME = cout.CHECK_OUT_TIME,
+                                    CHECK_OUT_STATE = cout.CHECK_OUT_STATE,
+                                    FULL_CHARGE = cout.FULL_CHARGE,
+                                    USER_CODE = cout.USER_CODE,
+                                    TOTAL_TIME = cout.TOTAL_TIME,
+                                    VEHICLE_PLATE = cin.VEHICLE_PLATE,
+                                    PARKING_SPACE_NUMBER = ps.PARKING_SPACE_NUMBER,
+                                    DESCRIPTION_PARKING_TYPE = pt.DESCRIPTION_PARKING_TYPE
                                 };
+
                     checkOuts = query.ToList();
                 }
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return checkOuts;
         }
 
-        public dynamic getInfoCheckOut(string checkOutCode)
+
+        public CheckOutDTO getInfoCheckOut(string checkOutCode)
         {
-            dynamic checkOut = new CHECK_OUT();
+            CheckOutDTO checkOut = null;
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    var query = from cout in db.CHECK_OUT 
+                    var query = from cout in db.CHECK_OUT
                                 join cin in db.CHECK_IN on cout.CHECK_IN_CODE equals cin.CHECK_IN_CODE
                                 join ps in db.PARKING_SPACE on cin.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
                                 join cli in db.CLIENTS on cin.CLIENT_DNI equals cli.CLIENT_CODE
-                                join b in db.BILL on cout.CHECK_OUT_CODE equals b.CHECK_OUT_CODE 
-
-                                where cout.DEL == false && cout.CHECK_OUT_CODE == checkOutCode
-                                select new
+                                join b in db.BILL on cout.CHECK_OUT_CODE equals b.CHECK_OUT_CODE
+                                where cout.CHECK_OUT_CODE == checkOutCode
+                                select new CheckOutDTO
                                 {
-                                    cout.CHECK_IN_CODE,
-                                    cin.CLIENT_DNI,
-                                    cin.OBSERVATIONS,
-                                    cin.VEHICLE_PLATE,
-                                    cin.CHECK_IN_TIME,
-                                    cin.PARKING_SPACE_CODE,
-                                    ps.PARKING_SPACE_NUMBER,
-                                    pt.DESCRIPTION_PARKING_TYPE,
-                                    pf.PARKING_FEE_CODE,
-                                    pf.PRICE_FOR_HOUR,
-                                    cout.CHECK_OUT_TIME,
-                                    cout.CHECK_OUT_STATE,
-                                    cout.DEL,
-                                    cout.USER_CODE,
-                                    cli.CLIENT_NAME,
-                                    cli.CLIENT_LASTNAME,
-                                    b.ISV,
-                                    b.DATE_OF_ISSUE,
-                                    b.DISCOUNT,
-                                    b.SUBTOTAL,
-                                    b.TOTAL
+                                    CHECK_IN_CODE = cout.CHECK_IN_CODE,
+                                    CLIENT_DNI = cin.CLIENT_DNI,
+                                    OBSERVATIONS = cin.OBSERVATIONS,
+                                    VEHICLE_PLATE = cin.VEHICLE_PLATE,
+                                    CHECK_IN_TIME = cin.CHECK_IN_TIME,
+                                    PARKING_SPACE_CODE = cin.PARKING_SPACE_CODE,
+                                    PARKING_SPACE_NUMBER = ps.PARKING_SPACE_NUMBER,
+                                    DESCRIPTION_PARKING_TYPE = pt.DESCRIPTION_PARKING_TYPE,
+                                    PARKING_FEE_CODE = pf.PARKING_FEE_CODE,
+                                    PRICE_FOR_HOUR = pf.PRICE_FOR_HOUR,
+                                    CHECK_OUT_TIME = cout.CHECK_OUT_TIME,
+                                    CHECK_OUT_STATE = cout.CHECK_OUT_STATE,
+                                    DEL = cout.DEL,
+                                    USER_CODE = cout.USER_CODE,
+                                    CLIENT_NAME = cli.CLIENT_NAME,
+                                    CLIENT_LASTNAME = cli.CLIENT_LASTNAME,
+                                    ISV = b.ISV,
+                                    DATE_OF_ISSUE = b.DATE_OF_ISSUE,
+                                    DISCOUNT = b.DISCOUNT,
+                                    SUBTOTAL = b.SUBTOTAL,
+                                    TOTAL = b.TOTAL
                                 };
 
                     checkOut = query.FirstOrDefault();
                 }
-
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return checkOut;
-
         }
+
         public CHECK_OUT getCheckOut(string id)
         {
             CHECK_OUT checkOut = new CHECK_OUT();
@@ -122,7 +128,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return checkOut;
         }
@@ -139,7 +145,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
         }
@@ -159,7 +165,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
 
@@ -178,31 +184,12 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
         }
 
         public int deleteCheckOut(string id)
-        {
-            int result = 0;
-            try
-            {
-                using (PARKINGEntities db = new PARKINGEntities())
-                {
-                    CHECK_OUT checkOut = db.CHECK_OUT.Find(id);
-                    checkOut.DEL = true;
-                    result = db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                h.MsgError(ex.ToString());
-            }
-            return result;
-        }
-
-        public int destroyCheckOut(string id)
         {
             int result = 0;
             try
@@ -217,7 +204,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
         }
@@ -240,7 +227,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
             return result;
         }

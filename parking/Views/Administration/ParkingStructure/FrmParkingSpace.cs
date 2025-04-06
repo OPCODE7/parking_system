@@ -1,5 +1,6 @@
 ﻿using parking.Config;
 using parking.Controllers;
+using parking.DTO;
 using parking.Helpers;
 using parking.Models;
 using System;
@@ -24,7 +25,7 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingFeeController parkingFeeController= new ParkingFeeController();
         string psCode,parkingFee,userId,moduleId= "PSP";
         int psNumber;
-        bool psState;
+        bool psState,flagIsPaperbin;
         public FrmParkingSpace()
         {
             InitializeComponent();
@@ -43,7 +44,13 @@ namespace parking.Views.Administration.ParkingStructure
         private void startForm()
         {
             fillCmbParkingFee();
-            getParkingSpaces("");
+            getParkingSpaces("",false);
+            flagIsPaperbin = false;
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxRecovery.Enabled = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
@@ -142,7 +149,7 @@ namespace parking.Views.Administration.ParkingStructure
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getParkingSpaces("");
+            getParkingSpaces("",flagIsPaperbin);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -154,13 +161,13 @@ namespace parking.Views.Administration.ParkingStructure
         {
             if (e.KeyCode == Keys.Enter)
             {
-                getParkingSpaces(TxtSearch.Text.Trim());
+                getParkingSpaces(TxtSearch.Text.Trim(),flagIsPaperbin);
             }
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getParkingSpaces(TxtSearch.Text.Trim());
+            getParkingSpaces(TxtSearch.Text.Trim(),flagIsPaperbin);
         }
 
         private void BtnEdit_Click(object sender, EventArgs e)
@@ -194,10 +201,11 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            PARKING_SPACE ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
+            PARKING_SPACE ps = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+            ps.DEL = true;
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
-                if(psc.deleteParkingSpace(ps.PARKING_SPACE_CODE) > 0)
+                if(psc.updateParkingSpace(ps) > 0)
                 {
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
@@ -210,7 +218,54 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-      
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+            flagIsPaperbin = true;
+            getParkingSpaces("", flagIsPaperbin);
+
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                PARKING_SPACE ps = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+                ps.DEL = false;
+                if (psc.updateParkingSpace(ps) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+            }
+
+
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                if (psc.deleteParkingSpace(TxtParkingSpaceCode.Text) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0019);
+                }
+            }
+
+        }
 
         private void CmbParkingFee_TextChanged(object sender, EventArgs e)
         {
@@ -227,6 +282,10 @@ namespace parking.Views.Administration.ParkingStructure
                 BtnNew.Enabled = false;
                 BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
                 BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+                BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                BtnDelete.Enabled = flagIsPaperbin ? false : true;
+                PbxRecovery.Enabled = PermissionManager.HasPermission("PAP","Modificar");
+                PbxDestroy.Enabled= PermissionManager.HasPermission("PAP","Eliminar");
                 BtnCancel.Enabled = true;
                 BtnSave.Enabled = false;
                 CmbParkingFee.Enabled = true;
@@ -245,17 +304,17 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void getParkingSpaces(string searchFilter)
+        private void getParkingSpaces(string searchFilter,bool isDel)
         {
             DgvParkingTypes.Rows.Clear();
-            var parkingSpaces= psc.getParkingSpaces(searchFilter);
+            var parkingSpaces= psc.getParkingSpaces(searchFilter,isDel);
 
             if (parkingSpaces.Count() == 0)
             {
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getParkingSpaces("");
+                    getParkingSpaces("",isDel);
                 }
                 return;
             }
@@ -266,7 +325,7 @@ namespace parking.Views.Administration.ParkingStructure
                     ps.PARKING_SPACE_CODE,
                     ps.PARKING_SPACE_NUMBER,
                     ps.PARKING_TYPE_DESCRIPTION,
-                    ps.PARKING_STATE,
+                    ps.STATE,
                     Convert.ToDateTime(ps.INSERTED_AT).ToShortDateString()
                 );
             }

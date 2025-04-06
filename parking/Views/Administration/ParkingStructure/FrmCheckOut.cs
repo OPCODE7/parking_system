@@ -1,5 +1,6 @@
 ﻿using parking.Config;
 using parking.Controllers;
+using parking.DTO;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -22,22 +23,23 @@ namespace parking.Views.Administration.ParkingStructure
         CorrelativesController correlativesController = new CorrelativesController();
         DiscountsBillController discountsBillController = new DiscountsBillController();
         DiscountsController discountsController = new DiscountsController();
-        
+
         DISCOUNTS discountFF, discountFT;
 
-        string checkOutCode,checkInCode, checkOutState, userCode,formatTime,moduleId= "COUT";
+        string checkOutCode, checkInCode, checkOutState, userCode, formatTime, moduleId = "COUT";
         DateTime checkOutTime;
-        double fullCharge, finalDiscount, subtotal, isvPercent= 15, isvCharge,totalHours, priceParkingFee,_totalHours,subtotalWithDiscount,discountForTime= 0,discountForFrequency=0;
+        double fullCharge, finalDiscount, subtotal, isvPercent = 15, isvCharge, totalHours, priceParkingFee, _totalHours, subtotalWithDiscount, discountForTime = 0, discountForFrequency = 0;
         TimeSpan difference;
         int hours;
+        bool flagIsPaperbin = false;
 
 
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                getCheckOuts(TxtSearch.Text.Trim());
+                getCheckOuts(TxtSearch.Text.Trim(),flagIsPaperbin);
             }
         }
 
@@ -48,6 +50,54 @@ namespace parking.Views.Administration.ParkingStructure
             searchCheckIn.ShowDialog();
         }
 
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            BtnCancel.Enabled = true;
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+            BtnSearchCheckIn.Enabled = false;
+            flagIsPaperbin = true;
+            getCheckOuts("",flagIsPaperbin);
+
+        }
+
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                CHECK_OUT checkOut = checkOutController.getCheckOut(checkOutCode);
+                checkOut.DEL = false;
+                if (checkOutController.updateCheckOut(checkOut) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+            }
+
+
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                
+                if (checkOutController.deleteCheckOut(checkOutCode) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+        }
+
         private void BtnGenerateBill_Click(object sender, EventArgs e)
         {
             generateBill();
@@ -55,9 +105,11 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion(Helpers.App.Msg0004)=="S")
-                {
-                if(checkOutController.deleteCheckOut(checkOutCode) > 0)
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
+            {
+                CHECK_OUT checkOut = checkOutController.getCheckOut(checkOutCode);
+                checkOut.DEL = true;
+                if (checkOutController.updateCheckOut(checkOut) > 0)
                 {
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
@@ -74,34 +126,50 @@ namespace parking.Views.Administration.ParkingStructure
         {
             string _checkOutCode = DgvCheckOuts.CurrentRow.Cells[0].Value.ToString();
             CHECK_OUT checkOut = checkOutController.getCheckOut(_checkOutCode);
+
+            checkOutCode = _checkOutCode;
+            
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+            BtnEdit.Enabled = flagIsPaperbin ? false : true;
+            BtnDelete.Enabled = flagIsPaperbin ? false : true;
+            PbxDestroy.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+            PbxRecovery.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+
             if (checkOutController.thisIsBilled(_checkOutCode))
             {
                 getInfoCheckOut(_checkOutCode);
                 BtnGenerateBill.Visible = false;
+                BtnEdit.Enabled= false; 
+                BtnDelete.Enabled= false;
             }
             else
             {
                 getInfoCheckIn(checkOut.CHECK_IN_CODE);
-                BtnGenerateBill.Visible = true;
+                BtnGenerateBill.Visible= PermissionManager.HasPermission("FAC", "Crear");   
+                TspBill.Visible= PermissionManager.HasPermission("FAC", "Crear"); 
+                BtnGenerateBill.Visible = flagIsPaperbin ? false : true;
+                TspBill.Visible = flagIsPaperbin ? false : true;
             }
-            checkOutCode = _checkOutCode;
+
             BtnSave.Enabled = false;
-            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+
+
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getCheckOuts();
+            getCheckOuts("",flagIsPaperbin);
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
         {
-            getCheckOuts(TxtSearch.Text.Trim());
+            getCheckOuts(TxtSearch.Text.Trim(),flagIsPaperbin);
         }
 
-        
-                
+
+
         public FrmCheckOut()
         {
             InitializeComponent();
@@ -114,18 +182,25 @@ namespace parking.Views.Administration.ParkingStructure
 
         public void startForm()
         {
-            getCheckOuts();
+            getCheckOuts("",false);
+            flagIsPaperbin = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
             BtnGenerateBill.Visible = false;
+            TspBill.Visible = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Enabled = false;
+            BtnPaperbin.Enabled = PermissionManager.HasPermission(moduleId, "Acceso");
             BtnSearchCheckIn.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
-;            DtpCheckInTime.Format = DateTimePickerFormat.Custom;
+            ; DtpCheckInTime.Format = DateTimePickerFormat.Custom;
             DtpCheckInTime.CustomFormat = "dd/MM/yyyy HH:mm";
 
             DtpCheckOutTime.Format = DateTimePickerFormat.Custom;
             DtpCheckOutTime.CustomFormat = "dd/MM/yyyy HH:mm";
-           
+
 
 
             foreach (TextBox txt in this.Controls.OfType<TextBox>())
@@ -145,7 +220,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void setValues()
         {
-            checkOutTime= DtpCheckOutTime.Value;
+            checkOutTime = DtpCheckOutTime.Value;
             checkInCode = TxtCheckInCode.Text;
             difference = DtpCheckOutTime.Value - DtpCheckInTime.Value;
             totalHours = difference.TotalHours;
@@ -157,18 +232,18 @@ namespace parking.Views.Administration.ParkingStructure
 
             CHECK_IN checkIn = checkInController.getCheckIn(checkInCode);
             int totalVisits = checkOutController.getTotalVisitsClient(checkIn.CLIENT_DNI);
-            discountFT= discountsController.getDiscountForTime(hours);
+            discountFT = discountsController.getDiscountForTime(hours);
 
-            
 
-            if(discountFT!=null) discountForTime = subtotal * (Convert.ToDouble(discountFT.DISCOUNT_VALUE.Replace("%", "")) / 100);
+
+            if (discountFT != null) discountForTime = subtotal * (Convert.ToDouble(discountFT.DISCOUNT_VALUE.Replace("%", "")) / 100);
 
             if (checkIn.CLIENT_DNI != "CLI000001")
             {
                 discountFF = discountsController.getDiscountForFrequency(totalVisits);
-              
-                if(discountFF!=null)
-                discountForFrequency = subtotal * (Convert.ToDouble(discountFF.DISCOUNT_VALUE.Replace("%", "")) / 100);
+
+                if (discountFF != null)
+                    discountForFrequency = subtotal * (Convert.ToDouble(discountFF.DISCOUNT_VALUE.Replace("%", "")) / 100);
             }
 
 
@@ -178,31 +253,31 @@ namespace parking.Views.Administration.ParkingStructure
             fullCharge = subtotalWithDiscount + isvCharge;
             userCode = Config.User.userId;
         }
-         
-        public void getCheckOuts(string searchFilter="")
+
+        public void getCheckOuts(string searchFilter = "",bool isDel= false)
         {
             DgvCheckOuts.Rows.Clear();
-            var checkOuts= checkOutController.getCheckOuts(searchFilter);
+            IEnumerable<CheckOutDTO> checkOuts = checkOutController.getCheckOuts(searchFilter,isDel);
 
-            if(checkOuts.Count()==0)
+            if (checkOuts.Count() == 0)
             {
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getCheckOuts();
+                    getCheckOuts("",isDel);
                 }
                 return;
-                
+
             }
 
             foreach (var checkOut in checkOuts)
             {
-                DgvCheckOuts.Rows.Add(checkOut.CHECK_OUT_CODE, checkOut.VEHICLE_PLATE, checkOut.PARKING_SPACE_NUMBER,checkOut.DESCRIPTION_PARKING_TYPE,Convert.ToDateTime(checkOut.CHECK_OUT_TIME),checkOut.CHECK_OUT_STATE);
+                DgvCheckOuts.Rows.Add(checkOut.CHECK_OUT_CODE, checkOut.VEHICLE_PLATE, checkOut.PARKING_SPACE_NUMBER, checkOut.DESCRIPTION_PARKING_TYPE, Convert.ToDateTime(checkOut.CHECK_OUT_TIME), checkOut.CHECK_OUT_STATE);
             }
         }
         public void getInfoCheckIn(string checkInCode)
-        { 
-            dynamic checkIn = checkInController.getInfoCheckIn(checkInCode);
+        {
+            CheckInDTO checkIn = checkInController.getInfoCheckIn(checkInCode);
             if (checkIn != null)
             {
                 TxtCheckInCode.Text = checkIn.CHECK_IN_CODE;
@@ -216,12 +291,12 @@ namespace parking.Views.Administration.ParkingStructure
                 setValues();
                 BtnSave.Enabled = true;
 
-                TxtDiscount.Text = "L. "+finalDiscount.ToString();
+                TxtDiscount.Text = "L. " + finalDiscount.ToString();
                 TxtTotalTime.Text = formatTime;
                 TxtSubtotal.Text = "L. " + subtotal;
                 TxtISV.Text = isvCharge.ToString();
                 TxtTotal.Text = "L. " + fullCharge;
-              
+
             }
             else
             {
@@ -231,7 +306,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         public void getInfoCheckOut(string checkOutCode)
         {
-            dynamic checkOut = checkOutController.getInfoCheckOut(checkOutCode);
+            CheckOutDTO checkOut = checkOutController.getInfoCheckOut(checkOutCode);
             if (checkOut != null)
             {
 
@@ -266,7 +341,7 @@ namespace parking.Views.Administration.ParkingStructure
         private void BtnSave_Click(object sender, EventArgs e)
         {
             CHECK_OUT newCheckOut = new CHECK_OUT();
-            checkOutCode= moduleId + correlativesController.getNextId(moduleId);
+            checkOutCode = moduleId + correlativesController.getNextId(moduleId);
             newCheckOut.CHECK_OUT_CODE = checkOutCode;
             newCheckOut.CHECK_IN_CODE = checkInCode;
             newCheckOut.CHECK_OUT_TIME = checkOutTime;
@@ -275,14 +350,14 @@ namespace parking.Views.Administration.ParkingStructure
             newCheckOut.CHECK_OUT_STATE = "PENDIENTE";
             newCheckOut.TOTAL_TIME = hours;
             newCheckOut.USER_CODE = userCode;
-            
 
-            if(checkOutController.saveCheckOut(newCheckOut) > 0)
+
+            if (checkOutController.saveCheckOut(newCheckOut) > 0)
             {
-                CHECK_IN checkInUpdate= checkInController.getCheckIn(checkInCode);
+                CHECK_IN checkInUpdate = checkInController.getCheckIn(checkInCode);
                 checkInUpdate.CHECK_IN_STATE = "FINALIZADO";
 
-                if(checkInController.updateCheckIn(checkInUpdate) > 0)
+                if (checkInController.updateCheckIn(checkInUpdate) > 0)
                 {
                     BtnSave.Enabled = false;
                     generateBill();

@@ -1,5 +1,6 @@
 ﻿using parking.Config;
 using parking.Controllers;
+using parking.DTO;
 using parking.Helpers;
 using parking.Models;
 using System;
@@ -17,15 +18,15 @@ namespace parking.Views.Administration.ParkingStructure
 {
     public partial class FrmCheckIn : Form
     {
-        Helpers.Helpers h= new Helpers.Helpers();
+        Helpers.Helpers h = new Helpers.Helpers();
         ParkingTypeController parkingTypeController = new ParkingTypeController();
         ParkingFeeController parkingFeeController = new ParkingFeeController();
         ParkingSpaceController parkingSpaceController = new ParkingSpaceController();
         CorrelativesController correlativesController = new CorrelativesController();
         CheckInController checkInController = new CheckInController();
         ClientController clientController = new ClientController();
-        string checkInCode, clientCode, observations,vehiclePlate, status,parkingSpaceCode,moduleId= "CIN";
-        bool isMarkedToEdit= false;
+        string checkInCode, clientCode, observations, vehiclePlate, status, parkingSpaceCode, moduleId = "CIN";
+        bool isMarkedToEdit = false, flagIsPaperbin;
         public FrmCheckIn()
         {
             InitializeComponent();
@@ -45,8 +46,14 @@ namespace parking.Views.Administration.ParkingStructure
         public void startForm()
         {
             fillCmbParkingFee();
-            getCheckIns();
+            getCheckIns("","",false);
+            flagIsPaperbin = false;
+            PbxRecovery.Enabled = false;
+            PbxDestroy.Enabled = false;
+            PbxRecovery.Visible = false;
+            PbxDestroy.Visible = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
+            BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnCancel.Enabled = false;
@@ -73,16 +80,16 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void fillCmbParkingFee()
         {
-                CmbParkingTypes.DataSource = parkingFeeController.getParkingFees("").ToList();
-                CmbParkingTypes.ValueMember = "PARKING_FEE_CODE";
-                CmbParkingTypes.DisplayMember = "DESCRIPTION_PARKING_TYPE";
+            CmbParkingTypes.DataSource = parkingFeeController.getParkingFees("").ToList();
+            CmbParkingTypes.ValueMember = "PARKING_FEE_CODE";
+            CmbParkingTypes.DisplayMember = "DESCRIPTION_PARKING_TYPE";
         }
 
-        private void fillCmbParkingSpaces(string parkingType,bool getAll)
+        private void fillCmbParkingSpaces(string parkingType, bool getAll)
         {
-            List<dynamic> parkingSpaces= getAll ? parkingSpaceController.getParkingSpacesByParkingType(parkingType).ToList() : parkingSpaceController.getParkingSpacesByParkingType(parkingType).Where(pt => pt.STATE == false).ToList();
+            IEnumerable<ParkingSpaceDTO> parkingSpaces = getAll ? parkingSpaceController.getParkingSpacesByParkingType(parkingType).ToList() : parkingSpaceController.getParkingSpacesByParkingType(parkingType).Where(pt => pt.STATE== false).ToList();
 
-            if(parkingSpaces.Count()>0)
+            if (parkingSpaces.Count() > 0)
             {
                 CmbParkingSpaces.DataSource = parkingSpaces;
                 CmbParkingSpaces.DisplayMember = "PARKING_SPACE_NUMBER";
@@ -98,10 +105,13 @@ namespace parking.Views.Administration.ParkingStructure
                 if (pf != null) TxtPrice.Text = pf.PRICE_FOR_HOUR.ToString();
 
                 CmbParkingSpaces.Enabled = true;
-                if (isMarkedToEdit) {
+                if (isMarkedToEdit)
+                {
                     fillCmbParkingSpaces(pf.PARKING_TYPE_CODE, true);
-                } else {
-                    fillCmbParkingSpaces(pf.PARKING_TYPE_CODE,false);
+                }
+                else
+                {
+                    fillCmbParkingSpaces(pf.PARKING_TYPE_CODE, false);
                 }
             }
         }
@@ -140,7 +150,7 @@ namespace parking.Views.Administration.ParkingStructure
             this.AddOwnedForm(frmSearchClient);
             frmSearchClient.ShowDialog();
         }
-        
+
         public void getInfoClient(string clientCode)
         {
             ClientController clientController = new ClientController();
@@ -153,27 +163,27 @@ namespace parking.Views.Administration.ParkingStructure
             }
             else
             {
-                h.MsgInfo(Helpers.App.Msg0012);
+                h.MsgInfo(Helpers.App.Msg0013);
                 TxtClientCode.Clear();
                 TxtClientName.Clear();
                 MskClientPhone.Clear();
                 TxtClientCode.Focus();
-            
+
             }
         }
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                getCheckIns(TxtSearch.Text.Trim());
+                getCheckIns(TxtSearch.Text.Trim(), "", flagIsPaperbin);
             }
         }
 
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getCheckIns();
+            getCheckIns("", "", flagIsPaperbin);
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)
@@ -184,14 +194,18 @@ namespace parking.Views.Administration.ParkingStructure
         private void DgvCheckIns_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             isMarkedToEdit = true;
-            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
-            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+            BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
+            BtnEdit.Enabled = flagIsPaperbin ? false : true;
+            BtnDelete.Enabled = flagIsPaperbin ? false : true;
+            PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
+            PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
             BtnCancel.Enabled = true;
             BtnNew.Enabled = false;
             BtnSave.Enabled = false;
             CmbParkingTypes.Enabled = true;
 
-            foreach(TextBox txt in this.Controls.OfType<TextBox>())
+            foreach (TextBox txt in this.Controls.OfType<TextBox>())
             {
                 txt.Enabled = true;
                 txt.Clear();
@@ -202,25 +216,25 @@ namespace parking.Views.Administration.ParkingStructure
             TxtCheckInCode.Enabled = false;
             PbxSearchClient.Enabled = true;
 
-            var checkIn = checkInController.getInfoCheckIn(DgvCheckIns.CurrentRow.Cells[0].Value.ToString());
+            CheckInDTO checkIn = checkInController.getInfoCheckIn(DgvCheckIns.CurrentRow.Cells[0].Value.ToString());
 
-            if(checkIn!= null)
+            if (checkIn != null)
             {
 
-                if(checkIn.CHECK_IN_STATE=="FINALIZADO")
+                if (checkIn.CHECK_IN_STATE == "FINALIZADO")
                 {
                     BtnEdit.Enabled = false;
                     BtnDelete.Enabled = false;
                 }
                 TxtCheckInCode.Text = checkIn.CHECK_IN_CODE;
-                TxtClientCode.Text= checkIn.CLIENT_DNI;
+                TxtClientCode.Text = checkIn.CLIENT_DNI;
                 getInfoClient(checkIn.CLIENT_DNI);
-                CmbParkingTypes.SelectedValue= checkIn.PARKING_FEE_CODE;
+                CmbParkingTypes.SelectedValue = checkIn.PARKING_FEE_CODE;
                 PARKING_FEE pf = parkingFeeController.getParkingFee(CmbParkingTypes.SelectedValue.ToString());
                 fillCmbParkingSpaces(pf.PARKING_TYPE_CODE, true);
-                CmbParkingSpaces.SelectedValue= checkIn.PARKING_SPACE_CODE;
+                CmbParkingSpaces.SelectedValue = checkIn.PARKING_SPACE_CODE;
 
-                TxtPrice.Text= checkIn.PRICE_FOR_HOUR.ToString();
+                TxtPrice.Text = checkIn.PRICE_FOR_HOUR.ToString();
                 TxtObservations.Text = checkIn.OBSERVATIONS;
                 TxtVehiclePlate.Text = checkIn.VEHICLE_PLATE;
             }
@@ -228,7 +242,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            if(h.MsgQuestion(Helpers.App.Msg0002) == "S")
+            if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
                 if (validateData() == 0)
                 {
@@ -246,7 +260,7 @@ namespace parking.Views.Administration.ParkingStructure
                         {
                             PARKING_SPACE newPs = parkingSpaceController.getParkingSpace(parkingSpaceCode);
                             lastPs.STATE = false;
-                            newPs.STATE= true;
+                            newPs.STATE = true;
                             if (parkingSpaceController.updateParkingSpace(lastPs) < 0 || parkingSpaceController.updateParkingSpace(newPs) < 0)
                             {
                                 h.MsgError(Helpers.App.Msg0017);
@@ -265,33 +279,97 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
+        private void PbxRecovery_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
+            {
+                CHECK_IN checkIn = checkInController.getCheckIn(DgvCheckIns.CurrentRow.Cells[0].Value.ToString());
+                checkIn.IS_DEL = false;
+                PARKING_SPACE pks = parkingSpaceController.getParkingSpace(checkIn.PARKING_SPACE_CODE);
+
+                if (pks.STATE == true)
+                {
+                    h.MsgError("NO SE PUEDE RECUPERAR ESTA ENTRADA PORQUE EL ESPACIO DE PARQUEO YA ESTÁ SIENDO UTILIZADO EN OTRA ENTRADA ACTIVA!");
+                    return;
+                }
+
+                if (checkInController.updateCheckIn(checkIn) > 0)
+                {
+                    PARKING_SPACE ps = parkingSpaceController.getParkingSpace(checkIn.PARKING_SPACE_CODE);
+                    ps.STATE = true;
+                    if (parkingSpaceController.updateParkingSpace(ps) < 0)
+                    {
+                        h.MsgError(Helpers.App.Msg0017);
+                    }
+                    h.MsgInfo(Helpers.App.Msg0010);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0018);
+                }
+            }
+
+        }
+
+        private void PbxDestroy_Click(object sender, EventArgs e)
+        {
+            if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
+            {
+                CHECK_IN checkIn = checkInController.getCheckIn(TxtCheckInCode.Text);
+
+                if (checkInController.deleteCheckIn(checkIn) > 0)
+                {
+                    h.MsgInfo(Helpers.App.Msg0008);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
+            }
+        }
+
+        private void BtnPaperbin_Click(object sender, EventArgs e)
+        {
+            startForm();
+            BtnNew.Enabled = false;
+            BtnCancel.Enabled = true;
+            PbxDestroy.Visible = true;
+            PbxRecovery.Visible = true;
+            flagIsPaperbin = true;
+            getCheckIns("", "", flagIsPaperbin);
+
+        }
+
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
-                    CHECK_IN checkIn = checkInController.getCheckIn(TxtCheckInCode.Text);
+                CHECK_IN checkIn = checkInController.getCheckIn(TxtCheckInCode.Text);
+                checkIn.IS_DEL = true;
 
-                    if (checkInController.deleteCheckIn(checkIn) > 0)
+                if (checkInController.updateCheckIn(checkIn) > 0)
+                {
+                    PARKING_SPACE ps = parkingSpaceController.getParkingSpace(CmbParkingSpaces.SelectedValue.ToString());
+                    ps.STATE = false;
+                    if (parkingSpaceController.updateParkingSpace(ps) < 0)
                     {
-                        PARKING_SPACE ps = parkingSpaceController.getParkingSpace(CmbParkingSpaces.SelectedValue.ToString());
-                        ps.STATE = false;
-                        if (parkingSpaceController.updateParkingSpace(ps) < 0)
-                        {
-                            h.MsgError(Helpers.App.Msg0017);
-                        }
+                        h.MsgError(Helpers.App.Msg0017);
+                    }
                     h.MsgInfo(Helpers.App.Msg0005);
-                        startForm();
-                    }
-                    else
-                    {
-                        h.MsgError(Helpers.App.Msg0016);
-                    }
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0016);
+                }
             }
         }
 
         private void TxtClientCode_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 getInfoClient(TxtClientCode.Text.Trim());
             }
@@ -306,14 +384,14 @@ namespace parking.Views.Administration.ParkingStructure
                 checkIn.CHECK_IN_CODE = checkInCode;
                 checkIn.CLIENT_DNI = clientCode;
                 checkIn.PARKING_SPACE_CODE = parkingSpaceCode;
-                checkIn.OBSERVATIONS= observations;
+                checkIn.OBSERVATIONS = observations;
                 checkIn.VEHICLE_PLATE = vehiclePlate;
                 checkIn.CHECK_IN_TIME = DateTime.Now;
                 checkIn.INSERTED_AT = DateTime.Now;
                 checkIn.CHECK_IN_STATE = "ACTIVO";
-                checkIn.USER_CODE= Config.User.userId;
+                checkIn.USER_CODE = Config.User.userId;
 
-                if (checkInController.saveCheckIn(checkIn)>0)
+                if (checkInController.saveCheckIn(checkIn) > 0)
                 {
                     PARKING_SPACE ps = parkingSpaceController.getParkingSpace(parkingSpaceCode);
                     ps.STATE = true;
@@ -336,9 +414,9 @@ namespace parking.Views.Administration.ParkingStructure
         {
 
             checkInCode = TxtCheckInCode.Text.Trim();
-            clientCode = TxtClientCode.Text.Trim().Length==0 ? clientController.getClient("CLI000001").CLIENT_CODE : h.SanitizeStr(TxtClientCode.Text.Trim());
+            clientCode = TxtClientCode.Text.Trim().Length == 0 ? clientController.getClient("CLI000001").CLIENT_CODE : h.SanitizeStr(TxtClientCode.Text.Trim());
             parkingSpaceCode = h.SanitizeStr(CmbParkingSpaces.SelectedValue.ToString());
-            observations= h.SanitizeStr(TxtObservations.Text.Trim());
+            observations = h.SanitizeStr(TxtObservations.Text.Trim());
             vehiclePlate = h.SanitizeStr(TxtVehiclePlate.Text.Trim());
         }
 
@@ -346,20 +424,20 @@ namespace parking.Views.Administration.ParkingStructure
         {
             int error = 0;
 
-            if(TxtClientCode.Text.Trim()!="")
+            if (TxtClientCode.Text.Trim() != "")
             {
                 ClientController clientController = new ClientController();
                 CLIENTS client = clientController.getClient(TxtClientCode.Text.Trim());
 
                 if (client == null)
                 {
-                    h.MsgError("CLIENTE NO ENCONTRADO.");
+                    h.MsgError("CLIENTE NO ENCONTRADO!");
                     error++;
                     TxtClientCode.Focus();
                     return error;
                 }
             }
-           
+
 
             if (CmbParkingTypes.SelectedIndex == -1)
             {
@@ -378,7 +456,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
 
 
-            if (!Regex.Match(TxtPrice.Text,RegexPatterns.DecimalPattern).Success)
+            if (!Regex.Match(TxtPrice.Text, RegexPatterns.DecimalPattern).Success)
             {
                 h.MsgError("PRECIO NO VÁLIDO.");
                 error++;
@@ -393,8 +471,8 @@ namespace parking.Views.Administration.ParkingStructure
                 TxtObservations.Focus();
                 return error;
             }
-           
-            if (!Regex.Match(TxtVehiclePlate.Text,RegexPatterns.LicensePlatePattern).Success)
+
+            if (!Regex.Match(TxtVehiclePlate.Text, RegexPatterns.LicensePlatePattern).Success)
             {
                 h.MsgError("PLACA NO VÁLIDA.");
                 error++;
@@ -405,23 +483,24 @@ namespace parking.Views.Administration.ParkingStructure
             return error;
         }
 
-        private void getCheckIns(string searchFilter="",string state="")
+        private void getCheckIns(string searchFilter = "", string state = "", bool isDel = false)
         {
             DgvCheckIns.Rows.Clear();
-            var checkIns = checkInController.getCheckIns(searchFilter,state);
+            IEnumerable<CheckInDTO> checkIns = checkInController.getCheckIns(searchFilter, state, isDel);
 
-            if (checkIns.Count() == 0) {
+            if (checkIns.Count() == 0)
+            {
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getCheckIns();
+                    getCheckIns("", "", isDel);
                 }
                 return;
             }
 
             foreach (var checkIn in checkIns)
             {
-                DgvCheckIns.Rows.Add(checkIn.CHECK_IN_CODE, checkIn.VEHICLE_PLATE, checkIn.PARKING_SPACE_NUMBER, checkIn.CLIENT_NAME + " " + checkIn.CLIENT_LASTNAME, checkIn.DESCRIPTION_PARKING_TYPE,checkIn.CHECK_IN_TIME, checkIn.CHECK_IN_STATE);
+                DgvCheckIns.Rows.Add(checkIn.CHECK_IN_CODE, checkIn.VEHICLE_PLATE, checkIn.PARKING_SPACE_NUMBER, checkIn.CLIENT_NAME + " " + checkIn.CLIENT_LASTNAME, checkIn.DESCRIPTION_PARKING_TYPE, checkIn.CHECK_IN_TIME, checkIn.CHECK_IN_STATE);
             }
         }
     }
