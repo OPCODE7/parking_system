@@ -12,18 +12,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Configuration
 {
     public partial class FrmCompany : Form
     {
         string rtn, companyName, companyAddress, companyPhone, companyEmail,legaForm, moduleId= "COMP";
+        LogBookAppController lac= new LogBookAppController();
         bool exist= false;
 
         Helpers.Helpers h = new Helpers.Helpers();
         CompanyDataController cdc= new CompanyDataController();
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -31,6 +33,33 @@ namespace parking.Views.Administration.Configuration
                 if (exist)
                 {
                     COMPANY_DATA companyData= cdc.getCompanyData(rtn);
+
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (companyData.COMPANY_RTN != rtn)
+                        changes += $"COMPANY_RTN: '{companyData.COMPANY_RTN}' → '{rtn}'{separator}";
+
+                    if (companyData.COMPANY_NAME != companyName)
+                        changes += $"COMPANY_NAME: '{companyData.COMPANY_NAME}' → '{companyName}'{separator}";
+
+                    if (companyData.COMPANY_ADDRESS != companyAddress)
+                        changes += $"COMPANY_ADDRESS: '{companyData.COMPANY_ADDRESS}' → '{companyAddress}'{separator}";
+
+                    if (companyData.COMPANY_PHONE != companyPhone)
+                        changes += $"COMPANY_PHONE: '{companyData.COMPANY_PHONE}' → '{companyPhone}'{separator}";
+
+                    if (companyData.COMPANY_EMAIL != companyEmail)
+                        changes += $"COMPANY_EMAIL: '{companyData.COMPANY_EMAIL}' → '{companyEmail}'{separator}";
+
+                    if (companyData.LEGAL_FORM != legaForm)
+                        changes += $"LEGAL_FORM: '{companyData.LEGAL_FORM}' → '{legaForm}'{separator}";
+
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
                     companyData.COMPANY_RTN = rtn;
                     companyData.COMPANY_NAME = companyName;
                     companyData.COMPANY_ADDRESS = companyAddress;
@@ -40,6 +69,11 @@ namespace parking.Views.Administration.Configuration
 
                     if(cdc.updateCompanyData(companyData)>0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {User.userName} modificó datos de la empresa {companyData.COMPANY_NAME}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgSuccess(App.Msg0003);
                     }
                     else
@@ -62,6 +96,7 @@ namespace parking.Views.Administration.Configuration
 
                     if (cdc.saveCompanyData(newCompanyData) > 0)
                     {
+                        await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} creó los datos de la empresa {CompanyName}.", moduleId, DateTime.Now);
                         h.MsgSuccess(App.Msg0001);
                     }
                     else

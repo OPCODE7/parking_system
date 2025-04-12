@@ -24,8 +24,10 @@ namespace parking.Models
         public string DESCRIPTION_PARKING_TYPE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }
+        public string USER_CODE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARKING_FEE> PARKING_FEE { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

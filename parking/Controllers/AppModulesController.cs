@@ -48,5 +48,24 @@ namespace parking.Controllers
             
 
         }
+
+
+        public APP_MODULES getModule(string moduleId)
+        {
+            APP_MODULES module = new APP_MODULES();
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    module = db.APP_MODULES.Find(moduleId);
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
+            }
+            return module;
+        }
     }
+
 }

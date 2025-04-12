@@ -26,10 +26,12 @@ namespace parking.Models
         public string DESCRIPTION_ROLE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }
+        public string USER_CODE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERS> USERS { get; set; }
+        public virtual USERS USERS1 { get; set; }
     }
 }

@@ -29,12 +29,12 @@ namespace parking.Controllers
                                 join ps in db.PARKING_SPACE on c.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                                join cli in db.CLIENTS on c.CLIENT_DNI equals cli.CLIENT_CODE
+                                join cli in db.CLIENTS on c.CLIENT_CODE equals cli.CLIENT_CODE
                                 where c.IS_DEL == isDel
                                 select new CheckInDTO
                                 {
                                     CHECK_IN_CODE = c.CHECK_IN_CODE,
-                                    CLIENT_DNI = c.CLIENT_DNI,
+                                    CLIENT_CODE = c.CLIENT_CODE,
                                     CLIENT_NAME = cli.CLIENT_NAME,
                                     CLIENT_LASTNAME = cli.CLIENT_LASTNAME,
                                     OBSERVATIONS = c.OBSERVATIONS,
@@ -91,12 +91,12 @@ namespace parking.Controllers
                                join ps in db.PARKING_SPACE on c.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                               join cli in db.CLIENTS on c.CLIENT_DNI equals cli.CLIENT_CODE
+                               join cli in db.CLIENTS on c.CLIENT_CODE equals cli.CLIENT_CODE
                                where c.CHECK_IN_CODE == checkInCode
                                select new CheckInDTO
                                {
                                    CHECK_IN_CODE = c.CHECK_IN_CODE,
-                                   CLIENT_DNI = c.CLIENT_DNI,
+                                   CLIENT_CODE = c.CLIENT_CODE,
                                    CLIENT_NAME = cli.CLIENT_NAME,
                                    CLIENT_LASTNAME = cli.CLIENT_LASTNAME,
                                    OBSERVATIONS = c.OBSERVATIONS,

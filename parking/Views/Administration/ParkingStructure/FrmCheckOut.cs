@@ -1,4 +1,5 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
 using parking.Controllers;
 using parking.DTO;
 using parking.Models;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace parking.Views.Administration.ParkingStructure
 {
     public partial class FrmCheckOut : Form
@@ -23,6 +25,7 @@ namespace parking.Views.Administration.ParkingStructure
         CorrelativesController correlativesController = new CorrelativesController();
         DiscountsBillController discountsBillController = new DiscountsBillController();
         DiscountsController discountsController = new DiscountsController();
+        LogBookAppController lac = new LogBookAppController();
 
         DISCOUNTS discountFF, discountFT;
 
@@ -61,7 +64,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -69,6 +72,7 @@ namespace parking.Views.Administration.ParkingStructure
                 checkOut.DEL = false;
                 if (checkOutController.updateCheckOut(checkOut) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró la salida con código  {checkOut.CHECK_OUT_CODE} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -81,13 +85,14 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
                 
                 if (checkOutController.deleteCheckOut(checkOutCode) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente la salida con código {checkOutCode}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -103,7 +108,7 @@ namespace parking.Views.Administration.ParkingStructure
             generateBill();
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -111,6 +116,8 @@ namespace parking.Views.Administration.ParkingStructure
                 checkOut.DEL = true;
                 if (checkOutController.updateCheckOut(checkOut) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió la salida con código  {checkOut.CHECK_OUT_CODE} a la papelera de reciclaje.", moduleId, DateTime.Now);
+                    h.MsgSuccess(Helpers.App.Msg0005);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -231,14 +238,14 @@ namespace parking.Views.Administration.ParkingStructure
             subtotal = _totalHours * priceParkingFee;
 
             CHECK_IN checkIn = checkInController.getCheckIn(checkInCode);
-            int totalVisits = checkOutController.getTotalVisitsClient(checkIn.CLIENT_DNI);
+            int totalVisits = checkOutController.getTotalVisitsClient(checkIn.CLIENT_CODE);
             discountFT = discountsController.getDiscountForTime(hours);
 
 
 
             if (discountFT != null) discountForTime = subtotal * (Convert.ToDouble(discountFT.DISCOUNT_VALUE.Replace("%", "")) / 100);
 
-            if (checkIn.CLIENT_DNI != "CLI000001")
+            if (checkIn.CLIENT_CODE != "CLI000001")
             {
                 discountFF = discountsController.getDiscountForFrequency(totalVisits);
 
@@ -338,7 +345,7 @@ namespace parking.Views.Administration.ParkingStructure
             startForm();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             CHECK_OUT newCheckOut = new CHECK_OUT();
             checkOutCode = moduleId + correlativesController.getNextId(moduleId);
@@ -347,18 +354,22 @@ namespace parking.Views.Administration.ParkingStructure
             newCheckOut.CHECK_OUT_TIME = checkOutTime;
             newCheckOut.FULL_CHARGE = Convert.ToDecimal(fullCharge);
             newCheckOut.USER_CODE = userCode;
-            newCheckOut.CHECK_OUT_STATE = "PENDIENTE";
+            newCheckOut.CHECK_OUT_STATE = "Pendiente";
             newCheckOut.TOTAL_TIME = hours;
             newCheckOut.USER_CODE = userCode;
 
 
             if (checkOutController.saveCheckOut(newCheckOut) > 0)
             {
+                await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó la salida con código {checkOutCode}.", moduleId, DateTime.Now);
+
                 CHECK_IN checkInUpdate = checkInController.getCheckIn(checkInCode);
-                checkInUpdate.CHECK_IN_STATE = "FINALIZADO";
+                checkInUpdate.CHECK_IN_STATE = "Finalizado";
 
                 if (checkInController.updateCheckIn(checkInUpdate) > 0)
                 {
+                    string logDesc = $"El usuario {Config.User.userName} modificó la entrada con código {checkInUpdate.CHECK_IN_CODE}. Cambios: CHECK_IN_STATE: 'Pendiente' → 'Finalizado'.";
+                    await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
                     BtnSave.Enabled = false;
                     generateBill();
                 }

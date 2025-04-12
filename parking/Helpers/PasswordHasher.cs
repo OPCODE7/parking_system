@@ -9,7 +9,12 @@ namespace parking.Helpers
 {
     internal class PasswordHasher
     {
-        public string makeHash(string password)
+        /// <summary>
+        /// Genera un hash seguro a partir de una contraseña utilizando PBKDF2 con SHA256.
+        /// </summary>
+        /// <param name="password">Contraseña en texto plano.</param>
+        /// <returns>Cadena codificada en Base64 que contiene el salt y el hash combinado.</returns>
+        public string MakeHash(string password)
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
@@ -28,7 +33,13 @@ namespace parking.Helpers
             }
         }
 
-        public bool verifyPassword(string password, string storedHash)
+        /// <summary>
+        /// Verifica si una contraseña proporcionada coincide con un hash almacenado.
+        /// </summary>
+        /// <param name="password">Contraseña en texto plano proporcionada por el usuario.</param>
+        /// <param name="storedHash">Hash previamente almacenado en formato Base64.</param>
+        /// <returns>True si la contraseña es válida, de lo contrario False.</returns>
+        public bool VerifyPassword(string password, string storedHash)
         {
             byte[] hashBytes = Convert.FromBase64String(storedHash);
             byte[] salt = new byte[16];

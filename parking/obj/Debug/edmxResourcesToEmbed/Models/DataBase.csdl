@@ -23,7 +23,7 @@
       <PropertyRef Name="CHECK_IN_CODE" />
     </Key>
     <Property Name="CHECK_IN_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CLIENT_DNI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="VEHICLE_PLATE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CHECK_IN_TIME" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="OBSERVATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
@@ -33,9 +33,9 @@
     <Property Name="PARKING_SPACE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_CHECK_IN" FromRole="CHECK_IN" ToRole="CHECK_OUT" />
-    <NavigationProperty Name="CLIENTS" Relationship="Self.FK_CLIENT" FromRole="CHECK_IN" ToRole="CLIENTS" />
     <NavigationProperty Name="PARKING_SPACE" Relationship="Self.FK_PSC" FromRole="CHECK_IN" ToRole="PARKING_SPACE" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USR" FromRole="CHECK_IN" ToRole="USERS" />
+    <NavigationProperty Name="CLIENTS" Relationship="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CHECK_IN" ToRole="CLIENTS" />
   </EntityType>
   <EntityType Name="CHECK_OUT">
     <Key>
@@ -67,8 +67,8 @@
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="CHECK_IN" Relationship="Self.FK_CLIENT" FromRole="CLIENTS" ToRole="CHECK_IN" />
     <NavigationProperty Name="USERS" Relationship="Self.FK__CLIENTS__USER_ID__3EA749C6" FromRole="CLIENTS" ToRole="USERS" />
+    <NavigationProperty Name="CHECK_IN" Relationship="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CLIENTS" ToRole="CHECK_IN" />
   </EntityType>
   <EntityType Name="COMPANY_DATA">
     <Key>
@@ -135,6 +135,8 @@
     <Property Name="BIT" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
     <Property Name="DISCOUNT_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__DISCOUNTS__USER___68336F3E" FromRole="DISCOUNTS_BILL" ToRole="USERS" />
   </EntityType>
   <EntityType Name="EMPLOYEE_USER">
     <Key>
@@ -195,8 +197,11 @@
       <PropertyRef Name="LOG_ID" />
     </Key>
     <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="LOG_DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
+    <Property Name="LOG_DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ACTION_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="PARKING_FEE">
     <Key>
@@ -235,6 +240,8 @@
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK_PARKING_TYPE" FromRole="PARKING_TYPES" ToRole="PARKING_FEE" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__PARKING_T__USER___673F4B05" FromRole="PARKING_TYPES" ToRole="USERS" />
   </EntityType>
   <EntityType Name="ROLE_PERMISSIONS">
     <Key>
@@ -246,6 +253,8 @@
     <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
     <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_PERMISSIONS" />
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_ROLE_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_ROLES" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__ROLE_PERM__USER___664B26CC" FromRole="ROLE_PERMISSIONS" ToRole="USERS" />
   </EntityType>
   <EntityType Name="SALARIES">
     <Key>
@@ -294,6 +303,8 @@
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERS1" Relationship="PARKINGModel.FK__USER_ROLE__USER___65570293" FromRole="USER_ROLES" ToRole="USERS" />
   </EntityType>
   <EntityType Name="USERS">
     <Key>
@@ -317,6 +328,13 @@
     <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
     <NavigationProperty Name="BILL_RANGE" Relationship="PARKINGModel.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
     <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="USERS" ToRole="APP_MODULES" />
+    <Property Name="CREATED_BY" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DISCOUNTS_BILL" Relationship="PARKINGModel.FK__DISCOUNTS__USER___68336F3E" FromRole="USERS" ToRole="DISCOUNTS_BILL" />
+    <NavigationProperty Name="PARKING_TYPES" Relationship="PARKINGModel.FK__PARKING_T__USER___673F4B05" FromRole="USERS" ToRole="PARKING_TYPES" />
+    <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK__ROLE_PERM__USER___664B26CC" FromRole="USERS" ToRole="ROLE_PERMISSIONS" />
+    <NavigationProperty Name="USER_ROLES1" Relationship="PARKINGModel.FK__USER_ROLE__USER___65570293" FromRole="USERS" ToRole="USER_ROLES" />
+    <NavigationProperty Name="USERS1" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS" ToRole="USERS1" />
+    <NavigationProperty Name="USERS2" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS1" ToRole="USERS" />
   </EntityType>
   <Association Name="FK_CHECKOUTBILL">
     <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
@@ -351,18 +369,6 @@
       </Principal>
       <Dependent Role="CHECK_OUT">
         <PropertyRef Name="CHECK_IN_CODE" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CLIENT">
-    <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="0..1" />
-    <End Role="CHECK_IN" Type="Self.CHECK_IN" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CLIENTS">
-        <PropertyRef Name="CLIENT_CODE" />
-      </Principal>
-      <Dependent Role="CHECK_IN">
-        <PropertyRef Name="CLIENT_DNI" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -630,10 +636,6 @@
       <End Role="CHECK_IN" EntitySet="CHECK_IN" />
       <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
     </AssociationSet>
-    <AssociationSet Name="FK_CLIENT" Association="Self.FK_CLIENT">
-      <End Role="CLIENTS" EntitySet="CLIENTS" />
-      <End Role="CHECK_IN" EntitySet="CHECK_IN" />
-    </AssociationSet>
     <AssociationSet Name="FK_PSC" Association="Self.FK_PSC">
       <End Role="PARKING_SPACE" EntitySet="PARKING_SPACE" />
       <End Role="CHECK_IN" EntitySet="CHECK_IN" />
@@ -754,6 +756,30 @@
       <End Role="USERS" EntitySet="USERS" />
       <End Role="APP_MODULES" EntitySet="APP_MODULES" />
     </AssociationSet>
+    <AssociationSet Name="FK__DISCOUNTS__USER___68336F3E" Association="PARKINGModel.FK__DISCOUNTS__USER___68336F3E">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PARKING_T__USER___673F4B05" Association="PARKINGModel.FK__PARKING_T__USER___673F4B05">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ROLE_PERM__USER___664B26CC" Association="PARKINGModel.FK__ROLE_PERM__USER___664B26CC">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_ROLE__USER___65570293" Association="PARKINGModel.FK__USER_ROLE__USER___65570293">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USERS__CREATED_B__6462DE5A" Association="PARKINGModel.FK__USERS__CREATED_B__6462DE5A">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="USERS1" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CHECK_IN__CLIENT__72B0FDB1" Association="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1">
+      <End Role="CLIENTS" EntitySet="CLIENTS" />
+      <End Role="CHECK_IN" EntitySet="CHECK_IN" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -828,6 +854,78 @@
       </Principal>
       <Dependent Role="APP_MODULES">
         <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DISCOUNTS__USER___68336F3E">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.DISCOUNTS_BILL" Role="DISCOUNTS_BILL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="DISCOUNTS_BILL">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PARKING_T__USER___673F4B05">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.PARKING_TYPES" Role="PARKING_TYPES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="PARKING_TYPES">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ROLE_PERM__USER___664B26CC">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_ROLE__USER___65570293">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.USER_ROLES" Role="USER_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="USER_ROLES">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USERS__CREATED_B__6462DE5A">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.USERS" Role="USERS1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="USERS1">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CHECK_IN__CLIENT__72B0FDB1">
+    <End Type="PARKINGModel.CLIENTS" Role="CLIENTS" Multiplicity="0..1" />
+    <End Type="PARKINGModel.CHECK_IN" Role="CHECK_IN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTS">
+        <PropertyRef Name="CLIENT_CODE" />
+      </Principal>
+      <Dependent Role="CHECK_IN">
+        <PropertyRef Name="CLIENT_CODE" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

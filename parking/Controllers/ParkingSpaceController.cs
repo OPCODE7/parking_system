@@ -144,6 +144,24 @@ namespace parking.Controllers
 
             return ps;
         }
+
+        public bool isParkingNumberExists(int parkingNumber)
+        {
+            bool exists = false;
+            try
+            {
+                using (PARKINGEntities db = new PARKINGEntities())
+                {
+                    exists = db.PARKING_SPACE.Any(ps => ps.PARKING_SPACE_NUMBER == parkingNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
+            }
+
+            return exists;
+        }
         public int saveParkingSpace(PARKING_SPACE ps)
         {
             int result = 0;

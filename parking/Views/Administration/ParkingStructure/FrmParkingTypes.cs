@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,7 +21,9 @@ namespace parking.Views.Administration.ParkingStructure
         ParkingTypeController parkingTypeController = new ParkingTypeController();
         Helpers.Helpers h = new Helpers.Helpers();
         CorrelativesController correlativesController = new CorrelativesController();
-        string parkingTypeCode, parkingTypeDescription,moduleId= "PTY";
+        LogBookAppController lac= new LogBookAppController();
+
+        string parkingTypeCode, parkingTypeDescription, moduleId = "PTY";
         bool flagIsPaperbin;
         public FrmParkingTypes()
         {
@@ -45,12 +48,12 @@ namespace parking.Views.Administration.ParkingStructure
 
         private void startForm()
         {
-            getparkingTypes("",false);
+            getparkingTypes("", false);
             flagIsPaperbin = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
             PbxRecovery.Enabled = false;
             PbxDestroy.Enabled = false;
@@ -87,7 +90,7 @@ namespace parking.Views.Administration.ParkingStructure
             startForm();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -101,6 +104,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó el tipo de parqueo {parkingTypeDescription}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
@@ -153,21 +157,21 @@ namespace parking.Views.Administration.ParkingStructure
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getparkingTypes("",flagIsPaperbin);
+            getparkingTypes("", flagIsPaperbin);
         }
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                getparkingTypes(TxtSearch.Text.Trim(),flagIsPaperbin);
+                getparkingTypes(TxtSearch.Text.Trim(), flagIsPaperbin);
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
-           
-            if (h.MsgQuestion(Helpers.App.Msg0004)=="S")
+
+            if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
                 PARKING_TYPES parkingType = parkingTypeController.getParkingType(TxtParkingTypeCode.Text);
                 parkingType.IS_DEL = true;
@@ -175,6 +179,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió el tipo de parqueo {parkingType.DESCRIPTION_PARKING_TYPE} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -187,23 +192,37 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
-            if (validateData() == 0)
+
+            if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
-                setValues();
-                PARKING_TYPES currentPTY= parkingTypeController.getParkingType(parkingTypeCode);
-
-                if (h.MsgQuestion(Helpers.App.Msg0002)=="S")
+                if (validateData() == 0)
                 {
-                    PARKING_TYPES parkingType = new PARKING_TYPES();
-                    parkingType.PARKING_TYPE_CODE = parkingTypeCode;
-                    parkingType.DESCRIPTION_PARKING_TYPE = parkingTypeDescription;
+                    setValues();
+                    PARKING_TYPES pt = parkingTypeController.getParkingType(parkingTypeCode);
 
-                    int result = parkingTypeController.updateParkingType(parkingType);
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (pt.DESCRIPTION_PARKING_TYPE!= parkingTypeDescription)
+                        changes += $"DESCRIPTION_PARKING_TYPE: '{pt.DESCRIPTION_PARKING_TYPE}' → '{parkingTypeDescription}'{separator}";
+                    
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
+                    pt.DESCRIPTION_PARKING_TYPE = parkingTypeDescription;
+
+                    int result = parkingTypeController.updateParkingType(pt);
 
                     if (result > 0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {Config.User.userName} modificó el tipo de parqueo {parkingTypeDescription}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -227,7 +246,7 @@ namespace parking.Views.Administration.ParkingStructure
             getparkingTypes("", flagIsPaperbin);
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
 
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
@@ -237,6 +256,7 @@ namespace parking.Views.Administration.ParkingStructure
                 int result = parkingTypeController.updateParkingType(parkingType);
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró el tipo de parqueo {parkingType.DESCRIPTION_PARKING_TYPE} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -248,13 +268,14 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
                 int result = parkingTypeController.deleteParkingType(TxtParkingTypeCode.Text);
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente el tipo de parqueo {TxtParkingTypeDescription.Text}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -266,12 +287,12 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void getparkingTypes(string searchFilter,bool isDel)
+        private void getparkingTypes(string searchFilter, bool isDel)
         {
             DgvParkingTypes.Rows.Clear();
-         
-            
-            List<PARKING_TYPES> parkingTypes = parkingTypeController.getParkingTypes(searchFilter,isDel);
+
+
+            List<PARKING_TYPES> parkingTypes = parkingTypeController.getParkingTypes(searchFilter, isDel);
 
             if (parkingTypes.Count == 0)
             {
@@ -279,17 +300,17 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (searchFilter != "")
                 {
-                    getparkingTypes("",isDel);
+                    getparkingTypes("", isDel);
                 }
                 return;
             }
 
             foreach (var parkingType in parkingTypes)
             {
-                DgvParkingTypes.Rows.Add(parkingType.PARKING_TYPE_CODE, parkingType.DESCRIPTION_PARKING_TYPE,Convert.ToDateTime(parkingType.INSERTED_AT).ToShortDateString());
+                DgvParkingTypes.Rows.Add(parkingType.PARKING_TYPE_CODE, parkingType.DESCRIPTION_PARKING_TYPE, Convert.ToDateTime(parkingType.INSERTED_AT).ToShortDateString());
             }
 
-           
+
         }
 
         private void BtnNew_Click(object sender, EventArgs e)

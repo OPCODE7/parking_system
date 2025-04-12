@@ -21,7 +21,7 @@ namespace parking.Models
         }
     
         public string CHECK_IN_CODE { get; set; }
-        public string CLIENT_DNI { get; set; }
+        public string CLIENT_CODE { get; set; }
         public string VEHICLE_PLATE { get; set; }
         public System.DateTime CHECK_IN_TIME { get; set; }
         public string OBSERVATIONS { get; set; }
@@ -33,8 +33,8 @@ namespace parking.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHECK_OUT> CHECK_OUT { get; set; }
-        public virtual CLIENTS CLIENTS { get; set; }
         public virtual PARKING_SPACE PARKING_SPACE { get; set; }
         public virtual USERS USERS { get; set; }
+        public virtual CLIENTS CLIENTS { get; set; }
     }
 }

@@ -12,44 +12,53 @@ namespace parking.Helpers
 {
     internal class Helpers
     {
-        //Metodo MsgWarning
-        //Envia una advertencia a pantalla en cuadro de dialogo 
+        /// <summary>
+        /// Muestra un cuadro de diálogo de advertencia con el mensaje especificado.
+        /// </summary>
+        /// <param name="msg">Mensaje a mostrar.</param>
         public void MsgWarning(string msg)
         {
             MessageBox.Show(msg, "ATENCIÓN", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-        //Fin Metodo MsgWarning
 
-        //Metodo MsgSuccess
-        //Envia un cuadro de dialogo a pantalla indicando que un proceso se realizo exitosamente
+        /// <summary>
+        /// Muestra un cuadro de diálogo indicando que un proceso se realizó exitosamente.
+        /// </summary>
+        /// <param name="msg">Mensaje a mostrar.</param>
         public void MsgSuccess(string msg)
         {
             MessageBox.Show(msg, "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        //Fin MsgSuccess
 
+        /// <summary>
+        /// Muestra un cuadro de diálogo de error con el mensaje especificado.
+        /// </summary>
+        /// <param name="msg">Mensaje de error a mostrar.</param>
         public void MsgError(string msg)
         {
-
             MessageBox.Show(msg, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        /// <summary>
+        /// Muestra un cuadro de diálogo informativo con el mensaje proporcionado.
+        /// </summary>
+        /// <param name="msg">Mensaje informativo a mostrar.</param>
         public void MsgInfo(string msg)
         {
             MessageBox.Show(msg, "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
-
-        //Metodo SanitizeStr
+        /// <summary>
+        /// Elimina caracteres prohibidos de una cadena para prevenir inyecciones u otros errores.
+        /// </summary>
+        /// <param name="str">Cadena de texto a sanitizar.</param>
+        /// <returns>Cadena limpia sin caracteres prohibidos.</returns>
         public string SanitizeStr(string str)
         {
-            string strout = "";//cadena de salida
-
-            //arreglo de caracteres prohibidos
+            string strout = "";
             string[] forbiddenchars = { "'", "=", "-", ">", ";", "/", "!" };
-            int i, j; //variables para interar ciclos
-            int coincidences;// variable de coincidencias
+            int i, j;
+            int coincidences;
 
             for (i = 0; i < str.Length; i++)
             {
@@ -59,68 +68,66 @@ namespace parking.Helpers
                     coincidences = str.Substring(i, 1) == forbiddenchars[j] ? coincidences + 1 : coincidences + 0;
                 }
                 strout = coincidences == 0 ? strout + str.Substring(i, 1) : strout;
-
             }
             return strout;
-
-
-
         }
-        //Fin Metodo SanitizeStr
 
-
-        //Metodo GetOnlyNumbers
-        //Bloquear cualquier caracter que no sea numero
-        public Boolean GetOnlyNumbers(KeyPressEventArgs e)
+        /// <summary>
+        /// Permite únicamente el ingreso de caracteres numéricos o retroceso en un campo de entrada.
+        /// </summary>
+        /// <param name="e">Evento de tecla presionada.</param>
+        /// <returns>True si el carácter es numérico o retroceso, de lo contrario False.</returns>
+        public bool GetOnlyNumbers(KeyPressEventArgs e)
         {
-            Boolean resp = false;
-            if (Char.IsNumber(e.KeyChar) || e.KeyChar == (char)8)
+            bool resp = false;
+            if (char.IsNumber(e.KeyChar) || e.KeyChar == (char)8)
             {
                 resp = true;
-
             }
 
             return resp;
-
         }
-        //Fin GetOnlyNumbers
 
-        //Metodo GetNumericValue
-        //Devolver el valor numerico de un numero
+        /// <summary>
+        /// Convierte una cadena en un valor numérico (double).
+        /// </summary>
+        /// <param name="str">Cadena a convertir.</param>
+        /// <returns>Valor double equivalente o 0 si ocurre un error.</returns>
         public double GetNumericValue(string str)
         {
             double value = 0;
             if (double.TryParse(str, out value))
             {
                 value = Convert.ToDouble(str);
-
             }
             else
             {
-                MsgWarning("Error al obtener el valor numerico de! " + str);
+                MsgWarning("Error al obtener el valor numérico de: " + str);
                 value = 0;
             }
             return value;
         }
-        // Fin GetNumericValue
 
-        //MetodoMsgQuestion
-        //Manda un cuadro de dialogo en el cual se confirma si se quiere realizar algun proceso
+        /// <summary>
+        /// Muestra un cuadro de diálogo de confirmación y retorna la respuesta del usuario.
+        /// </summary>
+        /// <param name="msg">Mensaje de confirmación a mostrar.</param>
+        /// <returns>"S" si se confirma con Sí, "N" si se elige No.</returns>
         public string MsgQuestion(string msg)
         {
-            ; string Op = "N";
+            string Op = "N";
             if (MessageBox.Show(msg, "CONFIRMAR", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Op = "S";
-
             }
             return Op;
-
         }
-        //FinMetodoMsgQuestion
 
-        //Metodo ConvertDouble
-        //Metodo para convertir datos alfanumericos a double
+        /// <summary>
+        /// Convierte una cadena alfanumérica en un número decimal (double).
+        /// </summary>
+        /// <param name="value">Cadena a convertir.</param>
+        /// <returns>Valor numérico en formato double o 0 si ocurre un error.</returns>
         public double ConvertDouble(string value)
         {
             double num;
@@ -134,24 +141,29 @@ namespace parking.Helpers
                 num = 0;
             }
             return num;
-
         }
 
-        //Fin Metodo ConvertDouble
-
-        //Metodo ConvertAmountToWords
-        //Convierte un monto en letras
-
-
+        /// <summary>
+        /// Convierte un monto numérico a su representación en letras (español).
+        /// </summary>
+        /// <param name="amount">Monto a convertir.</param>
+        /// <param name="currency">Moneda a usar en la conversión. Por defecto "lempiras".</param>
+        /// <param name="centsFormat">
+        /// Formato para los centavos:
+        /// 1 - en letras (ej: "con cincuenta centavos"),
+        /// 2 - en número (ej: "con 50 centavos"),
+        /// 3 - como fracción (ej: "con 50/100").
+        /// </param>
+        /// <returns>Cadena con el monto expresado en letras.</returns>
         public string ConvertAmountToWords(decimal amount, string currency = "lempiras", int centsFormat = 1)
         {
             string[] units = { "cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez",
-                       "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve" };
+                   "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve" };
 
             string[] tens = { "", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa" };
 
             string[] hundreds = { "", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos",
-                          "setecientos", "ochocientos", "novecientos" };
+                      "setecientos", "ochocientos", "novecientos" };
 
             string ConvertNumberToWords(long number)
             {
@@ -178,13 +190,13 @@ namespace parking.Helpers
                 result += $" {currency} con ";
                 switch (centsFormat)
                 {
-                    case 1: // "con cincuenta y seis centavos"
+                    case 1:
                         result += ConvertNumberToWords(decimalPart) + " centavos";
                         break;
-                    case 2: // "con 56 centavos"
+                    case 2:
                         result += decimalPart + " centavos";
                         break;
-                    case 3: // "con 56/100"
+                    case 3:
                     default:
                         result += $"{decimalPart:D2}/100";
                         break;
@@ -195,34 +207,7 @@ namespace parking.Helpers
             return result + $" {currency}";
         }
 
-        //FinMetodoConvertAmountToWords
 
-        //Metodo ConvertToDataTable
-        public DataTable ConvertToDataTable<T>(List<T> data)
-        {
-            DataTable dt = new DataTable(typeof(T).Name);
-
-            // Crear columnas basadas en las propiedades de la clase
-            PropertyInfo[] props = typeof(T).GetProperties();
-            foreach (PropertyInfo prop in props)
-            {
-                dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            }
-
-            // Llenar filas con datos de la lista
-            foreach (T item in data)
-            {
-                DataRow row = dt.NewRow();
-                foreach (PropertyInfo prop in props)
-                {
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                }
-                dt.Rows.Add(row);
-            }
-
-            return dt;
-        }
-        //FinMetodoConvertToDataTable
 
     }
 }

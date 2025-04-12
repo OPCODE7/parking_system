@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aeb5c0b2a6d04f4e9dd1658fb481810a" Name="Diagram1" ZoomLevel="50">
+      <Diagram DiagramId="aeb5c0b2a6d04f4e9dd1658fb481810a" Name="Diagram1" ZoomLevel="48">
         <EntityTypeShape EntityType="PARKINGModel.BILL" Width="1.5" PointX="5.25" PointY="16.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PARKINGModel.CHECK_IN" Width="1.5" PointX="7.5" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PARKINGModel.CHECK_OUT" Width="1.5" PointX="9.75" PointY="18.75" IsExpanded="true" />
@@ -31,7 +31,6 @@
         <AssociationConnector Association="PARKINGModel.FK_CHECKOUTBILL" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_USRBILL" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_CHECK_IN" ManuallyRouted="false" />
-        <AssociationConnector Association="PARKINGModel.FK_CLIENT" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_PSC" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_USR" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_USROUT" ManuallyRouted="false" />
@@ -56,6 +55,12 @@
         <EntityTypeShape EntityType="PARKINGModel.APP_MODULES" Width="1.5" PointX="5.25" PointY="35.75" />
         <AssociationConnector Association="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" />
         <AssociationConnector Association="PARKINGModel.FK_USER_MODULES" />
+        <AssociationConnector Association="PARKINGModel.FK__DISCOUNTS__USER___68336F3E" />
+        <AssociationConnector Association="PARKINGModel.FK__PARKING_T__USER___673F4B05" />
+        <AssociationConnector Association="PARKINGModel.FK__ROLE_PERM__USER___664B26CC" />
+        <AssociationConnector Association="PARKINGModel.FK__USER_ROLE__USER___65570293" />
+        <AssociationConnector Association="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" />
+        <AssociationConnector Association="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

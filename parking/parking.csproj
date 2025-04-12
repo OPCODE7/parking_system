@@ -112,6 +112,7 @@
     <Compile Include="Controllers\EmployeeUserController.cs" />
     <Compile Include="Controllers\HoraryController.cs" />
     <Compile Include="Controllers\JobPositionController.cs" />
+    <Compile Include="Controllers\LogBookAppController.cs" />
     <Compile Include="Controllers\ParkingFeeController.cs" />
     <Compile Include="Controllers\ParkingSpaceController.cs" />
     <Compile Include="Controllers\ParkingTypeController.cs" />

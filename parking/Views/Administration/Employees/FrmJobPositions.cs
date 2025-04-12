@@ -1,4 +1,6 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
+using parking.Controllers;
 using parking.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Employees
 {
@@ -18,6 +21,7 @@ namespace parking.Views.Administration.Employees
         Helpers.Helpers h = new Helpers.Helpers();
         Controllers.JobPositionController jobPositionController = new Controllers.JobPositionController();
         Controllers.CorrelativesController correlativesController = new Controllers.CorrelativesController();
+        LogBookAppController lac = new LogBookAppController();
 
         string description, jpsCode, moduleId = "JPS";
         bool flagIsPaperbin = false;
@@ -169,7 +173,7 @@ namespace parking.Views.Administration.Employees
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             JOB_POSITIONS jps = jobPositionController.getJobPosition(TxtJPSCode.Text);
             jps.IS_DEL = true;
@@ -177,6 +181,7 @@ namespace parking.Views.Administration.Employees
             {
                 if (jobPositionController.updateJobPosition(jps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió el cargo {jps.DESCRIPTION_JOB_POSITION} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -189,7 +194,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -199,9 +204,21 @@ namespace parking.Views.Administration.Employees
                 if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
                 {
                     JOB_POSITIONS jps = jobPositionController.getJobPosition(TxtJPSCode.Text);
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (jps.DESCRIPTION_JOB_POSITION!= description)
+                        changes += $"DESCRIPTION_JOB_POSITION: '{jps.DESCRIPTION_JOB_POSITION}' → '{description}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
                     jps.DESCRIPTION_JOB_POSITION = description;
                     if (jobPositionController.updateJobPosition(jps) > 0)
                     {
+                        string logDesc = $"El usuario {Config.User.userName} modificó el cargo {description}. Cambios: {changes}.";
+                        await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -227,13 +244,14 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
                 JOB_POSITIONS jps = jobPositionController.getJobPosition(TxtJPSCode.Text);
                 if (jobPositionController.deleteJobPosition(jps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente el cargo {jps.DESCRIPTION_JOB_POSITION}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -246,7 +264,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -254,6 +272,7 @@ namespace parking.Views.Administration.Employees
                 jps.IS_DEL = false;
                 if (jobPositionController.updateJobPosition(jps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró el rol {jps.DESCRIPTION_JOB_POSITION} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -270,7 +289,7 @@ namespace parking.Views.Administration.Employees
             if (e.KeyCode == Keys.Enter) getJobPositions(TxtSearch.Text.Trim(), flagIsPaperbin);
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -282,6 +301,7 @@ namespace parking.Views.Administration.Employees
 
                 if (jobPositionController.saveJobPosition(jps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó el cargo {description}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }

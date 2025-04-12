@@ -63,6 +63,9 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.AdminPa
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.BillingModule.FrmGenerateBill.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Clients.FrmClient.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Clients.FrmSearchClient.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmBillRanges.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmCompany.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmSetUserPermissions.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmEmployees.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmHorary.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Employees.FrmJobPositions.resources
@@ -82,6 +85,3 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.CoreCompileInputs.cac
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.Up2Date
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
-C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmCompany.resources
-C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmBillRanges.resources
-C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmSetUserPermissions.resources

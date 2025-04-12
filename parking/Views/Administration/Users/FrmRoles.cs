@@ -12,15 +12,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Employees
 {
     public partial class FrmRoles : Form
     {
-        Helpers.Helpers h= new Helpers.Helpers();
+        Helpers.Helpers h = new Helpers.Helpers();
         RoleController roleController = new RoleController();
-        DataBaseController dbController= new DataBaseController();
-        string roleName,roleDescription,moduleId= "ROL";
+        DataBaseController dbController = new DataBaseController();
+        Controllers.LogBookAppController lac = new Controllers.LogBookAppController();
+        string roleName, roleDescription, moduleId = "ROL";
         int roleId;
         bool flagIsPaperbin = false;
         public FrmRoles()
@@ -30,12 +32,12 @@ namespace parking.Views.Administration.Employees
 
         private void startForm()
         {
-            getRoles("",false);
+            getRoles("", false);
             flagIsPaperbin = false;
             BtnEdit.Enabled = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"CREAR");
+            BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "CREAR");
             BtnCancel.Enabled = false;
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
             PbxRecovery.Enabled = false;
@@ -55,7 +57,7 @@ namespace parking.Views.Administration.Employees
         private void setValues()
         {
 
-             roleName= h.SanitizeStr(TxtRoleName.Text.Trim().ToString());
+            roleName = h.SanitizeStr(TxtRoleName.Text.Trim().ToString());
             roleDescription = h.SanitizeStr(TxtRoleDescription.Text.Trim().ToString());
 
         }
@@ -99,59 +101,61 @@ namespace parking.Views.Administration.Employees
             TxtRoleCode.Enabled = false;
             TxtRoleName.Focus();
 
-            TxtRoleCode.Text= dbController.getNextIdModule("USER_ROLES").ToString();
+            TxtRoleCode.Text = dbController.getNextIdModule("USER_ROLES").ToString();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
-        {
-            if (validateData() == 0)
-            {
-                setValues();
-                USER_ROLES newRole= new USER_ROLES();
-                newRole.ROLE_NAME = roleName;
-                newRole.DESCRIPTION_ROLE = roleDescription;
-                newRole.INSERTED_AT = DateTime.Now;
 
-                if (roleController.saveRole(newRole) > 0)
-                {
-                    h.MsgSuccess(Helpers.App.Msg0001);
-                    startForm();
-                }
-
-            }
-
-        }
 
         private void FrmRoles_Load(object sender, EventArgs e)
         {
             startForm();
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             setValues();
 
             if (validateData() == 0)
             {
-                    USER_ROLES role = roleController.getRole(Convert.ToInt32(TxtRoleCode.Text));
-                    role.ROLE_NAME = roleName;
-                    role.DESCRIPTION_ROLE = roleDescription;
+                USER_ROLES role = roleController.getRole(Convert.ToInt32(TxtRoleCode.Text));
+                string changes = "";
+                var separator = ", ";
 
-                    int result = roleController.updateRole(role);
-                    if (result > 0)
+                if (role.ROLE_NAME != roleName)
+                    changes += $"ROLE_NAME: '{role.ROLE_NAME}' → '{roleName}'{separator}";
+
+
+                if (role.DESCRIPTION_ROLE != roleDescription)
+                    changes += $"DESCRIPTION_ROLE: '{role.DESCRIPTION_ROLE}' → '{roleDescription}'{separator}";
+
+                // Limpiar coma final
+                if (!string.IsNullOrEmpty(changes))
+                    changes = changes.TrimEnd(',', ' ');
+
+                role.ROLE_NAME = roleName;
+                role.DESCRIPTION_ROLE = roleDescription;
+
+                int result = roleController.updateRole(role);
+                if (result > 0)
+                {
+                    if (!string.IsNullOrEmpty(changes))
                     {
-                        h.MsgSuccess(Helpers.App.Msg0003);
-                        startForm();
+                        string logDesc = $"El usuario {User.userName} modificó el rol {role.ROLE_NAME}. Cambios: {changes}.";
+                        await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
                     }
-                    else
-                    {
-                        h.MsgError(Helpers.App.Msg0017);
-                    }
+
+                    h.MsgSuccess(Helpers.App.Msg0003);
+                    startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0017);
+                }
             }
 
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             USER_ROLES role = roleController.getRole(Convert.ToInt32(TxtRoleCode.Text));
             role.IS_DEL = true;
@@ -162,13 +166,14 @@ namespace parking.Views.Administration.Employees
 
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {User.userName} movió el rol {role.ROLE_NAME} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();
                 }
                 else
                 {
                     h.MsgError(Helpers.App.Msg0016);
-                
+
                 }
             }
         }
@@ -186,7 +191,7 @@ namespace parking.Views.Administration.Employees
         private void PbxCancel_Click(object sender, EventArgs e)
         {
             TxtSearch.Clear();
-            getRoles("",flagIsPaperbin);
+            getRoles("", flagIsPaperbin);
         }
 
         private void DgvRoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -205,8 +210,8 @@ namespace parking.Views.Administration.Employees
                     TxtRoleName.Enabled = true;
                     TxtRoleDescription.Enabled = true;
 
-                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId,"Modificar");
-                    BtnDelete.Enabled = PermissionManager.HasPermission(moduleId,"Eliminar");
+                    BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
+                    BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
 
                     BtnEdit.Enabled = flagIsPaperbin ? false : true;
                     BtnDelete.Enabled = flagIsPaperbin ? false : true;
@@ -241,7 +246,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -250,6 +255,7 @@ namespace parking.Views.Administration.Employees
                 int result = roleController.updateRole(role);
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {User.userName} restauró el rol {role.ROLE_NAME} de la papelera.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -261,7 +267,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -269,6 +275,7 @@ namespace parking.Views.Administration.Employees
                 int result = roleController.deleteRole(role);
                 if (result > 0)
                 {
+                    await lac.saveLog(User.userId, "Eliminar", $"El usuario {User.userName} eliminó permanentemente el rol {role.ROLE_NAME}.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -280,26 +287,47 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (validateData() == 0)
             {
-                getRoles(TxtSearch.Text,flagIsPaperbin);
+                setValues();
+                USER_ROLES newRole = new USER_ROLES();
+                newRole.ROLE_NAME = roleName;
+                newRole.DESCRIPTION_ROLE = roleDescription;
+                newRole.INSERTED_AT = DateTime.Now;
+                newRole.USER_CODE = Config.User.userId;
+
+                if (roleController.saveRole(newRole) > 0)
+                {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} insertó el rol {roleName}.", moduleId, DateTime.Now);
+                    h.MsgSuccess(Helpers.App.Msg0001);
+                    startForm();
+                }
+
             }
         }
 
-        public void getRoles(string searchFilter,bool isDel)
+        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-           
+            if (e.KeyCode == Keys.Enter)
+            {
+                getRoles(TxtSearch.Text, flagIsPaperbin);
+            }
+        }
+
+        public void getRoles(string searchFilter, bool isDel)
+        {
+
             DgvRoles.Rows.Clear();
-            List<USER_ROLES> lst = roleController.getRoles(searchFilter,isDel);
+            List<USER_ROLES> lst = roleController.getRoles(searchFilter, isDel);
 
             if (lst.Count == 0)
             {
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getRoles("",isDel);
+                    getRoles("", isDel);
                     TxtSearch.Clear();
                 }
                 return;

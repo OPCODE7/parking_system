@@ -143,14 +143,14 @@ namespace parking.Controllers
             return lasIdBillRange;
         }
 
-        public int getLastIdBillRange()
+        public int getLastIdBillRange(bool isDel)
         {
             int lasIdBillRange = 0;
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    lasIdBillRange = db.BILL_RANGE.Max(x => x.BILL_RANGE_ID);
+                    lasIdBillRange = db.BILL_RANGE.Where(x => x.DEL==isDel).Max(x => x.BILL_RANGE_ID);
                 }
             }
             catch (Exception ex)

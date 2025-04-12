@@ -1,4 +1,5 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
 using parking.Controllers;
 using parking.DTO;
 using parking.Helpers;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.ParkingStructure
 {
@@ -25,6 +27,8 @@ namespace parking.Views.Administration.ParkingStructure
         CorrelativesController correlativesController = new CorrelativesController();
         CheckInController checkInController = new CheckInController();
         ClientController clientController = new ClientController();
+        LogBookAppController lac = new LogBookAppController();
+
         string checkInCode, clientCode, observations, vehiclePlate, status, parkingSpaceCode, moduleId = "CIN";
         bool isMarkedToEdit = false, flagIsPaperbin;
         public FrmCheckIn()
@@ -227,10 +231,11 @@ namespace parking.Views.Administration.ParkingStructure
                     BtnDelete.Enabled = false;
                 }
                 TxtCheckInCode.Text = checkIn.CHECK_IN_CODE;
-                TxtClientCode.Text = checkIn.CLIENT_DNI;
-                getInfoClient(checkIn.CLIENT_DNI);
+                TxtClientCode.Text = checkIn.CLIENT_CODE;
+                getInfoClient(checkIn.CLIENT_CODE);
                 CmbParkingTypes.SelectedValue = checkIn.PARKING_FEE_CODE;
                 PARKING_FEE pf = parkingFeeController.getParkingFee(CmbParkingTypes.SelectedValue.ToString());
+
                 fillCmbParkingSpaces(pf.PARKING_TYPE_CODE, true);
                 CmbParkingSpaces.SelectedValue = checkIn.PARKING_SPACE_CODE;
 
@@ -240,7 +245,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
@@ -250,10 +255,30 @@ namespace parking.Views.Administration.ParkingStructure
                     CHECK_IN checkIn = checkInController.getCheckIn(TxtCheckInCode.Text);
                     PARKING_SPACE lastPs = parkingSpaceController.getParkingSpace(checkIn.PARKING_SPACE_CODE);
 
-                    checkIn.CLIENT_DNI = clientCode;
+                    string cambios = "";
+                    var separator = ", ";
+
+                    if (checkIn.CLIENT_CODE != clientCode)
+                        cambios += $"CLIENT_CODE: '{checkIn.CLIENT_CODE}' → '{clientCode}'{separator}";
+
+                    if (checkIn.PARKING_SPACE_CODE != parkingSpaceCode)
+                        cambios += $"PARKING_SPACE_CODE: '{checkIn.PARKING_SPACE_CODE}' → '{parkingSpaceCode}'{separator}";
+
+                    if (checkIn.OBSERVATIONS != observations)
+                        cambios += $"OBSERVATIONS: '{checkIn.OBSERVATIONS}' → '{observations}'{separator}";
+
+                    if (checkIn.VEHICLE_PLATE != vehiclePlate)
+                        cambios += $"VEHICLE_PLATE: '{checkIn.VEHICLE_PLATE}' → '{vehiclePlate}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(cambios))
+                        cambios = cambios.TrimEnd(',', ' ');
+
+                    checkIn.CLIENT_CODE = clientCode;
                     checkIn.PARKING_SPACE_CODE = parkingSpaceCode;
                     checkIn.OBSERVATIONS = observations;
                     checkIn.VEHICLE_PLATE = vehiclePlate;
+
                     if (checkInController.updateCheckIn(checkIn) > 0)
                     {
                         if (lastPs.PARKING_SPACE_CODE != parkingSpaceCode)
@@ -264,9 +289,10 @@ namespace parking.Views.Administration.ParkingStructure
                             if (parkingSpaceController.updateParkingSpace(lastPs) < 0 || parkingSpaceController.updateParkingSpace(newPs) < 0)
                             {
                                 h.MsgError(Helpers.App.Msg0017);
-
                             }
                         }
+                        string logDesc = $"El usuario {Config.User.userName} modificó la entrada con código {checkIn.CHECK_IN_CODE}. Cambios: {cambios}.";
+                        await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -279,7 +305,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -300,7 +326,14 @@ namespace parking.Views.Administration.ParkingStructure
                     if (parkingSpaceController.updateParkingSpace(ps) < 0)
                     {
                         h.MsgError(Helpers.App.Msg0017);
+                        return;
                     }
+
+
+                    string logDesc = $"El usuario {Config.User.userName} modificó el espacio de parqueo con código {ps.PARKING_SPACE_CODE}. Cambios: STATE: 'desocupado' → 'ocupado'.";
+                    await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró la entrada con código {checkIn.CHECK_IN_CODE} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -312,7 +345,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -320,6 +353,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if (checkInController.deleteCheckIn(checkIn) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente la entrada con código {checkIn.CHECK_IN_CODE}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -342,7 +376,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -356,7 +390,14 @@ namespace parking.Views.Administration.ParkingStructure
                     if (parkingSpaceController.updateParkingSpace(ps) < 0)
                     {
                         h.MsgError(Helpers.App.Msg0017);
+                        return;
                     }
+
+                    
+                    string logDesc = $"El usuario {Config.User.userName} modificó el espacio de parqueo con código {ps.PARKING_SPACE_CODE}. Cambios: STATE: 'ocupado' → 'desocupado'.";
+                    await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió la entrada con código {checkIn.CHECK_IN_CODE} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -375,20 +416,20 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
                 setValues();
                 CHECK_IN checkIn = new CHECK_IN();
                 checkIn.CHECK_IN_CODE = checkInCode;
-                checkIn.CLIENT_DNI = clientCode;
+                checkIn.CLIENT_CODE = clientCode;
                 checkIn.PARKING_SPACE_CODE = parkingSpaceCode;
                 checkIn.OBSERVATIONS = observations;
                 checkIn.VEHICLE_PLATE = vehiclePlate;
                 checkIn.CHECK_IN_TIME = DateTime.Now;
                 checkIn.INSERTED_AT = DateTime.Now;
-                checkIn.CHECK_IN_STATE = "ACTIVO";
+                checkIn.CHECK_IN_STATE = "Pendiente";
                 checkIn.USER_CODE = Config.User.userId;
 
                 if (checkInController.saveCheckIn(checkIn) > 0)
@@ -398,8 +439,14 @@ namespace parking.Views.Administration.ParkingStructure
                     if (parkingSpaceController.updateParkingSpace(ps) < 0)
                     {
                         h.MsgError(Helpers.App.Msg0017);
+                        return;
                     }
 
+                    string logDesc = $"El usuario {Config.User.userName} modificó el espacio de parqueo con código {ps.PARKING_SPACE_CODE}. Cambios: STATE: 'desocupado' → 'ocupado'.";
+                    await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+
+
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó la entrada con código {checkInCode}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }

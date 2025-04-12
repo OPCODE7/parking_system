@@ -1,4 +1,5 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
 using parking.Controllers;
 using parking.Helpers;
 using parking.Models;
@@ -6,12 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.ParkingStructure
 {
@@ -21,10 +24,11 @@ namespace parking.Views.Administration.ParkingStructure
         Helpers.Helpers h = new Helpers.Helpers();
         ParkingFeeController parkingFeeController = new ParkingFeeController();
         ParkingTypeController parkingTypeController = new ParkingTypeController();
+        LogBookAppController lac = new LogBookAppController();
 
         string pfCode, ptCode,userId,moduleId= "PKF";
         decimal pfPrice;
-        bool flagIsPaperbin;
+        bool flagIsPaperbin,isEditing= false;
         public FrmParkingFee()
         {
             InitializeComponent();
@@ -46,6 +50,7 @@ namespace parking.Views.Administration.ParkingStructure
         {
             getParkingFees("",false);
             flagIsPaperbin = false;
+            isEditing = false;
             BtnCancel.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
@@ -126,12 +131,16 @@ namespace parking.Views.Administration.ParkingStructure
 
             }
 
-            if (CmbParkingTypes.SelectedValue != null && parkingFeeController.getParkingFees("", false).Any(pf => pf.PARKING_TYPE_CODE == CmbParkingTypes.SelectedValue.ToString())==true){
-               
-                h.MsgWarning("YA EXISTE UNA TARIFA ASOCIADA A ESTE TIPO DE PARQUEO!");
-                error++;
-                CmbParkingTypes.Focus();
-                return error;
+            if (!isEditing)
+            {
+                if (CmbParkingTypes.SelectedValue != null && parkingFeeController.getParkingFees("", false).Any(pf => pf.PARKING_TYPE_CODE == CmbParkingTypes.SelectedValue.ToString()) == true)
+                {
+
+                    h.MsgWarning("YA EXISTE UNA TARIFA ASOCIADA A ESTE TIPO DE PARQUEO!");
+                    error++;
+                    CmbParkingTypes.Focus();
+                    return error;
+                }
             }
             return error;
         }
@@ -181,20 +190,39 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
-            PARKING_FEE pf= parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+            
             if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
+                isEditing = true;
                 if (validateData() == 0)
                 {
                     setValues();
+                    PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (pf.PRICE_FOR_HOUR!= pfPrice)
+                        changes += $"PRICE_FOR_HOUR: '{pf.PRICE_FOR_HOUR}' → '{pfPrice}'{separator}";
+
+                    if (pf.PARKING_TYPE_CODE != ptCode)
+                        changes += $"PARKING_TYPE_CODE: '{pf.PARKING_TYPE_CODE}' → '{ptCode}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
 
                     pf.PRICE_FOR_HOUR = pfPrice;
                     pf.PARKING_TYPE_CODE= ptCode;
 
                     if (parkingFeeController.updateParkingFee(pf) > 0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {Config.User.userName} modificó la tarifa de parqueo con código {TxtParkingFeeCode.Text}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgSuccess(Helpers.App.Msg0003);
                         startForm();
 
@@ -221,7 +249,7 @@ namespace parking.Views.Administration.ParkingStructure
             
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -229,6 +257,7 @@ namespace parking.Views.Administration.ParkingStructure
                 pf.IS_DEL = false;
                 if (parkingFeeController.updateParkingFee(pf) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró la tarifa de parqueo con código {pf.PARKING_FEE_CODE} de la papelera.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -241,13 +270,14 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
                 PARKING_FEE pf = parkingFeeController.getParkingFee(TxtParkingFeeCode.Text.Trim());
                 if (parkingFeeController.deleteParkingFee(pf) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente la tarifa de parqueo con código {pf.PARKING_FEE_CODE}.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -259,7 +289,7 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         { 
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -267,6 +297,7 @@ namespace parking.Views.Administration.ParkingStructure
                 pf.IS_DEL = true;
                 if (parkingFeeController.updateParkingFee(pf) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió la tarifa de parqueo con código {pf.PARKING_FEE_CODE} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -294,7 +325,7 @@ namespace parking.Views.Administration.ParkingStructure
             TxtPrice.Focus();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -308,6 +339,7 @@ namespace parking.Views.Administration.ParkingStructure
 
                 if(parkingFeeController.saveParkingFee(newPf) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó la tarifa de parqueo con código {pfCode}.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0001);
                     startForm();
                 }

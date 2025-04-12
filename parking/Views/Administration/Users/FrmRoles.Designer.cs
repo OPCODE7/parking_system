@@ -53,6 +53,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvRoles = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtRoleDescription = new System.Windows.Forms.TextBox();
             this.TxtRoleName = new System.Windows.Forms.TextBox();
             this.TxtRoleCode = new System.Windows.Forms.TextBox();
@@ -61,10 +65,6 @@
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -323,6 +323,42 @@
             this.DgvRoles.TabIndex = 75;
             this.DgvRoles.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvRoles_CellDoubleClick);
             // 
+            // ID
+            // 
+            this.ID.FillWeight = 227.2728F;
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 150;
+            // 
+            // NOMBRE
+            // 
+            this.NOMBRE.FillWeight = 57.57574F;
+            this.NOMBRE.HeaderText = "NOMBRE";
+            this.NOMBRE.MinimumWidth = 8;
+            this.NOMBRE.Name = "NOMBRE";
+            this.NOMBRE.ReadOnly = true;
+            this.NOMBRE.Width = 180;
+            // 
+            // DESCRIPCIÓN
+            // 
+            this.DESCRIPCIÓN.FillWeight = 57.57574F;
+            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
+            this.DESCRIPCIÓN.MinimumWidth = 8;
+            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
+            this.DESCRIPCIÓN.ReadOnly = true;
+            this.DESCRIPCIÓN.Width = 250;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.FillWeight = 57.57574F;
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 95;
+            // 
             // TxtRoleDescription
             // 
             this.TxtRoleDescription.BackColor = System.Drawing.SystemColors.Control;
@@ -415,41 +451,6 @@
             // 
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpDestroy.ToolTipTitle = "Destruir";
-            // 
-            // ID
-            // 
-            this.ID.FillWeight = 227.2728F;
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // NOMBRE
-            // 
-            this.NOMBRE.FillWeight = 57.57574F;
-            this.NOMBRE.HeaderText = "NOMBRE";
-            this.NOMBRE.MinimumWidth = 8;
-            this.NOMBRE.Name = "NOMBRE";
-            this.NOMBRE.ReadOnly = true;
-            this.NOMBRE.Width = 180;
-            // 
-            // DESCRIPCIÓN
-            // 
-            this.DESCRIPCIÓN.FillWeight = 57.57574F;
-            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
-            this.DESCRIPCIÓN.MinimumWidth = 8;
-            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
-            this.DESCRIPCIÓN.ReadOnly = true;
-            this.DESCRIPCIÓN.Width = 250;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.FillWeight = 57.57574F;
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 95;
             // 
             // FrmRoles
             // 

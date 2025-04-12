@@ -31,8 +31,8 @@ namespace parking.Models
         public string USER_ID { get; set; }
         public bool IS_DEL { get; set; }
     
+        public virtual USERS USERS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHECK_IN> CHECK_IN { get; set; }
-        public virtual USERS USERS { get; set; }
     }
 }

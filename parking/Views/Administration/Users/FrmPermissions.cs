@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Employees
 {
@@ -23,6 +24,8 @@ namespace parking.Views.Administration.Employees
         Controllers.PermissionController permissionController = new Controllers.PermissionController();
         DataBaseController dbController = new DataBaseController();
         AppModulesController appModulesController = new AppModulesController();
+        LogBookAppController lac = new LogBookAppController();
+
         string permissionDescription, moduleId, action, _moduleId = "PER";
         int permissionId;
         bool flagIsPaperbin;
@@ -104,7 +107,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
 
             if (validateData() == 0)
@@ -122,9 +125,15 @@ namespace parking.Views.Administration.Employees
                 int result = permissionController.savePermission(newPermission);
                 if (result > 0)
                 {
+                   await lac.saveLog(Config.User.userId, "Crear", $"El usuario {User.userName} insertó el permiso {permissionDescription}.", moduleId, DateTime.Now);
+
                     h.MsgSuccess(Helpers.App.Msg0001);
                     DgvPermissions.Rows.Clear();
                     startForm();
+                }
+                else
+                {
+                    h.MsgError(Helpers.App.Msg0015);
                 }
             }
 
@@ -208,7 +217,7 @@ namespace parking.Views.Administration.Employees
             }
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
 
             if (validateData() == 0)
@@ -218,6 +227,24 @@ namespace parking.Views.Administration.Employees
                 {
                     setValues();
                     USER_PERMISSIONS permission = permissionController.getPermission(Convert.ToInt32(TxtPermissionCode.Text));
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (permission.MODULE_ID!= moduleId)
+                        changes += $"MODULE_ID: '{permission.MODULE_ID}' → '{moduleId}'{separator}";
+
+                    if(permission.PERMISSION_DESCRIPTION != permissionDescription)
+                        changes += $"PERMISSION_DESCRIPTION: '{permission.PERMISSION_DESCRIPTION}' → '{permissionDescription}'{separator}";
+
+                    if(permission.ACTION != CmbActions.SelectedItem.ToString())
+                        changes += $"ACTION: '{permission.ACTION}' → '{CmbActions.SelectedItem.ToString()}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
+
+
                     permission.MODULE_ID = moduleId;
                     permission.PERMISSION_DESCRIPTION = permissionDescription;
                     permission.ACTION = CmbActions.SelectedItem.ToString();
@@ -225,9 +252,18 @@ namespace parking.Views.Administration.Employees
                     int result = permissionController.updatePermission(permission);
                     if (result > 0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {User.userName} modificó el permiso {permissionDescription}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
+
                         h.MsgSuccess(Helpers.App.Msg0003);
                         DgvPermissions.Rows.Clear();
                         startForm();
+                    }else
+                    {
+                        h.MsgError(Helpers.App.Msg0017);
                     }
 
                 }
@@ -245,7 +281,7 @@ namespace parking.Views.Administration.Employees
         }
 
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -255,6 +291,7 @@ namespace parking.Views.Administration.Employees
 
                 if (result > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {User.userName} movió el permiso {registro.PERMISSION_DESCRIPTION} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -308,7 +345,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -316,6 +353,7 @@ namespace parking.Views.Administration.Employees
                 registro.IS_DEL = false;
                 if (permissionController.updatePermission(registro) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {User.userName} restauró el permiso {registro.PERMISSION_DESCRIPTION} de la papelera.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -326,7 +364,7 @@ namespace parking.Views.Administration.Employees
             }
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -334,6 +372,7 @@ namespace parking.Views.Administration.Employees
                 int result = permissionController.deletePermission(registro);
                 if (result > 0)
                 {
+                   await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {User.userName} eliminó permanentemente el permiso {registro.PERMISSION_DESCRIPTION}.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0008);
                     startForm();
                 }

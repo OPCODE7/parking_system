@@ -26,6 +26,7 @@ namespace parking.Views.Administration.BillingModule
         CheckOutController checkOutController = new CheckOutController();
         DiscountsBillController discountsBillController= new DiscountsBillController();
         ParkingSpaceController pspController = new ParkingSpaceController();
+        LogBookAppController lac = new LogBookAppController();
 
         public int discountIdFT,discountIdFF;
         public double amountDiscountFT,amountDiscountFF;
@@ -49,15 +50,16 @@ namespace parking.Views.Administration.BillingModule
             frmCheckOut.BtnGenerateBill.Visible = true;
         }
 
-        private void BtnGenerateBill_Click(object sender, EventArgs e)
+        private async void BtnGenerateBill_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
                 BILL newBill = new BILL();
                 string nextBillCode= moduleId + correlativesController.getNextId(moduleId);
+                string nextBillNumber= billController.GenerateNextBillNumber();
                 newBill.BILL_CODE = nextBillCode;
                 newBill.DATE_OF_ISSUE = DateTime.Now;
-                newBill.BILL_NUMBER = billController.GenerateNextBillNumber(); ;
+                newBill.BILL_NUMBER = nextBillNumber; 
                 newBill.SUBTOTAL = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
                 newBill.DISCOUNT = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
                 newBill.ISV = Convert.ToDecimal(Regex.Replace(TxtISV.Text, "%", ""));
@@ -108,6 +110,7 @@ namespace parking.Views.Administration.BillingModule
                         }
                     }
 
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} generó la factura No. {nextBillNumber} con código {nextBillCode}.", moduleId, DateTime.Now);
                     h.MsgSuccess("LA FACTURA SE HA GENERADO CORRECTAMENTE");
 
                     CHECK_OUT checkOut = checkOutController.getCheckOut(TxtCheckOutCode.Text);

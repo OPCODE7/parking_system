@@ -18,8 +18,10 @@ namespace parking.Models
         public int ROLE_ID { get; set; }
         public int PERMISSION_ID { get; set; }
         public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public string USER_CODE { get; set; }
     
         public virtual USER_PERMISSIONS USER_PERMISSIONS { get; set; }
         public virtual USER_ROLES USER_ROLES { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

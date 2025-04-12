@@ -77,13 +77,13 @@ namespace parking.Controllers
                                 join ps in db.PARKING_SPACE on cin.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                                join cli in db.CLIENTS on cin.CLIENT_DNI equals cli.CLIENT_CODE
+                                join cli in db.CLIENTS on cin.CLIENT_CODE equals cli.CLIENT_CODE
                                 join b in db.BILL on cout.CHECK_OUT_CODE equals b.CHECK_OUT_CODE
                                 where cout.CHECK_OUT_CODE == checkOutCode
                                 select new CheckOutDTO
                                 {
                                     CHECK_IN_CODE = cout.CHECK_IN_CODE,
-                                    CLIENT_DNI = cin.CLIENT_DNI,
+                                    CLIENT_CODE = cin.CLIENT_CODE,
                                     OBSERVATIONS = cin.OBSERVATIONS,
                                     VEHICLE_PLATE = cin.VEHICLE_PLATE,
                                     CHECK_IN_TIME = cin.CHECK_IN_TIME,

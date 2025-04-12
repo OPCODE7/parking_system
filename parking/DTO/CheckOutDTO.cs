@@ -9,7 +9,7 @@ namespace parking.DTO
     internal class CheckOutDTO
     {
         public string CHECK_IN_CODE { get; set; }
-        public string CLIENT_DNI { get; set; }
+        public string CLIENT_CODE { get; set; }
         public string OBSERVATIONS { get; set; }
         public string VEHICLE_PLATE { get; set; }
         public DateTime CHECK_IN_TIME { get; set; }

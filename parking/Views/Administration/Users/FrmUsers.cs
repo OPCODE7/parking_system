@@ -13,8 +13,7 @@ using parking.Controllers;
 using parking.DTO;
 using parking.Helpers;
 using parking.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 
 namespace parking.Views.Administration
 {
@@ -26,7 +25,8 @@ namespace parking.Views.Administration
         RoleController roleController = new RoleController();
         EmployeeController employeeController = new EmployeeController();
         EmployeeUserController employeeUserController = new EmployeeUserController();
-        Helpers.PasswordHasher pwdHasher = new Helpers.PasswordHasher();
+        PasswordHasher pwdHasher = new PasswordHasher();
+        LogBookAppController lac = new LogBookAppController();
 
         string userCode, userName, userPassword, employeeCode, moduleId = "USR";
         bool userState, isEdit = false, flagIsPaperbin = false;
@@ -83,7 +83,7 @@ namespace parking.Views.Administration
         {
             userCode = TxtUserCode.Text.Trim();
             userName = h.SanitizeStr(TxtUserName.Text.Trim());
-            userPassword = pwdHasher.makeHash(TxtPwd.Text.Trim());
+            userPassword = pwdHasher.MakeHash(TxtPwd.Text.Trim());
             userState = ChkState.Checked;
             employeeCode = CmbEmployees.SelectedValue.ToString();
             roleId = Convert.ToInt32(CmbRole.SelectedValue);
@@ -255,7 +255,7 @@ namespace parking.Views.Administration
 
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -265,6 +265,29 @@ namespace parking.Views.Administration
                 {
                     USERS newUser = userController.getUser(TxtUserCode.Text);
                     EMPLOYEE_USER empUser = employeeUserController.getEmployeeUser(TxtUserCode.Text);
+
+                    string cambios = "";
+                    var separator = ", ";
+
+                    if (newUser.USER_NAME != userName)
+                        cambios += $"USER_NAME: '{newUser.USER_NAME}' → '{userName}'{separator}";
+
+                    if (newUser.USER_STATE != userState)
+                        cambios += $"USER_STATE: '{newUser.USER_STATE}' → '{userState}'{separator}";
+
+                    if (newUser.ROLE_ID != roleId)
+                        cambios += $"ROLE_ID: '{newUser.ROLE_ID}' → '{roleId}'{separator}";
+
+                    if (!string.IsNullOrEmpty(userPassword) && newUser.USER_PASSWORD != userPassword)
+                        cambios += $"USER_PASSWORD: '[oculto]' → '[nuevo]'{separator}";
+
+                    if (empUser.EMPLOYEE_CODE != employeeCode)
+                        cambios += $"EMPLOYEE_CODE: '{empUser.EMPLOYEE_CODE}' → '{employeeCode}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(cambios))
+                        cambios = cambios.TrimEnd(',', ' ');
+
                     newUser.USER_CODE = userCode;
                     newUser.USER_NAME = userName;
                     if (!String.IsNullOrEmpty(userPassword)) newUser.USER_PASSWORD = userPassword;
@@ -272,8 +295,16 @@ namespace parking.Views.Administration
                     newUser.ROLE_ID = roleId;
                     empUser.EMPLOYEE_CODE = employeeCode;
                     empUser.USER_CODE = userCode;
+
+
+
                     if (userController.updateUser(newUser) > 0 && employeeUserController.updateEmployeeUser(empUser) > 0)
                     {
+                        if (!string.IsNullOrEmpty(cambios))
+                        {
+                            string logDesc = $"El usuario {User.userName} modificó al usuario {userName}. Cambios: {cambios}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgSuccess(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -285,7 +316,7 @@ namespace parking.Views.Administration
             }
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -293,6 +324,7 @@ namespace parking.Views.Administration
 
                 if (userController.deleteUser(user.USER_CODE) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {User.userName} eliminó permanentemente al usuario {user.USER_NAME}.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -304,7 +336,7 @@ namespace parking.Views.Administration
             }
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -312,6 +344,7 @@ namespace parking.Views.Administration
                 user.IS_DEL = false;
                 if (userController.updateUser(user) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {User.userName} restauró al usuario {user.USER_NAME} de la papelera.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -333,7 +366,7 @@ namespace parking.Views.Administration
             getUsers("", flagIsPaperbin);
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
 
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
@@ -342,6 +375,7 @@ namespace parking.Views.Administration
                 user.IS_DEL = true;
                 if (userController.updateUser(user) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {User.userName} movió al usuario {user.USER_NAME} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgSuccess(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -372,7 +406,7 @@ namespace parking.Views.Administration
             startForm();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -383,6 +417,7 @@ namespace parking.Views.Administration
                 user.USER_PASSWORD = userPassword;
                 user.USER_STATE = userState;
                 user.ROLE_ID = roleId;
+                user.CREATED_BY= Config.User.userId;
                 user.INSERTED_AT = DateTime.Now;
 
                 if (userController.saveUser(user) > 0)
@@ -395,6 +430,8 @@ namespace parking.Views.Administration
                     employeeUser.INSERTED_AT = DateTime.Now;
                     if (employeeUserController.saveEmployeeUser(employeeUser) > 0)
                     {
+                        await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} insertó al usuario {userName}.", moduleId, DateTime.Now);
+
                         h.MsgInfo(Helpers.App.Msg0001);
                         startForm();
                     }

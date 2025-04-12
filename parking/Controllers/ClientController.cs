@@ -48,7 +48,7 @@ namespace parking.Controllers
                             (c.CLIENT_NAME + " " + c.CLIENT_LASTNAME).Contains(searchFilter) ||
                             c.CLIENT_PHONE.Contains(searchFilter) ||
                             c.CLIENT_ADDRESS.Contains(searchFilter) ||
-                            c.CLIENT_DNI.Contains(searchFilter) ||
+                            c.CLIENT_CODE.Contains(searchFilter) ||
                             c.INSERTED_AT.ToString().Contains(searchFilter));
                     }
 
@@ -128,7 +128,7 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    if(HasReferences(db,db.CHECK_IN,c => c.CLIENT_DNI == clientId))
+                    if(HasReferences(db,db.CHECK_IN,c => c.CLIENT_CODE == clientId))
                     {
                         h.MsgError(Helpers.App.Msg0019);
                         return 0;
@@ -146,5 +146,7 @@ namespace parking.Controllers
             return result;
 
         }
+        
+        
     }
 }

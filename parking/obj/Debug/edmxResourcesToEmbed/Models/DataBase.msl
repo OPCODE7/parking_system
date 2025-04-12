@@ -22,7 +22,6 @@
       <EntityTypeMapping TypeName="PARKINGModel.CHECK_IN">
         <MappingFragment StoreEntitySet="CHECK_IN">
           <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
-          <ScalarProperty Name="CLIENT_DNI" ColumnName="CLIENT_DNI" />
           <ScalarProperty Name="VEHICLE_PLATE" ColumnName="VEHICLE_PLATE" />
           <ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
           <ScalarProperty Name="OBSERVATIONS" ColumnName="OBSERVATIONS" />
@@ -31,6 +30,7 @@
           <ScalarProperty Name="CHECK_IN_STATE" ColumnName="CHECK_IN_STATE" />
           <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="CLIENT_CODE" ColumnName="CLIENT_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -120,6 +120,7 @@
     <EntitySetMapping Name="DISCOUNTS_BILL">
       <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
         <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
           <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
           <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
@@ -182,6 +183,9 @@
     <EntitySetMapping Name="LOGBOOK_APP">
       <EntityTypeMapping TypeName="PARKINGModel.LOGBOOK_APP">
         <MappingFragment StoreEntitySet="LOGBOOK_APP">
+          <ScalarProperty Name="ACTION_TYPE" ColumnName="ACTION_TYPE" />
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
           <ScalarProperty Name="LOG_DESCRIPTION" ColumnName="LOG_DESCRIPTION" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
@@ -216,6 +220,7 @@
     <EntitySetMapping Name="PARKING_TYPES">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
         <MappingFragment StoreEntitySet="PARKING_TYPES">
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
           <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
@@ -226,6 +231,7 @@
     <EntitySetMapping Name="ROLE_PERMISSIONS">
       <EntityTypeMapping TypeName="PARKINGModel.ROLE_PERMISSIONS">
         <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
@@ -272,6 +278,7 @@
     <EntitySetMapping Name="USER_ROLES">
       <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
         <MappingFragment StoreEntitySet="USER_ROLES">
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
           <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />
@@ -283,6 +290,7 @@
     <EntitySetMapping Name="USERS">
       <EntityTypeMapping TypeName="PARKINGModel.USERS">
         <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
           <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />

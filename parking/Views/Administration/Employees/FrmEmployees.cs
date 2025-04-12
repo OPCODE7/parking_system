@@ -1,4 +1,5 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
 using parking.Controllers;
 using parking.DTO;
 using parking.Helpers;
@@ -14,6 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Employees
 {
@@ -24,6 +26,7 @@ namespace parking.Views.Administration.Employees
         EmployeeController employeeController = new EmployeeController();
         JobPositionController jobPositionController = new JobPositionController();
         HoraryController horaryController = new HoraryController();
+        LogBookAppController lac= new LogBookAppController();
 
         string dni,name,lastname,phone,email,address,employeeCode,jobPositionCode,horaryCode,moduleId= "EMP";
         bool flagIsPaperBin = false;
@@ -91,7 +94,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if(validateData() == 0)
             {
@@ -110,6 +113,7 @@ namespace parking.Views.Administration.Employees
 
                 if (employeeController.saveEmployee(newEmployee) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó al empleado {name} {lastname}.", moduleId, DateTime.Now);
                     h.MsgInfo(App.Msg0001);
                     startForm();
                 }
@@ -126,7 +130,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if(validateData() == 0)
             {
@@ -134,6 +138,42 @@ namespace parking.Views.Administration.Employees
                {
                     setValues();
                     EMPLOYEES newEmployee = employeeController.getEmployee(TxtEmployeeCode.Text.Trim());
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (newEmployee.EMPLOYEE_CODE != employeeCode)
+                        changes += $"EMPLOYEE_CODE: '{newEmployee.EMPLOYEE_CODE}' → '{employeeCode}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_DNI != dni)
+                        changes += $"EMPLOYEE_DNI: '{newEmployee.EMPLOYEE_DNI}' → '{dni}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_NAME != name)
+                        changes += $"EMPLOYEE_NAME: '{newEmployee.EMPLOYEE_NAME}' → '{name}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_LASTNAME != lastname)
+                        changes += $"EMPLOYEE_LASTNAME: '{newEmployee.EMPLOYEE_LASTNAME}' → '{lastname}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_PHONE != phone)
+                        changes += $"EMPLOYEE_PHONE: '{newEmployee.EMPLOYEE_PHONE}' → '{phone}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_EMAIL != email)
+                        changes += $"EMPLOYEE_EMAIL: '{newEmployee.EMPLOYEE_EMAIL}' → '{email}'{separator}";
+
+                    if (newEmployee.EMPLOYEE_ADDRESS != address)
+                        changes += $"EMPLOYEE_ADDRESS: '{newEmployee.EMPLOYEE_ADDRESS}' → '{address}'{separator}";
+
+                    if (newEmployee.JOB_POSITION_CODE != jobPositionCode)
+                        changes += $"JOB_POSITION_CODE: '{newEmployee.JOB_POSITION_CODE}' → '{jobPositionCode}'{separator}";
+
+                    if (newEmployee.HORARY_CODE != horaryCode)
+                        changes += $"HORARY_CODE: '{newEmployee.HORARY_CODE}' → '{horaryCode}'{separator}";
+
+
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
                     newEmployee.EMPLOYEE_CODE = employeeCode;
                     newEmployee.EMPLOYEE_DNI = dni;
                     newEmployee.EMPLOYEE_NAME = name;
@@ -146,6 +186,8 @@ namespace parking.Views.Administration.Employees
 
                     if (employeeController.updateEmployee(newEmployee) > 0)
                     {
+                        string logDesc = $"El usuario {Config.User.userName} modificó al empleado {name} {lastname}. Cambios: {changes}.";
+                        await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
                         h.MsgInfo(App.Msg0003);
                         startForm();
                     }
@@ -158,7 +200,7 @@ namespace parking.Views.Administration.Employees
 
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
 
@@ -168,6 +210,7 @@ namespace parking.Views.Administration.Employees
             {
                 if (employeeController.updateEmployee(employee) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió al empleado {employee.EMPLOYEE_NAME} {employee.EMPLOYEE_LASTNAME} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(App.Msg0005);
                     startForm();
                 }
@@ -204,7 +247,7 @@ namespace parking.Views.Administration.Employees
             getEmployees("", true);
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
 
@@ -213,6 +256,7 @@ namespace parking.Views.Administration.Employees
             {
                 if (employeeController.deleteEmployee(employee) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente al empleado {employee.EMPLOYEE_NAME} {employee.EMPLOYEE_LASTNAME}.", moduleId, DateTime.Now);
                     h.MsgInfo(App.Msg0008);
                     startForm();
                 }
@@ -223,7 +267,7 @@ namespace parking.Views.Administration.Employees
             }
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             EMPLOYEES employee = employeeController.getEmployee(TxtEmployeeCode.Text);
             employee.IS_DEL = false;
@@ -232,6 +276,7 @@ namespace parking.Views.Administration.Employees
             {
                 if (employeeController.updateEmployee(employee) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró al empleado {employee.EMPLOYEE_NAME} {employee.EMPLOYEE_LASTNAME} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(App.Msg0010);
                     startForm();
                 }

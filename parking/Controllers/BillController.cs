@@ -34,7 +34,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
 
             }
             return result;
@@ -57,14 +57,14 @@ namespace parking.Controllers
 
                 }
             }
-            catch (SqlException ex)
+            catch(SqlException ex)
             {
-                h.MsgError("No se pudo generar el número de factura: " + ex.Message);
+                h.MsgError(ex.Message);
                 throw;
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message);
                 throw;
             }
         }

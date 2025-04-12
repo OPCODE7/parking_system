@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace parking.Views.Administration.ParkingStructure
         Helpers.Helpers h= new Helpers.Helpers();
         CorrelativesController correlativeController= new CorrelativesController();
         ParkingFeeController parkingFeeController= new ParkingFeeController();
+        LogBookAppController lac = new LogBookAppController();
+
         string psCode,parkingFee,userId,moduleId= "PSP";
         int psNumber;
         bool psState,flagIsPaperbin;
@@ -73,7 +76,7 @@ namespace parking.Views.Administration.ParkingStructure
             TxtSearch.Focus();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -89,6 +92,8 @@ namespace parking.Views.Administration.ParkingStructure
                 
                 if(psc.saveParkingSpace(newPs) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó el espacio de parqueo con código {psCode}.", moduleId, DateTime.Now);
+
                     h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
@@ -131,8 +136,17 @@ namespace parking.Views.Administration.ParkingStructure
             if (!Regex.Match(TxtNumberSpace.Text, RegexPatterns.NumberPattern).Success) {
                 h.MsgError("INGRESAR CORRECTAMENTE EL NÚMERO DEL ESPACIO DE PARQUEO. ¡SÓLO NÚMEROS!");
                 error++;
-                TxtPrice.Focus();
+                TxtNumberSpace.Focus();
                 return error;
+            }
+
+            if (psc.isParkingNumberExists(Convert.ToInt32(TxtNumberSpace.Text.Trim())))
+            {
+                h.MsgError("EL NÚMERO DE PARQUEO YA EXISTE!");
+                error++;
+                TxtNumberSpace.Focus();
+                return error;
+
             }
 
             if (CmbParkingFee.SelectedValue == null)
@@ -146,46 +160,54 @@ namespace parking.Views.Administration.ParkingStructure
             return error;
         }
 
-        private void PbxCancel_Click(object sender, EventArgs e)
-        {
-            TxtSearch.Clear();
-            getParkingSpaces("",flagIsPaperbin);
-        }
+      
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             startForm();
         }
 
-        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                getParkingSpaces(TxtSearch.Text.Trim(),flagIsPaperbin);
-            }
-        }
+      
 
-        private void PbxSearch_Click(object sender, EventArgs e)
-        {
-            getParkingSpaces(TxtSearch.Text.Trim(),flagIsPaperbin);
-        }
+       
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         { 
-            dynamic ps = psc.getInfoParkingSpace(TxtParkingSpaceCode.Text);
             
             if (h.MsgQuestion(Helpers.App.Msg0002)=="S")
             {
-                
                 if (validateData() == 0)
                 {
                     setValues();
                     PARKING_SPACE editPs = psc.getParkingSpace(TxtParkingSpaceCode.Text);
+
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (editPs.PARKING_SPACE_NUMBER != psNumber)
+                        changes += $"PARKING_SPACE_NUMBER: '{editPs.PARKING_SPACE_NUMBER}' → '{psNumber}'{separator}";
+
+                    if (editPs.PARKING_FEE_CODE != parkingFee)  
+                        changes += $"PARKING_FEE_CODE: '{editPs.PARKING_FEE_CODE}' → '{parkingFee}'{separator}";
+
+                    if (editPs.STATE != psState)
+                        changes += $"STATE: '{editPs.STATE}' → '{psState}'{separator}";
+
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
                     editPs.PARKING_SPACE_NUMBER = psNumber;
                     editPs.PARKING_FEE_CODE = parkingFee;
                     editPs.STATE = psState;
                     if (psc.updateParkingSpace(editPs) > 0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {Config.User.userName} modificó el espacio de parqueo con código {TxtParkingSpaceCode.Text}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -199,7 +221,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             PARKING_SPACE ps = psc.getParkingSpace(TxtParkingSpaceCode.Text);
             ps.DEL = true;
@@ -207,6 +229,7 @@ namespace parking.Views.Administration.ParkingStructure
             {
                 if(psc.updateParkingSpace(ps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió el espacio de parqueo con código {ps.PARKING_SPACE_CODE} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -230,7 +253,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -238,6 +261,7 @@ namespace parking.Views.Administration.ParkingStructure
                 ps.DEL = false;
                 if (psc.updateParkingSpace(ps) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró el espacio de parqueo con código {ps.PARKING_SPACE_CODE} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -250,12 +274,13 @@ namespace parking.Views.Administration.ParkingStructure
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
                 if (psc.deleteParkingSpace(TxtParkingSpaceCode.Text) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente el espacio de parqueo con código {TxtParkingSpaceCode.Text}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -265,6 +290,25 @@ namespace parking.Views.Administration.ParkingStructure
                 }
             }
 
+        }
+
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                getParkingSpaces(TxtSearch.Text.Trim(), flagIsPaperbin);
+            }
+        }
+
+        private void PbxSearch_Click(object sender, EventArgs e)
+        {
+            getParkingSpaces(TxtSearch.Text.Trim(), flagIsPaperbin);
+        }
+
+        private void PbxCancel_Click(object sender, EventArgs e)
+        {
+            TxtSearch.Clear();
+            getParkingSpaces("", flagIsPaperbin);
         }
 
         private void CmbParkingFee_TextChanged(object sender, EventArgs e)

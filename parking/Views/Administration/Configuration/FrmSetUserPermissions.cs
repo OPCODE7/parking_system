@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Configuration
 {
@@ -22,11 +23,15 @@ namespace parking.Views.Administration.Configuration
         RoleController roleController = new RoleController();
         RolePermissionsController rolePermissionController = new RolePermissionsController();
         PermissionController permissionController = new PermissionController();
+        LogBookAppController lac = new LogBookAppController();
+        AppModulesController amc= new AppModulesController();
 
         string moduleId = "UPER";
+        APP_MODULES moduleData = new APP_MODULES();
         public FrmSetUserPermissions()
         {
             InitializeComponent();
+            moduleData = amc.getModule(moduleId);
         }
 
         private void PbxClose_Click(object sender, EventArgs e)
@@ -41,7 +46,7 @@ namespace parking.Views.Administration.Configuration
 
         private void fillCmbRoles()
         {
-            List<USER_ROLES> roles = roleController.getRoles("",false);
+            List<USER_ROLES> roles = roleController.getRoles("", false);
 
             CmbRoles.DataSource = roles;
             CmbRoles.DisplayMember = "ROLE_NAME";
@@ -52,7 +57,7 @@ namespace parking.Views.Administration.Configuration
         private void fillTrvPermissions()
         {
             TrvPermissions.Nodes.Clear();
-           
+
 
             var permissions = permissionController.getPermissions();
 
@@ -63,7 +68,7 @@ namespace parking.Views.Administration.Configuration
             }
 
             var groupModules = permissions.GroupBy(p => p.MODULE_NAME);
-           
+
 
             foreach (var groupModule in groupModules)
             {
@@ -86,11 +91,11 @@ namespace parking.Views.Administration.Configuration
             }
 
             TrvPermissions.ExpandAll();
-            TrvPermissions.AutoScrollOffset = new Point(0, 0);
-
-
-
-
+            if (TrvPermissions.Nodes.Count > 0)
+            {
+                var firstNode = TrvPermissions.Nodes[0];
+                firstNode.EnsureVisible();
+            }
         }
 
         private void startForm()
@@ -98,16 +103,15 @@ namespace parking.Views.Administration.Configuration
             fillCmbRoles();
             fillTrvPermissions();
             TrvPermissions.Enabled = false;
-            BtnSave.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
+            BtnSave.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
         }
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             startForm();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
-            ROLE_PERMISSIONS rolePermission = new ROLE_PERMISSIONS();
             try
             {
                 if (CmbRoles.SelectedValue == null)
@@ -118,45 +122,66 @@ namespace parking.Views.Administration.Configuration
 
                 int roleId = Convert.ToInt32(CmbRoles.SelectedValue);
 
-                foreach (TreeNode parenNode in TrvPermissions.Nodes)
+                foreach (TreeNode parentNode in TrvPermissions.Nodes)
                 {
-                    foreach(TreeNode childNode in parenNode.Nodes)
+                    foreach (TreeNode childNode in parentNode.Nodes)
                     {
-                        ROLE_PERMISSIONS rp = rolePermissionController.getRolePermission(roleId, Convert.ToInt32(childNode.Tag));
+                        int permissionId = Convert.ToInt32(childNode.Tag);
+                        bool isChecked = childNode.Checked;
 
-                        if (childNode.Checked)
-                        {
-                            rolePermission.ROLE_ID = roleId;
-                            rolePermission.PERMISSION_ID = Convert.ToInt32(childNode.Tag);
-                            rolePermission.INSERTED_AT = DateTime.Now;
+                        var existing = rolePermissionController.getRolePermission(roleId, permissionId);
+                        var permission = permissionController.getPermission(permissionId);
+                        var role = roleController.getRole(roleId);
 
-                            if (rp == null) rolePermissionController.saveRolePermission(rolePermission);
-                        }
-                        else
+                        if (isChecked && existing == null)
                         {
-                            if (rp != null)
+                            var newRolePermission = new ROLE_PERMISSIONS
                             {
-                                rolePermissionController.deleteRolePermission(rp);
+                                ROLE_ID = roleId,
+                                PERMISSION_ID = permissionId,
+                                INSERTED_AT = DateTime.Now
+                            };
+
+                            int saved = rolePermissionController.saveRolePermission(newRolePermission);
+
+                            if (saved > 0)
+                            {
+                                await lac.saveLog(Config.User.userId, "Insertar",
+                                     $"El usuario {User.userName} habilitó el permiso {permission.PERMISSION_DESCRIPTION} del módulo {moduleData.MODULE_NAME} para el rol {role.ROLE_NAME}.",
+                                     moduleId, DateTime.Now);
+
                             }
                         }
+                        else if (!isChecked && existing != null)
+                        {
+                            int deleted = rolePermissionController.deleteRolePermission(existing);
+
+                            if (deleted > 0)
+                            {
+                                await lac.saveLog(Config.User.userId, "Eliminar",
+                                    $"El usuario {User.userName} deshabilitó el permiso {permission.PERMISSION_DESCRIPTION} del módulo {moduleData.MODULE_NAME} para el rol {role.ROLE_NAME}.",
+                                    moduleId, DateTime.Now);
+                            }
+                        }
+                        // Si está marcado y ya existe, no hacemos nada.
+                        // Si no está marcado y no existe, tampoco.
                     }
-                   
                 }
 
+                // Actualizar permisos del usuario
                 PermissionManager.UserPermissions = rolePermissionController.getPermissionsByRole(User.roleId);
 
                 h.MsgInfo(Helpers.App.Msg0003);
                 startForm();
-                if(User.roleId == roleId)
+
+                if (User.roleId == roleId)
                 {
                     h.MsgInfo("DEBES DESCONECTARTE PARA VER LOS CAMBIOS!");
-                    
                 }
-               
             }
             catch (Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError($"Ocurrió un error: {ex.Message}");
             }
         }
 
@@ -165,44 +190,44 @@ namespace parking.Views.Administration.Configuration
             if (CmbRoles.SelectedValue != null)
             {
                 var selectedRole = CmbRoles.SelectedValue;
-               
+
                 if (selectedRole is int id)
                 {
 
                     TrvPermissions.Enabled = true;
-                    foreach (TreeNode node in TrvPermissions.Nodes)
+                    foreach (TreeNode parentNode in TrvPermissions.Nodes)
                     {
-                        node.Checked = false;
-                        foreach (TreeNode childNode in node.Nodes)
+                        parentNode.Checked = false;
+                        foreach (TreeNode childNode in parentNode.Nodes)
                         {
                             childNode.Checked = false;
                         }
-                      
+
                     }
                     int roleId = id;
                     IEnumerable<dynamic> lst = rolePermissionController.getPermissionsByRole(roleId);
                     if (lst != null && lst.Any())
                     {
-                        foreach(TreeNode node in TrvPermissions.Nodes)
+                        foreach (TreeNode parentNode in TrvPermissions.Nodes)
                         {
-                            int counChecked = 0;
-                            foreach(TreeNode childNode in node.Nodes)
+                            int countChecked = 0;
+                            foreach (TreeNode childNode in parentNode.Nodes)
                             {
                                 foreach (var item in lst)
                                 {
                                     if (Convert.ToInt32(childNode.Tag) == item.PERMISSION_ID)
                                     {
                                         childNode.Checked = true;
-                                        counChecked++;
+                                        countChecked++;
 
                                     }
-                                   
+
                                 }
                             }
-                            if (counChecked == node.Nodes.Count) node.Checked = true;
-                            
+                            if (countChecked == parentNode.Nodes.Count) parentNode.Checked = true;
+
                         }
-                       
+
                     }
                 }
             }

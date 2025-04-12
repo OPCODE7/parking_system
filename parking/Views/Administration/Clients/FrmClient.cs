@@ -13,6 +13,9 @@ using parking.Models;
 using parking.Config;
 using parking.Helpers;
 using parking.DTO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Runtime.Remoting;
+using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
 
 namespace parking.Views.Administration.Clients
 {
@@ -21,6 +24,8 @@ namespace parking.Views.Administration.Clients
         CorrelativesController correlativesController = new CorrelativesController();
         ClientController clientController = new ClientController();
         Helpers.Helpers h = new Helpers.Helpers();
+        LogBookAppController lac= new LogBookAppController();
+
         string userId, clientId, clientName, clientLastName, clientEmail,clientDni, clientAddress, clientPhone,moduleId= "CLI";
         bool flagIsPaperbin = false;
 
@@ -70,7 +75,7 @@ namespace parking.Views.Administration.Clients
         }
 
         
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -78,6 +83,32 @@ namespace parking.Views.Administration.Clients
                 if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
                 {
                     CLIENTS editClient = clientController.getClient(TxtClientCode.Text);
+                    string changes = "";
+                    var separator = ", ";
+
+                    if (editClient.CLIENT_DNI != clientDni)
+                        changes += $"CLIENT_DNI: '{editClient.CLIENT_DNI}' → '{clientDni}'{separator}";
+
+                    if (editClient.CLIENT_NAME!= clientName)
+                        changes += $"CLIENT_NAME: '{editClient.CLIENT_NAME}' → '{clientName}'{separator}";
+
+                    if (editClient.CLIENT_LASTNAME != clientLastName) 
+                        changes += $"CLIENT_LASTNAME: '{editClient.CLIENT_LASTNAME}' → '{clientLastName}'{separator}";
+
+                    if (editClient.CLIENT_EMAIL != clientEmail)
+                        changes += $"CLIENT_EMAIL: '{editClient.CLIENT_EMAIL}' → '{clientEmail}'{separator}";
+
+
+                    if (editClient.CLIENT_PHONE != clientPhone)
+                        changes += $"CLIENT_PHONE: '{editClient.CLIENT_PHONE}' → '{clientPhone}'{separator}";
+
+                    if (editClient.CLIENT_ADDRESS != clientAddress)
+                        changes += $"CLIENT_ADDRESS: '{editClient.CLIENT_ADDRESS}' → '{clientAddress}'{separator}";
+
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(changes))
+                        changes = changes.TrimEnd(',', ' ');
+
                     editClient.CLIENT_DNI = clientDni;
                     editClient.CLIENT_NAME = clientName;
                     editClient.CLIENT_LASTNAME = clientLastName;
@@ -87,6 +118,11 @@ namespace parking.Views.Administration.Clients
 
                     if (clientController.updateClient(editClient) > 0)
                     {
+                        if (!string.IsNullOrEmpty(changes))
+                        {
+                            string logDesc = $"El usuario {Config.User.userName} modificó al cliente {clientName}. Cambios: {changes}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -122,7 +158,7 @@ namespace parking.Views.Administration.Clients
             getClients("",flagIsPaperbin);
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
@@ -131,6 +167,7 @@ namespace parking.Views.Administration.Clients
 
                 if (clientController.updateClient(client) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró al cliente {client.CLIENT_NAME} {client.CLIENT_LASTNAME} de la papelera.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -142,7 +179,7 @@ namespace parking.Views.Administration.Clients
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -150,6 +187,7 @@ namespace parking.Views.Administration.Clients
 
                 if (clientController.deleteClient(client.CLIENT_CODE) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó permanentemente al cliente {client.CLIENT_NAME} {client.CLIENT_LASTNAME}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -169,7 +207,7 @@ namespace parking.Views.Administration.Clients
             }
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             if(h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -177,6 +215,7 @@ namespace parking.Views.Administration.Clients
                 client.IS_DEL = true;
                 if(clientController.updateClient(client) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió  al cliente {client.CLIENT_NAME} {client.CLIENT_LASTNAME} a la papelera de reciclaje.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -241,7 +280,7 @@ namespace parking.Views.Administration.Clients
             TxtClientCode.Text = newCode;
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if(validateData() == 0)
             {
@@ -259,6 +298,7 @@ namespace parking.Views.Administration.Clients
 
                 if (clientController.saveClient(newClient) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó al cliente {clientName} {clientLastName}.", moduleId, DateTime.Now);
                     h.MsgInfo(Helpers.App.Msg0001);
                     startForm();
                 }
@@ -318,7 +358,7 @@ namespace parking.Views.Administration.Clients
                 return error;
             }
 
-            if (MskPhoneNumber.Text.Trim().Length==0)
+            if (!MskPhoneNumber.MaskFull)
             {
                 h.MsgWarning("INGRESAR NÚMERO TELEFÓNICO.");
                 error++;
@@ -353,7 +393,7 @@ namespace parking.Views.Administration.Clients
 
             foreach(var client in clients)
             {
-                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.CLIENT_DNI,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
+                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.CLIENT_CODE,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
             }
         }
     }

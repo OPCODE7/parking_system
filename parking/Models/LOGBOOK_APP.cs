@@ -17,5 +17,8 @@ namespace parking.Models
         public int LOG_ID { get; set; }
         public string LOG_DESCRIPTION { get; set; }
         public Nullable<System.DateTime> INSERTED_AT { get; set; }
+        public string USER_CODE { get; set; }
+        public string MODULE_ID { get; set; }
+        public string ACTION_TYPE { get; set; }
     }
 }

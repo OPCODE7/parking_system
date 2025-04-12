@@ -1,4 +1,6 @@
-﻿using parking.Config;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Config;
+using parking.Controllers;
 using parking.DTO;
 using parking.Models;
 using System;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace parking.Views.Administration.Configuration
 {
@@ -17,6 +20,9 @@ namespace parking.Views.Administration.Configuration
     {
         Helpers.Helpers h = new Helpers.Helpers();
         Controllers.BillRangeController brc = new Controllers.BillRangeController();
+        LogBookAppController lac= new LogBookAppController();
+        BillController bc= new BillController();
+
         string establishment, emissionPoint, doctype, userId, moduleId = "RFAC";
         int initialRange, finalRange, lastUsed;
         bool flagIsPaperbin = false;
@@ -111,7 +117,7 @@ namespace parking.Views.Administration.Configuration
             }
         }
 
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private async void BtnEdit_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
@@ -119,6 +125,30 @@ namespace parking.Views.Administration.Configuration
                 {
                     setValues();
                     BILL_RANGE updateBillRange = brc.getBillRange(Convert.ToInt32(TxtBillRangeId.Text));
+
+                    string cambios = "";
+                    var separator = ", ";
+
+                    if (updateBillRange.ESTABLISHMENT != establishment)
+                        cambios += $"ESTABLISHMENT: '{updateBillRange.ESTABLISHMENT}' → '{establishment}'{separator}";
+
+                    if (updateBillRange.EMISSION_POINT != emissionPoint)
+                        cambios += $"EMISSION_POINT: '{updateBillRange.EMISSION_POINT}' → '{emissionPoint}'{separator}";
+
+                    if (updateBillRange.DOC_TYPE != doctype)
+                        cambios += $"DOC_TYPE: '{updateBillRange.DOC_TYPE}' → '{doctype}'{separator}";
+
+                    if (updateBillRange.INITIAL_RANGE != initialRange)
+                        cambios += $"INITIAL_RANGE: '{updateBillRange.INITIAL_RANGE}' → '{initialRange}'{separator}";
+
+                    if (updateBillRange.FINAL_RANGE != finalRange)
+                        cambios += $"FINAL_RANGE: '{updateBillRange.FINAL_RANGE}' → '{finalRange}'{separator}";
+
+                   
+                    // Limpiar coma final
+                    if (!string.IsNullOrEmpty(cambios))
+                        cambios = cambios.TrimEnd(',', ' ');
+
                     updateBillRange.ESTABLISHMENT = establishment;
                     updateBillRange.EMISSION_POINT = emissionPoint;
                     updateBillRange.DOC_TYPE = doctype;
@@ -127,6 +157,11 @@ namespace parking.Views.Administration.Configuration
 
                     if (brc.updateBillRange(updateBillRange) > 0)
                     {
+                        if (!string.IsNullOrEmpty(cambios))
+                        {
+                            string logDesc = $"El usuario {Config.User.userName} modificó el rango de facturacion con código {updateBillRange.BILL_RANGE_ID}. Cambios: {cambios}.";
+                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                        }
                         h.MsgInfo(Helpers.App.Msg0003);
                         startForm();
                     }
@@ -151,14 +186,35 @@ namespace parking.Views.Administration.Configuration
             getBillRanges("",flagIsPaperbin);
         }
 
-        private void PbxRecovery_Click(object sender, EventArgs e)
+        private async void PbxRecovery_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0009) == "S")
             {
                 BILL_RANGE br = brc.getBillRange(Convert.ToInt32(TxtBillRangeId.Text));
                 br.DEL = false;
+
+                if (br.LAST_USED < br.FINAL_RANGE)
+                {
+                    br.BILL_RANGE_STATE = true;
+                }
+
+                BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));
+
+                
+
                 if (brc.updateBillRange(br) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró el rango de facturación con código  {brc.getLastIdBillRange(false)} de la papelera.", moduleId, DateTime.Now);
+
+                    lastBillRange.BILL_RANGE_STATE = false;
+
+                    if (brc.updateBillRange(lastBillRange) < 0)
+                    {
+                        h.MsgError(Helpers.App.Msg0017);
+                        return;
+                    }
+
+
                     h.MsgInfo(Helpers.App.Msg0010);
                     startForm();
                 }
@@ -170,7 +226,7 @@ namespace parking.Views.Administration.Configuration
 
         }
 
-        private void PbxDestroy_Click(object sender, EventArgs e)
+        private async void PbxDestroy_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0007) == "S")
             {
@@ -178,6 +234,20 @@ namespace parking.Views.Administration.Configuration
                 br.DEL = true;
                 if (brc.deleteBillRange(br.BILL_RANGE_ID) > 0)
                 {
+                    BILL_RANGE lastBillRange= brc.getBillRange(brc.getLastIdBillRange(false));
+                    await lac.saveLog(Config.User.userId, "Eliminar", $"El usuario {Config.User.userName} eliminó el rango de facturación con código  {TxtBillRangeId.Text}.", moduleId, DateTime.Now);
+
+                    if (lastBillRange.LAST_USED < lastBillRange.FINAL_RANGE)
+                    {
+                        lastBillRange.BILL_RANGE_STATE = true;
+                        if (brc.updateBillRange(lastBillRange) < 0)
+                        {
+                            h.MsgError(Helpers.App.Msg0016);
+                            return;
+                        }
+                       
+                    }
+                    
                     h.MsgInfo(Helpers.App.Msg0008);
                     startForm();
                 }
@@ -210,7 +280,7 @@ namespace parking.Views.Administration.Configuration
 
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private async void BtnDelete_Click(object sender, EventArgs e)
         {
             if (h.MsgQuestion(Helpers.App.Msg0004) == "S")
             {
@@ -218,6 +288,22 @@ namespace parking.Views.Administration.Configuration
                 br.DEL = true;
                 if (brc.updateBillRange(br) > 0)
                 {
+                    await lac.saveLog(Config.User.userId, "Mover a papelera", $"El usuario {Config.User.userName} movió  el rango de facturación con código {br.BILL_RANGE_ID} a la papelera de reciclaje.", moduleId, DateTime.Now);
+
+                   
+                    BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));
+
+                    if (lastBillRange.LAST_USED < lastBillRange.FINAL_RANGE)
+                    {
+                        lastBillRange.BILL_RANGE_STATE = true;
+                        if (brc.updateBillRange(lastBillRange) < 0)
+                        {
+                            h.MsgError(Helpers.App.Msg0016);
+                            return;
+                        }
+
+                    }
+
                     h.MsgInfo(Helpers.App.Msg0005);
                     startForm();
                 }
@@ -256,7 +342,7 @@ namespace parking.Views.Administration.Configuration
         private int validateData()
         {
             int error = 0;
-            var lastBillRange = brc.getBillRangeInfo(brc.getLastIdBillRange());
+            var lastBillRange = brc.getBillRangeInfo(brc.getLastIdBillRange(false));
 
             if (!MskInitialRange.MaskFull)
             {
@@ -311,12 +397,12 @@ namespace parking.Views.Administration.Configuration
             initialRange = Convert.ToInt32(billRange[3]);
             finalRange = Convert.ToInt32(MskFinalRange.Text.Split('-')[3]);
             lastUsed = initialRange - 1;
-            userId = User.userId;
+            userId = Config.User.userId;
 
 
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
             {
@@ -331,14 +417,19 @@ namespace parking.Views.Administration.Configuration
                 newBillRange.INSERTED_AT = DateTime.Now;
                 newBillRange.BILL_RANGE_STATE = true;
                 newBillRange.USER_CODE = userId;
-                BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange());
+                BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));
 
                 if (brc.saveBillRange(newBillRange) > 0)
                 {
+
                     lastBillRange.BILL_RANGE_STATE = false;
 
                     if (brc.updateBillRange(lastBillRange) > 0)
                     {
+                        await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {Config.User.userName} insertó el rango de facturación con código {brc.getLastIdBillRange(false)}.", moduleId, DateTime.Now);
+                        
+                        await lac.saveLog(Config.User.userId, "Modificar", $"El usuario {Config.User.userName} modificó el rango de facturacion con código {lastBillRange.BILL_RANGE_ID}. Cambios: BILL_RANGE_STATE: 'activo' → 'inactivo'.", moduleId, DateTime.Now);
+
                         h.MsgInfo(Helpers.App.Msg0001);
                         startForm();
                     }
