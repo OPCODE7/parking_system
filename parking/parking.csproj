@@ -125,6 +125,7 @@
     <Compile Include="DTO\CheckOutDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
     <Compile Include="DTO\EmployeeDTO.cs" />
+    <Compile Include="DTO\LogBookDTO.cs" />
     <Compile Include="DTO\ParkingFeeDTO.cs" />
     <Compile Include="DTO\ParkingSpaceDTO.cs" />
     <Compile Include="DTO\PermissionDTO.cs" />
@@ -240,6 +241,12 @@
     </Compile>
     <Compile Include="Views\Administration\AdminPanel.Designer.cs">
       <DependentUpon>AdminPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\Audit\FrmLogBookApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Audit\FrmLogBookApp.Designer.cs">
+      <DependentUpon>FrmLogBookApp.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Administration\BillingModule\FrmGenerateBill.cs">
       <SubType>Form</SubType>
@@ -386,6 +393,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Administration\AdminPanel.resx">
       <DependentUpon>AdminPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Audit\FrmLogBookApp.resx">
+      <DependentUpon>FrmLogBookApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\BillingModule\FrmGenerateBill.resx">
       <DependentUpon>FrmGenerateBill.cs</DependentUpon>

@@ -65,6 +65,7 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
+            this.BtnLogBookApp = new System.Windows.Forms.Button();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -82,6 +83,7 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingType);
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingSpace);
             this.PnlAdminSideBar.Controls.Add(this.BtnClients);
+            this.PnlAdminSideBar.Controls.Add(this.BtnLogBookApp);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.PnlAdminSideBar.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.PnlAdminSideBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -446,6 +448,20 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
+            // BtnLogBookApp
+            // 
+            this.BtnLogBookApp.BackColor = System.Drawing.Color.Teal;
+            this.BtnLogBookApp.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnLogBookApp.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnLogBookApp.Location = new System.Drawing.Point(3, 503);
+            this.BtnLogBookApp.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnLogBookApp.Name = "BtnLogBookApp";
+            this.BtnLogBookApp.Size = new System.Drawing.Size(211, 54);
+            this.BtnLogBookApp.TabIndex = 9;
+            this.BtnLogBookApp.Text = "Bitácora";
+            this.BtnLogBookApp.UseVisualStyleBackColor = false;
+            this.BtnLogBookApp.Click += new System.EventHandler(this.BtnLogBookApp_Click);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -511,5 +527,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem BtnUserPermissions;
         private System.Windows.Forms.PictureBox PbxLogout;
+        private System.Windows.Forms.Button BtnLogBookApp;
     }
 }

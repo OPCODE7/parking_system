@@ -47,9 +47,8 @@ namespace parking.Views.Administration
             BtnBillRanges.Enabled = PermissionManager.HasPermission("RFAC", "Acceso");
             BtnUserPermissions.Enabled = PermissionManager.HasPermission("UPER", "Acceso");
             BtnReports.Enabled= PermissionManager.HasPermission("RPT", "Acceso");
-
-
             BtnJobPositions.Enabled = PermissionManager.HasPermission("JPS", "Acceso");
+            BtnLogBookApp.Enabled= PermissionManager.HasPermission("LOG","Acceso");
 
 
         }
@@ -232,6 +231,19 @@ namespace parking.Views.Administration
             this.Close();
             Login login = new Login();
             login.Show();
+        }
+
+        private void BtnLogBookApp_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+            
+            Audit.FrmLogBookApp frmLogBookApp = new Audit.FrmLogBookApp();
+            frmLogBookApp.MdiParent = this;
+            frmLogBookApp.Show();
+
+
+
         }
     }
 }
