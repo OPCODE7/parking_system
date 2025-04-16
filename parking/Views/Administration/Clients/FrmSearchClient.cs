@@ -23,13 +23,13 @@ namespace parking.Views.Administration.Clients
 
         private void FrmSearchClient_Load(object sender, EventArgs e)
         {
-            getClients();
+            getClients("",false);
         }
 
-        public void getClients(string searchFilter = "")
+        public void getClients(string searchFilter = "",bool isDel= false)
         {
             DgvClients.Rows.Clear();
-            var clients = clientController.getClients(searchFilter);
+            var clients = clientController.getClients(searchFilter,isDel);
             if (clients.Count() == 0)
             {
                 h.MsgInfo("No se encontraron resultados.");

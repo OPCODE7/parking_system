@@ -61,6 +61,8 @@
         <AssociationConnector Association="PARKINGModel.FK__USER_ROLE__USER___65570293" />
         <AssociationConnector Association="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" />
         <AssociationConnector Association="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" />
+        <AssociationConnector Association="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D" />
+        <AssociationConnector Association="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

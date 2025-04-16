@@ -13,10 +13,12 @@ C:\OPCODE\OP_APPS\parking\parking\bin\Debug\Microsoft.ReportViewer.Design.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\Microsoft.ReportViewer.WinForms.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\Microsoft.SqlServer.Types.dll
+C:\OPCODE\OP_APPS\parking\parking\bin\Debug\System.Configuration.ConfigurationManager.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\EnvDTE.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\stdole.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\EntityFramework.xml
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\EntityFramework.SqlServer.xml
+C:\OPCODE\OP_APPS\parking\parking\bin\Debug\System.Configuration.ConfigurationManager.xml
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\de\Microsoft.ReportViewer.Common.resources.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\es\Microsoft.ReportViewer.Common.resources.dll
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\fr\Microsoft.ReportViewer.Common.resources.dll
@@ -60,6 +62,7 @@ C:\OPCODE\OP_APPS\parking\parking\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinFor
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.AssemblyReference.cache
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Properties.Resources.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.AdminPanel.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Audit.FrmLogBookApp.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.BillingModule.FrmGenerateBill.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Clients.FrmClient.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Clients.FrmSearchClient.resources
@@ -85,4 +88,4 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.CoreCompileInputs.cac
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.Up2Date
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
-C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Audit.FrmLogBookApp.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Configuration.FrmServerConfig.resources

@@ -32,7 +32,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -80,6 +81,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.4\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -94,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\Boot.cs" />
     <Compile Include="Config\Env.cs" />
     <Compile Include="Config\PermissionManager.cs" />
     <Compile Include="Config\User.cs" />
@@ -278,6 +284,12 @@
     <Compile Include="Views\Administration\Configuration\FrmCompany.Designer.cs">
       <DependentUpon>FrmCompany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Administration\Configuration\FrmServerConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Configuration\FrmServerConfig.Designer.cs">
+      <DependentUpon>FrmServerConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Administration\Configuration\FrmSetUserPermissions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Configuration\FrmCompany.resx">
       <DependentUpon>FrmCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Configuration\FrmServerConfig.resx">
+      <DependentUpon>FrmServerConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Configuration\FrmSetUserPermissions.resx">
       <DependentUpon>FrmSetUserPermissions.cs</DependentUpon>

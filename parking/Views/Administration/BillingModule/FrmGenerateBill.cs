@@ -118,7 +118,7 @@ namespace parking.Views.Administration.BillingModule
                     checkOutController.updateCheckOut(checkOut);
                     FrmCheckOut frmCheckOut = (FrmCheckOut)this.Owner;
                     frmCheckOut.startForm();
-                    this.Close();
+                    this.Hide();
                     Reports.FrmGeneratedBillReport frmGeneratedBillReport = new Reports.FrmGeneratedBillReport();
                     frmGeneratedBillReport.billCode = nextBillCode;
                     frmGeneratedBillReport.ShowDialog();

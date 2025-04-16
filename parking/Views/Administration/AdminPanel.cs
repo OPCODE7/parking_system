@@ -49,6 +49,7 @@ namespace parking.Views.Administration
             BtnReports.Enabled= PermissionManager.HasPermission("RPT", "Acceso");
             BtnJobPositions.Enabled = PermissionManager.HasPermission("JPS", "Acceso");
             BtnLogBookApp.Enabled= PermissionManager.HasPermission("LOG","Acceso");
+            BtnConfigServer.Enabled= Config.User.roleName.ToLower()=="super usuario"? true : false;
 
 
         }
@@ -244,6 +245,13 @@ namespace parking.Views.Administration
 
 
 
+        }
+
+        private void BtnConfigServer_Click(object sender, EventArgs e)
+        {
+            FrmServerConfig frmServerConfig = new FrmServerConfig();
+            frmServerConfig.MdiParent = this;
+            frmServerConfig.Show();
         }
     }
 }

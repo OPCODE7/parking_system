@@ -90,11 +90,19 @@ namespace parking.Views.Reports
             }
             catch(Exception ex)
             {
-                h.MsgError(ex.ToString());
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
-
-
       
+        }
+
+        private void PbxClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void RptBill_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

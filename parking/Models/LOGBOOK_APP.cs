@@ -20,5 +20,7 @@ namespace parking.Models
         public string USER_CODE { get; set; }
         public string MODULE_ID { get; set; }
         public string ACTION_TYPE { get; set; }
+    
+        public virtual USERS USERS { get; set; }
     }
 }

@@ -48,6 +48,7 @@ namespace parking.Views.Auth
         private void Login_Load(object sender, EventArgs e)
         {
             TxtUserName.Focus();
+            
         }
 
         private void TxtPwd_KeyUp(object sender, KeyEventArgs e)

@@ -67,7 +67,7 @@ namespace parking.Controllers
 
         public CheckOutDTO getInfoCheckOut(string checkOutCode)
         {
-            CheckOutDTO checkOut = null;
+            CheckOutDTO checkOut = new CheckOutDTO();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())

@@ -429,7 +429,7 @@ namespace parking.Views.Administration.ParkingStructure
                 checkIn.VEHICLE_PLATE = vehiclePlate;
                 checkIn.CHECK_IN_TIME = DateTime.Now;
                 checkIn.INSERTED_AT = DateTime.Now;
-                checkIn.CHECK_IN_STATE = "Pendiente";
+                checkIn.CHECK_IN_STATE = "Activo";
                 checkIn.USER_CODE = Config.User.userId;
 
                 if (checkInController.saveCheckIn(checkIn) > 0)

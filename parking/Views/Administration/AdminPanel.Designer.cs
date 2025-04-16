@@ -37,6 +37,7 @@
             this.BtnParkingType = new System.Windows.Forms.Button();
             this.BtnParkingSpace = new System.Windows.Forms.Button();
             this.BtnClients = new System.Windows.Forms.Button();
+            this.BtnLogBookApp = new System.Windows.Forms.Button();
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
             this.BtnReports = new System.Windows.Forms.ToolStripDropDownButton();
@@ -65,7 +66,7 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
-            this.BtnLogBookApp = new System.Windows.Forms.Button();
+            this.BtnConfigServer = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -186,6 +187,20 @@
             this.BtnClients.Text = "Clientes";
             this.BtnClients.UseVisualStyleBackColor = false;
             this.BtnClients.Click += new System.EventHandler(this.BtnClients_Click);
+            // 
+            // BtnLogBookApp
+            // 
+            this.BtnLogBookApp.BackColor = System.Drawing.Color.Teal;
+            this.BtnLogBookApp.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnLogBookApp.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnLogBookApp.Location = new System.Drawing.Point(3, 503);
+            this.BtnLogBookApp.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnLogBookApp.Name = "BtnLogBookApp";
+            this.BtnLogBookApp.Size = new System.Drawing.Size(211, 54);
+            this.BtnLogBookApp.TabIndex = 9;
+            this.BtnLogBookApp.Text = "Bitácora";
+            this.BtnLogBookApp.UseVisualStyleBackColor = false;
+            this.BtnLogBookApp.Click += new System.EventHandler(this.BtnLogBookApp_Click);
             // 
             // TstPrincipal
             // 
@@ -347,7 +362,8 @@
             // 
             this.BtnConfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnCompanyData,
-            this.BtnBillRanges});
+            this.BtnBillRanges,
+            this.BtnConfigServer});
             this.BtnConfig.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnConfig.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BtnConfig.Image = ((System.Drawing.Image)(resources.GetObject("BtnConfig.Image")));
@@ -448,19 +464,14 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
-            // BtnLogBookApp
+            // BtnConfigServer
             // 
-            this.BtnLogBookApp.BackColor = System.Drawing.Color.Teal;
-            this.BtnLogBookApp.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnLogBookApp.ForeColor = System.Drawing.SystemColors.Control;
-            this.BtnLogBookApp.Location = new System.Drawing.Point(3, 503);
-            this.BtnLogBookApp.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.BtnLogBookApp.Name = "BtnLogBookApp";
-            this.BtnLogBookApp.Size = new System.Drawing.Size(211, 54);
-            this.BtnLogBookApp.TabIndex = 9;
-            this.BtnLogBookApp.Text = "Bitácora";
-            this.BtnLogBookApp.UseVisualStyleBackColor = false;
-            this.BtnLogBookApp.Click += new System.EventHandler(this.BtnLogBookApp_Click);
+            this.BtnConfigServer.BackColor = System.Drawing.Color.Teal;
+            this.BtnConfigServer.ForeColor = System.Drawing.Color.White;
+            this.BtnConfigServer.Name = "BtnConfigServer";
+            this.BtnConfigServer.Size = new System.Drawing.Size(286, 34);
+            this.BtnConfigServer.Text = "Servidor";
+            this.BtnConfigServer.Click += new System.EventHandler(this.BtnConfigServer_Click);
             // 
             // AdminPanel
             // 
@@ -475,7 +486,7 @@
             this.IsMdiContainer = true;
             this.Name = "AdminPanel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AdminPanel";
+            this.Text = "Servidor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.AdminPanel_Load);
             this.PnlAdminSideBar.ResumeLayout(false);
@@ -528,5 +539,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnUserPermissions;
         private System.Windows.Forms.PictureBox PbxLogout;
         private System.Windows.Forms.Button BtnLogBookApp;
+        private System.Windows.Forms.ToolStripMenuItem BtnConfigServer;
     }
 }

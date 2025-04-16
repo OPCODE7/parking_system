@@ -32,6 +32,8 @@ namespace parking.Models
             this.ROLE_PERMISSIONS = new HashSet<ROLE_PERMISSIONS>();
             this.USER_ROLES1 = new HashSet<USER_ROLES>();
             this.USERS1 = new HashSet<USERS>();
+            this.LOGBOOK_APP = new HashSet<LOGBOOK_APP>();
+            this.COMPANY_DATA = new HashSet<COMPANY_DATA>();
         }
     
         public string USER_CODE { get; set; }
@@ -75,5 +77,9 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERS> USERS1 { get; set; }
         public virtual USERS USERS2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOGBOOK_APP> LOGBOOK_APP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COMPANY_DATA> COMPANY_DATA { get; set; }
     }
 }

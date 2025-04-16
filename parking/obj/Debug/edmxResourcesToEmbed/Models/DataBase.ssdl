@@ -198,10 +198,10 @@
     </Key>
     <Property Name="LOG_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LOG_DESCRIPTION" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime2" Precision="7" />
-    <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
+    <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="MODULE_ID" Type="varchar" MaxLength="4" />
-    <Property Name="ACTION_TYPE" Type="varchar" MaxLength="30" />
+    <Property Name="ACTION_TYPE" Type="varchar" MaxLength="30" Nullable="false" />
   </EntityType>
   <EntityType Name="PARKING_FEE">
     <Key>
@@ -327,6 +327,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__COMPANY_D__USER___1D9B5BB6">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="COMPANY_DATA" Type="Self.COMPANY_DATA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="COMPANY_DATA">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__DISCOUNT___USER___39AD8A7F">
     <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
     <End Role="DISCOUNT_TYPE" Type="Self.DISCOUNT_TYPE" Multiplicity="*" />
@@ -371,6 +383,18 @@
         <PropertyRef Name="USER_CODE" />
       </Principal>
       <Dependent Role="DISCOUNTS_BILL">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="LOGBOOK_APP" Type="Self.LOGBOOK_APP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="LOGBOOK_APP">
         <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
@@ -740,6 +764,10 @@
       <End Role="USERS" EntitySet="USERS" />
       <End Role="CLIENTS" EntitySet="CLIENTS" />
     </AssociationSet>
+    <AssociationSet Name="FK__COMPANY_D__USER___1D9B5BB6" Association="Self.FK__COMPANY_D__USER___1D9B5BB6">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="COMPANY_DATA" EntitySet="COMPANY_DATA" />
+    </AssociationSet>
     <AssociationSet Name="FK__DISCOUNT___USER___39AD8A7F" Association="Self.FK__DISCOUNT___USER___39AD8A7F">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="DISCOUNT_TYPE" EntitySet="DISCOUNT_TYPE" />
@@ -755,6 +783,10 @@
     <AssociationSet Name="FK__DISCOUNTS__USER___68336F3E" Association="Self.FK__DISCOUNTS__USER___68336F3E">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="Self.FK__LOGBOOK_A__USER___1CA7377D">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
     </AssociationSet>
     <AssociationSet Name="FK__PARKING_F__USER___0B27A5C0" Association="Self.FK__PARKING_F__USER___0B27A5C0">
       <End Role="USERS" EntitySet="USERS" />

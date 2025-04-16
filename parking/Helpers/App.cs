@@ -112,6 +112,23 @@ namespace parking.Helpers
         /// </summary>
         public static string Msg0019 = "NO SE PUEDE ELIMINAR EL REGISTRO PORQUE ESTÁ ASOCIADO CON OTROS DATOS!";
 
+        /// <summary>
+        /// Mensaje de error al cargar los datos del archivo de configuración.
+        /// </summary>
+
+        public static string Msg0020 = "NO SE CARGARON LOS DATOS DEL ARCHIVO DE CONFIGURACIÓN";
+
+        /// <summary>
+        /// Mensaje de error fatal al no encontrar el archivo de configuración.
+        /// </summary>
+        public static string Msg0021 = "!ERROR FATAL! EL ARCHIVO DE CONFIGURACIÓN NO EXISTE";
+
+        /// <summary>
+        /// Mensaje de error fatal al no poder conectar a la base de datos.
+        /// </summary>
+
+        public static string Msg0022= "!ERROR FATAL! NO SE PUEDE CONECTAR A LA BASE DE DATOS, VERIFIQUE LOS DATOS DE CONEXION EN EL ARCHIVO DE CONFIGURACION";
+
 
 
 

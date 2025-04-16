@@ -82,7 +82,7 @@ namespace parking.Controllers
 
         public CheckInDTO getInfoCheckIn(string checkInCode)
         {
-            CheckInDTO checkIn = null;
+            CheckInDTO checkIn = new CheckInDTO();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
@@ -116,7 +116,7 @@ namespace parking.Controllers
             }
             catch (Exception ex)
             {
-                h.MsgError("ERROR INESPERADO: " + ex.Message);
+                h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
             }
 
             return checkIn;

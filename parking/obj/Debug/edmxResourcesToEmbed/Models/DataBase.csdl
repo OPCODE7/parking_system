@@ -83,6 +83,7 @@
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DEL" Type="Boolean" Nullable="false" />
     <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6" FromRole="COMPANY_DATA" ToRole="USERS" />
   </EntityType>
   <EntityType Name="CORRELATIVES">
     <Key>
@@ -198,10 +199,11 @@
     </Key>
     <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LOG_DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
-    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
+    <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ACTION_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ACTION_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D" FromRole="LOGBOOK_APP" ToRole="USERS" />
   </EntityType>
   <EntityType Name="PARKING_FEE">
     <Key>
@@ -335,6 +337,8 @@
     <NavigationProperty Name="USER_ROLES1" Relationship="PARKINGModel.FK__USER_ROLE__USER___65570293" FromRole="USERS" ToRole="USER_ROLES" />
     <NavigationProperty Name="USERS1" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS" ToRole="USERS1" />
     <NavigationProperty Name="USERS2" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS1" ToRole="USERS" />
+    <NavigationProperty Name="LOGBOOK_APP" Relationship="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D" FromRole="USERS" ToRole="LOGBOOK_APP" />
+    <NavigationProperty Name="COMPANY_DATA" Relationship="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6" FromRole="USERS" ToRole="COMPANY_DATA" />
   </EntityType>
   <Association Name="FK_CHECKOUTBILL">
     <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
@@ -780,6 +784,14 @@
       <End Role="CLIENTS" EntitySet="CLIENTS" />
       <End Role="CHECK_IN" EntitySet="CHECK_IN" />
     </AssociationSet>
+    <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMPANY_D__USER___1D9B5BB6" Association="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="COMPANY_DATA" EntitySet="COMPANY_DATA" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -926,6 +938,30 @@
       </Principal>
       <Dependent Role="CHECK_IN">
         <PropertyRef Name="CLIENT_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+    <End Type="PARKINGModel.LOGBOOK_APP" Role="LOGBOOK_APP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="LOGBOOK_APP">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMPANY_D__USER___1D9B5BB6">
+    <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
+    <End Type="PARKINGModel.COMPANY_DATA" Role="COMPANY_DATA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="COMPANY_DATA">
+        <PropertyRef Name="USER_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
