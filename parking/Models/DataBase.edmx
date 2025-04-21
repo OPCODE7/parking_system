@@ -46,6 +46,7 @@
           <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
           <Property Name="DEL" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="LIMIT_DATE" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="CHECK_IN">
           <Key>
@@ -705,6 +706,16 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GENERATE_BILL_NUMBER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BILL_NUMBER" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="LogAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+          <Parameter Name="ActionType" Type="varchar" Mode="In" />
+          <Parameter Name="LogDescription" Type="nvarchar" Mode="In" />
+          <Parameter Name="Module" Type="varchar" Mode="In" />
+          <Parameter Name="InsertedAt" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -721,6 +732,12 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_GET_ACTIVE_BILL_RANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_GET_COMPANY_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_GET_TOTAL_VISITS_CLIENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CLIENT_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="TOTAL_VISITS" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -733,6 +750,9 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_REPORT_GENERATED_INVOICE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="B_CODE" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="PARKINGModelStoreContainer">
@@ -1690,6 +1710,25 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="COMPANY_DATA" EntitySet="COMPANY_DATA" />
           </AssociationSet>
+          <FunctionImport Name="GENERATE_BILL_NUMBER">
+          <Parameter Name="BILL_NUMBER" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LogAction">
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+            <Parameter Name="ActionType" Mode="In" Type="String" />
+            <Parameter Name="LogDescription" Mode="In" Type="String" />
+            <Parameter Name="Module" Mode="In" Type="String" />
+            <Parameter Name="InsertedAt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_ACTIVE_BILL_RANGE" ReturnType="Collection(PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result)" />
+          <FunctionImport Name="SP_GET_COMPANY_DATA" ReturnType="Collection(PARKINGModel.SP_GET_COMPANY_DATA_Result)" />
+          <FunctionImport Name="SP_GET_TOTAL_VISITS_CLIENT">
+            <Parameter Name="CLIENT_CODE" Mode="In" Type="String" />
+            <Parameter Name="TOTAL_VISITS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REPORT_GENERATED_INVOICE" ReturnType="Collection(PARKINGModel.SP_REPORT_GENERATED_INVOICE_Result)">
+          <Parameter Name="B_CODE" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1718,6 +1757,7 @@
           <Property Name="DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="USERS" Relationship="PARKINGModel.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
+          <Property Name="LIMIT_DATE" Type="DateTime" Precision="0" Nullable="false" />
         </EntityType>
         <Association Name="LAYOUT">
           <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
@@ -1863,6 +1903,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="SP_GET_ACTIVE_BILL_RANGE_Result">
+          <Property Type="String" Name="ESTABLISHMENT" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="EMISSION_POINT" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DOC_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="Int32" Name="LAST_USED" Nullable="false" />
+          <Property Type="Int32" Name="FINAL_RANGE" Nullable="false" />
+          <Property Type="DateTime" Name="LIMIT_DATE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_COMPANY_DATA_Result">
+          <Property Type="String" Name="COMPANY_RTN" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="COMPANY_NAME" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="COMPANY_ADDRESS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="COMPANY_EMAIL" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="COMPANY_PHONE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="LEGAL_FORM" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="DEL" Nullable="false" />
+          <Property Type="String" Name="USER_ID" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="SP_REPORT_GENERATED_INVOICE_Result">
+          <Property Type="String" Name="BILL_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="BILL_NUMBER" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="DATE_OF_ISSUE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CHECK_OUT_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="Decimal" Name="DISCOUNT" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="ISV" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="LETTERS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="RTN" Nullable="true" MaxLength="14" />
+          <Property Type="Decimal" Name="SUBTOTAL" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="USER_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CLIENT_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LASTNAME" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PARKING_SPACE_NUMBER" Nullable="false" />
+          <Property Type="String" Name="DESCRIPTION_PARKING_TYPE" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="PRICE_FOR_HOUR" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="DISCOUNT_DETAILS" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2197,6 +2275,7 @@
           <EntitySetMapping Name="BILL_RANGE">
             <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
               <MappingFragment StoreEntitySet="BILL_RANGE">
+                <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
                 <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="DEL" ColumnName="DEL" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
@@ -2222,6 +2301,59 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GENERATE_BILL_NUMBER" FunctionName="PARKINGModel.Store.GENERATE_BILL_NUMBER" />
+          <FunctionImportMapping FunctionImportName="LogAction" FunctionName="PARKINGModel.Store.LogAction" />
+          <FunctionImportMapping FunctionImportName="SP_GET_ACTIVE_BILL_RANGE" FunctionName="PARKINGModel.Store.SP_GET_ACTIVE_BILL_RANGE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result">
+                <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
+                <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
+                <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
+                <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
+                <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
+                <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_COMPANY_DATA" FunctionName="PARKINGModel.Store.SP_GET_COMPANY_DATA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_COMPANY_DATA_Result">
+                <ScalarProperty Name="COMPANY_RTN" ColumnName="COMPANY_RTN" />
+                <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
+                <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />
+                <ScalarProperty Name="COMPANY_EMAIL" ColumnName="COMPANY_EMAIL" />
+                <ScalarProperty Name="COMPANY_PHONE" ColumnName="COMPANY_PHONE" />
+                <ScalarProperty Name="LEGAL_FORM" ColumnName="LEGAL_FORM" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="DEL" ColumnName="DEL" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_TOTAL_VISITS_CLIENT" FunctionName="PARKINGModel.Store.SP_GET_TOTAL_VISITS_CLIENT" />
+          <FunctionImportMapping FunctionImportName="SP_REPORT_GENERATED_INVOICE" FunctionName="PARKINGModel.Store.SP_REPORT_GENERATED_INVOICE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_REPORT_GENERATED_INVOICE_Result">
+                <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
+                <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
+                <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
+                <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
+                <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+                <ScalarProperty Name="ISV" ColumnName="ISV" />
+                <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
+                <ScalarProperty Name="RTN" ColumnName="RTN" />
+                <ScalarProperty Name="SUBTOTAL" ColumnName="SUBTOTAL" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="CLIENT_NAME" ColumnName="CLIENT_NAME" />
+                <ScalarProperty Name="CLIENT_LASTNAME" ColumnName="CLIENT_LASTNAME" />
+                <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
+                <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
+                <ScalarProperty Name="PRICE_FOR_HOUR" ColumnName="PRICE_FOR_HOUR" />
+                <ScalarProperty Name="DISCOUNT_DETAILS" ColumnName="DISCOUNT_DETAILS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

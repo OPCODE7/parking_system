@@ -10,23 +10,14 @@
 namespace parking.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BILL_RANGE
+    public partial class SP_GET_ACTIVE_BILL_RANGE_Result
     {
-        public int BILL_RANGE_ID { get; set; }
         public string ESTABLISHMENT { get; set; }
         public string EMISSION_POINT { get; set; }
         public string DOC_TYPE { get; set; }
-        public int INITIAL_RANGE { get; set; }
-        public int FINAL_RANGE { get; set; }
         public int LAST_USED { get; set; }
-        public bool BILL_RANGE_STATE { get; set; }
-        public System.DateTime INSERTED_AT { get; set; }
-        public bool DEL { get; set; }
-        public string USER_CODE { get; set; }
-        public System.DateTime LIMIT_DATE { get; set; }
-    
-        public virtual USERS USERS { get; set; }
+        public int FINAL_RANGE { get; set; }
+        public Nullable<System.DateTime> LIMIT_DATE { get; set; }
     }
 }

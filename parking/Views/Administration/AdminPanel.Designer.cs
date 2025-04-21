@@ -41,7 +41,6 @@
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
             this.BtnReports = new System.Windows.Forms.ToolStripDropDownButton();
-            this.facturaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnParkingFee = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,6 +57,7 @@
             this.BtnConfig = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnCompanyData = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnBillRanges = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnConfigServer = new System.Windows.Forms.ToolStripMenuItem();
             this.StPrincipal = new System.Windows.Forms.StatusStrip();
             this.LblUserLogged = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -66,7 +66,7 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
-            this.BtnConfigServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnRptBills = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -234,7 +234,7 @@
             // BtnReports
             // 
             this.BtnReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.facturaciónToolStripMenuItem});
+            this.BtnRptBills});
             this.BtnReports.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnReports.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BtnReports.Image = ((System.Drawing.Image)(resources.GetObject("BtnReports.Image")));
@@ -242,12 +242,6 @@
             this.BtnReports.Name = "BtnReports";
             this.BtnReports.Size = new System.Drawing.Size(129, 36);
             this.BtnReports.Text = "Reportes";
-            // 
-            // facturaciónToolStripMenuItem
-            // 
-            this.facturaciónToolStripMenuItem.Name = "facturaciónToolStripMenuItem";
-            this.facturaciónToolStripMenuItem.Size = new System.Drawing.Size(216, 34);
-            this.facturaciónToolStripMenuItem.Text = "Facturación";
             // 
             // toolStripSeparator1
             // 
@@ -390,6 +384,15 @@
             this.BtnBillRanges.Text = "Rangos Facturacion";
             this.BtnBillRanges.Click += new System.EventHandler(this.BtnBillRanges_Click);
             // 
+            // BtnConfigServer
+            // 
+            this.BtnConfigServer.BackColor = System.Drawing.Color.Teal;
+            this.BtnConfigServer.ForeColor = System.Drawing.Color.White;
+            this.BtnConfigServer.Name = "BtnConfigServer";
+            this.BtnConfigServer.Size = new System.Drawing.Size(286, 34);
+            this.BtnConfigServer.Text = "Servidor";
+            this.BtnConfigServer.Click += new System.EventHandler(this.BtnConfigServer_Click);
+            // 
             // StPrincipal
             // 
             this.StPrincipal.AutoSize = false;
@@ -464,14 +467,14 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
-            // BtnConfigServer
+            // BtnRptBills
             // 
-            this.BtnConfigServer.BackColor = System.Drawing.Color.Teal;
-            this.BtnConfigServer.ForeColor = System.Drawing.Color.White;
-            this.BtnConfigServer.Name = "BtnConfigServer";
-            this.BtnConfigServer.Size = new System.Drawing.Size(286, 34);
-            this.BtnConfigServer.Text = "Servidor";
-            this.BtnConfigServer.Click += new System.EventHandler(this.BtnConfigServer_Click);
+            this.BtnRptBills.BackColor = System.Drawing.Color.Teal;
+            this.BtnRptBills.ForeColor = System.Drawing.Color.White;
+            this.BtnRptBills.Name = "BtnRptBills";
+            this.BtnRptBills.Size = new System.Drawing.Size(270, 34);
+            this.BtnRptBills.Text = "Facturas";
+            this.BtnRptBills.Click += new System.EventHandler(this.BtnRptBills_Click);
             // 
             // AdminPanel
             // 
@@ -515,7 +518,6 @@
         private System.Windows.Forms.Button BtnParkingType;
         private System.Windows.Forms.Button BtnParkingSpace;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolStripMenuItem facturaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BtnCheckIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripDropDownButton BtnManageUsers;
@@ -540,5 +542,6 @@
         private System.Windows.Forms.PictureBox PbxLogout;
         private System.Windows.Forms.Button BtnLogBookApp;
         private System.Windows.Forms.ToolStripMenuItem BtnConfigServer;
+        private System.Windows.Forms.ToolStripMenuItem BtnRptBills;
     }
 }

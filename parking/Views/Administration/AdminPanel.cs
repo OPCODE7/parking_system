@@ -249,9 +249,23 @@ namespace parking.Views.Administration
 
         private void BtnConfigServer_Click(object sender, EventArgs e)
         {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
             FrmServerConfig frmServerConfig = new FrmServerConfig();
             frmServerConfig.MdiParent = this;
             frmServerConfig.Show();
+        }
+
+        private void BtnRptBills_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            Reports.FrmBillsReport frmBillsReport = new Reports.FrmBillsReport();
+            frmBillsReport.MdiParent = this;
+            frmBillsReport.Show();
+
         }
     }
 }

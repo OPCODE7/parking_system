@@ -769,7 +769,7 @@
   <Width>6.68414in</Width>
   <Page>
     <PageHeader>
-      <Height>3.68653cm</Height>
+      <Height>4.16278cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -859,7 +859,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Fecha: </Value>
+                  <Value>Fecha y hora: </Value>
                   <Style />
                 </TextRun>
                 <TextRun>
@@ -897,7 +897,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -910,7 +912,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -919,7 +923,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -932,7 +938,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -945,14 +953,31 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Fecha Límite de impresión: </Value>
+                  <Style />
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!LIMIT_DATE.Value, "DtsGetActiveBillRange")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <LineHeight>3pt</LineHeight>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
           <Top>1.09319cm</Top>
           <Left>0.64064cm</Left>
-          <Height>2.1875cm</Height>
-          <Width>6.08033cm</Width>
+          <Height>2.76958cm</Height>
+          <Width>10.34894cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -1048,6 +1073,13 @@
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
       <rd:DataSourceID>b27dd43d-ff93-4602-a4e0-e0ba2713edaa</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="DtsGetActiveBillRange">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>c21d9d12-eeb9-49ea-8b1c-57b192414aa9</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -1185,6 +1217,46 @@
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
         <rd:TableAdapterName>SP_GET_COMPANY_DATATableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="DtsGetActiveBillRange">
+      <Query>
+        <DataSourceName>DtsGetActiveBillRange</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ESTABLISHMENT">
+          <DataField>ESTABLISHMENT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EMISSION_POINT">
+          <DataField>EMISSION_POINT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DOC_TYPE">
+          <DataField>DOC_TYPE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LAST_USED">
+          <DataField>LAST_USED</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="FINAL_RANGE">
+          <DataField>FINAL_RANGE</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LIMIT_DATE">
+          <DataField>LIMIT_DATE</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DtsGetActiveBillRange</rd:DataSetName>
+        <rd:SchemaPath>C:\OPCODE\OP_APPS\parking\parking\Views\Reports\DataSets\DtsGetActiveBillRange.xsd</rd:SchemaPath>
+        <rd:TableName>SP_GET_ACTIVE_BILL_RANGE</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>SP_GET_ACTIVE_BILL_RANGETableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

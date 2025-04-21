@@ -20,6 +20,8 @@ namespace parking.DTO
         public string USER_CODE { get; set; }
         public string BILL_RANGE_START { get; set; }
         public string BILL_RANGE_END { get; set; }
+
+        public DateTime LIMIT_DATE { get; set; }
         public bool DEL { get; set; }
     }
 }

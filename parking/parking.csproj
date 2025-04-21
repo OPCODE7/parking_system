@@ -126,6 +126,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTO\BillDTO.cs" />
     <Compile Include="DTO\BillRangeDTO.cs" />
     <Compile Include="DTO\CheckInDTO.cs" />
     <Compile Include="DTO\CheckOutDTO.cs" />
@@ -220,10 +221,19 @@
     <Compile Include="Models\SALARIES.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_GET_ACTIVE_BILL_RANGE_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_GET_COMPANY_DATA_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_REPORT_GENERATED_INVOICE_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
@@ -382,10 +392,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsGenerateBill.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsGetActiveBillRange.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsGetActiveBillRange.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DataSets\DtsGetCompanyData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsGetInvoices.cs">
+      <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsGetInvoices.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\FrmBillsReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\FrmBillsReport.Designer.cs">
+      <DependentUpon>FrmBillsReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\FrmGeneratedBillReport.cs">
       <SubType>Form</SubType>
@@ -469,10 +498,14 @@
     <EmbeddedResource Include="Views\Auth\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Reports\FrmBillsReport.resx">
+      <DependentUpon>FrmBillsReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\FrmGeneratedBillReport.resx">
       <DependentUpon>FrmGeneratedBillReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\RDLC\ReportGeneratedBill.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportInvoices.rdlc" />
     <EntityDeploy Include="Models\DataBase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
@@ -502,6 +535,17 @@
     <None Include="Views\Reports\DataSets\DtsGenerateBill.xss">
       <DependentUpon>DtsGenerateBill.xsd</DependentUpon>
     </None>
+    <None Include="Views\Reports\DataSets\DtsGetActiveBillRange.xsc">
+      <DependentUpon>DtsGetActiveBillRange.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetActiveBillRange.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsGetActiveBillRange.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetActiveBillRange.xss">
+      <DependentUpon>DtsGetActiveBillRange.xsd</DependentUpon>
+    </None>
     <None Include="Views\Reports\DataSets\DtsGetCompanyData.xsc">
       <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
     </None>
@@ -512,6 +556,17 @@
     </None>
     <None Include="Views\Reports\DataSets\DtsGetCompanyData.xss">
       <DependentUpon>DtsGetCompanyData.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetInvoices.xsc">
+      <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetInvoices.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsGetInvoices.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsGetInvoices.xss">
+      <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

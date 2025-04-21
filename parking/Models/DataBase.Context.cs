@@ -155,5 +155,63 @@ namespace parking.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual int GENERATE_BILL_NUMBER(ObjectParameter bILL_NUMBER)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GENERATE_BILL_NUMBER", bILL_NUMBER);
+        }
+    
+        public virtual int LogAction(string userCode, string actionType, string logDescription, string module, Nullable<System.DateTime> insertedAt)
+        {
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var actionTypeParameter = actionType != null ?
+                new ObjectParameter("ActionType", actionType) :
+                new ObjectParameter("ActionType", typeof(string));
+    
+            var logDescriptionParameter = logDescription != null ?
+                new ObjectParameter("LogDescription", logDescription) :
+                new ObjectParameter("LogDescription", typeof(string));
+    
+            var moduleParameter = module != null ?
+                new ObjectParameter("Module", module) :
+                new ObjectParameter("Module", typeof(string));
+    
+            var insertedAtParameter = insertedAt.HasValue ?
+                new ObjectParameter("InsertedAt", insertedAt) :
+                new ObjectParameter("InsertedAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LogAction", userCodeParameter, actionTypeParameter, logDescriptionParameter, moduleParameter, insertedAtParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_ACTIVE_BILL_RANGE_Result> SP_GET_ACTIVE_BILL_RANGE()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_ACTIVE_BILL_RANGE_Result>("SP_GET_ACTIVE_BILL_RANGE");
+        }
+    
+        public virtual ObjectResult<SP_GET_COMPANY_DATA_Result> SP_GET_COMPANY_DATA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_COMPANY_DATA_Result>("SP_GET_COMPANY_DATA");
+        }
+    
+        public virtual int SP_GET_TOTAL_VISITS_CLIENT(string cLIENT_CODE, ObjectParameter tOTAL_VISITS)
+        {
+            var cLIENT_CODEParameter = cLIENT_CODE != null ?
+                new ObjectParameter("CLIENT_CODE", cLIENT_CODE) :
+                new ObjectParameter("CLIENT_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GET_TOTAL_VISITS_CLIENT", cLIENT_CODEParameter, tOTAL_VISITS);
+        }
+    
+        public virtual ObjectResult<SP_REPORT_GENERATED_INVOICE_Result> SP_REPORT_GENERATED_INVOICE(string b_CODE)
+        {
+            var b_CODEParameter = b_CODE != null ?
+                new ObjectParameter("B_CODE", b_CODE) :
+                new ObjectParameter("B_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REPORT_GENERATED_INVOICE_Result>("SP_REPORT_GENERATED_INVOICE", b_CODEParameter);
+        }
     }
 }

@@ -24,8 +24,9 @@ namespace parking.Views.Administration.Configuration
         BillController bc= new BillController();
 
         string establishment, emissionPoint, doctype, userId, moduleId = "RFAC";
+        DateTime limitDate;
         int initialRange, finalRange, lastUsed;
-        bool flagIsPaperbin = false;
+        bool flagIsPaperbin = false,flagIsUpdate= false;
         public FrmBillRanges()
         {
             InitializeComponent();
@@ -44,6 +45,7 @@ namespace parking.Views.Administration.Configuration
         private void startForm()
         {
             getBillRanges("",false);
+            flagIsUpdate = false;
             BtnCancel.Enabled = false;
             BtnSave.Enabled = false;
             BtnEdit.Enabled = false;
@@ -60,6 +62,8 @@ namespace parking.Views.Administration.Configuration
             PbxRecovery.Enabled = false;
             flagIsPaperbin = false;
             MskInitialRange.Focus();
+            DtpLimitDate.Enabled = false;
+            DtpLimitDate.Value= DateTime.Now;
         }
 
         private void BtnNew_Click(object sender, EventArgs e)
@@ -70,6 +74,7 @@ namespace parking.Views.Administration.Configuration
             MskInitialRange.Enabled = true;
             MskFinalRange.Enabled = true;
             MskInitialRange.Focus();
+            DtpLimitDate.Enabled = true;
 
             TxtBillRangeId.Text = brc.getNextIdBillRange().ToString();
         }
@@ -89,6 +94,7 @@ namespace parking.Views.Administration.Configuration
 
                 BtnNew.Enabled = false;
                 BtnSave.Enabled = false;
+                DtpLimitDate.Enabled = true;
 
                 BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
                 BtnCancel.Enabled = true;
@@ -114,6 +120,7 @@ namespace parking.Views.Administration.Configuration
                 TxtBillRangeId.Text = billRange.BILL_RANGE_ID.ToString();
                 MskInitialRange.Text = billRange.BILL_RANGE_START;
                 MskFinalRange.Text = billRange.BILL_RANGE_END;
+                DtpLimitDate.Value = billRange.LIMIT_DATE;
             }
         }
 
@@ -121,6 +128,7 @@ namespace parking.Views.Administration.Configuration
         {
             if (h.MsgQuestion(Helpers.App.Msg0002) == "S")
             {
+                flagIsUpdate= true;
                 if (validateData() == 0)
                 {
                     setValues();
@@ -144,7 +152,12 @@ namespace parking.Views.Administration.Configuration
                     if (updateBillRange.FINAL_RANGE != finalRange)
                         cambios += $"FINAL_RANGE: '{updateBillRange.FINAL_RANGE}' → '{finalRange}'{separator}";
 
-                   
+                    if(updateBillRange.LIMIT_DATE!=limitDate)
+                        cambios += $"LIMIT_DATE: '{updateBillRange.LIMIT_DATE}' → '{limitDate}'{separator}";
+
+
+
+
                     // Limpiar coma final
                     if (!string.IsNullOrEmpty(cambios))
                         cambios = cambios.TrimEnd(',', ' ');
@@ -154,6 +167,7 @@ namespace parking.Views.Administration.Configuration
                     updateBillRange.DOC_TYPE = doctype;
                     updateBillRange.INITIAL_RANGE = initialRange;
                     updateBillRange.FINAL_RANGE = finalRange;
+                    updateBillRange.LIMIT_DATE = limitDate;
 
                     if (brc.updateBillRange(updateBillRange) > 0)
                     {
@@ -335,7 +349,7 @@ namespace parking.Views.Administration.Configuration
 
             foreach (var item in billRanges)
             {
-                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END, item.BILL_RANGE_STATE, Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END, item.BILL_RANGE_STATE,Convert.ToDateTime(item.LIMIT_DATE).ToShortDateString() ,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
         }
 
@@ -346,7 +360,7 @@ namespace parking.Views.Administration.Configuration
 
             if (!MskInitialRange.MaskFull)
             {
-                h.MsgInfo("DEBE INGRESAR EL RANGO INICIAL EN FORMATO CORRECTO.");
+                h.MsgWarning("DEBE INGRESAR EL RANGO INICIAL EN FORMATO CORRECTO.");
                 MskInitialRange.Focus();
                 error++;
                 return error;
@@ -354,22 +368,25 @@ namespace parking.Views.Administration.Configuration
 
             if (!MskFinalRange.MaskFull)
             {
-                h.MsgInfo("DEBE INGRESAR EL RANGO FINAL EN FORMATO CORRECTO.");
+                h.MsgWarning("DEBE INGRESAR EL RANGO FINAL EN FORMATO CORRECTO.");
                 MskFinalRange.Focus();
                 error++;
                 return error;
             }
 
-            if (brc.existBillRange(MskInitialRange.Text, MskFinalRange.Text))
+            if (!flagIsUpdate)
             {
-                h.MsgInfo("EL RANGO DE FACTURA YA EXISTE.");
-                error++;
-                return error;
+                if (brc.existBillRange(MskInitialRange.Text, MskFinalRange.Text))
+                {
+                    h.MsgWarning("EL RANGO DE FACTURA YA EXISTE.");
+                    error++;
+                    return error;
+                }
             }
 
             if (Convert.ToInt32(MskInitialRange.Text.Split('-')[3]) >= Convert.ToInt32(MskFinalRange.Text.Split('-')[3]))
             {
-                h.MsgInfo("EL RANGO FINAL DEBE SER MAYOR AL RANGO INICIAL.");
+                h.MsgWarning("EL RANGO FINAL DEBE SER MAYOR AL RANGO INICIAL.");
                 error++;
                 return error;
             }
@@ -379,10 +396,17 @@ namespace parking.Views.Administration.Configuration
             {
                 if (Convert.ToInt32(MskInitialRange.Text.Split('-')[3]) <= lastBillRange.FINAL_RANGE)
                 {
-                    h.MsgInfo("EL RANGO DE FACTURA INICIAL NO PUEDE SER MENOR O IGUAL QUE EL ÚLTIMO RANGO CONFIGURADO.");
+                    h.MsgWarning("EL RANGO DE FACTURA INICIAL NO PUEDE SER MENOR O IGUAL QUE EL ÚLTIMO RANGO CONFIGURADO.");
                     error++;
                     return error;
                 }
+            }
+
+            if (DtpLimitDate.Value < DateTime.Now)
+            {
+                h.MsgWarning("LA FECHA LIMITE NO DEBE SER MENOR A LA FECHA ACTUAL.");
+                error++;
+                return error;
             }
             return error;
         }
@@ -396,6 +420,7 @@ namespace parking.Views.Administration.Configuration
             doctype = billRange[2];
             initialRange = Convert.ToInt32(billRange[3]);
             finalRange = Convert.ToInt32(MskFinalRange.Text.Split('-')[3]);
+            limitDate = DtpLimitDate.Value;
             lastUsed = initialRange - 1;
             userId = Config.User.userId;
 
@@ -415,7 +440,9 @@ namespace parking.Views.Administration.Configuration
                 newBillRange.FINAL_RANGE = finalRange;
                 newBillRange.LAST_USED = lastUsed;
                 newBillRange.INSERTED_AT = DateTime.Now;
+                newBillRange.LIMIT_DATE = limitDate;
                 newBillRange.BILL_RANGE_STATE = true;
+
                 newBillRange.USER_CODE = userId;
                 BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));
 

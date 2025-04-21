@@ -32,6 +32,7 @@ namespace parking.Views.Reports
             {
                 DataTable billDt = new DataTable();
                 DataTable companyDt = new DataTable();
+                DataTable billRangeDt = new DataTable();
 
 
                 using (PARKINGEntities db = new PARKINGEntities())
@@ -74,14 +75,30 @@ namespace parking.Views.Reports
                         }
                     }
 
+                    using(var cmd= connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SP_GET_ACTIVE_BILL_RANGE";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        if(connection.State==ConnectionState.Closed)
+                            connection.Open();
+
+                        using(var reader= cmd.ExecuteReader())
+                        {
+                            billRangeDt.Load(reader);
+                        }
+                    }
+
 
                 }
                 ReportDataSource rds = new ReportDataSource("DtsGenerateBill", billDt);
                 ReportDataSource rds2 = new ReportDataSource("DtsGetCompanyData", companyDt);
+                ReportDataSource rds3 = new ReportDataSource("DtsGetActiveBillRange", billRangeDt);
 
                 RptBill.LocalReport.DataSources.Clear();
                 RptBill.LocalReport.DataSources.Add(rds);
                 RptBill.LocalReport.DataSources.Add(rds2);
+                RptBill.LocalReport.DataSources.Add(rds3);
                 RptBill.SetDisplayMode(DisplayMode.PrintLayout);
                 RptBill.ZoomMode= ZoomMode.Percent;
                 RptBill.ZoomPercent = 100;

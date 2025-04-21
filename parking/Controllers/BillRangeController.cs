@@ -41,7 +41,8 @@ namespace parking.Controllers
                             USER_CODE = br.USER_CODE,
                             BILL_RANGE_START = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.INITIAL_RANGE,
                             BILL_RANGE_END = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.FINAL_RANGE,
-                            DEL = br.DEL
+                            DEL = br.DEL,
+                            LIMIT_DATE= br.LIMIT_DATE
                         });
 
                     // Aplicar filtro de búsqueda si se proporciona
@@ -94,7 +95,8 @@ namespace parking.Controllers
                             USER_CODE = br.USER_CODE,
                             BILL_RANGE_START = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.INITIAL_RANGE,
                             BILL_RANGE_END = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.FINAL_RANGE,
-                            DEL = br.DEL
+                            DEL = br.DEL,
+                            LIMIT_DATE= br.LIMIT_DATE
                         })
                         .FirstOrDefault();
 
