@@ -41,6 +41,8 @@
             this.TstPrincipal = new System.Windows.Forms.ToolStrip();
             this.SprMiembros = new System.Windows.Forms.ToolStripSeparator();
             this.BtnReports = new System.Windows.Forms.ToolStripDropDownButton();
+            this.BtnRptBills = new System.Windows.Forms.ToolStripMenuItem();
+            this.RptFinancialIncomes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnParkingFee = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -66,7 +68,6 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
-            this.BtnRptBills = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -234,7 +235,8 @@
             // BtnReports
             // 
             this.BtnReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnRptBills});
+            this.BtnRptBills,
+            this.RptFinancialIncomes});
             this.BtnReports.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnReports.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BtnReports.Image = ((System.Drawing.Image)(resources.GetObject("BtnReports.Image")));
@@ -242,6 +244,24 @@
             this.BtnReports.Name = "BtnReports";
             this.BtnReports.Size = new System.Drawing.Size(129, 36);
             this.BtnReports.Text = "Reportes";
+            // 
+            // BtnRptBills
+            // 
+            this.BtnRptBills.BackColor = System.Drawing.Color.Teal;
+            this.BtnRptBills.ForeColor = System.Drawing.Color.White;
+            this.BtnRptBills.Name = "BtnRptBills";
+            this.BtnRptBills.Size = new System.Drawing.Size(290, 34);
+            this.BtnRptBills.Text = "Facturas";
+            this.BtnRptBills.Click += new System.EventHandler(this.BtnRptBills_Click);
+            // 
+            // RptFinancialIncomes
+            // 
+            this.RptFinancialIncomes.BackColor = System.Drawing.Color.Teal;
+            this.RptFinancialIncomes.ForeColor = System.Drawing.Color.White;
+            this.RptFinancialIncomes.Name = "RptFinancialIncomes";
+            this.RptFinancialIncomes.Size = new System.Drawing.Size(290, 34);
+            this.RptFinancialIncomes.Text = "Ingresos Financieros";
+            this.RptFinancialIncomes.Click += new System.EventHandler(this.RptFinancialIncomes_Click);
             // 
             // toolStripSeparator1
             // 
@@ -467,15 +487,6 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
-            // BtnRptBills
-            // 
-            this.BtnRptBills.BackColor = System.Drawing.Color.Teal;
-            this.BtnRptBills.ForeColor = System.Drawing.Color.White;
-            this.BtnRptBills.Name = "BtnRptBills";
-            this.BtnRptBills.Size = new System.Drawing.Size(270, 34);
-            this.BtnRptBills.Text = "Facturas";
-            this.BtnRptBills.Click += new System.EventHandler(this.BtnRptBills_Click);
-            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -543,5 +554,6 @@
         private System.Windows.Forms.Button BtnLogBookApp;
         private System.Windows.Forms.ToolStripMenuItem BtnConfigServer;
         private System.Windows.Forms.ToolStripMenuItem BtnRptBills;
+        private System.Windows.Forms.ToolStripMenuItem RptFinancialIncomes;
     }
 }

@@ -899,7 +899,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Reporte de Facturas</Value>
+                  <Value>Reporte de Facturas Emitidas</Value>
                   <Style>
                     <FontFamily>Century Gothic</FontFamily>
                     <FontSize>12pt</FontSize>
@@ -914,7 +914,7 @@
           <Top>2.98474cm</Top>
           <Left>9.45395cm</Left>
           <Height>0.81167cm</Height>
-          <Width>4.47556cm</Width>
+          <Width>6.48639cm</Width>
           <Style>
             <Border>
               <Style>None</Style>

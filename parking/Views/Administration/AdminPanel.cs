@@ -25,11 +25,11 @@ namespace parking.Views.Administration
         }
 
 
-       
+
         private void startForm()
         {
 
-            
+
             BtnUsers.Enabled = PermissionManager.HasPermission("USR", "Acceso");
             BtnManageUsers.Enabled = PermissionManager.HasPermission("USR", "Acceso");
             BtnConfig.Enabled = PermissionManager.HasPermission("CFG", "Acceso");
@@ -46,10 +46,10 @@ namespace parking.Views.Administration
             BtnCompanyData.Enabled = PermissionManager.HasPermission("COMP", "Acceso");
             BtnBillRanges.Enabled = PermissionManager.HasPermission("RFAC", "Acceso");
             BtnUserPermissions.Enabled = PermissionManager.HasPermission("UPER", "Acceso");
-            BtnReports.Enabled= PermissionManager.HasPermission("RPT", "Acceso");
+            BtnReports.Enabled = PermissionManager.HasPermission("RPT", "Acceso");
             BtnJobPositions.Enabled = PermissionManager.HasPermission("JPS", "Acceso");
-            BtnLogBookApp.Enabled= PermissionManager.HasPermission("LOG","Acceso");
-            BtnConfigServer.Enabled= Config.User.roleName.ToLower()=="super usuario"? true : false;
+            BtnLogBookApp.Enabled = PermissionManager.HasPermission("LOG", "Acceso");
+            BtnConfigServer.Enabled = Config.User.roleName.ToLower() == "super usuario" ? true : false;
 
 
         }
@@ -67,16 +67,16 @@ namespace parking.Views.Administration
         {
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
-            FrmPermissions frmPermissions= new FrmPermissions();
+            FrmPermissions frmPermissions = new FrmPermissions();
             frmPermissions.MdiParent = this;
             frmPermissions.Show();
         }
 
         private void BtnRoles_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name!="AdminPanel").ToList();
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
-            
+
 
             FrmRoles frmRoles = new FrmRoles();
             frmRoles.MdiParent = this;
@@ -89,7 +89,7 @@ namespace parking.Views.Administration
             form.ForEach(x => x.Hide());
 
 
-            FrmEmployees frmEmployees= new FrmEmployees();
+            FrmEmployees frmEmployees = new FrmEmployees();
             frmEmployees.MdiParent = this;
             frmEmployees.Show();
 
@@ -123,7 +123,7 @@ namespace parking.Views.Administration
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
 
-           FrmParkingTypes frmParkingTypes = new FrmParkingTypes();
+            FrmParkingTypes frmParkingTypes = new FrmParkingTypes();
             frmParkingTypes.MdiParent = this;
             frmParkingTypes.Show();
 
@@ -163,14 +163,14 @@ namespace parking.Views.Administration
 
         private void BtnClients_Click(object sender, EventArgs e)
         {
-            
+
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
 
             Clients.FrmClient frmClient = new Clients.FrmClient();
             frmClient.MdiParent = this;
             frmClient.Show();
-            
+
 
         }
 
@@ -187,9 +187,9 @@ namespace parking.Views.Administration
 
         private void AdminPanel_Load(object sender, EventArgs e)
         {
-            LblUserLogged.Text= User.userName;
-            LblFecha.Text= DateTime.Now.ToLongDateString();
-            LblRole.Text= User.roleName;
+            LblUserLogged.Text = User.userName;
+            LblFecha.Text = DateTime.Now.ToLongDateString();
+            LblRole.Text = User.roleName;
             startForm();
 
 
@@ -238,12 +238,10 @@ namespace parking.Views.Administration
         {
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
-            
+
             Audit.FrmLogBookApp frmLogBookApp = new Audit.FrmLogBookApp();
             frmLogBookApp.MdiParent = this;
             frmLogBookApp.Show();
-
-
 
         }
 
@@ -265,6 +263,19 @@ namespace parking.Views.Administration
             Reports.FrmBillsReport frmBillsReport = new Reports.FrmBillsReport();
             frmBillsReport.MdiParent = this;
             frmBillsReport.Show();
+
+        }
+
+        private void RptFinancialIncomes_Click(object sender, EventArgs e)
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
+
+            Reports.FrmIncomesReport frmFinancialIncomes = new Reports.FrmIncomesReport();
+            frmFinancialIncomes.MdiParent = this;
+            frmFinancialIncomes.Show();
+
+
 
         }
     }

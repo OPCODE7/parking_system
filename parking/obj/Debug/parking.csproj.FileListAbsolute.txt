@@ -61,7 +61,6 @@ C:\OPCODE\OP_APPS\parking\parking\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinFor
 C:\OPCODE\OP_APPS\parking\parking\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.AssemblyReference.cache
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Properties.Resources.resources
-C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.AdminPanel.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Audit.FrmLogBookApp.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.BillingModule.FrmGenerateBill.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.Clients.FrmClient.resources
@@ -85,8 +84,10 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.FrmUser
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Auth.Login.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Reports.FrmBillsReport.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Reports.FrmGeneratedBillReport.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Reports.FrmIncomesReport.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.GenerateResource.cache
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.CoreCompileInputs.cache
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.csproj.Up2Date
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.AdminPanel.resources
