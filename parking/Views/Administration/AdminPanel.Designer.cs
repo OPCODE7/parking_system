@@ -68,6 +68,7 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
+            this.BtnCheckInReport = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -236,7 +237,8 @@
             // 
             this.BtnReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnRptBills,
-            this.RptFinancialIncomes});
+            this.RptFinancialIncomes,
+            this.BtnCheckInReport});
             this.BtnReports.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnReports.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BtnReports.Image = ((System.Drawing.Image)(resources.GetObject("BtnReports.Image")));
@@ -487,6 +489,15 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
+            // BtnCheckInReport
+            // 
+            this.BtnCheckInReport.BackColor = System.Drawing.Color.Teal;
+            this.BtnCheckInReport.ForeColor = System.Drawing.Color.White;
+            this.BtnCheckInReport.Name = "BtnCheckInReport";
+            this.BtnCheckInReport.Size = new System.Drawing.Size(290, 34);
+            this.BtnCheckInReport.Text = "Entradas";
+            this.BtnCheckInReport.Click += new System.EventHandler(this.BtnCheckInReport_Click);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -555,5 +566,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnConfigServer;
         private System.Windows.Forms.ToolStripMenuItem BtnRptBills;
         private System.Windows.Forms.ToolStripMenuItem RptFinancialIncomes;
+        private System.Windows.Forms.ToolStripMenuItem BtnCheckInReport;
     }
 }

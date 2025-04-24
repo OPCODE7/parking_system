@@ -56,8 +56,7 @@ namespace parking.Views.Administration
 
         private void BtnUsers_Click_1(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
             FrmUsers frmUsers = new FrmUsers();
             frmUsers.MdiParent = this;
             frmUsers.Show();
@@ -65,8 +64,7 @@ namespace parking.Views.Administration
 
         private void BtnPermissions_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
             FrmPermissions frmPermissions = new FrmPermissions();
             frmPermissions.MdiParent = this;
             frmPermissions.Show();
@@ -74,8 +72,7 @@ namespace parking.Views.Administration
 
         private void BtnRoles_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+           HideForms();
 
 
             FrmRoles frmRoles = new FrmRoles();
@@ -85,8 +82,7 @@ namespace parking.Views.Administration
 
         private void BtnEmployees_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
 
             FrmEmployees frmEmployees = new FrmEmployees();
@@ -97,8 +93,7 @@ namespace parking.Views.Administration
 
         private void BtnHorary_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+          HideForms(); 
 
 
             FrmHorary frmHorary = new FrmHorary();
@@ -109,9 +104,7 @@ namespace parking.Views.Administration
 
         private void BtnJobPositions_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
-
+            HideForms();
             FrmJobPositions frmJobPositions = new FrmJobPositions();
             frmJobPositions.MdiParent = this;
             frmJobPositions.Show();
@@ -131,8 +124,7 @@ namespace parking.Views.Administration
 
         private void BtnParkingSpace_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmParkingSpace frmParkingSpace = new FrmParkingSpace();
             frmParkingSpace.MdiParent = this;
@@ -142,8 +134,7 @@ namespace parking.Views.Administration
 
         private void BtnParkingFee_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmParkingFee frmParkingFee = new FrmParkingFee();
             frmParkingFee.MdiParent = this;
@@ -153,8 +144,7 @@ namespace parking.Views.Administration
 
         private void BtnCheckIn_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmCheckIn frmCheckIn = new FrmCheckIn();
             frmCheckIn.MdiParent = this;
@@ -164,8 +154,7 @@ namespace parking.Views.Administration
         private void BtnClients_Click(object sender, EventArgs e)
         {
 
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             Clients.FrmClient frmClient = new Clients.FrmClient();
             frmClient.MdiParent = this;
@@ -176,8 +165,7 @@ namespace parking.Views.Administration
 
         private void BtnCheckout_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmCheckOut frmCheckOut = new FrmCheckOut();
             frmCheckOut.MdiParent = this;
@@ -197,8 +185,7 @@ namespace parking.Views.Administration
 
         private void BtnCompanyData_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmCompany frmCompany = new FrmCompany();
             frmCompany.MdiParent = this;
@@ -207,8 +194,7 @@ namespace parking.Views.Administration
 
         private void BtnBillRanges_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmBillRanges frmBillRanges = new FrmBillRanges();
             frmBillRanges.MdiParent = this;
@@ -218,8 +204,7 @@ namespace parking.Views.Administration
 
         private void BtnUserPermissions_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmSetUserPermissions frmSetUserPermissions = new FrmSetUserPermissions();
             frmSetUserPermissions.MdiParent = this;
@@ -236,8 +221,7 @@ namespace parking.Views.Administration
 
         private void BtnLogBookApp_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             Audit.FrmLogBookApp frmLogBookApp = new Audit.FrmLogBookApp();
             frmLogBookApp.MdiParent = this;
@@ -247,8 +231,7 @@ namespace parking.Views.Administration
 
         private void BtnConfigServer_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             FrmServerConfig frmServerConfig = new FrmServerConfig();
             frmServerConfig.MdiParent = this;
@@ -257,8 +240,7 @@ namespace parking.Views.Administration
 
         private void BtnRptBills_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             Reports.FrmBillsReport frmBillsReport = new Reports.FrmBillsReport();
             frmBillsReport.MdiParent = this;
@@ -268,8 +250,7 @@ namespace parking.Views.Administration
 
         private void RptFinancialIncomes_Click(object sender, EventArgs e)
         {
-            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
-            form.ForEach(x => x.Hide());
+            HideForms();
 
             Reports.FrmIncomesReport frmFinancialIncomes = new Reports.FrmIncomesReport();
             frmFinancialIncomes.MdiParent = this;
@@ -277,6 +258,21 @@ namespace parking.Views.Administration
 
 
 
+        }
+
+        private void BtnCheckInReport_Click(object sender, EventArgs e)
+        {
+            HideForms();
+            Reports.FrmCheckInReport frmCheckInReport = new Reports.FrmCheckInReport();
+            frmCheckInReport.MdiParent = this;
+            frmCheckInReport.Show();
+
+        }
+
+        private void HideForms()
+        {
+            List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
+            form.ForEach(x => x.Hide());
         }
     }
 }
