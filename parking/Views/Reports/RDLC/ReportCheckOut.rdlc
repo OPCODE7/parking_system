@@ -12,16 +12,19 @@
               <Width>3.52466cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>4.07146cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.16766cm</Width>
+              <Width>2.34762cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.97121cm</Width>
+              <Width>1.44204cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.64023cm</Width>
+              <Width>3.98333cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -81,6 +84,39 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox24">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>TIEMPO TOTAL</Value>
+                              <Style>
+                                <FontFamily>Century Gothic</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox24</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -233,14 +269,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="CHECK_IN_CODE">
+                    <Textbox Name="CHECK_OUT_CODE">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CHECK_IN_CODE.Value</Value>
+                              <Value>=Fields!CHECK_OUT_CODE.Value</Value>
                               <Style>
                                 <FontFamily>Century Gothic</FontFamily>
                                 <FontWeight>Normal</FontWeight>
@@ -250,7 +286,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>CHECK_IN_CODE</rd:DefaultName>
+                      <rd:DefaultName>CHECK_OUT_CODE</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -266,14 +302,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="INSERTED_AT">
+                    <Textbox Name="CHECK_OUT_TIME">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!INSERTED_AT.Value</Value>
+                              <Value>=Fields!CHECK_OUT_TIME.Value</Value>
                               <Style>
                                 <FontFamily>Century Gothic</FontFamily>
                                 <FontWeight>Normal</FontWeight>
@@ -283,7 +319,40 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>INSERTED_AT</rd:DefaultName>
+                      <rd:DefaultName>CHECK_OUT_TIME</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TOTAL_TIME">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TOTAL_TIME.Value</Value>
+                              <Style>
+                                <FontFamily>Century Gothic</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TOTAL_TIME</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -332,7 +401,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="USER_NAME1">
+                    <Textbox Name="USER_NAME">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -349,7 +418,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>USER_NAME1</rd:DefaultName>
+                      <rd:DefaultName>USER_NAME</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -502,6 +571,39 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox26">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!TOTAL_TIME.Value)</Value>
+                              <Style>
+                                <FontFamily>Century Gothic</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox26</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox35">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -608,7 +710,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Count(Fields!CHECK_IN_CODE.Value, "DtsCheckIn")</Value>
+                              <Value>=Count(Fields!CHECK_OUT_CODE.Value, "DtsCheckOut")</Value>
                               <Style>
                                 <FontFamily>Century Gothic</FontFamily>
                                 <FontWeight>Normal</FontWeight>
@@ -644,6 +746,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -662,11 +765,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DtsCheckIn</DataSetName>
+        <DataSetName>DtsCheckOut</DataSetName>
         <Top>1.41952cm</Top>
-        <Left>1.23636cm</Left>
+        <Left>0.86621cm</Left>
         <Height>2.24097cm</Height>
-        <Width>19.87522cm</Width>
+        <Width>20.36911cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -679,10 +782,10 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>8.5773in</Width>
+  <Width>8.61899in</Width>
   <Page>
     <PageHeader>
-      <Height>4.23333cm</Height>
+      <Height>3.77472cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -693,7 +796,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Reporte de Entrada de Vehículos</Value>
+                  <Value>Reporte de Salidas de Vehículos</Value>
                   <Style>
                     <FontFamily>Century Gothic</FontFamily>
                     <FontSize>12pt</FontSize>
@@ -705,8 +808,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.92022cm</Top>
-          <Left>8.61838cm</Left>
+          <Top>2.47925cm</Top>
+          <Left>9.77546cm</Left>
           <Height>0.81167cm</Height>
           <Width>7.17431cm</Width>
           <Style>
@@ -723,8 +826,8 @@
           <Source>Embedded</Source>
           <Value>iconapp</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.50144cm</Top>
-          <Left>0.52917cm</Left>
+          <Top>0.06047cm</Top>
+          <Left>1.68625cm</Left>
           <Height>0.9168cm</Height>
           <Width>0.84736cm</Width>
           <ZIndex>1</ZIndex>
@@ -759,8 +862,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>0.50144cm</Top>
-          <Left>13.81579cm</Left>
+          <Top>0.06047cm</Top>
+          <Left>14.97287cm</Left>
           <Height>0.6cm</Height>
           <Width>4.94852cm</Width>
           <ZIndex>2</ZIndex>
@@ -871,8 +974,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>1.45352cm</Top>
-          <Left>0.52917cm</Left>
+          <Top>1.01255cm</Top>
+          <Left>1.68625cm</Left>
           <Height>2.27837cm</Height>
           <Width>6.73185cm</Width>
           <ZIndex>3</ZIndex>
@@ -916,7 +1019,7 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.97cm</Top>
-          <Left>18.61158cm</Left>
+          <Left>18.24143cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <Style>
@@ -947,66 +1050,22 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DtsCheckIn">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>7a652ec7-0224-40e6-9127-be881b22a7d2</rd:DataSourceID>
-    </DataSource>
     <DataSource Name="DtsGetCompanyData">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>bd5ac0d4-186b-41d2-8c7b-e85049840ef5</rd:DataSourceID>
+      <rd:DataSourceID>f1d445b9-de28-419b-b7fa-13e9a80e6bed</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="DtsCheckOut">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>e31257c0-912c-42fd-9937-731ad77c49d3</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DtsCheckIn">
-      <Query>
-        <DataSourceName>DtsCheckIn</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="INSERTED_AT">
-          <DataField>INSERTED_AT</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="CHECK_IN_CODE">
-          <DataField>CHECK_IN_CODE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CLIENT_FULL_NAME">
-          <DataField>CLIENT_FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="USER_NAME">
-          <DataField>USER_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PARKING_SPACE_NUMBER">
-          <DataField>PARKING_SPACE_NUMBER</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="DESCRIPTION_PARKING_TYPE">
-          <DataField>DESCRIPTION_PARKING_TYPE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PARKING_TYPE_CODE">
-          <DataField>PARKING_TYPE_CODE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>DtsCheckIn</rd:DataSetName>
-        <rd:SchemaPath>C:\OPCODE\OP_APPS\parking\parking\Views\Reports\DataSets\DtsCheckIn.xsd</rd:SchemaPath>
-        <rd:TableName>SP_CHECK_IN_REPORT</rd:TableName>
-        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>SP_CHECK_IN_REPORTTableAdapter</rd:TableAdapterName>
-      </rd:DataSetInfo>
-    </DataSet>
     <DataSet Name="DtsGetCompanyData">
       <Query>
         <DataSourceName>DtsGetCompanyData</DataSourceName>
@@ -1059,6 +1118,54 @@
         <rd:TableAdapterName>SP_GET_COMPANY_DATATableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
+    <DataSet Name="DtsCheckOut">
+      <Query>
+        <DataSourceName>DtsCheckOut</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="CHECK_OUT_TIME">
+          <DataField>CHECK_OUT_TIME</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CHECK_OUT_CODE">
+          <DataField>CHECK_OUT_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TOTAL_TIME">
+          <DataField>TOTAL_TIME</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CLIENT_FULL_NAME">
+          <DataField>CLIENT_FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="USER_NAME">
+          <DataField>USER_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PARKING_SPACE_NUMBER">
+          <DataField>PARKING_SPACE_NUMBER</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DESCRIPTION_PARKING_TYPE">
+          <DataField>DESCRIPTION_PARKING_TYPE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PARKING_TYPE_CODE">
+          <DataField>PARKING_TYPE_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DtsCheckOut</rd:DataSetName>
+        <rd:SchemaPath>C:\OPCODE\OP_APPS\parking\parking\Views\Reports\DataSets\DtsCheckOut.xsd</rd:SchemaPath>
+        <rd:TableName>SP_CHECK_OUT_REPORT</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>SP_CHECK_OUT_REPORTTableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
   </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="iconapp">
@@ -1068,5 +1175,5 @@ upru0VFGZmYABgUeTwngs1ksotXtxqUo9Pr9TEQipoofSE/HlZtL9+golzo79avZKf1yehVNewBIRx0O
     </EmbeddedImage>
   </EmbeddedImages>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>26743a16-9f14-4b04-b233-e3f1b1ddd5b9</rd:ReportID>
+  <rd:ReportID>e6b6458c-f279-499e-a5a7-b1476b7c4a3c</rd:ReportID>
 </Report>

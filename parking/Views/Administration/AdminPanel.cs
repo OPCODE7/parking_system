@@ -274,5 +274,14 @@ namespace parking.Views.Administration
             List<Form> form = Application.OpenForms.Cast<Form>().ToList().Where(x => x.Name != "AdminPanel").ToList();
             form.ForEach(x => x.Hide());
         }
+
+        private void BtnCheckOutReport_Click(object sender, EventArgs e)
+        {
+            HideForms();
+            Reports.FrmCheckOutReport frmCheckOutReport = new Reports.FrmCheckOutReport();
+            frmCheckOutReport.MdiParent = this;
+            frmCheckOutReport.Show();
+
+        }
     }
 }

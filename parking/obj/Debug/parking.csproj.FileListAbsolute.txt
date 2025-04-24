@@ -92,3 +92,4 @@ C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.exe
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.pdb
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Administration.AdminPanel.resources
 C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Reports.FrmCheckInReport.resources
+C:\OPCODE\OP_APPS\parking\parking\obj\Debug\parking.Views.Reports.FrmCheckOutReport.resources

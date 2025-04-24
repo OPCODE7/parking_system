@@ -389,6 +389,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsCheckIn.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsCheckOut.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsCheckOut.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DataSets\DtsFinancialIncomes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -431,6 +436,12 @@
     </Compile>
     <Compile Include="Views\Reports\FrmCheckInReport.Designer.cs">
       <DependentUpon>FrmCheckInReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\FrmCheckOutReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\FrmCheckOutReport.Designer.cs">
+      <DependentUpon>FrmCheckOutReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\FrmGeneratedBillReport.cs">
       <SubType>Form</SubType>
@@ -526,6 +537,9 @@
     <EmbeddedResource Include="Views\Reports\FrmCheckInReport.resx">
       <DependentUpon>FrmCheckInReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Reports\FrmCheckOutReport.resx">
+      <DependentUpon>FrmCheckOutReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\FrmGeneratedBillReport.resx">
       <DependentUpon>FrmGeneratedBillReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -533,6 +547,7 @@
       <DependentUpon>FrmIncomesReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\RDLC\ReportCheckIn.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportCheckOut.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportFinancialIncomes.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportGeneratedBill.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportInvoices.rdlc" />
@@ -564,6 +579,17 @@
     </None>
     <None Include="Views\Reports\DataSets\DtsCheckIn.xss">
       <DependentUpon>DtsCheckIn.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsCheckOut.xsc">
+      <DependentUpon>DtsCheckOut.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsCheckOut.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsCheckOut.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsCheckOut.xss">
+      <DependentUpon>DtsCheckOut.xsd</DependentUpon>
     </None>
     <None Include="Views\Reports\DataSets\DtsFinancialIncomes.xsc">
       <DependentUpon>DtsFinancialIncomes.xsd</DependentUpon>
