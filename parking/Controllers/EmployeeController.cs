@@ -62,6 +62,7 @@ namespace parking.Controllers
                         EMPLOYEE_DNI = emp.EMPLOYEE_DNI,
                         EMPLOYEE_NAME = emp.EMPLOYEE_NAME,
                         EMPLOYEE_LASTNAME = emp.EMPLOYEE_LASTNAME,
+                        EMPLOYEE_FULL_NAME= emp.EMPLOYEE_NAME + " " + emp.EMPLOYEE_LASTNAME,
                         DESCRIPTION_JOB_POSITION = emp.DESCRIPTION_JOB_POSITION,
                         INITIAL_HOUR = emp.INITIAL_HOUR,
                         FINAL_HOUR = emp.FINAL_HOUR,

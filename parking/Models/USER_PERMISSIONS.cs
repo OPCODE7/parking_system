@@ -22,14 +22,14 @@ namespace parking.Models
     
         public int PERMISSION_ID { get; set; }
         public string PERMISSION_DESCRIPTION { get; set; }
+        public string USER_ID { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }
-        public string USER_ID { get; set; }
         public string ACTION { get; set; }
         public string MODULE_ID { get; set; }
     
+        public virtual APP_MODULES APP_MODULES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
-        public virtual APP_MODULES APP_MODULES { get; set; }
     }
 }

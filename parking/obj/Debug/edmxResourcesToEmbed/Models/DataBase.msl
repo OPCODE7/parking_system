@@ -1,10 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="PARKINGModelStoreContainer" CdmEntityContainer="PARKINGEntities">
+    <EntitySetMapping Name="APP_MODULES">
+      <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
+        <MappingFragment StoreEntitySet="APP_MODULES">
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+          <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="BILL">
       <EntityTypeMapping TypeName="PARKINGModel.BILL">
         <MappingFragment StoreEntitySet="BILL">
-          <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
           <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
           <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
           <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
@@ -15,6 +25,25 @@
           <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="RTN" ColumnName="RTN" />
+          <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BILL_RANGE">
+      <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
+        <MappingFragment StoreEntitySet="BILL_RANGE">
+          <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
+          <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
+          <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
+          <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
+          <ScalarProperty Name="INITIAL_RANGE" ColumnName="INITIAL_RANGE" />
+          <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
+          <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
+          <ScalarProperty Name="BILL_RANGE_STATE" ColumnName="BILL_RANGE_STATE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="DEL" ColumnName="DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -22,6 +51,7 @@
       <EntityTypeMapping TypeName="PARKINGModel.CHECK_IN">
         <MappingFragment StoreEntitySet="CHECK_IN">
           <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+          <ScalarProperty Name="CLIENT_CODE" ColumnName="CLIENT_CODE" />
           <ScalarProperty Name="VEHICLE_PLATE" ColumnName="VEHICLE_PLATE" />
           <ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
           <ScalarProperty Name="OBSERVATIONS" ColumnName="OBSERVATIONS" />
@@ -30,7 +60,6 @@
           <ScalarProperty Name="CHECK_IN_STATE" ColumnName="CHECK_IN_STATE" />
           <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-          <ScalarProperty Name="CLIENT_CODE" ColumnName="CLIENT_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -82,12 +111,12 @@
     <EntitySetMapping Name="CORRELATIVES">
       <EntityTypeMapping TypeName="PARKINGModel.CORRELATIVES">
         <MappingFragment StoreEntitySet="CORRELATIVES">
-          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
           <ScalarProperty Name="CORRELATIVE_CODE" ColumnName="CORRELATIVE_CODE" />
           <ScalarProperty Name="CORRELATIVE_DESCRIPTION" ColumnName="CORRELATIVE_DESCRIPTION" />
           <ScalarProperty Name="CORRELATIVE_COUNTER" ColumnName="CORRELATIVE_COUNTER" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -120,13 +149,26 @@
     <EntitySetMapping Name="DISCOUNTS_BILL">
       <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
         <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-          <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
           <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
+          <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
           <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
           <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="BIT" ColumnName="BIT" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPLOYEE_SALARY">
+      <EntityTypeMapping TypeName="PARKINGModel.EMPLOYEE_SALARY">
+        <MappingFragment StoreEntitySet="EMPLOYEE_SALARY">
+          <ScalarProperty Name="EMPLOYEE_SALARY_CODE" ColumnName="EMPLOYEE_SALARY_CODE" />
+          <ScalarProperty Name="EMPLOYEE_CODE" ColumnName="EMPLOYEE_CODE" />
+          <ScalarProperty Name="SALARY_CODE" ColumnName="SALARY_CODE" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="SALARY_STATE" ColumnName="SALARY_STATE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -183,12 +225,12 @@
     <EntitySetMapping Name="LOGBOOK_APP">
       <EntityTypeMapping TypeName="PARKINGModel.LOGBOOK_APP">
         <MappingFragment StoreEntitySet="LOGBOOK_APP">
-          <ScalarProperty Name="ACTION_TYPE" ColumnName="ACTION_TYPE" />
-          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
           <ScalarProperty Name="LOG_DESCRIPTION" ColumnName="LOG_DESCRIPTION" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+          <ScalarProperty Name="ACTION_TYPE" ColumnName="ACTION_TYPE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -220,22 +262,22 @@
     <EntitySetMapping Name="PARKING_TYPES">
       <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
         <MappingFragment StoreEntitySet="PARKING_TYPES">
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
           <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ROLE_PERMISSIONS">
       <EntityTypeMapping TypeName="PARKINGModel.ROLE_PERMISSIONS">
         <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -244,10 +286,11 @@
         <MappingFragment StoreEntitySet="SALARIES">
           <ScalarProperty Name="SALARY_CODE" ColumnName="SALARY_CODE" />
           <ScalarProperty Name="BASE_SALARY" ColumnName="BASE_SALARY" />
-          <ScalarProperty Name="AUMENTO" ColumnName="AUMENTO" />
+          <ScalarProperty Name="INCREASE" ColumnName="INCREASE" />
           <ScalarProperty Name="TOTAL_SALARY" ColumnName="TOTAL_SALARY" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="EMPLOYEE_CODE" ColumnName="EMPLOYEE_CODE" />
+          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -265,32 +308,31 @@
     <EntitySetMapping Name="USER_PERMISSIONS">
       <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
         <MappingFragment StoreEntitySet="USER_PERMISSIONS">
-          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
-          <ScalarProperty Name="ACTION" ColumnName="ACTION" />
-          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
           <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="USER_ROLES">
       <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
         <MappingFragment StoreEntitySet="USER_ROLES">
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
           <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />
           <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="USERS">
       <EntityTypeMapping TypeName="PARKINGModel.USERS">
         <MappingFragment StoreEntitySet="USERS">
-          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
           <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
           <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
           <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
@@ -298,64 +340,43 @@
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
           <ScalarProperty Name="USER_STATE" ColumnName="USER_STATE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PARKINGModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PARKINGModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PARKINGModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PARKINGModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PARKINGModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="BILL_RANGE">
-      <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
-        <MappingFragment StoreEntitySet="BILL_RANGE">
-          <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
-          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-          <ScalarProperty Name="DEL" ColumnName="DEL" />
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="BILL_RANGE_STATE" ColumnName="BILL_RANGE_STATE" />
-          <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
-          <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
-          <ScalarProperty Name="INITIAL_RANGE" ColumnName="INITIAL_RANGE" />
-          <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
-          <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
-          <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
-          <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="APP_MODULES">
-      <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
-        <MappingFragment StoreEntitySet="APP_MODULES">
-          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-          <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-          <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
-          <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GENERATE_BILL_NUMBER" FunctionName="PARKINGModel.Store.GENERATE_BILL_NUMBER" />
     <FunctionImportMapping FunctionImportName="LogAction" FunctionName="PARKINGModel.Store.LogAction" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PARKINGModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="SP_CHECK_IN_REPORT" FunctionName="PARKINGModel.Store.SP_CHECK_IN_REPORT">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.SP_CHECK_IN_REPORT_Result">
+          <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+          <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+          <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
+          <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
+          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_CHECK_OUT_REPORT" FunctionName="PARKINGModel.Store.SP_CHECK_OUT_REPORT">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.SP_CHECK_OUT_REPORT_Result">
+          <ScalarProperty Name="CHECK_OUT_TIME" ColumnName="CHECK_OUT_TIME" />
+          <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
+          <ScalarProperty Name="TOTAL_TIME" ColumnName="TOTAL_TIME" />
+          <ScalarProperty Name="FORMAT_TIME" ColumnName="FORMAT_TIME" />
+          <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
+          <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
+          <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PARKINGModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PARKINGModel.Store.sp_dropdiagram" />
     <FunctionImportMapping FunctionImportName="SP_GET_ACTIVE_BILL_RANGE" FunctionName="PARKINGModel.Store.SP_GET_ACTIVE_BILL_RANGE">
       <ResultMapping>
         <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result">
@@ -383,7 +404,58 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GET_FILTER_INVOICES" FunctionName="PARKINGModel.Store.SP_GET_FILTER_INVOICES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_FILTER_INVOICES_Result">
+          <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
+          <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
+          <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
+          <ScalarProperty Name="ISV" ColumnName="ISV" />
+          <ScalarProperty Name="RTN" ColumnName="RTN" />
+          <ScalarProperty Name="SUBTOTAL" ColumnName="SUBTOTAL" />
+          <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+          <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_GET_TOTAL_VISITS_CLIENT" FunctionName="PARKINGModel.Store.SP_GET_TOTAL_VISITS_CLIENT" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PARKINGModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PARKINGModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="SP_REPORT_FINANCIAL_INCOMES" FunctionName="PARKINGModel.Store.SP_REPORT_FINANCIAL_INCOMES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PARKINGModel.SP_REPORT_FINANCIAL_INCOMES_Result">
+          <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="MONTH_NAME" ColumnName="MONTH_NAME" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="TOTAL_SUBTOTAL" ColumnName="TOTAL_SUBTOTAL" />
+          <ScalarProperty Name="TOTAL_ISV" ColumnName="TOTAL_ISV" />
+          <ScalarProperty Name="TOTAL_DISCOUNT" ColumnName="TOTAL_DISCOUNT" />
+          <ScalarProperty Name="FULL_TOTAL" ColumnName="FULL_TOTAL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_REPORT_GENERATED_INVOICE" FunctionName="PARKINGModel.Store.SP_REPORT_GENERATED_INVOICE">
       <ResultMapping>
         <ComplexTypeMapping TypeName="PARKINGModel.SP_REPORT_GENERATED_INVOICE_Result">
@@ -407,5 +479,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
   </EntityContainerMapping>
 </Mapping>

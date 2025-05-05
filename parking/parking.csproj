@@ -115,6 +115,7 @@
     <Compile Include="Controllers\DiscountsBillController.cs" />
     <Compile Include="Controllers\DiscountsController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeeSalaryController.cs" />
     <Compile Include="Controllers\EmployeeUserController.cs" />
     <Compile Include="Controllers\HoraryController.cs" />
     <Compile Include="Controllers\JobPositionController.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
+    <Compile Include="Controllers\SalariesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\BillDTO.cs" />
     <Compile Include="DTO\BillRangeDTO.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="DTO\ParkingFeeDTO.cs" />
     <Compile Include="DTO\ParkingSpaceDTO.cs" />
     <Compile Include="DTO\PermissionDTO.cs" />
+    <Compile Include="DTO\SalaryDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Helpers\App.cs" />
     <Compile Include="Helpers\Helpers.cs" />
@@ -194,6 +197,9 @@
     <Compile Include="Models\EMPLOYEES.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EMPLOYEE_SALARY.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EMPLOYEE_USER.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -221,16 +227,28 @@
     <Compile Include="Models\SALARIES.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_CHECK_IN_REPORT_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_CHECK_OUT_REPORT_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_GET_ACTIVE_BILL_RANGE_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_GET_COMPANY_DATA_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_GET_FILTER_INVOICES_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_REPORT_FINANCIAL_INCOMES_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_REPORT_GENERATED_INVOICE_Result.cs">
@@ -324,6 +342,12 @@
     <Compile Include="Views\Administration\Employees\FrmHorary.Designer.cs">
       <DependentUpon>FrmHorary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Administration\Employees\FrmSalaries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\Employees\FrmSalaries.Designer.cs">
+      <DependentUpon>FrmSalaries.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Administration\ParkingStructure\FrmCheckIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -388,6 +412,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsCheckIn.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsCheckOut.cs">
+      <DependentUpon>DtsCheckOut.xsd</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\DataSets\DtsCheckOut.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -500,6 +527,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Employees\FrmJobPositions.resx">
       <DependentUpon>FrmJobPositions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\Employees\FrmSalaries.resx">
+      <DependentUpon>FrmSalaries.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\ParkingStructure\FrmCheckIn.resx">
       <DependentUpon>FrmCheckIn.cs</DependentUpon>
@@ -677,7 +707,6 @@
     </Content>
     <None Include="Resources\iconapp.ico" />
     <None Include="Assets\Icons\parking.png" />
-    <Content Include="iconapp.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

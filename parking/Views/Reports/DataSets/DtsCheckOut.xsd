@@ -9,7 +9,7 @@
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SP_CHECK_OUT_REPORTTableAdapter" GeneratorDataComponentClassName="SP_CHECK_OUT_REPORTTableAdapter" Name="SP_CHECK_OUT_REPORT" UserDataComponentName="SP_CHECK_OUT_REPORTTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="PARKINGConnectionString (Settings)" DbObjectName="PARKING.dbo.SP_CHECK_OUT_REPORT" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="PARKINGConnectionString (Settings)" DbObjectName="PARKING.dbo.SP_CHECK_OUT_REPORT" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.SP_CHECK_OUT_REPORT</CommandText>
@@ -35,6 +35,7 @@
               <Mapping SourceColumn="PARKING_SPACE_NUMBER" DataSetColumn="PARKING_SPACE_NUMBER" />
               <Mapping SourceColumn="DESCRIPTION_PARKING_TYPE" DataSetColumn="DESCRIPTION_PARKING_TYPE" />
               <Mapping SourceColumn="PARKING_TYPE_CODE" DataSetColumn="PARKING_TYPE_CODE" />
+              <Mapping SourceColumn="FORMAT_TIME" DataSetColumn="FORMAT_TIME" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -43,47 +44,54 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="DtsCheckOut" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DtsCheckOut" msprop:Generator_DataSetName="DtsCheckOut">
+  <xs:element name="DtsCheckOut" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DtsCheckOut" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DtsCheckOut">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="SP_CHECK_OUT_REPORT" msprop:Generator_RowEvHandlerName="SP_CHECK_OUT_REPORTRowChangeEventHandler" msprop:Generator_RowDeletedName="SP_CHECK_OUT_REPORTRowDeleted" msprop:Generator_RowDeletingName="SP_CHECK_OUT_REPORTRowDeleting" msprop:Generator_RowEvArgName="SP_CHECK_OUT_REPORTRowChangeEvent" msprop:Generator_TablePropName="SP_CHECK_OUT_REPORT" msprop:Generator_RowChangedName="SP_CHECK_OUT_REPORTRowChanged" msprop:Generator_RowChangingName="SP_CHECK_OUT_REPORTRowChanging" msprop:Generator_TableClassName="SP_CHECK_OUT_REPORTDataTable" msprop:Generator_RowClassName="SP_CHECK_OUT_REPORTRow" msprop:Generator_TableVarName="tableSP_CHECK_OUT_REPORT" msprop:Generator_UserTableName="SP_CHECK_OUT_REPORT">
+        <xs:element name="SP_CHECK_OUT_REPORT" msprop:Generator_RowClassName="SP_CHECK_OUT_REPORTRow" msprop:Generator_RowEvHandlerName="SP_CHECK_OUT_REPORTRowChangeEventHandler" msprop:Generator_RowDeletedName="SP_CHECK_OUT_REPORTRowDeleted" msprop:Generator_RowDeletingName="SP_CHECK_OUT_REPORTRowDeleting" msprop:Generator_RowEvArgName="SP_CHECK_OUT_REPORTRowChangeEvent" msprop:Generator_TablePropName="SP_CHECK_OUT_REPORT" msprop:Generator_RowChangedName="SP_CHECK_OUT_REPORTRowChanged" msprop:Generator_UserTableName="SP_CHECK_OUT_REPORT" msprop:Generator_RowChangingName="SP_CHECK_OUT_REPORTRowChanging" msprop:Generator_TableClassName="SP_CHECK_OUT_REPORTDataTable" msprop:Generator_TableVarName="tableSP_CHECK_OUT_REPORT">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="CHECK_OUT_TIME" msprop:Generator_ColumnPropNameInRow="CHECK_OUT_TIME" msprop:Generator_ColumnPropNameInTable="CHECK_OUT_TIMEColumn" msprop:Generator_ColumnVarNameInTable="columnCHECK_OUT_TIME" msprop:Generator_UserColumnName="CHECK_OUT_TIME" type="xs:dateTime" />
-              <xs:element name="CHECK_OUT_CODE" msprop:Generator_ColumnPropNameInRow="CHECK_OUT_CODE" msprop:Generator_ColumnPropNameInTable="CHECK_OUT_CODEColumn" msprop:Generator_ColumnVarNameInTable="columnCHECK_OUT_CODE" msprop:Generator_UserColumnName="CHECK_OUT_CODE">
+              <xs:element name="CHECK_OUT_TIME" msprop:Generator_UserColumnName="CHECK_OUT_TIME" msprop:Generator_ColumnPropNameInTable="CHECK_OUT_TIMEColumn" msprop:Generator_ColumnPropNameInRow="CHECK_OUT_TIME" msprop:Generator_ColumnVarNameInTable="columnCHECK_OUT_TIME" type="xs:dateTime" />
+              <xs:element name="CHECK_OUT_CODE" msprop:Generator_UserColumnName="CHECK_OUT_CODE" msprop:Generator_ColumnPropNameInTable="CHECK_OUT_CODEColumn" msprop:Generator_ColumnPropNameInRow="CHECK_OUT_CODE" msprop:Generator_ColumnVarNameInTable="columnCHECK_OUT_CODE">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="15" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TOTAL_TIME" msprop:Generator_ColumnPropNameInRow="TOTAL_TIME" msprop:Generator_ColumnPropNameInTable="TOTAL_TIMEColumn" msprop:Generator_ColumnVarNameInTable="columnTOTAL_TIME" msprop:Generator_UserColumnName="TOTAL_TIME" type="xs:decimal" />
-              <xs:element name="CLIENT_FULL_NAME" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="CLIENT_FULL_NAME" msprop:Generator_ColumnPropNameInTable="CLIENT_FULL_NAMEColumn" msprop:Generator_ColumnVarNameInTable="columnCLIENT_FULL_NAME" msprop:Generator_UserColumnName="CLIENT_FULL_NAME" minOccurs="0">
+              <xs:element name="TOTAL_TIME" msprop:Generator_UserColumnName="TOTAL_TIME" msprop:Generator_ColumnPropNameInTable="TOTAL_TIMEColumn" msprop:Generator_ColumnPropNameInRow="TOTAL_TIME" msprop:Generator_ColumnVarNameInTable="columnTOTAL_TIME" type="xs:decimal" />
+              <xs:element name="CLIENT_FULL_NAME" msdata:ReadOnly="true" msprop:Generator_UserColumnName="CLIENT_FULL_NAME" msprop:Generator_ColumnPropNameInTable="CLIENT_FULL_NAMEColumn" msprop:Generator_ColumnPropNameInRow="CLIENT_FULL_NAME" msprop:Generator_ColumnVarNameInTable="columnCLIENT_FULL_NAME" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="101" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="USER_NAME" msprop:Generator_ColumnPropNameInRow="USER_NAME" msprop:Generator_ColumnPropNameInTable="USER_NAMEColumn" msprop:Generator_ColumnVarNameInTable="columnUSER_NAME" msprop:Generator_UserColumnName="USER_NAME">
+              <xs:element name="USER_NAME" msprop:Generator_UserColumnName="USER_NAME" msprop:Generator_ColumnPropNameInTable="USER_NAMEColumn" msprop:Generator_ColumnPropNameInRow="USER_NAME" msprop:Generator_ColumnVarNameInTable="columnUSER_NAME">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="16" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="PARKING_SPACE_NUMBER" msprop:Generator_ColumnPropNameInRow="PARKING_SPACE_NUMBER" msprop:Generator_ColumnPropNameInTable="PARKING_SPACE_NUMBERColumn" msprop:Generator_ColumnVarNameInTable="columnPARKING_SPACE_NUMBER" msprop:Generator_UserColumnName="PARKING_SPACE_NUMBER" type="xs:int" />
-              <xs:element name="DESCRIPTION_PARKING_TYPE" msprop:Generator_ColumnPropNameInRow="DESCRIPTION_PARKING_TYPE" msprop:Generator_ColumnPropNameInTable="DESCRIPTION_PARKING_TYPEColumn" msprop:Generator_ColumnVarNameInTable="columnDESCRIPTION_PARKING_TYPE" msprop:Generator_UserColumnName="DESCRIPTION_PARKING_TYPE">
+              <xs:element name="PARKING_SPACE_NUMBER" msprop:Generator_UserColumnName="PARKING_SPACE_NUMBER" msprop:Generator_ColumnPropNameInTable="PARKING_SPACE_NUMBERColumn" msprop:Generator_ColumnPropNameInRow="PARKING_SPACE_NUMBER" msprop:Generator_ColumnVarNameInTable="columnPARKING_SPACE_NUMBER" type="xs:int" />
+              <xs:element name="DESCRIPTION_PARKING_TYPE" msprop:Generator_UserColumnName="DESCRIPTION_PARKING_TYPE" msprop:Generator_ColumnPropNameInTable="DESCRIPTION_PARKING_TYPEColumn" msprop:Generator_ColumnPropNameInRow="DESCRIPTION_PARKING_TYPE" msprop:Generator_ColumnVarNameInTable="columnDESCRIPTION_PARKING_TYPE">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="PARKING_TYPE_CODE" msprop:Generator_ColumnPropNameInRow="PARKING_TYPE_CODE" msprop:Generator_ColumnPropNameInTable="PARKING_TYPE_CODEColumn" msprop:Generator_ColumnVarNameInTable="columnPARKING_TYPE_CODE" msprop:Generator_UserColumnName="PARKING_TYPE_CODE">
+              <xs:element name="PARKING_TYPE_CODE" msprop:Generator_UserColumnName="PARKING_TYPE_CODE" msprop:Generator_ColumnPropNameInTable="PARKING_TYPE_CODEColumn" msprop:Generator_ColumnPropNameInRow="PARKING_TYPE_CODE" msprop:Generator_ColumnVarNameInTable="columnPARKING_TYPE_CODE">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FORMAT_TIME" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="FORMAT_TIME" msprop:Generator_ColumnPropNameInTable="FORMAT_TIMEColumn" msprop:Generator_ColumnVarNameInTable="columnFORMAT_TIME" msprop:Generator_UserColumnName="FORMAT_TIME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

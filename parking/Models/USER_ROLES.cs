@@ -18,7 +18,7 @@ namespace parking.Models
         public USER_ROLES()
         {
             this.ROLE_PERMISSIONS = new HashSet<ROLE_PERMISSIONS>();
-            this.USERS = new HashSet<USERS>();
+            this.USERS1 = new HashSet<USERS>();
         }
     
         public int ROLE_ID { get; set; }
@@ -30,8 +30,8 @@ namespace parking.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
+        public virtual USERS USERS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USERS> USERS { get; set; }
-        public virtual USERS USERS1 { get; set; }
+        public virtual ICollection<USERS> USERS1 { get; set; }
     }
 }

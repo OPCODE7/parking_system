@@ -50,6 +50,7 @@ namespace parking.Views.Administration
             BtnJobPositions.Enabled = PermissionManager.HasPermission("JPS", "Acceso");
             BtnLogBookApp.Enabled = PermissionManager.HasPermission("LOG", "Acceso");
             BtnConfigServer.Enabled = Config.User.roleName.ToLower() == "super usuario" ? true : false;
+            BtnSalaries.Enabled = PermissionManager.HasPermission("SAL","Acceso");
 
 
         }
@@ -281,6 +282,16 @@ namespace parking.Views.Administration
             Reports.FrmCheckOutReport frmCheckOutReport = new Reports.FrmCheckOutReport();
             frmCheckOutReport.MdiParent = this;
             frmCheckOutReport.Show();
+
+        }
+
+        private void BtnSalaries_Click(object sender, EventArgs e)
+        {
+            HideForms();
+
+            FrmSalaries frmSalaries = new FrmSalaries();
+            frmSalaries.MdiParent = this;
+            frmSalaries.Show();
 
         }
     }

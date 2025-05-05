@@ -15,11 +15,11 @@ namespace parking.Models
     public partial class DISCOUNTS_BILL
     {
         public int DISCOUNTS_BILL_ID { get; set; }
+        public Nullable<decimal> DISCOUNT_AMOUNT { get; set; }
         public int DISCOUNT_ID { get; set; }
         public string BILL_CODE { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
         public bool BIT { get; set; }
-        public Nullable<decimal> DISCOUNT_AMOUNT { get; set; }
         public string USER_CODE { get; set; }
     
         public virtual DISCOUNTS DISCOUNTS { get; set; }

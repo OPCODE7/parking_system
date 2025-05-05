@@ -14,13 +14,22 @@ namespace parking.Models
     
     public partial class SALARIES
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SALARIES()
+        {
+            this.EMPLOYEE_SALARY = new HashSet<EMPLOYEE_SALARY>();
+        }
+    
         public string SALARY_CODE { get; set; }
         public decimal BASE_SALARY { get; set; }
-        public decimal AUMENTO { get; set; }
+        public decimal INCREASE { get; set; }
         public decimal TOTAL_SALARY { get; set; }
-        public Nullable<System.DateTime> INSERTED_AT { get; set; }
-        public string EMPLOYEE_CODE { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public bool IS_DEL { get; set; }
+        public string USER_CODE { get; set; }
     
-        public virtual EMPLOYEES EMPLOYEES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLOYEE_SALARY> EMPLOYEE_SALARY { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

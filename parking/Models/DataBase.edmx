@@ -152,6 +152,18 @@
           <Property Name="BIT" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
         </EntityType>
+        <EntityType Name="EMPLOYEE_SALARY">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_SALARY_CODE" />
+          </Key>
+          <Property Name="EMPLOYEE_SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IS_DEL" Type="bit" Nullable="false" />
+          <Property Name="SALARY_STATE" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="EMPLOYEE_USER">
           <Key>
             <PropertyRef Name="EMPLOYEE_USER_ID" />
@@ -258,10 +270,11 @@
           </Key>
           <Property Name="SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="BASE_SALARY" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="AUMENTO" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="INCREASE" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="TOTAL_SALARY" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="datetime" />
-          <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IS_DEL" Type="bit" Nullable="false" />
+          <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -393,6 +406,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__EMPLOYEE___EMPLO__3E082B48">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_CODE" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="EMPLOYEE_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EMPLOYEE___SALAR__3D14070F">
+          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALARIES">
+              <PropertyRef Name="SALARY_CODE" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="SALARY_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
           <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
           <End Role="LOGBOOK_APP" Type="Self.LOGBOOK_APP" Multiplicity="*" />
@@ -449,6 +486,18 @@
               <PropertyRef Name="USER_CODE" />
             </Principal>
             <Dependent Role="ROLE_PERMISSIONS">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SALARIES__USER_C__3FF073BA">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="SALARIES">
               <PropertyRef Name="USER_CODE" />
             </Dependent>
           </ReferentialConstraint>
@@ -513,15 +562,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EMPLOYE_SALARY">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
-          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+        <Association Name="FK_EMP_SAL">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMPLOYEE_CODE" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
             </Principal>
-            <Dependent Role="SALARIES">
-              <PropertyRef Name="EMPLOYEE_CODE" />
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="USER_CODE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -722,6 +771,22 @@
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="SP_CHECK_IN_REPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+          <Parameter Name="ParkingType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_CHECK_OUT_REPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+          <Parameter Name="ParkingType" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -734,6 +799,13 @@
         </Function>
         <Function Name="SP_GET_ACTIVE_BILL_RANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GET_COMPANY_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_GET_FILTER_INVOICES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_GET_TOTAL_VISITS_CLIENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CLIENT_CODE" Type="varchar" Mode="In" />
           <Parameter Name="TOTAL_VISITS" Type="int" Mode="InOut" />
@@ -751,6 +823,13 @@
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_REPORT_FINANCIAL_INCOMES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_REPORT_GENERATED_INVOICE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="B_CODE" Type="varchar" Mode="In" />
         </Function>
@@ -767,6 +846,7 @@
           <EntitySet Name="DISCOUNT_TYPE" EntityType="Self.DISCOUNT_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DISCOUNTS_BILL" EntityType="Self.DISCOUNTS_BILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEE_SALARY" EntityType="Self.EMPLOYEE_SALARY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_USER" EntityType="Self.EMPLOYEE_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HORARY" EntityType="Self.HORARY" Schema="dbo" store:Type="Tables" />
@@ -809,6 +889,14 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
           </AssociationSet>
+          <AssociationSet Name="FK__EMPLOYEE___EMPLO__3E082B48" Association="Self.FK__EMPLOYEE___EMPLO__3E082B48">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EMPLOYEE___SALAR__3D14070F" Association="Self.FK__EMPLOYEE___SALAR__3D14070F">
+            <End Role="SALARIES" EntitySet="SALARIES" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+          </AssociationSet>
           <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="Self.FK__LOGBOOK_A__USER___1CA7377D">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
@@ -828,6 +916,10 @@
           <AssociationSet Name="FK__ROLE_PERM__USER___664B26CC" Association="Self.FK__ROLE_PERM__USER___664B26CC">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SALARIES__USER_C__3FF073BA" Association="Self.FK__SALARIES__USER_C__3FF073BA">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="SALARIES" EntitySet="SALARIES" />
           </AssociationSet>
           <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="Self.FK__USER_PERM__MODUL__45DE573A">
             <End Role="APP_MODULES" EntitySet="APP_MODULES" />
@@ -849,9 +941,9 @@
             <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
             <End Role="BILL" EntitySet="BILL" />
           </AssociationSet>
-          <AssociationSet Name="FK_EMPLOYE_SALARY" Association="Self.FK_EMPLOYE_SALARY">
-            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-            <End Role="SALARIES" EntitySet="SALARIES" />
+          <AssociationSet Name="FK_EMP_SAL" Association="Self.FK_EMP_SAL">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
           </AssociationSet>
           <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
@@ -918,13 +1010,25 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PARKINGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APP_MODULES">
+          <Key>
+            <PropertyRef Name="MODULE_ID" />
+          </Key>
+          <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MODULE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IS_DEL" Type="Boolean" />
+          <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
+        </EntityType>
         <EntityType Name="BILL">
           <Key>
             <PropertyRef Name="BILL_CODE" />
           </Key>
           <Property Name="BILL_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DATE_OF_ISSUE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="BILL_NUMBER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="BILL_NUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SUBTOTAL" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="DISCOUNT" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="ISV" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
@@ -932,16 +1036,34 @@
           <Property Name="CHECK_OUT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="LETTERS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_CHECKOUTBILL" FromRole="BILL" ToRole="CHECK_OUT" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USRBILL" FromRole="BILL" ToRole="USERS" />
-          <Property Name="LETTERS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BILL_RANGE">
+          <Key>
+            <PropertyRef Name="BILL_RANGE_ID" />
+          </Key>
+          <Property Name="BILL_RANGE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ESTABLISHMENT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMISSION_POINT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOC_TYPE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INITIAL_RANGE" Type="Int32" Nullable="false" />
+          <Property Name="FINAL_RANGE" Type="Int32" Nullable="false" />
+          <Property Name="LAST_USED" Type="Int32" Nullable="false" />
+          <Property Name="BILL_RANGE_STATE" Type="Boolean" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DEL" Type="Boolean" Nullable="false" />
+          <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LIMIT_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="USERS" Relationship="Self.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
         </EntityType>
         <EntityType Name="CHECK_IN">
           <Key>
             <PropertyRef Name="CHECK_IN_CODE" />
           </Key>
           <Property Name="CHECK_IN_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CLIENT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false"/>
+          <Property Name="CLIENT_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="VEHICLE_PLATE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CHECK_IN_TIME" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="OBSERVATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
@@ -950,10 +1072,10 @@
           <Property Name="CHECK_IN_STATE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PARKING_SPACE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CLIENTS" Relationship="Self.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CHECK_IN" ToRole="CLIENTS" />
           <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_CHECK_IN" FromRole="CHECK_IN" ToRole="CHECK_OUT" />
           <NavigationProperty Name="PARKING_SPACE" Relationship="Self.FK_PSC" FromRole="CHECK_IN" ToRole="PARKING_SPACE" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USR" FromRole="CHECK_IN" ToRole="USERS" />
-          <NavigationProperty Name="CLIENTS" Relationship="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CHECK_IN" ToRole="CLIENTS" />
         </EntityType>
         <EntityType Name="CHECK_OUT">
           <Key>
@@ -985,8 +1107,8 @@
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CHECK_IN" Relationship="Self.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CLIENTS" ToRole="CHECK_IN" />
           <NavigationProperty Name="USERS" Relationship="Self.FK__CLIENTS__USER_ID__3EA749C6" FromRole="CLIENTS" ToRole="USERS" />
-          <NavigationProperty Name="CHECK_IN" Relationship="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1" FromRole="CLIENTS" ToRole="CHECK_IN" />
         </EntityType>
         <EntityType Name="COMPANY_DATA">
           <Key>
@@ -1001,7 +1123,7 @@
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6" FromRole="COMPANY_DATA" ToRole="USERS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__COMPANY_D__USER___1D9B5BB6" FromRole="COMPANY_DATA" ToRole="USERS" />
         </EntityType>
         <EntityType Name="CORRELATIVES">
           <Key>
@@ -1047,15 +1169,30 @@
           <Key>
             <PropertyRef Name="DISCOUNTS_BILL_ID" />
           </Key>
-          <Property Name="DISCOUNTS_BILL_ID" Type="Int32" Nullable="false" />
+          <Property Name="DISCOUNTS_BILL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DISCOUNT_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="DISCOUNT_ID" Type="Int32" Nullable="false" />
           <Property Name="BILL_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="BIT" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
-          <Property Name="DISCOUNT_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__DISCOUNTS__USER___68336F3E" FromRole="DISCOUNTS_BILL" ToRole="USERS" />
+          <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__DISCOUNTS__USER___68336F3E" FromRole="DISCOUNTS_BILL" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE_SALARY">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_SALARY_CODE" />
+          </Key>
+          <Property Name="EMPLOYEE_SALARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPLOYEE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SALARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+          <Property Name="SALARY_STATE" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK__EMPLOYEE___EMPLO__3E082B48" FromRole="EMPLOYEE_SALARY" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="SALARIES" Relationship="Self.FK__EMPLOYEE___SALAR__3D14070F" FromRole="EMPLOYEE_SALARY" ToRole="SALARIES" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK_EMP_SAL" FromRole="EMPLOYEE_SALARY" ToRole="USERS" />
         </EntityType>
         <EntityType Name="EMPLOYEE_USER">
           <Key>
@@ -1084,8 +1221,8 @@
           <Property Name="JOB_POSITION_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="HORARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEE_SALARY" Relationship="Self.FK__EMPLOYEE___EMPLO__3E082B48" FromRole="EMPLOYEES" ToRole="EMPLOYEE_SALARY" />
           <NavigationProperty Name="EMPLOYEE_USER" Relationship="Self.FK_EMPLOYEE" FromRole="EMPLOYEES" ToRole="EMPLOYEE_USER" />
-          <NavigationProperty Name="SALARIES" Relationship="Self.FK_EMPLOYE_SALARY" FromRole="EMPLOYEES" ToRole="SALARIES" />
           <NavigationProperty Name="HORARY" Relationship="Self.FK_HORARY_EMPLOYE" FromRole="EMPLOYEES" ToRole="HORARY" />
           <NavigationProperty Name="JOB_POSITIONS" Relationship="Self.FK_JOB_POSITION_EMPLOYE" FromRole="EMPLOYEES" ToRole="JOB_POSITIONS" />
         </EntityType>
@@ -1115,13 +1252,13 @@
           <Key>
             <PropertyRef Name="LOG_ID" />
           </Key>
-          <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOG_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LOG_DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="7" Nullable="false" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="ACTION_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D" FromRole="LOGBOOK_APP" ToRole="USERS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__LOGBOOK_A__USER___1CA7377D" FromRole="LOGBOOK_APP" ToRole="USERS" />
         </EntityType>
         <EntityType Name="PARKING_FEE">
           <Key>
@@ -1159,9 +1296,9 @@
           <Property Name="DESCRIPTION_PARKING_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK_PARKING_TYPE" FromRole="PARKING_TYPES" ToRole="PARKING_FEE" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__PARKING_T__USER___673F4B05" FromRole="PARKING_TYPES" ToRole="USERS" />
+          <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK_PARKING_TYPE" FromRole="PARKING_TYPES" ToRole="PARKING_FEE" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__PARKING_T__USER___673F4B05" FromRole="PARKING_TYPES" ToRole="USERS" />
         </EntityType>
         <EntityType Name="ROLE_PERMISSIONS">
           <Key>
@@ -1171,10 +1308,10 @@
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Precision="7" />
+          <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__ROLE_PERM__USER___664B26CC" FromRole="ROLE_PERMISSIONS" ToRole="USERS" />
           <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_PERMISSIONS" />
           <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_ROLE_ID" FromRole="ROLE_PERMISSIONS" ToRole="USER_ROLES" />
-          <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK__ROLE_PERM__USER___664B26CC" FromRole="ROLE_PERMISSIONS" ToRole="USERS" />
         </EntityType>
         <EntityType Name="SALARIES">
           <Key>
@@ -1182,11 +1319,13 @@
           </Key>
           <Property Name="SALARY_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BASE_SALARY" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="AUMENTO" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="INCREASE" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="TOTAL_SALARY" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Precision="3" />
-          <Property Name="EMPLOYEE_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYE_SALARY" FromRole="SALARIES" ToRole="EMPLOYEES" />
+          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
+          <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLOYEE_SALARY" Relationship="Self.FK__EMPLOYEE___SALAR__3D14070F" FromRole="SALARIES" ToRole="EMPLOYEE_SALARY" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__SALARIES__USER_C__3FF073BA" FromRole="SALARIES" ToRole="USERS" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1204,13 +1343,13 @@
           </Key>
           <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="USER_PERMISSIONS" ToRole="ROLE_PERMISSIONS" />
-          <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ACTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="USER_PERMISSIONS" ToRole="APP_MODULES" />
+          <NavigationProperty Name="APP_MODULES" Relationship="Self.FK__USER_PERM__MODUL__45DE573A" FromRole="USER_PERMISSIONS" ToRole="APP_MODULES" />
+          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_PERMISSION_ID" FromRole="USER_PERMISSIONS" ToRole="ROLE_PERMISSIONS" />
         </EntityType>
         <EntityType Name="USER_ROLES">
           <Key>
@@ -1221,10 +1360,10 @@
           <Property Name="DESCRIPTION_ROLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
-          <NavigationProperty Name="USERS" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USERS1" Relationship="PARKINGModel.FK__USER_ROLE__USER___65570293" FromRole="USER_ROLES" ToRole="USERS" />
+          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK_ROLE_ID" FromRole="USER_ROLES" ToRole="ROLE_PERMISSIONS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__USER_ROLE__USER___65570293" FromRole="USER_ROLES" ToRole="USERS" />
+          <NavigationProperty Name="USERS1" Relationship="Self.FK_USER_ROLE" FromRole="USER_ROLES" ToRole="USERS" />
         </EntityType>
         <EntityType Name="USERS">
           <Key>
@@ -1237,27 +1376,53 @@
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_STATE" Type="Boolean" Nullable="false" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="APP_MODULES" Relationship="Self.FK_USER_MODULES" FromRole="USERS" ToRole="APP_MODULES" />
           <NavigationProperty Name="BILL" Relationship="Self.FK_USRBILL" FromRole="USERS" ToRole="BILL" />
+          <NavigationProperty Name="BILL_RANGE" Relationship="Self.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
           <NavigationProperty Name="CHECK_IN" Relationship="Self.FK_USR" FromRole="USERS" ToRole="CHECK_IN" />
           <NavigationProperty Name="CHECK_OUT" Relationship="Self.FK_USROUT" FromRole="USERS" ToRole="CHECK_OUT" />
           <NavigationProperty Name="CLIENTS" Relationship="Self.FK__CLIENTS__USER_ID__3EA749C6" FromRole="USERS" ToRole="CLIENTS" />
+          <NavigationProperty Name="COMPANY_DATA" Relationship="Self.FK__COMPANY_D__USER___1D9B5BB6" FromRole="USERS" ToRole="COMPANY_DATA" />
           <NavigationProperty Name="DISCOUNT_TYPE" Relationship="Self.FK__DISCOUNT___USER___39AD8A7F" FromRole="USERS" ToRole="DISCOUNT_TYPE" />
           <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK_USER_DISCOUNT" FromRole="USERS" ToRole="DISCOUNTS" />
+          <NavigationProperty Name="DISCOUNTS_BILL" Relationship="Self.FK__DISCOUNTS__USER___68336F3E" FromRole="USERS" ToRole="DISCOUNTS_BILL" />
+          <NavigationProperty Name="EMPLOYEE_SALARY" Relationship="Self.FK_EMP_SAL" FromRole="USERS" ToRole="EMPLOYEE_SALARY" />
           <NavigationProperty Name="EMPLOYEE_USER" Relationship="Self.FK_USER" FromRole="USERS" ToRole="EMPLOYEE_USER" />
+          <NavigationProperty Name="LOGBOOK_APP" Relationship="Self.FK__LOGBOOK_A__USER___1CA7377D" FromRole="USERS" ToRole="LOGBOOK_APP" />
           <NavigationProperty Name="PARKING_FEE" Relationship="Self.FK__PARKING_F__USER___0B27A5C0" FromRole="USERS" ToRole="PARKING_FEE" />
-          <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
-          <NavigationProperty Name="BILL_RANGE" Relationship="PARKINGModel.LAYOUT" FromRole="USERS" ToRole="BILL_RANGE" />
-          <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="USERS" ToRole="APP_MODULES" />
-          <Property Name="CREATED_BY" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DISCOUNTS_BILL" Relationship="PARKINGModel.FK__DISCOUNTS__USER___68336F3E" FromRole="USERS" ToRole="DISCOUNTS_BILL" />
-          <NavigationProperty Name="PARKING_TYPES" Relationship="PARKINGModel.FK__PARKING_T__USER___673F4B05" FromRole="USERS" ToRole="PARKING_TYPES" />
-          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="PARKINGModel.FK__ROLE_PERM__USER___664B26CC" FromRole="USERS" ToRole="ROLE_PERMISSIONS" />
-          <NavigationProperty Name="USER_ROLES1" Relationship="PARKINGModel.FK__USER_ROLE__USER___65570293" FromRole="USERS" ToRole="USER_ROLES" />
-          <NavigationProperty Name="USERS1" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS" ToRole="USERS1" />
-          <NavigationProperty Name="USERS2" Relationship="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS1" ToRole="USERS" />
-          <NavigationProperty Name="LOGBOOK_APP" Relationship="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D" FromRole="USERS" ToRole="LOGBOOK_APP" />
-          <NavigationProperty Name="COMPANY_DATA" Relationship="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6" FromRole="USERS" ToRole="COMPANY_DATA" />
+          <NavigationProperty Name="PARKING_TYPES" Relationship="Self.FK__PARKING_T__USER___673F4B05" FromRole="USERS" ToRole="PARKING_TYPES" />
+          <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Self.FK__ROLE_PERM__USER___664B26CC" FromRole="USERS" ToRole="ROLE_PERMISSIONS" />
+          <NavigationProperty Name="SALARIES" Relationship="Self.FK__SALARIES__USER_C__3FF073BA" FromRole="USERS" ToRole="SALARIES" />
+          <NavigationProperty Name="USER_ROLES" Relationship="Self.FK__USER_ROLE__USER___65570293" FromRole="USERS" ToRole="USER_ROLES" />
+          <NavigationProperty Name="USER_ROLES1" Relationship="Self.FK_USER_ROLE" FromRole="USERS" ToRole="USER_ROLES" />
+          <NavigationProperty Name="USERS1" Relationship="Self.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS" ToRole="USERS1" />
+          <NavigationProperty Name="USERS2" Relationship="Self.FK__USERS__CREATED_B__6462DE5A" FromRole="USERS1" ToRole="USERS" />
         </EntityType>
+        <Association Name="FK__USER_PERM__MODUL__45DE573A">
+          <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="0..1" />
+          <End Role="USER_PERMISSIONS" Type="Self.USER_PERMISSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_MODULES">
+              <PropertyRef Name="MODULE_ID" />
+            </Principal>
+            <Dependent Role="USER_PERMISSIONS">
+              <PropertyRef Name="MODULE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_MODULES">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="APP_MODULES">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CHECKOUTBILL">
           <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="1" />
           <End Role="BILL" Type="Self.BILL" Multiplicity="*" />
@@ -1279,6 +1444,30 @@
             </Principal>
             <Dependent Role="BILL">
               <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LAYOUT">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="BILL_RANGE" Type="Self.BILL_RANGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="BILL_RANGE">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CHECK_IN__CLIENT__72B0FDB1">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="0..1" />
+          <End Role="CHECK_IN" Type="Self.CHECK_IN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="CLIENT_CODE" />
+            </Principal>
+            <Dependent Role="CHECK_IN">
+              <PropertyRef Name="CLIENT_CODE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1342,6 +1531,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__COMPANY_D__USER___1D9B5BB6">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="COMPANY_DATA" Type="Self.COMPANY_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="COMPANY_DATA">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__DISCOUNT___USER___39AD8A7F">
           <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
           <End Role="DISCOUNT_TYPE" Type="Self.DISCOUNT_TYPE" Multiplicity="*" />
@@ -1390,6 +1591,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__DISCOUNTS__USER___68336F3E">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="DISCOUNTS_BILL" Type="Self.DISCOUNTS_BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="DISCOUNTS_BILL">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EMPLOYEE___EMPLO__3E082B48">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_CODE" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="EMPLOYEE_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EMPLOYEE___SALAR__3D14070F">
+          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALARIES">
+              <PropertyRef Name="SALARY_CODE" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="SALARY_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMP_SAL">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_SALARY">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EMPLOYEE">
           <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
           <End Role="EMPLOYEE_USER" Type="Self.EMPLOYEE_USER" Multiplicity="*" />
@@ -1414,18 +1663,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EMPLOYE_SALARY">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
-          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMPLOYEE_CODE" />
-            </Principal>
-            <Dependent Role="SALARIES">
-              <PropertyRef Name="EMPLOYEE_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_HORARY_EMPLOYE">
           <End Role="HORARY" Type="Self.HORARY" Multiplicity="1" />
           <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
@@ -1447,6 +1684,18 @@
             </Principal>
             <Dependent Role="EMPLOYEES">
               <PropertyRef Name="JOB_POSITION_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LOGBOOK_APP" Type="Self.LOGBOOK_APP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="LOGBOOK_APP">
+              <PropertyRef Name="USER_CODE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1486,6 +1735,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PARKING_T__USER___673F4B05">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="PARKING_TYPES" Type="Self.PARKING_TYPES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="PARKING_TYPES">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROLE_PERM__USER___664B26CC">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="ROLE_PERMISSIONS" Type="Self.ROLE_PERMISSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="ROLE_PERMISSIONS">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PERMISSION_ID">
           <End Role="USER_PERMISSIONS" Type="Self.USER_PERMISSIONS" Multiplicity="1" />
           <End Role="ROLE_PERMISSIONS" Type="Self.ROLE_PERMISSIONS" Multiplicity="*" />
@@ -1510,6 +1783,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SALARIES__USER_C__3FF073BA">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="SALARIES">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_ROLE__USER___65570293">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="USER_ROLES">
+              <PropertyRef Name="USER_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USER_ROLE">
           <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="1" />
           <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
@@ -1522,8 +1819,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__USERS__CREATED_B__6462DE5A">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="USERS1" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_CODE" />
+            </Principal>
+            <Dependent Role="USERS1">
+              <PropertyRef Name="CREATED_BY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PARKINGEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APP_MODULES" EntityType="Self.APP_MODULES" />
           <EntitySet Name="BILL" EntityType="Self.BILL" />
+          <EntitySet Name="BILL_RANGE" EntityType="Self.BILL_RANGE" />
           <EntitySet Name="CHECK_IN" EntityType="Self.CHECK_IN" />
           <EntitySet Name="CHECK_OUT" EntityType="Self.CHECK_OUT" />
           <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" />
@@ -1532,6 +1843,7 @@
           <EntitySet Name="DISCOUNT_TYPE" EntityType="Self.DISCOUNT_TYPE" />
           <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" />
           <EntitySet Name="DISCOUNTS_BILL" EntityType="Self.DISCOUNTS_BILL" />
+          <EntitySet Name="EMPLOYEE_SALARY" EntityType="Self.EMPLOYEE_SALARY" />
           <EntitySet Name="EMPLOYEE_USER" EntityType="Self.EMPLOYEE_USER" />
           <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
           <EntitySet Name="HORARY" EntityType="Self.HORARY" />
@@ -1546,6 +1858,14 @@
           <EntitySet Name="USER_PERMISSIONS" EntityType="Self.USER_PERMISSIONS" />
           <EntitySet Name="USER_ROLES" EntityType="Self.USER_ROLES" />
           <EntitySet Name="USERS" EntityType="Self.USERS" />
+          <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="Self.FK__USER_PERM__MODUL__45DE573A">
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+            <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_MODULES" Association="Self.FK_USER_MODULES">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+          </AssociationSet>
           <AssociationSet Name="FK_CHECKOUTBILL" Association="Self.FK_CHECKOUTBILL">
             <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
             <End Role="BILL" EntitySet="BILL" />
@@ -1553,6 +1873,14 @@
           <AssociationSet Name="FK_USRBILL" Association="Self.FK_USRBILL">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="BILL" EntitySet="BILL" />
+          </AssociationSet>
+          <AssociationSet Name="LAYOUT" Association="Self.LAYOUT">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BILL_RANGE" EntitySet="BILL_RANGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CHECK_IN__CLIENT__72B0FDB1" Association="Self.FK__CHECK_IN__CLIENT__72B0FDB1">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="CHECK_IN" EntitySet="CHECK_IN" />
           </AssociationSet>
           <AssociationSet Name="FK_CHECK_IN" Association="Self.FK_CHECK_IN">
             <End Role="CHECK_IN" EntitySet="CHECK_IN" />
@@ -1574,6 +1902,10 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="CLIENTS" EntitySet="CLIENTS" />
           </AssociationSet>
+          <AssociationSet Name="FK__COMPANY_D__USER___1D9B5BB6" Association="Self.FK__COMPANY_D__USER___1D9B5BB6">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="COMPANY_DATA" EntitySet="COMPANY_DATA" />
+          </AssociationSet>
           <AssociationSet Name="FK__DISCOUNT___USER___39AD8A7F" Association="Self.FK__DISCOUNT___USER___39AD8A7F">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="DISCOUNT_TYPE" EntitySet="DISCOUNT_TYPE" />
@@ -1590,6 +1922,22 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
           </AssociationSet>
+          <AssociationSet Name="FK__DISCOUNTS__USER___68336F3E" Association="Self.FK__DISCOUNTS__USER___68336F3E">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EMPLOYEE___EMPLO__3E082B48" Association="Self.FK__EMPLOYEE___EMPLO__3E082B48">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EMPLOYEE___SALAR__3D14070F" Association="Self.FK__EMPLOYEE___SALAR__3D14070F">
+            <End Role="SALARIES" EntitySet="SALARIES" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMP_SAL" Association="Self.FK_EMP_SAL">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+          </AssociationSet>
           <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
             <End Role="EMPLOYEE_USER" EntitySet="EMPLOYEE_USER" />
@@ -1598,10 +1946,6 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="EMPLOYEE_USER" EntitySet="EMPLOYEE_USER" />
           </AssociationSet>
-          <AssociationSet Name="FK_EMPLOYE_SALARY" Association="Self.FK_EMPLOYE_SALARY">
-            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-            <End Role="SALARIES" EntitySet="SALARIES" />
-          </AssociationSet>
           <AssociationSet Name="FK_HORARY_EMPLOYE" Association="Self.FK_HORARY_EMPLOYE">
             <End Role="HORARY" EntitySet="HORARY" />
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
@@ -1609,6 +1953,10 @@
           <AssociationSet Name="FK_JOB_POSITION_EMPLOYE" Association="Self.FK_JOB_POSITION_EMPLOYE">
             <End Role="JOB_POSITIONS" EntitySet="JOB_POSITIONS" />
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="Self.FK__LOGBOOK_A__USER___1CA7377D">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
           </AssociationSet>
           <AssociationSet Name="FK__PARKING_F__USER___0B27A5C0" Association="Self.FK__PARKING_F__USER___0B27A5C0">
             <End Role="USERS" EntitySet="USERS" />
@@ -1622,6 +1970,14 @@
             <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
             <End Role="PARKING_FEE" EntitySet="PARKING_FEE" />
           </AssociationSet>
+          <AssociationSet Name="FK__PARKING_T__USER___673F4B05" Association="Self.FK__PARKING_T__USER___673F4B05">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROLE_PERM__USER___664B26CC" Association="Self.FK__ROLE_PERM__USER___664B26CC">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+          </AssociationSet>
           <AssociationSet Name="FK_PERMISSION_ID" Association="Self.FK_PERMISSION_ID">
             <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
             <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
@@ -1630,15 +1986,53 @@
             <End Role="USER_ROLES" EntitySet="USER_ROLES" />
             <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
           </AssociationSet>
+          <AssociationSet Name="FK__SALARIES__USER_C__3FF073BA" Association="Self.FK__SALARIES__USER_C__3FF073BA">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="SALARIES" EntitySet="SALARIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_ROLE__USER___65570293" Association="Self.FK__USER_ROLE__USER___65570293">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+          </AssociationSet>
           <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
             <End Role="USER_ROLES" EntitySet="USER_ROLES" />
             <End Role="USERS" EntitySet="USERS" />
           </AssociationSet>
+          <AssociationSet Name="FK__USERS__CREATED_B__6462DE5A" Association="Self.FK__USERS__CREATED_B__6462DE5A">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USERS1" EntitySet="USERS" />
+          </AssociationSet>
+          <FunctionImport Name="GENERATE_BILL_NUMBER">
+          <Parameter Name="BILL_NUMBER" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LogAction">
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+            <Parameter Name="ActionType" Mode="In" Type="String" />
+            <Parameter Name="LogDescription" Mode="In" Type="String" />
+            <Parameter Name="Module" Mode="In" Type="String" />
+            <Parameter Name="InsertedAt" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CHECK_IN_REPORT" ReturnType="Collection(PARKINGModel.SP_CHECK_IN_REPORT_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+            <Parameter Name="ParkingType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CHECK_OUT_REPORT" ReturnType="Collection(PARKINGModel.SP_CHECK_OUT_REPORT_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+            <Parameter Name="ParkingType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_creatediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1649,6 +2043,19 @@
           <FunctionImport Name="sp_dropdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_ACTIVE_BILL_RANGE" ReturnType="Collection(PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result)" />
+          <FunctionImport Name="SP_GET_COMPANY_DATA" ReturnType="Collection(PARKINGModel.SP_GET_COMPANY_DATA_Result)" />
+          <FunctionImport Name="SP_GET_FILTER_INVOICES" ReturnType="Collection(PARKINGModel.SP_GET_FILTER_INVOICES_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_TOTAL_VISITS_CLIENT">
+            <Parameter Name="CLIENT_CODE" Mode="In" Type="String" />
+            <Parameter Name="TOTAL_VISITS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(PARKINGModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1663,253 +2070,45 @@
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="BILL_RANGE" EntityType="PARKINGModel.BILL_RANGE" />
-          <AssociationSet Name="LAYOUT" Association="PARKINGModel.LAYOUT">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="BILL_RANGE" EntitySet="BILL_RANGE" />
-          </AssociationSet>
-          <EntitySet Name="APP_MODULES" EntityType="PARKINGModel.APP_MODULES" />
-          <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="PARKINGModel.FK__USER_PERM__MODUL__45DE573A">
-            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
-            <End Role="USER_PERMISSIONS" EntitySet="USER_PERMISSIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_USER_MODULES" Association="PARKINGModel.FK_USER_MODULES">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DISCOUNTS__USER___68336F3E" Association="PARKINGModel.FK__DISCOUNTS__USER___68336F3E">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PARKING_T__USER___673F4B05" Association="PARKINGModel.FK__PARKING_T__USER___673F4B05">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="PARKING_TYPES" EntitySet="PARKING_TYPES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ROLE_PERM__USER___664B26CC" Association="PARKINGModel.FK__ROLE_PERM__USER___664B26CC">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USER_ROLE__USER___65570293" Association="PARKINGModel.FK__USER_ROLE__USER___65570293">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USERS__CREATED_B__6462DE5A" Association="PARKINGModel.FK__USERS__CREATED_B__6462DE5A">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="USERS1" EntitySet="USERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CHECK_IN__CLIENT__72B0FDB1" Association="PARKINGModel.FK__CHECK_IN__CLIENT__72B0FDB1">
-            <End Role="CLIENTS" EntitySet="CLIENTS" />
-            <End Role="CHECK_IN" EntitySet="CHECK_IN" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="PARKINGModel.FK__LOGBOOK_A__USER___1CA7377D">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
-          </AssociationSet>
-          <AssociationSet Name="FK__COMPANY_D__USER___1D9B5BB6" Association="PARKINGModel.FK__COMPANY_D__USER___1D9B5BB6">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="COMPANY_DATA" EntitySet="COMPANY_DATA" />
-          </AssociationSet>
-          <FunctionImport Name="GENERATE_BILL_NUMBER">
-          <Parameter Name="BILL_NUMBER" Mode="InOut" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="LogAction">
+          <FunctionImport Name="SP_REPORT_FINANCIAL_INCOMES" ReturnType="Collection(PARKINGModel.SP_REPORT_FINANCIAL_INCOMES_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="UserCode" Mode="In" Type="String" />
-            <Parameter Name="ActionType" Mode="In" Type="String" />
-            <Parameter Name="LogDescription" Mode="In" Type="String" />
-            <Parameter Name="Module" Mode="In" Type="String" />
-            <Parameter Name="InsertedAt" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="SP_GET_ACTIVE_BILL_RANGE" ReturnType="Collection(PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result)" />
-          <FunctionImport Name="SP_GET_COMPANY_DATA" ReturnType="Collection(PARKINGModel.SP_GET_COMPANY_DATA_Result)" />
-          <FunctionImport Name="SP_GET_TOTAL_VISITS_CLIENT">
-            <Parameter Name="CLIENT_CODE" Mode="In" Type="String" />
-            <Parameter Name="TOTAL_VISITS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_REPORT_GENERATED_INVOICE" ReturnType="Collection(PARKINGModel.SP_REPORT_GENERATED_INVOICE_Result)">
           <Parameter Name="B_CODE" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
+        <ComplexType Name="SP_CHECK_IN_REPORT_Result">
+          <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" />
+          <Property Type="String" Name="CHECK_IN_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CLIENT_FULL_NAME" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="USER_NAME" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="PARKING_SPACE_NUMBER" Nullable="false" />
+          <Property Type="String" Name="DESCRIPTION_PARKING_TYPE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PARKING_TYPE_CODE" Nullable="false" MaxLength="15" />
         </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        <ComplexType Name="SP_CHECK_OUT_REPORT_Result">
+          <Property Type="DateTime" Name="CHECK_OUT_TIME" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CHECK_OUT_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="Decimal" Name="TOTAL_TIME" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="FORMAT_TIME" Nullable="true" MaxLength="36" />
+          <Property Type="String" Name="CLIENT_FULL_NAME" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="USER_NAME" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="PARKING_SPACE_NUMBER" Nullable="false" />
+          <Property Type="String" Name="DESCRIPTION_PARKING_TYPE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PARKING_TYPE_CODE" Nullable="false" MaxLength="15" />
         </ComplexType>
-        <EntityType Name="BILL_RANGE">
-          <Key>
-            <PropertyRef Name="BILL_RANGE_ID" />
-          </Key>
-          <Property Name="BILL_RANGE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ESTABLISHMENT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="EMISSION_POINT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="DOC_TYPE" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="INITIAL_RANGE" Type="Int32" Nullable="false" />
-          <Property Name="FINAL_RANGE" Type="Int32" Nullable="false" />
-          <Property Name="LAST_USED" Type="Int32" Nullable="false" />
-          <Property Name="BILL_RANGE_STATE" Type="Boolean" Nullable="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DEL" Type="Boolean" Nullable="false" />
-          <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
-          <Property Name="LIMIT_DATE" Type="DateTime" Precision="0" Nullable="false" />
-        </EntityType>
-        <Association Name="LAYOUT">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
-          <End Type="PARKINGModel.BILL_RANGE" Role="BILL_RANGE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="BILL_RANGE">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="APP_MODULES">
-          <Key>
-            <PropertyRef Name="MODULE_ID" />
-          </Key>
-          <Property Name="MODULE_ID" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="MODULE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IS_DEL" Type="Boolean" />
-          <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="USER_PERMISSIONS" Relationship="PARKINGModel.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
-          <NavigationProperty Name="USERS" Relationship="PARKINGModel.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
-        </EntityType>
-        <Association Name="FK__USER_PERM__MODUL__45DE573A">
-          <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="0..1" />
-          <End Type="PARKINGModel.USER_PERMISSIONS" Role="USER_PERMISSIONS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_MODULES">
-              <PropertyRef Name="MODULE_ID" />
-            </Principal>
-            <Dependent Role="USER_PERMISSIONS">
-              <PropertyRef Name="MODULE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_USER_MODULES">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
-          <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="APP_MODULES">
-              <PropertyRef Name="USER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DISCOUNTS__USER___68336F3E">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.DISCOUNTS_BILL" Role="DISCOUNTS_BILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="DISCOUNTS_BILL">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PARKING_T__USER___673F4B05">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.PARKING_TYPES" Role="PARKING_TYPES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="PARKING_TYPES">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ROLE_PERM__USER___664B26CC">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="ROLE_PERMISSIONS">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__USER_ROLE__USER___65570293">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.USER_ROLES" Role="USER_ROLES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="USER_ROLES">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__USERS__CREATED_B__6462DE5A">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.USERS" Role="USERS1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="USERS1">
-              <PropertyRef Name="CREATED_BY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CHECK_IN__CLIENT__72B0FDB1">
-          <End Type="PARKINGModel.CLIENTS" Role="CLIENTS" Multiplicity="0..1" />
-          <End Type="PARKINGModel.CHECK_IN" Role="CHECK_IN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTS">
-              <PropertyRef Name="CLIENT_CODE" />
-            </Principal>
-            <Dependent Role="CHECK_IN">
-              <PropertyRef Name="CLIENT_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
-          <End Type="PARKINGModel.LOGBOOK_APP" Role="LOGBOOK_APP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="LOGBOOK_APP">
-              <PropertyRef Name="USER_CODE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__COMPANY_D__USER___1D9B5BB6">
-          <End Type="PARKINGModel.USERS" Role="USERS" Multiplicity="1" />
-          <End Type="PARKINGModel.COMPANY_DATA" Role="COMPANY_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_CODE" />
-            </Principal>
-            <Dependent Role="COMPANY_DATA">
-              <PropertyRef Name="USER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="SP_GET_ACTIVE_BILL_RANGE_Result">
           <Property Type="String" Name="ESTABLISHMENT" Nullable="false" MaxLength="3" />
           <Property Type="String" Name="EMISSION_POINT" Nullable="false" MaxLength="3" />
           <Property Type="String" Name="DOC_TYPE" Nullable="false" MaxLength="2" />
           <Property Type="Int32" Name="LAST_USED" Nullable="false" />
           <Property Type="Int32" Name="FINAL_RANGE" Nullable="false" />
-          <Property Type="DateTime" Name="LIMIT_DATE" Nullable="true" />
+          <Property Type="DateTime" Name="LIMIT_DATE" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_GET_COMPANY_DATA_Result">
           <Property Type="String" Name="COMPANY_RTN" Nullable="false" MaxLength="14" />
@@ -1921,6 +2120,40 @@
           <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" Precision="23" />
           <Property Type="Boolean" Name="DEL" Nullable="false" />
           <Property Type="String" Name="USER_ID" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_FILTER_INVOICES_Result">
+          <Property Type="String" Name="BILL_NUMBER" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="BILL_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="DateTime" Name="DATE_OF_ISSUE" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="ISV" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="RTN" Nullable="true" MaxLength="14" />
+          <Property Type="Decimal" Name="SUBTOTAL" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="DISCOUNT" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="USER_CODE" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="USER_NAME" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="CLIENT_FULL_NAME" Nullable="false" MaxLength="101" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_REPORT_FINANCIAL_INCOMES_Result">
+          <Property Type="Int32" Name="YEAR" Nullable="true" />
+          <Property Type="Int32" Name="MONTH" Nullable="true" />
+          <Property Type="String" Name="MONTH_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="USER_NAME" Nullable="false" MaxLength="16" />
+          <Property Type="Decimal" Name="TOTAL_SUBTOTAL" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL_ISV" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL_DISCOUNT" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="FULL_TOTAL" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <ComplexType Name="SP_REPORT_GENERATED_INVOICE_Result">
           <Property Type="String" Name="BILL_CODE" Nullable="false" MaxLength="15" />
@@ -1947,10 +2180,20 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PARKINGModelStoreContainer" CdmEntityContainer="PARKINGEntities">
+          <EntitySetMapping Name="APP_MODULES">
+            <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
+              <MappingFragment StoreEntitySet="APP_MODULES">
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BILL">
             <EntityTypeMapping TypeName="PARKINGModel.BILL">
               <MappingFragment StoreEntitySet="BILL">
-                <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
                 <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
                 <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
                 <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
@@ -1961,27 +2204,45 @@
                 <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
                 <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="RTN" ColumnName="RTN" />
+                <ScalarProperty Name="LETTERS" ColumnName="LETTERS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-			<EntitySetMapping Name="CHECK_IN">
-				<EntityTypeMapping TypeName="PARKINGModel.CHECK_IN">
-					<MappingFragment StoreEntitySet="CHECK_IN">
-						<ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
-						<ScalarProperty Name="VEHICLE_PLATE" ColumnName="VEHICLE_PLATE" />
-						<ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
-						<ScalarProperty Name="OBSERVATIONS" ColumnName="OBSERVATIONS" />
-						<ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-						<ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-						<ScalarProperty Name="CHECK_IN_STATE" ColumnName="CHECK_IN_STATE" />
-						<ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
-						<ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-						<ScalarProperty Name="CLIENT_CODE" ColumnName="CLIENT_CODE" />
-					</MappingFragment>
-				</EntityTypeMapping>
-			</EntitySetMapping>
-
-			<EntitySetMapping Name="CHECK_OUT">
+          <EntitySetMapping Name="BILL_RANGE">
+            <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
+              <MappingFragment StoreEntitySet="BILL_RANGE">
+                <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
+                <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
+                <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
+                <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
+                <ScalarProperty Name="INITIAL_RANGE" ColumnName="INITIAL_RANGE" />
+                <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
+                <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
+                <ScalarProperty Name="BILL_RANGE_STATE" ColumnName="BILL_RANGE_STATE" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="DEL" ColumnName="DEL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHECK_IN">
+            <EntityTypeMapping TypeName="PARKINGModel.CHECK_IN">
+              <MappingFragment StoreEntitySet="CHECK_IN">
+                <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+                <ScalarProperty Name="CLIENT_CODE" ColumnName="CLIENT_CODE" />
+                <ScalarProperty Name="VEHICLE_PLATE" ColumnName="VEHICLE_PLATE" />
+                <ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
+                <ScalarProperty Name="OBSERVATIONS" ColumnName="OBSERVATIONS" />
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="CHECK_IN_STATE" ColumnName="CHECK_IN_STATE" />
+                <ScalarProperty Name="PARKING_SPACE_CODE" ColumnName="PARKING_SPACE_CODE" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHECK_OUT">
             <EntityTypeMapping TypeName="PARKINGModel.CHECK_OUT">
               <MappingFragment StoreEntitySet="CHECK_OUT">
                 <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
@@ -2029,12 +2290,12 @@
           <EntitySetMapping Name="CORRELATIVES">
             <EntityTypeMapping TypeName="PARKINGModel.CORRELATIVES">
               <MappingFragment StoreEntitySet="CORRELATIVES">
-                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
                 <ScalarProperty Name="CORRELATIVE_CODE" ColumnName="CORRELATIVE_CODE" />
                 <ScalarProperty Name="CORRELATIVE_DESCRIPTION" ColumnName="CORRELATIVE_DESCRIPTION" />
                 <ScalarProperty Name="CORRELATIVE_COUNTER" ColumnName="CORRELATIVE_COUNTER" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2067,13 +2328,26 @@
           <EntitySetMapping Name="DISCOUNTS_BILL">
             <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
               <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-                <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
                 <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
+                <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
                 <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
                 <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="BIT" ColumnName="BIT" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEE_SALARY">
+            <EntityTypeMapping TypeName="PARKINGModel.EMPLOYEE_SALARY">
+              <MappingFragment StoreEntitySet="EMPLOYEE_SALARY">
+                <ScalarProperty Name="EMPLOYEE_SALARY_CODE" ColumnName="EMPLOYEE_SALARY_CODE" />
+                <ScalarProperty Name="EMPLOYEE_CODE" ColumnName="EMPLOYEE_CODE" />
+                <ScalarProperty Name="SALARY_CODE" ColumnName="SALARY_CODE" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="SALARY_STATE" ColumnName="SALARY_STATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2130,12 +2404,12 @@
           <EntitySetMapping Name="LOGBOOK_APP">
             <EntityTypeMapping TypeName="PARKINGModel.LOGBOOK_APP">
               <MappingFragment StoreEntitySet="LOGBOOK_APP">
-                <ScalarProperty Name="ACTION_TYPE" ColumnName="ACTION_TYPE" />
-                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
                 <ScalarProperty Name="LOG_DESCRIPTION" ColumnName="LOG_DESCRIPTION" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="ACTION_TYPE" ColumnName="ACTION_TYPE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2167,22 +2441,22 @@
           <EntitySetMapping Name="PARKING_TYPES">
             <EntityTypeMapping TypeName="PARKINGModel.PARKING_TYPES">
               <MappingFragment StoreEntitySet="PARKING_TYPES">
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
                 <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ROLE_PERMISSIONS">
             <EntityTypeMapping TypeName="PARKINGModel.ROLE_PERMISSIONS">
               <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
                 <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
                 <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2191,10 +2465,11 @@
               <MappingFragment StoreEntitySet="SALARIES">
                 <ScalarProperty Name="SALARY_CODE" ColumnName="SALARY_CODE" />
                 <ScalarProperty Name="BASE_SALARY" ColumnName="BASE_SALARY" />
-                <ScalarProperty Name="AUMENTO" ColumnName="AUMENTO" />
+                <ScalarProperty Name="INCREASE" ColumnName="INCREASE" />
                 <ScalarProperty Name="TOTAL_SALARY" ColumnName="TOTAL_SALARY" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-                <ScalarProperty Name="EMPLOYEE_CODE" ColumnName="EMPLOYEE_CODE" />
+                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2212,32 +2487,31 @@
           <EntitySetMapping Name="USER_PERMISSIONS">
             <EntityTypeMapping TypeName="PARKINGModel.USER_PERMISSIONS">
               <MappingFragment StoreEntitySet="USER_PERMISSIONS">
-                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
-                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
                 <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USER_ROLES">
             <EntityTypeMapping TypeName="PARKINGModel.USER_ROLES">
               <MappingFragment StoreEntitySet="USER_ROLES">
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
                 <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
                 <ScalarProperty Name="DESCRIPTION_ROLE" ColumnName="DESCRIPTION_ROLE" />
                 <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERS">
             <EntityTypeMapping TypeName="PARKINGModel.USERS">
               <MappingFragment StoreEntitySet="USERS">
-                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
@@ -2245,64 +2519,43 @@
                 <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
                 <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
                 <ScalarProperty Name="USER_STATE" ColumnName="USER_STATE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PARKINGModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PARKINGModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PARKINGModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PARKINGModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PARKINGModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="BILL_RANGE">
-            <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
-              <MappingFragment StoreEntitySet="BILL_RANGE">
-                <ScalarProperty Name="LIMIT_DATE" ColumnName="LIMIT_DATE" />
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-                <ScalarProperty Name="DEL" ColumnName="DEL" />
-                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-                <ScalarProperty Name="BILL_RANGE_STATE" ColumnName="BILL_RANGE_STATE" />
-                <ScalarProperty Name="LAST_USED" ColumnName="LAST_USED" />
-                <ScalarProperty Name="FINAL_RANGE" ColumnName="FINAL_RANGE" />
-                <ScalarProperty Name="INITIAL_RANGE" ColumnName="INITIAL_RANGE" />
-                <ScalarProperty Name="DOC_TYPE" ColumnName="DOC_TYPE" />
-                <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
-                <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
-                <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="APP_MODULES">
-            <EntityTypeMapping TypeName="PARKINGModel.APP_MODULES">
-              <MappingFragment StoreEntitySet="APP_MODULES">
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="IS_DEL" ColumnName="IS_DEL" />
-                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
-                <ScalarProperty Name="MODULE_NAME" ColumnName="MODULE_NAME" />
-                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GENERATE_BILL_NUMBER" FunctionName="PARKINGModel.Store.GENERATE_BILL_NUMBER" />
           <FunctionImportMapping FunctionImportName="LogAction" FunctionName="PARKINGModel.Store.LogAction" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PARKINGModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_CHECK_IN_REPORT" FunctionName="PARKINGModel.Store.SP_CHECK_IN_REPORT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_CHECK_IN_REPORT_Result">
+                <ScalarProperty Name="INSERTED_AT" ColumnName="INSERTED_AT" />
+                <ScalarProperty Name="CHECK_IN_CODE" ColumnName="CHECK_IN_CODE" />
+                <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
+                <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
+                <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CHECK_OUT_REPORT" FunctionName="PARKINGModel.Store.SP_CHECK_OUT_REPORT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_CHECK_OUT_REPORT_Result">
+                <ScalarProperty Name="CHECK_OUT_TIME" ColumnName="CHECK_OUT_TIME" />
+                <ScalarProperty Name="CHECK_OUT_CODE" ColumnName="CHECK_OUT_CODE" />
+                <ScalarProperty Name="TOTAL_TIME" ColumnName="TOTAL_TIME" />
+                <ScalarProperty Name="FORMAT_TIME" ColumnName="FORMAT_TIME" />
+                <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="PARKING_SPACE_NUMBER" ColumnName="PARKING_SPACE_NUMBER" />
+                <ScalarProperty Name="DESCRIPTION_PARKING_TYPE" ColumnName="DESCRIPTION_PARKING_TYPE" />
+                <ScalarProperty Name="PARKING_TYPE_CODE" ColumnName="PARKING_TYPE_CODE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PARKINGModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PARKINGModel.Store.sp_dropdiagram" />
           <FunctionImportMapping FunctionImportName="SP_GET_ACTIVE_BILL_RANGE" FunctionName="PARKINGModel.Store.SP_GET_ACTIVE_BILL_RANGE">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_ACTIVE_BILL_RANGE_Result">
@@ -2330,7 +2583,58 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_FILTER_INVOICES" FunctionName="PARKINGModel.Store.SP_GET_FILTER_INVOICES">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_GET_FILTER_INVOICES_Result">
+                <ScalarProperty Name="BILL_NUMBER" ColumnName="BILL_NUMBER" />
+                <ScalarProperty Name="BILL_CODE" ColumnName="BILL_CODE" />
+                <ScalarProperty Name="DATE_OF_ISSUE" ColumnName="DATE_OF_ISSUE" />
+                <ScalarProperty Name="ISV" ColumnName="ISV" />
+                <ScalarProperty Name="RTN" ColumnName="RTN" />
+                <ScalarProperty Name="SUBTOTAL" ColumnName="SUBTOTAL" />
+                <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="CLIENT_FULL_NAME" ColumnName="CLIENT_FULL_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_TOTAL_VISITS_CLIENT" FunctionName="PARKINGModel.Store.SP_GET_TOTAL_VISITS_CLIENT" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PARKINGModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PARKINGModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PARKINGModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="SP_REPORT_FINANCIAL_INCOMES" FunctionName="PARKINGModel.Store.SP_REPORT_FINANCIAL_INCOMES">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PARKINGModel.SP_REPORT_FINANCIAL_INCOMES_Result">
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="MONTH_NAME" ColumnName="MONTH_NAME" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="TOTAL_SUBTOTAL" ColumnName="TOTAL_SUBTOTAL" />
+                <ScalarProperty Name="TOTAL_ISV" ColumnName="TOTAL_ISV" />
+                <ScalarProperty Name="TOTAL_DISCOUNT" ColumnName="TOTAL_DISCOUNT" />
+                <ScalarProperty Name="FULL_TOTAL" ColumnName="FULL_TOTAL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_REPORT_GENERATED_INVOICE" FunctionName="PARKINGModel.Store.SP_REPORT_GENERATED_INVOICE">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PARKINGModel.SP_REPORT_GENERATED_INVOICE_Result">
@@ -2354,6 +2658,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PARKINGModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

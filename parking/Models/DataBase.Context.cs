@@ -27,7 +27,9 @@ namespace parking.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<APP_MODULES> APP_MODULES { get; set; }
         public virtual DbSet<BILL> BILL { get; set; }
+        public virtual DbSet<BILL_RANGE> BILL_RANGE { get; set; }
         public virtual DbSet<CHECK_IN> CHECK_IN { get; set; }
         public virtual DbSet<CHECK_OUT> CHECK_OUT { get; set; }
         public virtual DbSet<CLIENTS> CLIENTS { get; set; }
@@ -36,6 +38,7 @@ namespace parking.Models
         public virtual DbSet<DISCOUNT_TYPE> DISCOUNT_TYPE { get; set; }
         public virtual DbSet<DISCOUNTS> DISCOUNTS { get; set; }
         public virtual DbSet<DISCOUNTS_BILL> DISCOUNTS_BILL { get; set; }
+        public virtual DbSet<EMPLOYEE_SALARY> EMPLOYEE_SALARY { get; set; }
         public virtual DbSet<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         public virtual DbSet<EMPLOYEES> EMPLOYEES { get; set; }
         public virtual DbSet<HORARY> HORARY { get; set; }
@@ -50,8 +53,36 @@ namespace parking.Models
         public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
-        public virtual DbSet<BILL_RANGE> BILL_RANGE { get; set; }
-        public virtual DbSet<APP_MODULES> APP_MODULES { get; set; }
+    
+        public virtual int GENERATE_BILL_NUMBER(ObjectParameter bILL_NUMBER)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GENERATE_BILL_NUMBER", bILL_NUMBER);
+        }
+    
+        public virtual int LogAction(string userCode, string actionType, string logDescription, string module, Nullable<System.DateTime> insertedAt)
+        {
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var actionTypeParameter = actionType != null ?
+                new ObjectParameter("ActionType", actionType) :
+                new ObjectParameter("ActionType", typeof(string));
+    
+            var logDescriptionParameter = logDescription != null ?
+                new ObjectParameter("LogDescription", logDescription) :
+                new ObjectParameter("LogDescription", typeof(string));
+    
+            var moduleParameter = module != null ?
+                new ObjectParameter("Module", module) :
+                new ObjectParameter("Module", typeof(string));
+    
+            var insertedAtParameter = insertedAt.HasValue ?
+                new ObjectParameter("InsertedAt", insertedAt) :
+                new ObjectParameter("InsertedAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LogAction", userCodeParameter, actionTypeParameter, logDescriptionParameter, moduleParameter, insertedAtParameter);
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -72,6 +103,64 @@ namespace parking.Models
                 new ObjectParameter("definition", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual ObjectResult<SP_CHECK_IN_REPORT_Result> SP_CHECK_IN_REPORT(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<int> month, Nullable<int> year, string userCode, string parkingType)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var parkingTypeParameter = parkingType != null ?
+                new ObjectParameter("ParkingType", parkingType) :
+                new ObjectParameter("ParkingType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CHECK_IN_REPORT_Result>("SP_CHECK_IN_REPORT", dateFromParameter, dateToParameter, monthParameter, yearParameter, userCodeParameter, parkingTypeParameter);
+        }
+    
+        public virtual ObjectResult<SP_CHECK_OUT_REPORT_Result> SP_CHECK_OUT_REPORT(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<int> month, Nullable<int> year, string userCode, string parkingType)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var parkingTypeParameter = parkingType != null ?
+                new ObjectParameter("ParkingType", parkingType) :
+                new ObjectParameter("ParkingType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CHECK_OUT_REPORT_Result>("SP_CHECK_OUT_REPORT", dateFromParameter, dateToParameter, monthParameter, yearParameter, userCodeParameter, parkingTypeParameter);
         }
     
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -106,6 +195,50 @@ namespace parking.Models
                 new ObjectParameter("owner_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_ACTIVE_BILL_RANGE_Result> SP_GET_ACTIVE_BILL_RANGE()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_ACTIVE_BILL_RANGE_Result>("SP_GET_ACTIVE_BILL_RANGE");
+        }
+    
+        public virtual ObjectResult<SP_GET_COMPANY_DATA_Result> SP_GET_COMPANY_DATA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_COMPANY_DATA_Result>("SP_GET_COMPANY_DATA");
+        }
+    
+        public virtual ObjectResult<SP_GET_FILTER_INVOICES_Result> SP_GET_FILTER_INVOICES(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<int> month, Nullable<int> year, string userCode)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_FILTER_INVOICES_Result>("SP_GET_FILTER_INVOICES", dateFromParameter, dateToParameter, monthParameter, yearParameter, userCodeParameter);
+        }
+    
+        public virtual int SP_GET_TOTAL_VISITS_CLIENT(string cLIENT_CODE, ObjectParameter tOTAL_VISITS)
+        {
+            var cLIENT_CODEParameter = cLIENT_CODE != null ?
+                new ObjectParameter("CLIENT_CODE", cLIENT_CODE) :
+                new ObjectParameter("CLIENT_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GET_TOTAL_VISITS_CLIENT", cLIENT_CODEParameter, tOTAL_VISITS);
         }
     
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
@@ -151,58 +284,29 @@ namespace parking.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
-        public virtual int sp_upgraddiagrams()
+        public virtual ObjectResult<SP_REPORT_FINANCIAL_INCOMES_Result> SP_REPORT_FINANCIAL_INCOMES(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<int> month, Nullable<int> year, string userCode)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
     
-        public virtual int GENERATE_BILL_NUMBER(ObjectParameter bILL_NUMBER)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GENERATE_BILL_NUMBER", bILL_NUMBER);
-        }
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
     
-        public virtual int LogAction(string userCode, string actionType, string logDescription, string module, Nullable<System.DateTime> insertedAt)
-        {
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
             var userCodeParameter = userCode != null ?
                 new ObjectParameter("UserCode", userCode) :
                 new ObjectParameter("UserCode", typeof(string));
     
-            var actionTypeParameter = actionType != null ?
-                new ObjectParameter("ActionType", actionType) :
-                new ObjectParameter("ActionType", typeof(string));
-    
-            var logDescriptionParameter = logDescription != null ?
-                new ObjectParameter("LogDescription", logDescription) :
-                new ObjectParameter("LogDescription", typeof(string));
-    
-            var moduleParameter = module != null ?
-                new ObjectParameter("Module", module) :
-                new ObjectParameter("Module", typeof(string));
-    
-            var insertedAtParameter = insertedAt.HasValue ?
-                new ObjectParameter("InsertedAt", insertedAt) :
-                new ObjectParameter("InsertedAt", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LogAction", userCodeParameter, actionTypeParameter, logDescriptionParameter, moduleParameter, insertedAtParameter);
-        }
-    
-        public virtual ObjectResult<SP_GET_ACTIVE_BILL_RANGE_Result> SP_GET_ACTIVE_BILL_RANGE()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_ACTIVE_BILL_RANGE_Result>("SP_GET_ACTIVE_BILL_RANGE");
-        }
-    
-        public virtual ObjectResult<SP_GET_COMPANY_DATA_Result> SP_GET_COMPANY_DATA()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_COMPANY_DATA_Result>("SP_GET_COMPANY_DATA");
-        }
-    
-        public virtual int SP_GET_TOTAL_VISITS_CLIENT(string cLIENT_CODE, ObjectParameter tOTAL_VISITS)
-        {
-            var cLIENT_CODEParameter = cLIENT_CODE != null ?
-                new ObjectParameter("CLIENT_CODE", cLIENT_CODE) :
-                new ObjectParameter("CLIENT_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GET_TOTAL_VISITS_CLIENT", cLIENT_CODEParameter, tOTAL_VISITS);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REPORT_FINANCIAL_INCOMES_Result>("SP_REPORT_FINANCIAL_INCOMES", dateFromParameter, dateToParameter, monthParameter, yearParameter, userCodeParameter);
         }
     
         public virtual ObjectResult<SP_REPORT_GENERATED_INVOICE_Result> SP_REPORT_GENERATED_INVOICE(string b_CODE)
@@ -212,6 +316,11 @@ namespace parking.Models
                 new ObjectParameter("B_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REPORT_GENERATED_INVOICE_Result>("SP_REPORT_GENERATED_INVOICE", b_CODEParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

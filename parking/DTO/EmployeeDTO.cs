@@ -12,6 +12,8 @@ namespace parking.DTO
         public string EMPLOYEE_DNI { get; set; }
         public string EMPLOYEE_NAME { get; set; }
         public string EMPLOYEE_LASTNAME { get; set; }
+
+        public string EMPLOYEE_FULL_NAME { get; set; }
         public string DESCRIPTION_JOB_POSITION { get; set; }
         public TimeSpan INITIAL_HOUR { get; set; }
         public TimeSpan FINAL_HOUR { get; set; }

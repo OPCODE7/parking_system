@@ -40,7 +40,7 @@ namespace parking.Config
         }
 
 
-        
+
         public bool ReadFileData()
         {
             bool exist = CheckFileExist(path);
@@ -68,7 +68,7 @@ namespace parking.Config
                         Env.USERDB = reader["USERNAME"].ToString();
                         Env.PWD = reader["PWD"].ToString();
                         setEfConnection();
-                      
+
                     }
 
 
@@ -82,7 +82,7 @@ namespace parking.Config
                     h.MsgError("ERROR INESPERADO: " + error.ToString().ToUpper());
                 }
             }
-                return containsData;
+            return containsData;
         }
 
         public void setEfConnection()
@@ -95,13 +95,33 @@ trustservercertificate=True;MultipleActiveResultSets=True;App=EntityFramework'";
             string sqlConnectionString = $@"Data Source={Env.SERVER};Initial Catalog={Env.DBNAME};
 Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;TrustServerCertificate=True";
 
-            // Actualiza app.config
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.ConnectionStrings.ConnectionStrings["PARKINGEntities"].ConnectionString = efConnectionString;
-            config.ConnectionStrings.ConnectionStrings["parking.Properties.Settings.PARKINGConnectionString"].ConnectionString = sqlConnectionString;
+            var connStrings = config.ConnectionStrings.ConnectionStrings;
+
+            // PARKINGEntities (Entity Framework)
+            if (connStrings["PARKINGEntities"] != null)
+            {
+                connStrings["PARKINGEntities"].ConnectionString = efConnectionString;
+            }
+            else
+            {
+                connStrings.Add(new ConnectionStringSettings("PARKINGEntities", efConnectionString, "System.Data.EntityClient"));
+            }
+
+            // PARKINGConnectionString (por si se necesita)
+            if (connStrings["parking.Properties.Settings.PARKINGConnectionString"] != null)
+            {
+                connStrings["parking.Properties.Settings.PARKINGConnectionString"].ConnectionString = sqlConnectionString;
+            }
+            else
+            {
+                connStrings.Add(new ConnectionStringSettings("parking.Properties.Settings.PARKINGConnectionString", sqlConnectionString, "System.Data.SqlClient"));
+            }
+
             config.Save(ConfigurationSaveMode.Modified, true);
             ConfigurationManager.RefreshSection("connectionStrings");
         }
+
         public int saveConfigurationData(string table, string fields, string values)
         {
 

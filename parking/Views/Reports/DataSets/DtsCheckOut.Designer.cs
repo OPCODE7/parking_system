@@ -295,6 +295,8 @@ namespace parking.Views.Reports.DataSets {
             
             private global::System.Data.DataColumn columnPARKING_TYPE_CODE;
             
+            private global::System.Data.DataColumn columnFORMAT_TIME;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SP_CHECK_OUT_REPORTDataTable() {
@@ -394,6 +396,14 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn FORMAT_TIMEColumn {
+                get {
+                    return this.columnFORMAT_TIME;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -429,7 +439,7 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_CHECK_OUT_REPORTRow AddSP_CHECK_OUT_REPORTRow(System.DateTime CHECK_OUT_TIME, string CHECK_OUT_CODE, decimal TOTAL_TIME, string CLIENT_FULL_NAME, string USER_NAME, int PARKING_SPACE_NUMBER, string DESCRIPTION_PARKING_TYPE, string PARKING_TYPE_CODE) {
+            public SP_CHECK_OUT_REPORTRow AddSP_CHECK_OUT_REPORTRow(System.DateTime CHECK_OUT_TIME, string CHECK_OUT_CODE, decimal TOTAL_TIME, string CLIENT_FULL_NAME, string USER_NAME, int PARKING_SPACE_NUMBER, string DESCRIPTION_PARKING_TYPE, string PARKING_TYPE_CODE, string FORMAT_TIME) {
                 SP_CHECK_OUT_REPORTRow rowSP_CHECK_OUT_REPORTRow = ((SP_CHECK_OUT_REPORTRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CHECK_OUT_TIME,
@@ -439,7 +449,8 @@ namespace parking.Views.Reports.DataSets {
                         USER_NAME,
                         PARKING_SPACE_NUMBER,
                         DESCRIPTION_PARKING_TYPE,
-                        PARKING_TYPE_CODE};
+                        PARKING_TYPE_CODE,
+                        FORMAT_TIME};
                 rowSP_CHECK_OUT_REPORTRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSP_CHECK_OUT_REPORTRow);
                 return rowSP_CHECK_OUT_REPORTRow;
@@ -470,6 +481,7 @@ namespace parking.Views.Reports.DataSets {
                 this.columnPARKING_SPACE_NUMBER = base.Columns["PARKING_SPACE_NUMBER"];
                 this.columnDESCRIPTION_PARKING_TYPE = base.Columns["DESCRIPTION_PARKING_TYPE"];
                 this.columnPARKING_TYPE_CODE = base.Columns["PARKING_TYPE_CODE"];
+                this.columnFORMAT_TIME = base.Columns["FORMAT_TIME"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -491,6 +503,8 @@ namespace parking.Views.Reports.DataSets {
                 base.Columns.Add(this.columnDESCRIPTION_PARKING_TYPE);
                 this.columnPARKING_TYPE_CODE = new global::System.Data.DataColumn("PARKING_TYPE_CODE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPARKING_TYPE_CODE);
+                this.columnFORMAT_TIME = new global::System.Data.DataColumn("FORMAT_TIME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFORMAT_TIME);
                 this.columnCHECK_OUT_TIME.AllowDBNull = false;
                 this.columnCHECK_OUT_CODE.AllowDBNull = false;
                 this.columnCHECK_OUT_CODE.MaxLength = 15;
@@ -504,6 +518,8 @@ namespace parking.Views.Reports.DataSets {
                 this.columnDESCRIPTION_PARKING_TYPE.MaxLength = 50;
                 this.columnPARKING_TYPE_CODE.AllowDBNull = false;
                 this.columnPARKING_TYPE_CODE.MaxLength = 15;
+                this.columnFORMAT_TIME.ReadOnly = true;
+                this.columnFORMAT_TIME.MaxLength = 30;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -740,6 +756,23 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string FORMAT_TIME {
+                get {
+                    try {
+                        return ((string)(this[this.tableSP_CHECK_OUT_REPORT.FORMAT_TIMEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FORMAT_TIME\' de la tabla \'SP_CHECK_OUT_REPORT\' es DBNull." +
+                                "", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_CHECK_OUT_REPORT.FORMAT_TIMEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsCLIENT_FULL_NAMENull() {
                 return this.IsNull(this.tableSP_CHECK_OUT_REPORT.CLIENT_FULL_NAMEColumn);
             }
@@ -748,6 +781,18 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetCLIENT_FULL_NAMENull() {
                 this[this.tableSP_CHECK_OUT_REPORT.CLIENT_FULL_NAMEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsFORMAT_TIMENull() {
+                return this.IsNull(this.tableSP_CHECK_OUT_REPORT.FORMAT_TIMEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetFORMAT_TIMENull() {
+                this[this.tableSP_CHECK_OUT_REPORT.FORMAT_TIMEColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -918,6 +963,7 @@ namespace parking.Views.Reports.DataSets.DtsCheckOutTableAdapters {
             tableMapping.ColumnMappings.Add("PARKING_SPACE_NUMBER", "PARKING_SPACE_NUMBER");
             tableMapping.ColumnMappings.Add("DESCRIPTION_PARKING_TYPE", "DESCRIPTION_PARKING_TYPE");
             tableMapping.ColumnMappings.Add("PARKING_TYPE_CODE", "PARKING_TYPE_CODE");
+            tableMapping.ColumnMappings.Add("FORMAT_TIME", "FORMAT_TIME");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

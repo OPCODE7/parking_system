@@ -31,10 +31,10 @@ namespace parking.Models
         public string PARKING_SPACE_CODE { get; set; }
         public string USER_CODE { get; set; }
     
+        public virtual CLIENTS CLIENTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHECK_OUT> CHECK_OUT { get; set; }
         public virtual PARKING_SPACE PARKING_SPACE { get; set; }
         public virtual USERS USERS { get; set; }
-        public virtual CLIENTS CLIENTS { get; set; }
     }
 }

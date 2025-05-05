@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.42944cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.52466cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.58819cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.07146cm</Width>
+              <Width>3.76924cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.34762cm</Width>
+              <Width>2.22415cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.44204cm</Width>
+              <Width>2.07704cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.98333cm</Width>
@@ -335,14 +335,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="TOTAL_TIME">
+                    <Textbox Name="FORMAT_TIME">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TOTAL_TIME.Value</Value>
+                              <Value>=Fields!FORMAT_TIME.Value</Value>
                               <Style>
                                 <FontFamily>Century Gothic</FontFamily>
                                 <FontWeight>Normal</FontWeight>
@@ -352,7 +352,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>TOTAL_TIME</rd:DefaultName>
+                      <rd:DefaultName>FORMAT_TIME</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -578,7 +578,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TOTAL_TIME.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Century Gothic</FontFamily>
                                 <FontWeight>Normal</FontWeight>
@@ -769,7 +769,7 @@
         <Top>1.41952cm</Top>
         <Left>0.86621cm</Left>
         <Height>2.24097cm</Height>
-        <Width>20.36911cm</Width>
+        <Width>20.59606cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1154,6 +1154,10 @@
         </Field>
         <Field Name="PARKING_TYPE_CODE">
           <DataField>PARKING_TYPE_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FORMAT_TIME">
+          <DataField>FORMAT_TIME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

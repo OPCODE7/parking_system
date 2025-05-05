@@ -17,23 +17,25 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USERS()
         {
+            this.APP_MODULES = new HashSet<APP_MODULES>();
             this.BILL = new HashSet<BILL>();
+            this.BILL_RANGE = new HashSet<BILL_RANGE>();
             this.CHECK_IN = new HashSet<CHECK_IN>();
             this.CHECK_OUT = new HashSet<CHECK_OUT>();
             this.CLIENTS = new HashSet<CLIENTS>();
+            this.COMPANY_DATA = new HashSet<COMPANY_DATA>();
             this.DISCOUNT_TYPE = new HashSet<DISCOUNT_TYPE>();
             this.DISCOUNTS = new HashSet<DISCOUNTS>();
-            this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
-            this.PARKING_FEE = new HashSet<PARKING_FEE>();
-            this.BILL_RANGE = new HashSet<BILL_RANGE>();
-            this.APP_MODULES = new HashSet<APP_MODULES>();
             this.DISCOUNTS_BILL = new HashSet<DISCOUNTS_BILL>();
+            this.EMPLOYEE_SALARY = new HashSet<EMPLOYEE_SALARY>();
+            this.EMPLOYEE_USER = new HashSet<EMPLOYEE_USER>();
+            this.LOGBOOK_APP = new HashSet<LOGBOOK_APP>();
+            this.PARKING_FEE = new HashSet<PARKING_FEE>();
             this.PARKING_TYPES = new HashSet<PARKING_TYPES>();
             this.ROLE_PERMISSIONS = new HashSet<ROLE_PERMISSIONS>();
-            this.USER_ROLES1 = new HashSet<USER_ROLES>();
+            this.SALARIES = new HashSet<SALARIES>();
+            this.USER_ROLES = new HashSet<USER_ROLES>();
             this.USERS1 = new HashSet<USERS>();
-            this.LOGBOOK_APP = new HashSet<LOGBOOK_APP>();
-            this.COMPANY_DATA = new HashSet<COMPANY_DATA>();
         }
     
         public string USER_CODE { get; set; }
@@ -46,7 +48,11 @@ namespace parking.Models
         public string CREATED_BY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<APP_MODULES> APP_MODULES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILL> BILL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BILL_RANGE> BILL_RANGE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHECK_IN> CHECK_IN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -54,32 +60,32 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTS> CLIENTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COMPANY_DATA> COMPANY_DATA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DISCOUNT_TYPE> DISCOUNT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DISCOUNTS> DISCOUNTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DISCOUNTS_BILL> DISCOUNTS_BILL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLOYEE_SALARY> EMPLOYEE_SALARY { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEE_USER> EMPLOYEE_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOGBOOK_APP> LOGBOOK_APP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARKING_FEE> PARKING_FEE { get; set; }
-        public virtual USER_ROLES USER_ROLES { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BILL_RANGE> BILL_RANGE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<APP_MODULES> APP_MODULES { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DISCOUNTS_BILL> DISCOUNTS_BILL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARKING_TYPES> PARKING_TYPES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_PERMISSIONS> ROLE_PERMISSIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_ROLES> USER_ROLES1 { get; set; }
+        public virtual ICollection<SALARIES> SALARIES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USER_ROLES> USER_ROLES { get; set; }
+        public virtual USER_ROLES USER_ROLES1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERS> USERS1 { get; set; }
         public virtual USERS USERS2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOGBOOK_APP> LOGBOOK_APP { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMPANY_DATA> COMPANY_DATA { get; set; }
     }
 }

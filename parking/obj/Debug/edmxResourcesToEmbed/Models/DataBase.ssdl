@@ -147,6 +147,18 @@
     <Property Name="BIT" Type="bit" Nullable="false" />
     <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
   </EntityType>
+  <EntityType Name="EMPLOYEE_SALARY">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_SALARY_CODE" />
+    </Key>
+    <Property Name="EMPLOYEE_SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
+    <Property Name="SALARY_STATE" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="EMPLOYEE_USER">
     <Key>
       <PropertyRef Name="EMPLOYEE_USER_ID" />
@@ -253,10 +265,11 @@
     </Key>
     <Property Name="SALARY_CODE" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="BASE_SALARY" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="AUMENTO" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="INCREASE" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="TOTAL_SALARY" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="INSERTED_AT" Type="datetime" />
-    <Property Name="EMPLOYEE_CODE" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="IS_DEL" Type="bit" Nullable="false" />
+    <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -388,6 +401,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__EMPLOYEE___EMPLO__3E082B48">
+    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+    <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEES">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEE_SALARY">
+        <PropertyRef Name="EMPLOYEE_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMPLOYEE___SALAR__3D14070F">
+    <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="1" />
+    <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALARIES">
+        <PropertyRef Name="SALARY_CODE" />
+      </Principal>
+      <Dependent Role="EMPLOYEE_SALARY">
+        <PropertyRef Name="SALARY_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__LOGBOOK_A__USER___1CA7377D">
     <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
     <End Role="LOGBOOK_APP" Type="Self.LOGBOOK_APP" Multiplicity="*" />
@@ -444,6 +481,18 @@
         <PropertyRef Name="USER_CODE" />
       </Principal>
       <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="USER_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALARIES__USER_C__3FF073BA">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
+      </Principal>
+      <Dependent Role="SALARIES">
         <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
@@ -508,15 +557,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EMPLOYE_SALARY">
-    <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
-    <End Role="SALARIES" Type="Self.SALARIES" Multiplicity="*" />
+  <Association Name="FK_EMP_SAL">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="EMPLOYEE_SALARY" Type="Self.EMPLOYEE_SALARY" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="EMPLOYEES">
-        <PropertyRef Name="EMPLOYEE_CODE" />
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_CODE" />
       </Principal>
-      <Dependent Role="SALARIES">
-        <PropertyRef Name="EMPLOYEE_CODE" />
+      <Dependent Role="EMPLOYEE_SALARY">
+        <PropertyRef Name="USER_CODE" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -717,6 +766,22 @@
     <Parameter Name="version" Type="int" Mode="In" />
     <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
   </Function>
+  <Function Name="SP_CHECK_IN_REPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="DateTo" Type="datetime" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserCode" Type="varchar" Mode="In" />
+    <Parameter Name="ParkingType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_CHECK_OUT_REPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="DateTo" Type="datetime" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserCode" Type="varchar" Mode="In" />
+    <Parameter Name="ParkingType" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -729,6 +794,13 @@
   </Function>
   <Function Name="SP_GET_ACTIVE_BILL_RANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_GET_COMPANY_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_GET_FILTER_INVOICES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="DateTo" Type="datetime" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserCode" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="SP_GET_TOTAL_VISITS_CLIENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CLIENT_CODE" Type="varchar" Mode="In" />
     <Parameter Name="TOTAL_VISITS" Type="int" Mode="InOut" />
@@ -746,6 +818,13 @@
     <Parameter Name="owner_id" Type="int" Mode="In" />
     <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="SP_REPORT_FINANCIAL_INCOMES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="DateTo" Type="datetime" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserCode" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="SP_REPORT_GENERATED_INVOICE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="B_CODE" Type="varchar" Mode="In" />
   </Function>
@@ -762,6 +841,7 @@
     <EntitySet Name="DISCOUNT_TYPE" EntityType="Self.DISCOUNT_TYPE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DISCOUNTS_BILL" EntityType="Self.DISCOUNTS_BILL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLOYEE_SALARY" EntityType="Self.EMPLOYEE_SALARY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEE_USER" EntityType="Self.EMPLOYEE_USER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HORARY" EntityType="Self.HORARY" Schema="dbo" store:Type="Tables" />
@@ -804,6 +884,14 @@
       <End Role="USERS" EntitySet="USERS" />
       <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
     </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE___EMPLO__3E082B48" Association="Self.FK__EMPLOYEE___EMPLO__3E082B48">
+      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+      <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE___SALAR__3D14070F" Association="Self.FK__EMPLOYEE___SALAR__3D14070F">
+      <End Role="SALARIES" EntitySet="SALARIES" />
+      <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
+    </AssociationSet>
     <AssociationSet Name="FK__LOGBOOK_A__USER___1CA7377D" Association="Self.FK__LOGBOOK_A__USER___1CA7377D">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="LOGBOOK_APP" EntitySet="LOGBOOK_APP" />
@@ -823,6 +911,10 @@
     <AssociationSet Name="FK__ROLE_PERM__USER___664B26CC" Association="Self.FK__ROLE_PERM__USER___664B26CC">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALARIES__USER_C__3FF073BA" Association="Self.FK__SALARIES__USER_C__3FF073BA">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="SALARIES" EntitySet="SALARIES" />
     </AssociationSet>
     <AssociationSet Name="FK__USER_PERM__MODUL__45DE573A" Association="Self.FK__USER_PERM__MODUL__45DE573A">
       <End Role="APP_MODULES" EntitySet="APP_MODULES" />
@@ -844,9 +936,9 @@
       <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
       <End Role="BILL" EntitySet="BILL" />
     </AssociationSet>
-    <AssociationSet Name="FK_EMPLOYE_SALARY" Association="Self.FK_EMPLOYE_SALARY">
-      <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-      <End Role="SALARIES" EntitySet="SALARIES" />
+    <AssociationSet Name="FK_EMP_SAL" Association="Self.FK_EMP_SAL">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="EMPLOYEE_SALARY" EntitySet="EMPLOYEE_SALARY" />
     </AssociationSet>
     <AssociationSet Name="FK_EMPLOYEE" Association="Self.FK_EMPLOYEE">
       <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />

@@ -10,17 +10,16 @@
 namespace parking.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LOGBOOK_APP
+    public partial class SP_REPORT_FINANCIAL_INCOMES_Result
     {
-        public long LOG_ID { get; set; }
-        public string LOG_DESCRIPTION { get; set; }
-        public System.DateTime INSERTED_AT { get; set; }
-        public string USER_CODE { get; set; }
-        public string MODULE_ID { get; set; }
-        public string ACTION_TYPE { get; set; }
-    
-        public virtual USERS USERS { get; set; }
+        public Nullable<int> YEAR { get; set; }
+        public Nullable<int> MONTH { get; set; }
+        public string MONTH_NAME { get; set; }
+        public string USER_NAME { get; set; }
+        public Nullable<decimal> TOTAL_SUBTOTAL { get; set; }
+        public Nullable<decimal> TOTAL_ISV { get; set; }
+        public Nullable<decimal> TOTAL_DISCOUNT { get; set; }
+        public Nullable<decimal> FULL_TOTAL { get; set; }
     }
 }

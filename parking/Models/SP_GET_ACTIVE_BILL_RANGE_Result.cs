@@ -18,6 +18,6 @@ namespace parking.Models
         public string DOC_TYPE { get; set; }
         public int LAST_USED { get; set; }
         public int FINAL_RANGE { get; set; }
-        public Nullable<System.DateTime> LIMIT_DATE { get; set; }
+        public System.DateTime LIMIT_DATE { get; set; }
     }
 }

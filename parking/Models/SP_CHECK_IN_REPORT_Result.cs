@@ -10,17 +10,15 @@
 namespace parking.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LOGBOOK_APP
+    public partial class SP_CHECK_IN_REPORT_Result
     {
-        public long LOG_ID { get; set; }
-        public string LOG_DESCRIPTION { get; set; }
         public System.DateTime INSERTED_AT { get; set; }
-        public string USER_CODE { get; set; }
-        public string MODULE_ID { get; set; }
-        public string ACTION_TYPE { get; set; }
-    
-        public virtual USERS USERS { get; set; }
+        public string CHECK_IN_CODE { get; set; }
+        public string CLIENT_FULL_NAME { get; set; }
+        public string USER_NAME { get; set; }
+        public int PARKING_SPACE_NUMBER { get; set; }
+        public string DESCRIPTION_PARKING_TYPE { get; set; }
+        public string PARKING_TYPE_CODE { get; set; }
     }
 }

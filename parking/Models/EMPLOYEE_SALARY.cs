@@ -12,15 +12,18 @@ namespace parking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LOGBOOK_APP
+    public partial class EMPLOYEE_SALARY
     {
-        public long LOG_ID { get; set; }
-        public string LOG_DESCRIPTION { get; set; }
-        public System.DateTime INSERTED_AT { get; set; }
+        public string EMPLOYEE_SALARY_CODE { get; set; }
+        public string EMPLOYEE_CODE { get; set; }
+        public string SALARY_CODE { get; set; }
         public string USER_CODE { get; set; }
-        public string MODULE_ID { get; set; }
-        public string ACTION_TYPE { get; set; }
+        public System.DateTime INSERTED_AT { get; set; }
+        public bool IS_DEL { get; set; }
+        public bool SALARY_STATE { get; set; }
     
+        public virtual EMPLOYEES EMPLOYEES { get; set; }
+        public virtual SALARIES SALARIES { get; set; }
         public virtual USERS USERS { get; set; }
     }
 }

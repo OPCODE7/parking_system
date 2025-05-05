@@ -43,6 +43,8 @@
             this.BtnReports = new System.Windows.Forms.ToolStripDropDownButton();
             this.BtnRptBills = new System.Windows.Forms.ToolStripMenuItem();
             this.RptFinancialIncomes = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnCheckInReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnCheckOutReport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnParkingFee = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -68,8 +70,7 @@
             this.LblRole = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
-            this.BtnCheckInReport = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnCheckOutReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSalaries = new System.Windows.Forms.Button();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -88,6 +89,7 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnParkingSpace);
             this.PnlAdminSideBar.Controls.Add(this.BtnClients);
             this.PnlAdminSideBar.Controls.Add(this.BtnLogBookApp);
+            this.PnlAdminSideBar.Controls.Add(this.BtnSalaries);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.PnlAdminSideBar.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.PnlAdminSideBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -266,6 +268,24 @@
             this.RptFinancialIncomes.Size = new System.Drawing.Size(290, 34);
             this.RptFinancialIncomes.Text = "Ingresos Financieros";
             this.RptFinancialIncomes.Click += new System.EventHandler(this.RptFinancialIncomes_Click);
+            // 
+            // BtnCheckInReport
+            // 
+            this.BtnCheckInReport.BackColor = System.Drawing.Color.Teal;
+            this.BtnCheckInReport.ForeColor = System.Drawing.Color.White;
+            this.BtnCheckInReport.Name = "BtnCheckInReport";
+            this.BtnCheckInReport.Size = new System.Drawing.Size(290, 34);
+            this.BtnCheckInReport.Text = "Entradas";
+            this.BtnCheckInReport.Click += new System.EventHandler(this.BtnCheckInReport_Click);
+            // 
+            // BtnCheckOutReport
+            // 
+            this.BtnCheckOutReport.BackColor = System.Drawing.Color.Teal;
+            this.BtnCheckOutReport.ForeColor = System.Drawing.Color.White;
+            this.BtnCheckOutReport.Name = "BtnCheckOutReport";
+            this.BtnCheckOutReport.Size = new System.Drawing.Size(290, 34);
+            this.BtnCheckOutReport.Text = "Salidas";
+            this.BtnCheckOutReport.Click += new System.EventHandler(this.BtnCheckOutReport_Click);
             // 
             // toolStripSeparator1
             // 
@@ -491,23 +511,19 @@
             this.PbxLogout.TabStop = false;
             this.PbxLogout.Click += new System.EventHandler(this.PbxLogout_Click);
             // 
-            // BtnCheckInReport
+            // BtnSalaries
             // 
-            this.BtnCheckInReport.BackColor = System.Drawing.Color.Teal;
-            this.BtnCheckInReport.ForeColor = System.Drawing.Color.White;
-            this.BtnCheckInReport.Name = "BtnCheckInReport";
-            this.BtnCheckInReport.Size = new System.Drawing.Size(290, 34);
-            this.BtnCheckInReport.Text = "Entradas";
-            this.BtnCheckInReport.Click += new System.EventHandler(this.BtnCheckInReport_Click);
-            // 
-            // BtnCheckOutReport
-            // 
-            this.BtnCheckOutReport.BackColor = System.Drawing.Color.Teal;
-            this.BtnCheckOutReport.ForeColor = System.Drawing.Color.White;
-            this.BtnCheckOutReport.Name = "BtnCheckOutReport";
-            this.BtnCheckOutReport.Size = new System.Drawing.Size(290, 34);
-            this.BtnCheckOutReport.Text = "Salidas";
-            this.BtnCheckOutReport.Click += new System.EventHandler(this.BtnCheckOutReport_Click);
+            this.BtnSalaries.BackColor = System.Drawing.Color.Teal;
+            this.BtnSalaries.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSalaries.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnSalaries.Location = new System.Drawing.Point(3, 570);
+            this.BtnSalaries.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnSalaries.Name = "BtnSalaries";
+            this.BtnSalaries.Size = new System.Drawing.Size(211, 54);
+            this.BtnSalaries.TabIndex = 10;
+            this.BtnSalaries.Text = "Salarios";
+            this.BtnSalaries.UseVisualStyleBackColor = false;
+            this.BtnSalaries.Click += new System.EventHandler(this.BtnSalaries_Click);
             // 
             // AdminPanel
             // 
@@ -579,5 +595,6 @@
         private System.Windows.Forms.ToolStripMenuItem RptFinancialIncomes;
         private System.Windows.Forms.ToolStripMenuItem BtnCheckInReport;
         private System.Windows.Forms.ToolStripMenuItem BtnCheckOutReport;
+        private System.Windows.Forms.Button BtnSalaries;
     }
 }

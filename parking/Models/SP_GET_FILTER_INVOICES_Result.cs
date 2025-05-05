@@ -10,17 +10,19 @@
 namespace parking.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LOGBOOK_APP
+    public partial class SP_GET_FILTER_INVOICES_Result
     {
-        public long LOG_ID { get; set; }
-        public string LOG_DESCRIPTION { get; set; }
-        public System.DateTime INSERTED_AT { get; set; }
+        public string BILL_NUMBER { get; set; }
+        public string BILL_CODE { get; set; }
+        public System.DateTime DATE_OF_ISSUE { get; set; }
+        public decimal ISV { get; set; }
+        public string RTN { get; set; }
+        public decimal SUBTOTAL { get; set; }
+        public decimal DISCOUNT { get; set; }
+        public decimal TOTAL { get; set; }
         public string USER_CODE { get; set; }
-        public string MODULE_ID { get; set; }
-        public string ACTION_TYPE { get; set; }
-    
-        public virtual USERS USERS { get; set; }
+        public string USER_NAME { get; set; }
+        public string CLIENT_FULL_NAME { get; set; }
     }
 }

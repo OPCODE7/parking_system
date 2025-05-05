@@ -208,8 +208,6 @@ namespace parking.Views.Administration.ParkingStructure
             DtpCheckOutTime.Format = DateTimePickerFormat.Custom;
             DtpCheckOutTime.CustomFormat = "dd/MM/yyyy HH:mm";
 
-
-
             foreach (TextBox txt in this.Controls.OfType<TextBox>())
             {
                 txt.Enabled = false;
