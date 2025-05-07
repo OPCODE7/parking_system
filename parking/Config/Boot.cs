@@ -11,6 +11,9 @@ using System.IO;
 using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
 using System.Configuration;
 using System.Security.AccessControl;
+using parking.Controllers;
+using parking.Models;
+using parking.Helpers;
 
 
 namespace parking.Config
@@ -18,6 +21,10 @@ namespace parking.Config
     internal class Boot
     {
         Helpers.Helpers h = new Helpers.Helpers();
+        SystemLicense sl = new SystemLicense();
+        SystemLicenseController slc = new SystemLicenseController();
+        PasswordHasher hasher= new PasswordHasher();
+
 
         string query;
         public static string path = @"C:\Program Files\SystemHidden\parking.accdb";
@@ -184,6 +191,64 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
             {
                 return false;
             }
+        }
+
+
+        public void initApp()
+        {
+            SYSTEM_LICENSE systemL= slc.getSystemLicense();
+            string serialNumber= sl.GetMotherboardSerial();
+            
+            if (serialNumber == null)
+            {
+                h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
+                Application.Exit();
+                return;
+            }
+
+
+            if (systemL != null && !hasher.VerifyPassword(serialNumber,systemL.MACHINE_SIGNATURE))
+            {
+                h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
+                Application.Exit();
+                return;
+            }
+
+            if (systemL == null) {
+                SYSTEM_LICENSE newSL = new SYSTEM_LICENSE
+                {
+                    MACHINE_SIGNATURE = hasher.MakeHash(serialNumber),
+                    INSERTED_AT = DateTime.Now
+                };
+
+                if (slc.saveSystemLicense(newSL) == 0) {
+                    Application.Exit();
+                    return;
+                }
+                
+            }
+
+            if (ReadFileData())
+            {
+                string connectionString = $"Server={Env.SERVER};Database={Env.DBNAME};User Id={Env.USERDB};Password={Env.PWD};";
+
+                if (!TestConnection(connectionString))
+                {
+                    h.MsgError(Helpers.App.Msg0022);
+                    Application.Run(new Views.Administration.Configuration.FrmServerConfig());
+                }
+                else
+                {
+                    Application.Run(new Views.Auth.Login());
+                }
+            }
+            else
+            {
+                Application.Run(new Views.Administration.Configuration.FrmServerConfig());
+            }
+
+
+
         }
     }
 }

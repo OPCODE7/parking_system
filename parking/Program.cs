@@ -22,25 +22,28 @@ namespace parking
             Application.SetCompatibleTextRenderingDefault(false);
 
             Config.Boot boot= new Config.Boot();
-            Helpers.Helpers h = new Helpers.Helpers();
-            if (boot.ReadFileData())
-            {
-                string connectionString = $"Server={Env.SERVER};Database={Env.DBNAME};User Id={Env.USERDB};Password={Env.PWD};";
+            boot.initApp();
+            //Helpers.Helpers h = new Helpers.Helpers();
+            //Config.SystemLicense sl = new Config.SystemLicense();
 
-                if (!boot.TestConnection(connectionString))
-                {
-                    h.MsgError(Helpers.App.Msg0022);
-                    Application.Run(new Views.Administration.Configuration.FrmServerConfig());
-                }
-                else
-                {
-                    Application.Run(new Views.Auth.Login());
-                }
-            }
-            else
-            {
-                Application.Run(new Views.Administration.Configuration.FrmServerConfig());
-            }
+            //if (boot.ReadFileData())
+            //{
+            //    string connectionString = $"Server={Env.SERVER};Database={Env.DBNAME};User Id={Env.USERDB};Password={Env.PWD};";
+
+            //    if (!boot.TestConnection(connectionString))
+            //    {
+            //        h.MsgError(Helpers.App.Msg0022);
+            //        Application.Run(new Views.Administration.Configuration.FrmServerConfig());
+            //    }
+            //    else
+            //    {
+            //        Application.Run(new Views.Auth.Login());
+            //    }
+            //}
+            //else
+            //{
+            //    Application.Run(new Views.Administration.Configuration.FrmServerConfig());
+            //}
 
 
         }

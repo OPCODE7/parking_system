@@ -86,6 +86,7 @@
       <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.4\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -102,6 +103,7 @@
     <Compile Include="Config\Boot.cs" />
     <Compile Include="Config\Env.cs" />
     <Compile Include="Config\PermissionManager.cs" />
+    <Compile Include="Config\SystemLicense.cs" />
     <Compile Include="Config\User.cs" />
     <Compile Include="Controllers\AppModulesController.cs" />
     <Compile Include="Controllers\BillController.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\SalariesController.cs" />
+    <Compile Include="Controllers\SystemLicenseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\BillDTO.cs" />
     <Compile Include="DTO\BillRangeDTO.cs" />
@@ -255,6 +258,9 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SYSTEM_LICENSE.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel.cs" />

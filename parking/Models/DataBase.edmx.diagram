@@ -67,6 +67,7 @@
         <AssociationConnector Association="PARKINGModel.FK__USER_ROLE__USER___65570293" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK_USER_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="PARKINGModel.FK__USERS__CREATED_B__6462DE5A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PARKINGModel.SYSTEM_LICENSE" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -53,6 +53,7 @@ namespace parking.Models
         public virtual DbSet<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
+        public virtual DbSet<SYSTEM_LICENSE> SYSTEM_LICENSE { get; set; }
     
         public virtual int GENERATE_BILL_NUMBER(ObjectParameter bILL_NUMBER)
         {

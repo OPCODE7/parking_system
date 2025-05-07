@@ -1071,6 +1071,7 @@
       <Parameter Name="B_CODE" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="SYSTEM_LICENSE" EntityType="PARKINGModel.SYSTEM_LICENSE" />
   </EntityContainer>
   <ComplexType Name="SP_CHECK_IN_REPORT_Result">
     <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" />
@@ -1164,4 +1165,12 @@
     <Property Type="Decimal" Name="PRICE_FOR_HOUR" Nullable="false" Precision="10" Scale="2" />
     <Property Type="String" Name="DISCOUNT_DETAILS" Nullable="true" />
   </ComplexType>
+  <EntityType Name="SYSTEM_LICENSE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MACHINE_SIGNATURE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
+  </EntityType>
 </Schema>
