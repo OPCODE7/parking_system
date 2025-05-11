@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\OPCODE\\OP_APPS\\parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\administration\\audit\\frmlogbookapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\audit\\frmlogbookapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\views\\reports\\frmdefaultrpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\reports\\frmdefaultrpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|C:\\OPCODE\\OP_APPS\\parking\\parking\\views\\reports\\frmdefaultrpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\reports\\frmdefaultrpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|C:\\OPCODE\\OP_APPS\\parking\\parking\\views\\administration\\audit\\frmlogbookapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\views\\administration\\audit\\frmlogbookapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|c:\\opcode\\op_apps\\parking\\parking\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{71E155DD-8E77-42CD-AEE6-BB68D125E046}|parking\\parking.csproj|solutionrelative:parking\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,70 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "parking\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Controllers\\UserController.cs",
-              "RelativeToolTip": "parking\\Controllers\\UserController.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAvwC4AAABTAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T02:19:32.456Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FrmLogBookApp.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "RelativeToolTip": "parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAIA3wDMAAAAKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T23:39:43.17Z",
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\README.md",
+              "RelativeDocumentMoniker": "parking\\README.md",
+              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\README.md",
+              "RelativeToolTip": "parking\\README.md",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAEwC0AAABHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-05-11T04:21:00.994Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FrmDefaultRpt.cs",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "RelativeToolTip": "parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAhwCwAAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T22:10:50.378Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FrmDefaultRpt.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Reports\\FrmDefaultRpt.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Reports\\FrmDefaultRpt.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Reports\\FrmDefaultRpt.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T01:05:01.334Z",
-              "EditorCaption": " [Dise\u00F1o]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FrmLogBookApp.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "RelativeDocumentMoniker": "parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs",
-              "ToolTip": "C:\\OPCODE\\OP_APPS\\parking\\parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs [Dise\u00F1o]",
-              "RelativeToolTip": "parking\\Views\\Administration\\Audit\\FrmLogBookApp.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-10T00:12:11.585Z",
-              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }

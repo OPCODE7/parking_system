@@ -623,6 +623,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="README.md" />
     <None Include="Views\Reports\DataSets\DtsCheckIn.xsc">
       <DependentUpon>DtsCheckIn.xsd</DependentUpon>
     </None>
