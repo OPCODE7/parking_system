@@ -294,5 +294,10 @@ namespace parking.Views.Administration
             frmSalaries.Show();
 
         }
+
+        private void PbxLeave_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

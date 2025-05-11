@@ -19,7 +19,7 @@ namespace parking.Controllers
             correlativesModel= new CORRELATIVES();
         }
 
-        public CORRELATIVES getCorrelative(string correlativeId)
+        public CORRELATIVES getCorrelative(int correlativeId)
         {
             CORRELATIVES correlative = new CORRELATIVES();
             try
@@ -46,7 +46,7 @@ namespace parking.Controllers
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
 
-                    var correlatives = db.CORRELATIVES.Where(c => c.CORRELATIVE_CODE == idMod).FirstOrDefault();
+                    var correlatives = db.CORRELATIVES.Where(c => c.MODULE_ID == idMod).FirstOrDefault();
                     if (correlatives != null)
                     {
                        

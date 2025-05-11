@@ -109,12 +109,12 @@
           <Key>
             <PropertyRef Name="CORRELATIVE_CODE" />
           </Key>
-          <Property Name="CORRELATIVE_CODE" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="MODULE_ID" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="CORRELATIVE_DESCRIPTION" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />
           <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
           <Property Name="IS_DEL" Type="bit" Nullable="false" />
-          <Property Name="MODULE_ID" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="DISCOUNT_TYPE">
           <Key>
@@ -546,6 +546,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_APP_MOD">
+          <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="1" />
+          <End Role="CORRELATIVES" Type="Self.CORRELATIVES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_MODULES">
+              <PropertyRef Name="MODULE_ID" />
+            </Principal>
+            <Dependent Role="CORRELATIVES">
+              <PropertyRef Name="MODULE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CHECK_IN">
           <End Role="CHECK_IN" Type="Self.CHECK_IN" Multiplicity="1" />
           <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="*" />
@@ -942,6 +954,10 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="USERS1" EntitySet="USERS" />
           </AssociationSet>
+          <AssociationSet Name="FK_APP_MOD" Association="Self.FK_APP_MOD">
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+            <End Role="CORRELATIVES" EntitySet="CORRELATIVES" />
+          </AssociationSet>
           <AssociationSet Name="FK_CHECK_IN" Association="Self.FK_CHECK_IN">
             <End Role="CHECK_IN" EntitySet="CHECK_IN" />
             <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
@@ -1030,6 +1046,7 @@
           <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
+          <NavigationProperty Name="CORRELATIVES" Relationship="PARKINGModel.FK_APP_MOD" FromRole="APP_MODULES" ToRole="CORRELATIVES" />
         </EntityType>
         <EntityType Name="BILL">
           <Key>
@@ -1138,12 +1155,13 @@
           <Key>
             <PropertyRef Name="CORRELATIVE_CODE" />
           </Key>
-          <Property Name="CORRELATIVE_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORRELATIVE_CODE" Type="Int32" Nullable="false" />
           <Property Name="CORRELATIVE_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CORRELATIVE_COUNTER" Type="Int32" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-          <Property Name="MODULE_ID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_APP_MOD" FromRole="CORRELATIVES" ToRole="APP_MODULES" />
         </EntityType>
         <EntityType Name="DISCOUNT_TYPE">
           <Key>
@@ -2091,6 +2109,10 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="SYSTEM_LICENSE" EntityType="PARKINGModel.SYSTEM_LICENSE" />
+          <AssociationSet Name="FK_APP_MOD" Association="PARKINGModel.FK_APP_MOD">
+            <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+            <End Role="CORRELATIVES" EntitySet="CORRELATIVES" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="SP_CHECK_IN_REPORT_Result">
           <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" />
@@ -2192,6 +2214,18 @@
           <Property Name="MACHINE_SIGNATURE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
+        <Association Name="FK_APP_MOD">
+          <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="1" />
+          <End Type="PARKINGModel.CORRELATIVES" Role="CORRELATIVES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_MODULES">
+              <PropertyRef Name="MODULE_ID" />
+            </Principal>
+            <Dependent Role="CORRELATIVES">
+              <PropertyRef Name="MODULE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

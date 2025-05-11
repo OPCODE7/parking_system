@@ -104,12 +104,12 @@
     <Key>
       <PropertyRef Name="CORRELATIVE_CODE" />
     </Key>
-    <Property Name="CORRELATIVE_CODE" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+    <Property Name="MODULE_ID" Type="varchar" MaxLength="4" Nullable="false" />
     <Property Name="CORRELATIVE_DESCRIPTION" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />
     <Property Name="INSERTED_AT" Type="datetime" Nullable="false" />
     <Property Name="IS_DEL" Type="bit" Nullable="false" />
-    <Property Name="MODULE_ID" Type="varchar" MaxLength="3" />
   </EntityType>
   <EntityType Name="DISCOUNT_TYPE">
     <Key>
@@ -541,6 +541,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_APP_MOD">
+    <End Role="APP_MODULES" Type="Self.APP_MODULES" Multiplicity="1" />
+    <End Role="CORRELATIVES" Type="Self.CORRELATIVES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="APP_MODULES">
+        <PropertyRef Name="MODULE_ID" />
+      </Principal>
+      <Dependent Role="CORRELATIVES">
+        <PropertyRef Name="MODULE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CHECK_IN">
     <End Role="CHECK_IN" Type="Self.CHECK_IN" Multiplicity="1" />
     <End Role="CHECK_OUT" Type="Self.CHECK_OUT" Multiplicity="*" />
@@ -936,6 +948,10 @@
     <AssociationSet Name="FK__USERS__CREATED_B__6462DE5A" Association="Self.FK__USERS__CREATED_B__6462DE5A">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="USERS1" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_APP_MOD" Association="Self.FK_APP_MOD">
+      <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+      <End Role="CORRELATIVES" EntitySet="CORRELATIVES" />
     </AssociationSet>
     <AssociationSet Name="FK_CHECK_IN" Association="Self.FK_CHECK_IN">
       <End Role="CHECK_IN" EntitySet="CHECK_IN" />

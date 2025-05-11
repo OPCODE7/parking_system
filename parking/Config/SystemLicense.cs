@@ -13,6 +13,13 @@ namespace parking.Config
             h = new Helpers.Helpers();
 
         }
+
+        /// <summary>
+        /// Obtiene el número de serie de la placa base (motherboard) del equipo utilizando WMI (Windows Management Instrumentation).
+        /// </summary>
+        /// <returns>
+        /// El número de serie de la placa base como una cadena si se obtiene correctamente; de lo contrario, <c>null</c>.
+        /// </returns>
         public string GetMotherboardSerial()
         {
             try

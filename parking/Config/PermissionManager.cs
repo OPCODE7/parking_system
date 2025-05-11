@@ -11,6 +11,14 @@ namespace parking.Config
     {
         public static IEnumerable<dynamic> UserPermissions= new List<dynamic>();
 
+        /// <summary>
+        /// Verifica si el usuario actual tiene un permiso específico dentro de un módulo determinado.
+        /// </summary>
+        /// <param name="module">Identificador del módulo a verificar (insensible a mayúsculas).</param>
+        /// <param name="permission">Nombre de la acción o permiso requerido (insensible a mayúsculas).</param>
+        /// <returns>
+        /// <c>true</c> si el usuario tiene el permiso solicitado para el módulo; de lo contrario, <c>false</c>.
+        /// </returns>
         public static bool HasPermission(string module, string permission)
         {
 

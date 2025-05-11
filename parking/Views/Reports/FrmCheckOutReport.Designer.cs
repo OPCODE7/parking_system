@@ -228,14 +228,14 @@
             this.RptCheckIn.Location = new System.Drawing.Point(13, 258);
             this.RptCheckIn.Name = "RptCheckIn";
             this.RptCheckIn.ServerReport.BearerToken = null;
-            this.RptCheckIn.Size = new System.Drawing.Size(886, 465);
+            this.RptCheckIn.Size = new System.Drawing.Size(886, 404);
             this.RptCheckIn.TabIndex = 138;
             // 
             // FrmCheckOutReport
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(911, 735);
+            this.ClientSize = new System.Drawing.Size(911, 673);
             this.Controls.Add(this.GbxFilters);
             this.Controls.Add(this.RptCheckIn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

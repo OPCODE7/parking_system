@@ -32,7 +32,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogBookApp));
-            this.DgvEmployees = new System.Windows.Forms.DataGridView();
+            this.DgvLogs = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DESCRIPCION = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -41,9 +44,6 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DESCRIPCION = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TxtDescription = new System.Windows.Forms.TextBox();
@@ -55,27 +55,30 @@
             this.label5 = new System.Windows.Forms.Label();
             this.TxtModule = new System.Windows.Forms.TextBox();
             this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
+            this.PbxPrint = new System.Windows.Forms.PictureBox();
+            this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvLogs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).BeginInit();
             this.SuspendLayout();
             // 
-            // DgvEmployees
+            // DgvLogs
             // 
-            this.DgvEmployees.AllowUserToAddRows = false;
-            this.DgvEmployees.AllowUserToDeleteRows = false;
-            this.DgvEmployees.AllowUserToResizeColumns = false;
-            this.DgvEmployees.AllowUserToResizeRows = false;
+            this.DgvLogs.AllowUserToAddRows = false;
+            this.DgvLogs.AllowUserToDeleteRows = false;
+            this.DgvLogs.AllowUserToResizeColumns = false;
+            this.DgvLogs.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvEmployees.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvLogs.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvLogs.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.DgvLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.DESCRIPCION,
             this.REGISTRO});
@@ -86,18 +89,42 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvEmployees.Location = new System.Drawing.Point(14, 267);
-            this.DgvEmployees.Name = "DgvEmployees";
-            this.DgvEmployees.ReadOnly = true;
-            this.DgvEmployees.RowHeadersVisible = false;
-            this.DgvEmployees.RowHeadersWidth = 62;
-            this.DgvEmployees.RowTemplate.Height = 28;
-            this.DgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvEmployees.Size = new System.Drawing.Size(656, 303);
-            this.DgvEmployees.TabIndex = 93;
-            this.TlpSelectRow.SetToolTip(this.DgvEmployees, "Doble click para seleccionar un registro.");
-            this.DgvEmployees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEmployees_CellDoubleClick);
+            this.DgvLogs.DefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvLogs.Location = new System.Drawing.Point(14, 267);
+            this.DgvLogs.Name = "DgvLogs";
+            this.DgvLogs.ReadOnly = true;
+            this.DgvLogs.RowHeadersVisible = false;
+            this.DgvLogs.RowHeadersWidth = 62;
+            this.DgvLogs.RowTemplate.Height = 28;
+            this.DgvLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvLogs.Size = new System.Drawing.Size(656, 303);
+            this.DgvLogs.TabIndex = 93;
+            this.TlpSelectRow.SetToolTip(this.DgvLogs, "Doble click para seleccionar un registro.");
+            this.DgvLogs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEmployees_CellDoubleClick);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 150;
+            // 
+            // DESCRIPCION
+            // 
+            this.DESCRIPCION.HeaderText = "DESCRIPCION";
+            this.DESCRIPCION.MinimumWidth = 8;
+            this.DESCRIPCION.Name = "DESCRIPCION";
+            this.DESCRIPCION.ReadOnly = true;
+            this.DESCRIPCION.Width = 400;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 150;
             // 
             // PbxSearch
             // 
@@ -105,7 +132,7 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(609, 217);
+            this.PbxSearch.Location = new System.Drawing.Point(609, 218);
             this.PbxSearch.Name = "PbxSearch";
             this.PbxSearch.Size = new System.Drawing.Size(26, 27);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -119,7 +146,7 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(643, 217);
+            this.PbxCancel.Location = new System.Drawing.Point(643, 218);
             this.PbxCancel.Name = "PbxCancel";
             this.PbxCancel.Size = new System.Drawing.Size(26, 27);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -146,7 +173,7 @@
             this.TxtSearch.Location = new System.Drawing.Point(94, 220);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(474, 26);
+            this.TxtSearch.Size = new System.Drawing.Size(457, 26);
             this.TxtSearch.TabIndex = 87;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -193,29 +220,6 @@
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // DESCRIPCION
-            // 
-            this.DESCRIPCION.HeaderText = "DESCRIPCION";
-            this.DESCRIPCION.MinimumWidth = 8;
-            this.DESCRIPCION.Name = "DESCRIPCION";
-            this.DESCRIPCION.ReadOnly = true;
-            this.DESCRIPCION.Width = 400;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
             // 
             // label2
             // 
@@ -342,11 +346,31 @@
             this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
+            // PbxPrint
+            // 
+            this.PbxPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxPrint.BackColor = System.Drawing.Color.Transparent;
+            this.PbxPrint.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxPrint.Image = ((System.Drawing.Image)(resources.GetObject("PbxPrint.Image")));
+            this.PbxPrint.Location = new System.Drawing.Point(574, 218);
+            this.PbxPrint.Name = "PbxPrint";
+            this.PbxPrint.Size = new System.Drawing.Size(26, 27);
+            this.PbxPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxPrint.TabIndex = 109;
+            this.PbxPrint.TabStop = false;
+            this.TlpGenerateRpt.SetToolTip(this.PbxPrint, "Generar reporte de logs.");
+            this.PbxPrint.Click += new System.EventHandler(this.PbxPrint_Click);
+            // 
+            // TlpGenerateRpt
+            // 
+            this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
+            // 
             // FrmLogBookApp
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(679, 587);
+            this.Controls.Add(this.PbxPrint);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.TxtModule);
             this.Controls.Add(this.label4);
@@ -357,7 +381,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TxtDescription);
             this.Controls.Add(this.TxtLogId);
-            this.Controls.Add(this.DgvEmployees);
+            this.Controls.Add(this.DgvLogs);
             this.Controls.Add(this.PbxSearch);
             this.Controls.Add(this.PbxCancel);
             this.Controls.Add(this.label6);
@@ -369,19 +393,20 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmLogBookApp";
             this.Load += new System.EventHandler(this.FrmLogBookApp_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvLogs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView DgvEmployees;
+        private System.Windows.Forms.DataGridView DgvLogs;
         private System.Windows.Forms.PictureBox PbxSearch;
         private System.Windows.Forms.PictureBox PbxCancel;
         private System.Windows.Forms.Label label6;
@@ -390,9 +415,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton BtnCancel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCION;
-        private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TxtDescription;
@@ -404,5 +426,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox TxtModule;
         private System.Windows.Forms.ToolTip TlpSelectRow;
+        private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCION;
+        private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
     }
 }

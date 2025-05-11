@@ -209,6 +209,40 @@ namespace parking.Helpers
 
 
 
+        public DataTable GetDataTableFromDataGridView(DataGridView dgv)
+        {
+            DataTable dt = new DataTable();
+
+            // Crear las columnas del DataTable a partir de las columnas visibles del DataGridView
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                if (column.Visible)
+                {
+                    dt.Columns.Add(column.Name, column.ValueType ?? typeof(string));
+                }
+            }
+
+            // Llenar las filas
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (!row.IsNewRow) // Ignorar la fila para agregar nuevos datos
+                {
+                    DataRow dr = dt.NewRow();
+                    foreach (DataGridViewColumn column in dgv.Columns)
+                    {
+                        if (column.Visible)
+                        {
+                            dr[column.Name] = row.Cells[column.Name].Value ?? DBNull.Value;
+                        }
+                    }
+                    dt.Rows.Add(dr);
+                }
+            }
+
+            return dt;
+        }
+
+
     }
 }
 

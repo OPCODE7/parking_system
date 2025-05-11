@@ -52,7 +52,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\iconapp.ico</ApplicationIcon>
+    <ApplicationIcon>iconapp.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>parking.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -458,6 +461,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsLogs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsLogs.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\FrmBillsReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,6 +483,12 @@
     </Compile>
     <Compile Include="Views\Reports\FrmCheckOutReport.Designer.cs">
       <DependentUpon>FrmCheckOutReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\FrmDefaultRpt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\FrmDefaultRpt.Designer.cs">
+      <DependentUpon>FrmDefaultRpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\FrmGeneratedBillReport.cs">
       <SubType>Form</SubType>
@@ -576,6 +590,9 @@
     <EmbeddedResource Include="Views\Reports\FrmCheckOutReport.resx">
       <DependentUpon>FrmCheckOutReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Reports\FrmDefaultRpt.resx">
+      <DependentUpon>FrmDefaultRpt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\FrmGeneratedBillReport.resx">
       <DependentUpon>FrmGeneratedBillReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -587,6 +604,7 @@
     <EmbeddedResource Include="Views\Reports\RDLC\ReportFinancialIncomes.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportGeneratedBill.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportInvoices.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportLogs.rdlc" />
     <EntityDeploy Include="Models\DataBase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
@@ -682,12 +700,25 @@
     <None Include="Views\Reports\DataSets\DtsGetInvoices.xss">
       <DependentUpon>DtsGetInvoices.xsd</DependentUpon>
     </None>
+    <None Include="Views\Reports\DataSets\DtsLogs.xsc">
+      <DependentUpon>DtsLogs.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsLogs.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsLogs.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsLogs.xss">
+      <DependentUpon>DtsLogs.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icons\config-16px.png" />
+    <Content Include="Assets\Icons\iconapp.ico" />
+    <Content Include="iconapp.ico" />
     <Content Include="Models\DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataBase.Context.cs</LastGenOutput>

@@ -11,6 +11,7 @@
     <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="USER_PERMISSIONS" Relationship="Self.FK__USER_PERM__MODUL__45DE573A" FromRole="APP_MODULES" ToRole="USER_PERMISSIONS" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USER_MODULES" FromRole="APP_MODULES" ToRole="USERS" />
+    <NavigationProperty Name="CORRELATIVES" Relationship="PARKINGModel.FK_APP_MOD" FromRole="APP_MODULES" ToRole="CORRELATIVES" />
   </EntityType>
   <EntityType Name="BILL">
     <Key>
@@ -119,12 +120,13 @@
     <Key>
       <PropertyRef Name="CORRELATIVE_CODE" />
     </Key>
-    <Property Name="CORRELATIVE_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CORRELATIVE_CODE" Type="Int32" Nullable="false" />
     <Property Name="CORRELATIVE_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CORRELATIVE_COUNTER" Type="Int32" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IS_DEL" Type="Boolean" Nullable="false" />
-    <Property Name="MODULE_ID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="MODULE_ID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="APP_MODULES" Relationship="PARKINGModel.FK_APP_MOD" FromRole="CORRELATIVES" ToRole="APP_MODULES" />
   </EntityType>
   <EntityType Name="DISCOUNT_TYPE">
     <Key>
@@ -1072,6 +1074,10 @@
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
     <EntitySet Name="SYSTEM_LICENSE" EntityType="PARKINGModel.SYSTEM_LICENSE" />
+    <AssociationSet Name="FK_APP_MOD" Association="PARKINGModel.FK_APP_MOD">
+      <End Role="APP_MODULES" EntitySet="APP_MODULES" />
+      <End Role="CORRELATIVES" EntitySet="CORRELATIVES" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="SP_CHECK_IN_REPORT_Result">
     <Property Type="DateTime" Name="INSERTED_AT" Nullable="false" />
@@ -1173,4 +1179,16 @@
     <Property Name="MACHINE_SIGNATURE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
   </EntityType>
+  <Association Name="FK_APP_MOD">
+    <End Type="PARKINGModel.APP_MODULES" Role="APP_MODULES" Multiplicity="1" />
+    <End Type="PARKINGModel.CORRELATIVES" Role="CORRELATIVES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="APP_MODULES">
+        <PropertyRef Name="MODULE_ID" />
+      </Principal>
+      <Dependent Role="CORRELATIVES">
+        <PropertyRef Name="MODULE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

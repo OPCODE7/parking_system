@@ -18,6 +18,7 @@ namespace parking.Models
         public APP_MODULES()
         {
             this.USER_PERMISSIONS = new HashSet<USER_PERMISSIONS>();
+            this.CORRELATIVES = new HashSet<CORRELATIVES>();
         }
     
         public string MODULE_ID { get; set; }
@@ -29,5 +30,7 @@ namespace parking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_PERMISSIONS> USER_PERMISSIONS { get; set; }
         public virtual USERS USERS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CORRELATIVES> CORRELATIVES { get; set; }
     }
 }

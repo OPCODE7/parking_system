@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheckInReport));
             this.GbxFilters = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.CmbParkingTypes = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.PbxClose = new System.Windows.Forms.PictureBox();
@@ -43,8 +45,6 @@
             this.DtpTo = new System.Windows.Forms.DateTimePicker();
             this.DtpFrom = new System.Windows.Forms.DateTimePicker();
             this.RptCheckIn = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.label5 = new System.Windows.Forms.Label();
-            this.CmbParkingTypes = new System.Windows.Forms.ComboBox();
             this.GbxFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClearFilter)).BeginInit();
@@ -75,6 +75,25 @@
             this.GbxFilters.TabIndex = 135;
             this.GbxFilters.TabStop = false;
             this.GbxFilters.Text = "Seleccione el criterio de búsqueda";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.label5.Location = new System.Drawing.Point(8, 172);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(142, 19);
+            this.label5.TabIndex = 154;
+            this.label5.Text = "Tipo de parqueo:";
+            // 
+            // CmbParkingTypes
+            // 
+            this.CmbParkingTypes.FormattingEnabled = true;
+            this.CmbParkingTypes.Location = new System.Drawing.Point(161, 172);
+            this.CmbParkingTypes.Name = "CmbParkingTypes";
+            this.CmbParkingTypes.Size = new System.Drawing.Size(314, 27);
+            this.CmbParkingTypes.TabIndex = 153;
             // 
             // label4
             // 
@@ -209,33 +228,14 @@
             this.RptCheckIn.Location = new System.Drawing.Point(13, 258);
             this.RptCheckIn.Name = "RptCheckIn";
             this.RptCheckIn.ServerReport.BearerToken = null;
-            this.RptCheckIn.Size = new System.Drawing.Size(886, 465);
+            this.RptCheckIn.Size = new System.Drawing.Size(886, 402);
             this.RptCheckIn.TabIndex = 136;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label5.Location = new System.Drawing.Point(8, 172);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(142, 19);
-            this.label5.TabIndex = 154;
-            this.label5.Text = "Tipo de parqueo:";
-            // 
-            // CmbParkingTypes
-            // 
-            this.CmbParkingTypes.FormattingEnabled = true;
-            this.CmbParkingTypes.Location = new System.Drawing.Point(161, 172);
-            this.CmbParkingTypes.Name = "CmbParkingTypes";
-            this.CmbParkingTypes.Size = new System.Drawing.Size(314, 27);
-            this.CmbParkingTypes.TabIndex = 153;
             // 
             // FrmCheckInReport
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(911, 735);
+            this.ClientSize = new System.Drawing.Size(911, 673);
             this.Controls.Add(this.GbxFilters);
             this.Controls.Add(this.RptCheckIn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
