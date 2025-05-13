@@ -4,6 +4,8 @@ using parking.Controllers;
 using parking.DTO;
 using parking.Helpers;
 using parking.Models;
+using parking.Views.Reports.DataSets;
+using parking.Views.Reports;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -287,6 +289,27 @@ namespace parking.Views.Administration.Employees
             }
         }
 
+        private void PbxPrint_Click(object sender, EventArgs e)
+        {
+            if (DgvEmployees.Rows.Count > 0)
+            {
+                FrmDefaultRpt frmGenericRpt = new FrmDefaultRpt();
+
+
+                DataTable dt = h.GetDataTableFromDataGridView(DgvEmployees);
+
+                string pathRpt = @"..\..\Views\Reports\RDLC\ReportEmployees.rdlc";
+
+                string dtsName = "DtsEmployees";
+                frmGenericRpt.fillRpt(dt, pathRpt, dtsName);
+                frmGenericRpt.ShowDialog();
+            }
+            else
+            {
+                h.MsgError(Helpers.App.Msg0012);
+            }
+        }
+
         private void PbxSearch_Click(object sender, EventArgs e)
         {
             getEmployees(TxtSearch.Text, flagIsPaperBin);
@@ -306,7 +329,7 @@ namespace parking.Views.Administration.Employees
             PbxDestroy.Visible = false;
             PbxDestroy.Enabled = false;
             PbxRecovery.Enabled = false;
-
+            PbxPrint.Enabled = PermissionManager.HasPermission("RPT", "Crear");
             foreach (TextBox Txt in this.Controls.OfType<TextBox>())
             {
                 Txt.Enabled = false;
@@ -341,7 +364,7 @@ namespace parking.Views.Administration.Employees
 
             foreach (var item in employess)
             {
-                DgvEmployees.Rows.Add(item.EMPLOYEE_CODE,item.EMPLOYEE_NAME+" " +item.EMPLOYEE_LASTNAME,item.DESCRIPTION_JOB_POSITION,item.EMPLOYEE_PHONE,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvEmployees.Rows.Add(item.EMPLOYEE_CODE,item.EMPLOYEE_DNI,item.EMPLOYEE_NAME+" " +item.EMPLOYEE_LASTNAME,item.DESCRIPTION_JOB_POSITION,item.HORARY_DESCRIPTION,item.EMPLOYEE_PHONE,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
         }
 

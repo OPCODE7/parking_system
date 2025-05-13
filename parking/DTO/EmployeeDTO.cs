@@ -17,6 +17,8 @@ namespace parking.DTO
         public string DESCRIPTION_JOB_POSITION { get; set; }
         public TimeSpan INITIAL_HOUR { get; set; }
         public TimeSpan FINAL_HOUR { get; set; }
+
+        public string HORARY_DESCRIPTION { get; set; }
         public string EMPLOYEE_PHONE { get; set; }
         public DateTime INSERTED_AT { get; set; }
         public bool IS_DEL { get; set; }

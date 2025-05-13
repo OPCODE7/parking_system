@@ -2,6 +2,8 @@
 using parking.Controllers;
 using parking.DTO;
 using parking.Models;
+using parking.Views.Reports.DataSets;
+using parking.Views.Reports;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -412,6 +414,27 @@ namespace parking.Views.Administration.Employees
 
         }
 
+        private void PbxPrint_Click(object sender, EventArgs e)
+        {
+            if (DgvSalaries.Rows.Count > 0)
+            {
+                FrmDefaultRpt frmGenericRpt = new FrmDefaultRpt();
+
+
+                DataTable dt = h.GetDataTableFromDataGridView(DgvSalaries);
+
+                string pathRpt = @"..\..\Views\Reports\RDLC\ReportSalaries.rdlc";
+
+                string dtsName = "DtsEmployees";
+                frmGenericRpt.fillRpt(dt, pathRpt, dtsName);
+                frmGenericRpt.ShowDialog();
+            }
+            else
+            {
+                h.MsgError(Helpers.App.Msg0012);
+            }
+        }
+
         private void CmbEmployees_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
@@ -474,6 +497,7 @@ namespace parking.Views.Administration.Employees
             BtnSave.Enabled = false;
             BtnCancel.Enabled = false;
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxPrint.Enabled = PermissionManager.HasPermission("RPT", "Crear");
             PbxRecovery.Visible = false;
             PbxDestroy.Visible = false;
             PbxRecovery.Enabled = false;

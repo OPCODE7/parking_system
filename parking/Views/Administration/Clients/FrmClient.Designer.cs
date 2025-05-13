@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmClient));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label5 = new System.Windows.Forms.Label();
             this.TxtName = new System.Windows.Forms.TextBox();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
@@ -45,12 +45,20 @@
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvClients = new System.Windows.Forms.DataGridView();
+            this.CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DIRECCION = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TELEFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtClientCode = new System.Windows.Forms.TextBox();
             this.TxtLastName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -63,24 +71,19 @@
             this.TxtDni = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
-            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
-            this.PbxDestroy = new System.Windows.Forms.PictureBox();
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
-            this.CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DIRECCION = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TELEFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxDestroy = new System.Windows.Forms.PictureBox();
+            this.PbxPrint = new System.Windows.Forms.PictureBox();
+            this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvClients)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).BeginInit();
             this.SuspendLayout();
             // 
             // label5
@@ -218,6 +221,22 @@
             this.BtnCancel.Text = "Cancelar";
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // PbxSearch
             // 
             this.PbxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -286,11 +305,11 @@
             this.DgvClients.AllowUserToDeleteRows = false;
             this.DgvClients.AllowUserToResizeColumns = false;
             this.DgvClients.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvClients.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvClients.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.DgvClients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvClients.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -301,14 +320,14 @@
             this.TELEFONO,
             this.DNI,
             this.REGISTRO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvClients.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvClients.DefaultCellStyle = dataGridViewCellStyle8;
             this.DgvClients.Location = new System.Drawing.Point(12, 374);
             this.DgvClients.Name = "DgvClients";
             this.DgvClients.ReadOnly = true;
@@ -319,6 +338,48 @@
             this.DgvClients.Size = new System.Drawing.Size(646, 289);
             this.DgvClients.TabIndex = 121;
             this.DgvClients.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvClients_CellDoubleClick);
+            // 
+            // CODE
+            // 
+            this.CODE.HeaderText = "CÓDIGO";
+            this.CODE.MinimumWidth = 8;
+            this.CODE.Name = "CODE";
+            this.CODE.ReadOnly = true;
+            // 
+            // NOMBRE
+            // 
+            this.NOMBRE.HeaderText = "NOMBRE";
+            this.NOMBRE.MinimumWidth = 8;
+            this.NOMBRE.Name = "NOMBRE";
+            this.NOMBRE.ReadOnly = true;
+            // 
+            // DIRECCION
+            // 
+            this.DIRECCION.HeaderText = "DIRECCIÓN";
+            this.DIRECCION.MinimumWidth = 8;
+            this.DIRECCION.Name = "DIRECCION";
+            this.DIRECCION.ReadOnly = true;
+            // 
+            // TELEFONO
+            // 
+            this.TELEFONO.HeaderText = "TELÉFONO";
+            this.TELEFONO.MinimumWidth = 8;
+            this.TELEFONO.Name = "TELEFONO";
+            this.TELEFONO.ReadOnly = true;
+            // 
+            // DNI
+            // 
+            this.DNI.HeaderText = "DNI";
+            this.DNI.MinimumWidth = 8;
+            this.DNI.Name = "DNI";
+            this.DNI.ReadOnly = true;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
             // 
             // TxtClientCode
             // 
@@ -454,50 +515,13 @@
             this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpRecovery.ToolTipTitle = "Recuperar ";
             // 
-            // TtpDestroy
-            // 
-            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TtpDestroy.ToolTipTitle = "Destruir";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
-            // 
-            // BtnPaperbin
-            // 
-            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
-            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPaperbin.Name = "BtnPaperbin";
-            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
-            this.BtnPaperbin.Text = "Papelera";
-            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
-            // 
-            // PbxDestroy
-            // 
-            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
-            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
-            this.PbxDestroy.Location = new System.Drawing.Point(562, 338);
-            this.PbxDestroy.Name = "PbxDestroy";
-            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
-            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PbxDestroy.TabIndex = 169;
-            this.PbxDestroy.TabStop = false;
-            this.TtpDestroy.SetToolTip(this.PbxDestroy, "Destruir registro definitivamente de la base de datos");
-            this.PbxDestroy.Visible = false;
-            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
-            // 
             // PbxRecovery
             // 
             this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
             this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(526, 338);
+            this.PbxRecovery.Location = new System.Drawing.Point(491, 338);
             this.PbxRecovery.Name = "PbxRecovery";
             this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
             this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -507,53 +531,52 @@
             this.PbxRecovery.Visible = false;
             this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
             // 
-            // CODE
+            // TtpDestroy
             // 
-            this.CODE.HeaderText = "CÓDIGO";
-            this.CODE.MinimumWidth = 8;
-            this.CODE.Name = "CODE";
-            this.CODE.ReadOnly = true;
+            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpDestroy.ToolTipTitle = "Destruir";
             // 
-            // NOMBRE
+            // PbxDestroy
             // 
-            this.NOMBRE.HeaderText = "NOMBRE";
-            this.NOMBRE.MinimumWidth = 8;
-            this.NOMBRE.Name = "NOMBRE";
-            this.NOMBRE.ReadOnly = true;
+            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
+            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
+            this.PbxDestroy.Location = new System.Drawing.Point(527, 338);
+            this.PbxDestroy.Name = "PbxDestroy";
+            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
+            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxDestroy.TabIndex = 169;
+            this.PbxDestroy.TabStop = false;
+            this.TtpDestroy.SetToolTip(this.PbxDestroy, "Destruir registro definitivamente de la base de datos");
+            this.PbxDestroy.Visible = false;
+            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
             // 
-            // DIRECCION
+            // PbxPrint
             // 
-            this.DIRECCION.HeaderText = "DIRECCIÓN";
-            this.DIRECCION.MinimumWidth = 8;
-            this.DIRECCION.Name = "DIRECCION";
-            this.DIRECCION.ReadOnly = true;
+            this.PbxPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxPrint.BackColor = System.Drawing.Color.Transparent;
+            this.PbxPrint.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxPrint.Image = ((System.Drawing.Image)(resources.GetObject("PbxPrint.Image")));
+            this.PbxPrint.Location = new System.Drawing.Point(560, 338);
+            this.PbxPrint.Name = "PbxPrint";
+            this.PbxPrint.Size = new System.Drawing.Size(26, 27);
+            this.PbxPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxPrint.TabIndex = 170;
+            this.PbxPrint.TabStop = false;
+            this.TlpGenerateRpt.SetToolTip(this.PbxPrint, "Generar reporte de clientes");
+            this.PbxPrint.Click += new System.EventHandler(this.PbxPrint_Click);
             // 
-            // TELEFONO
+            // TlpGenerateRpt
             // 
-            this.TELEFONO.HeaderText = "TELÉFONO";
-            this.TELEFONO.MinimumWidth = 8;
-            this.TELEFONO.Name = "TELEFONO";
-            this.TELEFONO.ReadOnly = true;
-            // 
-            // DNI
-            // 
-            this.DNI.HeaderText = "DNI";
-            this.DNI.MinimumWidth = 8;
-            this.DNI.Name = "DNI";
-            this.DNI.ReadOnly = true;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
+            this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
             // 
             // FrmClient
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(674, 698);
+            this.Controls.Add(this.PbxPrint);
             this.Controls.Add(this.PbxDestroy);
             this.Controls.Add(this.PbxRecovery);
             this.Controls.Add(this.MskPhoneNumber);
@@ -588,8 +611,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvClients)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -639,5 +663,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TELEFONO;
         private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
     }
 }

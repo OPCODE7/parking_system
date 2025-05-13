@@ -430,6 +430,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsCheckOut.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsClients.cs">
+      <DependentUpon>DtsClients.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsClients.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsClients.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsEmployees.cs">
+      <DependentUpon>DtsEmployees.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsEmployees.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsEmployees.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DataSets\DtsFinancialIncomes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -465,6 +481,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsLogs.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DataSets\DtsUsers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsUsers.xsd</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\FrmBillsReport.cs">
       <SubType>Form</SubType>
@@ -601,6 +622,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\RDLC\ReportCheckIn.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportCheckOut.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportClients.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportUsers.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportSalaries.rdlc" />
+    <EmbeddedResource Include="Views\Reports\RDLC\ReportEmployees.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportFinancialIncomes.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportGeneratedBill.rdlc" />
     <EmbeddedResource Include="Views\Reports\RDLC\ReportInvoices.rdlc" />
@@ -645,6 +670,28 @@
     </None>
     <None Include="Views\Reports\DataSets\DtsCheckOut.xss">
       <DependentUpon>DtsCheckOut.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsClients.xsc">
+      <DependentUpon>DtsClients.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsClients.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsClients.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsClients.xss">
+      <DependentUpon>DtsClients.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsEmployees.xsc">
+      <DependentUpon>DtsEmployees.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsEmployees.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsEmployees.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsEmployees.xss">
+      <DependentUpon>DtsEmployees.xsd</DependentUpon>
     </None>
     <None Include="Views\Reports\DataSets\DtsFinancialIncomes.xsc">
       <DependentUpon>DtsFinancialIncomes.xsd</DependentUpon>
@@ -711,6 +758,17 @@
     </None>
     <None Include="Views\Reports\DataSets\DtsLogs.xss">
       <DependentUpon>DtsLogs.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsUsers.xsc">
+      <DependentUpon>DtsUsers.xsd</DependentUpon>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsUsers.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsUsers.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Reports\DataSets\DtsUsers.xss">
+      <DependentUpon>DtsUsers.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEmployees));
             this.DgvEmployees = new System.Windows.Forms.DataGridView();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
@@ -55,6 +55,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.TxtEmployeeCode = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.TxtLastName = new System.Windows.Forms.TextBox();
@@ -67,15 +68,18 @@
             this.label9 = new System.Windows.Forms.Label();
             this.CmbHorary = new System.Windows.Forms.ComboBox();
             this.TxtSearch = new System.Windows.Forms.TextBox();
-            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.PbxDestroy = new System.Windows.Forms.PictureBox();
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxPrint = new System.Windows.Forms.PictureBox();
+            this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IDENTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CARGO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TELÉFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HORARIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TELEFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -84,6 +88,7 @@
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).BeginInit();
             this.SuspendLayout();
             // 
             // DgvEmployees
@@ -92,36 +97,38 @@
             this.DgvEmployees.AllowUserToDeleteRows = false;
             this.DgvEmployees.AllowUserToResizeColumns = false;
             this.DgvEmployees.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DgvEmployees.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvEmployees.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
+            this.IDENTIDAD,
             this.NOMBRE,
             this.CARGO,
-            this.TELÉFONO,
+            this.HORARIO,
+            this.TELEFONO,
             this.REGISTRO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvEmployees.Location = new System.Drawing.Point(26, 390);
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle4;
+            this.DgvEmployees.Location = new System.Drawing.Point(25, 321);
             this.DgvEmployees.Name = "DgvEmployees";
             this.DgvEmployees.ReadOnly = true;
             this.DgvEmployees.RowHeadersVisible = false;
             this.DgvEmployees.RowHeadersWidth = 62;
             this.DgvEmployees.RowTemplate.Height = 28;
             this.DgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvEmployees.Size = new System.Drawing.Size(628, 246);
+            this.DgvEmployees.Size = new System.Drawing.Size(813, 246);
             this.DgvEmployees.TabIndex = 77;
             this.DgvEmployees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEmployees_CellDoubleClick);
             // 
@@ -131,7 +138,7 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(593, 345);
+            this.PbxSearch.Location = new System.Drawing.Point(777, 281);
             this.PbxSearch.Name = "PbxSearch";
             this.PbxSearch.Size = new System.Drawing.Size(26, 27);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -145,7 +152,7 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(627, 345);
+            this.PbxCancel.Location = new System.Drawing.Point(811, 281);
             this.PbxCancel.Name = "PbxCancel";
             this.PbxCancel.Size = new System.Drawing.Size(26, 27);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -158,7 +165,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label6.Location = new System.Drawing.Point(24, 351);
+            this.label6.Location = new System.Drawing.Point(23, 282);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(74, 22);
             this.label6.TabIndex = 74;
@@ -169,7 +176,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label4.Location = new System.Drawing.Point(24, 271);
+            this.label4.Location = new System.Drawing.Point(593, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(182, 22);
             this.label4.TabIndex = 71;
@@ -214,7 +221,7 @@
             this.PbxClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.PbxClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxClose.Image = ((System.Drawing.Image)(resources.GetObject("PbxClose.Image")));
-            this.PbxClose.Location = new System.Drawing.Point(652, 9);
+            this.PbxClose.Location = new System.Drawing.Point(819, 7);
             this.PbxClose.Name = "PbxClose";
             this.PbxClose.Size = new System.Drawing.Size(27, 26);
             this.PbxClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -227,9 +234,9 @@
             this.CmbJobPosition.BackColor = System.Drawing.SystemColors.Control;
             this.CmbJobPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.CmbJobPosition.FormattingEnabled = true;
-            this.CmbJobPosition.Location = new System.Drawing.Point(27, 302);
+            this.CmbJobPosition.Location = new System.Drawing.Point(596, 158);
             this.CmbJobPosition.Name = "CmbJobPosition";
-            this.CmbJobPosition.Size = new System.Drawing.Size(305, 28);
+            this.CmbJobPosition.Size = new System.Drawing.Size(242, 28);
             this.CmbJobPosition.TabIndex = 7;
             // 
             // TxtEmployeeName
@@ -242,7 +249,7 @@
             this.TxtEmployeeName.MaxLength = 50;
             this.TxtEmployeeName.Multiline = true;
             this.TxtEmployeeName.Name = "TxtEmployeeName";
-            this.TxtEmployeeName.Size = new System.Drawing.Size(305, 30);
+            this.TxtEmployeeName.Size = new System.Drawing.Size(250, 30);
             this.TxtEmployeeName.TabIndex = 3;
             // 
             // TxtDni
@@ -277,7 +284,7 @@
             this.BtnPaperbin});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(683, 42);
+            this.toolStrip1.Size = new System.Drawing.Size(852, 42);
             this.toolStrip1.TabIndex = 61;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -361,6 +368,17 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
             // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // TxtEmployeeCode
             // 
             this.TxtEmployeeCode.BackColor = System.Drawing.SystemColors.Control;
@@ -379,7 +397,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label7.Location = new System.Drawing.Point(342, 124);
+            this.label7.Location = new System.Drawing.Point(310, 124);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(88, 22);
             this.label7.TabIndex = 79;
@@ -390,12 +408,12 @@
             this.TxtLastName.BackColor = System.Drawing.SystemColors.Control;
             this.TxtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtLastName.Location = new System.Drawing.Point(346, 154);
+            this.TxtLastName.Location = new System.Drawing.Point(314, 154);
             this.TxtLastName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtLastName.MaxLength = 50;
             this.TxtLastName.Multiline = true;
             this.TxtLastName.Name = "TxtLastName";
-            this.TxtLastName.Size = new System.Drawing.Size(305, 30);
+            this.TxtLastName.Size = new System.Drawing.Size(250, 30);
             this.TxtLastName.TabIndex = 4;
             // 
             // label3
@@ -430,7 +448,7 @@
             this.TxtEmail.MaxLength = 200;
             this.TxtEmail.Multiline = true;
             this.TxtEmail.Name = "TxtEmail";
-            this.TxtEmail.Size = new System.Drawing.Size(305, 30);
+            this.TxtEmail.Size = new System.Drawing.Size(250, 30);
             this.TxtEmail.TabIndex = 5;
             // 
             // label5
@@ -449,12 +467,12 @@
             this.TxtAddress.BackColor = System.Drawing.SystemColors.Control;
             this.TxtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtAddress.Location = new System.Drawing.Point(347, 225);
+            this.TxtAddress.Location = new System.Drawing.Point(315, 225);
             this.TxtAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtAddress.MaxLength = 255;
             this.TxtAddress.Multiline = true;
             this.TxtAddress.Name = "TxtAddress";
-            this.TxtAddress.Size = new System.Drawing.Size(305, 30);
+            this.TxtAddress.Size = new System.Drawing.Size(250, 30);
             this.TxtAddress.TabIndex = 6;
             // 
             // label8
@@ -462,7 +480,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label8.Location = new System.Drawing.Point(343, 195);
+            this.label8.Location = new System.Drawing.Point(311, 195);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(101, 22);
             this.label8.TabIndex = 79;
@@ -473,7 +491,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label9.Location = new System.Drawing.Point(346, 271);
+            this.label9.Location = new System.Drawing.Point(594, 199);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(190, 22);
             this.label9.TabIndex = 84;
@@ -484,9 +502,9 @@
             this.CmbHorary.BackColor = System.Drawing.SystemColors.Control;
             this.CmbHorary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.CmbHorary.FormattingEnabled = true;
-            this.CmbHorary.Location = new System.Drawing.Point(349, 302);
+            this.CmbHorary.Location = new System.Drawing.Point(597, 230);
             this.CmbHorary.Name = "CmbHorary";
-            this.CmbHorary.Size = new System.Drawing.Size(305, 28);
+            this.CmbHorary.Size = new System.Drawing.Size(241, 28);
             this.CmbHorary.TabIndex = 8;
             // 
             // TxtSearch
@@ -494,23 +512,12 @@
             this.TxtSearch.BackColor = System.Drawing.SystemColors.Control;
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtSearch.Location = new System.Drawing.Point(105, 350);
+            this.TxtSearch.Location = new System.Drawing.Point(104, 281);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(347, 26);
+            this.TxtSearch.Size = new System.Drawing.Size(546, 26);
             this.TxtSearch.TabIndex = 9;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
-            // 
-            // BtnPaperbin
-            // 
-            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
-            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPaperbin.Name = "BtnPaperbin";
-            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
-            this.BtnPaperbin.Text = "Papelera";
-            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
             // 
             // PbxRecovery
             // 
@@ -518,7 +525,7 @@
             this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
             this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(521, 345);
+            this.PbxRecovery.Location = new System.Drawing.Point(678, 282);
             this.PbxRecovery.Name = "PbxRecovery";
             this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
             this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -534,7 +541,7 @@
             this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
             this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
-            this.PbxDestroy.Location = new System.Drawing.Point(557, 345);
+            this.PbxDestroy.Location = new System.Drawing.Point(712, 282);
             this.PbxDestroy.Name = "PbxDestroy";
             this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
             this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -554,12 +561,38 @@
             this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpRecovery.ToolTipTitle = "Recuperar ";
             // 
+            // PbxPrint
+            // 
+            this.PbxPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxPrint.BackColor = System.Drawing.Color.Transparent;
+            this.PbxPrint.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxPrint.Image = ((System.Drawing.Image)(resources.GetObject("PbxPrint.Image")));
+            this.PbxPrint.Location = new System.Drawing.Point(745, 282);
+            this.PbxPrint.Name = "PbxPrint";
+            this.PbxPrint.Size = new System.Drawing.Size(26, 27);
+            this.PbxPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxPrint.TabIndex = 110;
+            this.PbxPrint.TabStop = false;
+            this.TlpGenerateRpt.SetToolTip(this.PbxPrint, "Generar reporte de empleados");
+            this.PbxPrint.Click += new System.EventHandler(this.PbxPrint_Click);
+            // 
+            // TlpGenerateRpt
+            // 
+            this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
+            // 
             // ID
             // 
             this.ID.HeaderText = "ID";
             this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
+            // 
+            // IDENTIDAD
+            // 
+            this.IDENTIDAD.HeaderText = "IDENTIDAD";
+            this.IDENTIDAD.MinimumWidth = 8;
+            this.IDENTIDAD.Name = "IDENTIDAD";
+            this.IDENTIDAD.ReadOnly = true;
             // 
             // NOMBRE
             // 
@@ -575,12 +608,19 @@
             this.CARGO.Name = "CARGO";
             this.CARGO.ReadOnly = true;
             // 
-            // TELÉFONO
+            // HORARIO
             // 
-            this.TELÉFONO.HeaderText = "TELÉFONO";
-            this.TELÉFONO.MinimumWidth = 8;
-            this.TELÉFONO.Name = "TELÉFONO";
-            this.TELÉFONO.ReadOnly = true;
+            this.HORARIO.HeaderText = "HORARIO";
+            this.HORARIO.MinimumWidth = 8;
+            this.HORARIO.Name = "HORARIO";
+            this.HORARIO.ReadOnly = true;
+            // 
+            // TELEFONO
+            // 
+            this.TELEFONO.HeaderText = "TELEFONO";
+            this.TELEFONO.MinimumWidth = 8;
+            this.TELEFONO.Name = "TELEFONO";
+            this.TELEFONO.ReadOnly = true;
             // 
             // REGISTRO
             // 
@@ -593,7 +633,8 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(683, 646);
+            this.ClientSize = new System.Drawing.Size(852, 588);
+            this.Controls.Add(this.PbxPrint);
             this.Controls.Add(this.PbxDestroy);
             this.Controls.Add(this.PbxRecovery);
             this.Controls.Add(this.label9);
@@ -634,6 +675,7 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -681,10 +723,14 @@
         private System.Windows.Forms.PictureBox PbxDestroy;
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.ToolTip TtpRecovery;
+        private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IDENTIDAD;
         private System.Windows.Forms.DataGridViewTextBoxColumn NOMBRE;
         private System.Windows.Forms.DataGridViewTextBoxColumn CARGO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TELÉFONO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HORARIO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TELEFONO;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
     }
 }

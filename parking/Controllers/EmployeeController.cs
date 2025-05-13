@@ -36,6 +36,7 @@ namespace parking.Controllers
                             ej.jps.DESCRIPTION_JOB_POSITION,
                             hor.INITIAL_HOUR,
                             hor.FINAL_HOUR,
+                            hor.HORARY_DESCRIPTION,
                             ej.emp.EMPLOYEE_PHONE,
                             ej.emp.INSERTED_AT,
                             ej.emp.IS_DEL
@@ -66,6 +67,7 @@ namespace parking.Controllers
                         DESCRIPTION_JOB_POSITION = emp.DESCRIPTION_JOB_POSITION,
                         INITIAL_HOUR = emp.INITIAL_HOUR,
                         FINAL_HOUR = emp.FINAL_HOUR,
+                        HORARY_DESCRIPTION= emp.HORARY_DESCRIPTION,
                         EMPLOYEE_PHONE = emp.EMPLOYEE_PHONE,
                         INSERTED_AT = emp.INSERTED_AT,
                         IS_DEL = emp.IS_DEL

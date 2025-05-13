@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUsers));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TxtUserCode = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
@@ -70,6 +70,8 @@
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxPrint = new System.Windows.Forms.PictureBox();
+            this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -77,6 +79,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DgvUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).BeginInit();
             this.SuspendLayout();
             // 
             // TxtUserCode
@@ -341,7 +344,7 @@
             this.TxtSearch.Location = new System.Drawing.Point(93, 313);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(459, 30);
+            this.TxtSearch.Size = new System.Drawing.Size(448, 30);
             this.TxtSearch.TabIndex = 50;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -390,11 +393,11 @@
             this.DgvUsers.AllowUserToDeleteRows = false;
             this.DgvUsers.AllowUserToResizeColumns = false;
             this.DgvUsers.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvUsers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -404,14 +407,14 @@
             this.ROL,
             this.ESTADO,
             this.REGISTRO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvUsers.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
             this.DgvUsers.Location = new System.Drawing.Point(14, 352);
             this.DgvUsers.Name = "DgvUsers";
             this.DgvUsers.ReadOnly = true;
@@ -464,7 +467,7 @@
             this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
             this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
-            this.PbxDestroy.Location = new System.Drawing.Point(618, 312);
+            this.PbxDestroy.Location = new System.Drawing.Point(584, 313);
             this.PbxDestroy.Name = "PbxDestroy";
             this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
             this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -480,7 +483,7 @@
             this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
             this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(582, 312);
+            this.PbxRecovery.Location = new System.Drawing.Point(548, 313);
             this.PbxRecovery.Name = "PbxRecovery";
             this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
             this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -500,11 +503,31 @@
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpDestroy.ToolTipTitle = "Destruir";
             // 
+            // PbxPrint
+            // 
+            this.PbxPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxPrint.BackColor = System.Drawing.Color.Transparent;
+            this.PbxPrint.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxPrint.Image = ((System.Drawing.Image)(resources.GetObject("PbxPrint.Image")));
+            this.PbxPrint.Location = new System.Drawing.Point(618, 313);
+            this.PbxPrint.Name = "PbxPrint";
+            this.PbxPrint.Size = new System.Drawing.Size(26, 27);
+            this.PbxPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxPrint.TabIndex = 171;
+            this.PbxPrint.TabStop = false;
+            this.TlpGenerateRpt.SetToolTip(this.PbxPrint, "Generar reporte de usuarios");
+            this.PbxPrint.Click += new System.EventHandler(this.PbxPrint_Click);
+            // 
+            // TlpGenerateRpt
+            // 
+            this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
+            // 
             // FrmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 633);
+            this.Controls.Add(this.PbxPrint);
             this.Controls.Add(this.PbxDestroy);
             this.Controls.Add(this.PbxRecovery);
             this.Controls.Add(this.DgvUsers);
@@ -540,6 +563,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DgvUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxPrint)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -585,5 +609,7 @@
         private System.Windows.Forms.PictureBox PbxRecovery;
         private System.Windows.Forms.ToolTip TtpRecovery;
         private System.Windows.Forms.ToolTip TtpDestroy;
+        private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
     }
 }

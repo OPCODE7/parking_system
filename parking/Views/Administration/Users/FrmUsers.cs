@@ -13,6 +13,8 @@ using parking.Controllers;
 using parking.DTO;
 using parking.Helpers;
 using parking.Models;
+using parking.Views.Reports.DataSets;
+using parking.Views.Reports;
 
 
 namespace parking.Views.Administration
@@ -57,6 +59,7 @@ namespace parking.Views.Administration
             BtnSave.Enabled = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxPrint.Enabled = PermissionManager.HasPermission("RPT", "Crear");
             BtnCancel.Enabled = false;
             ChkState.Enabled = false;
             PbxRecovery.Visible = false;
@@ -352,6 +355,27 @@ namespace parking.Views.Administration
                 {
                     h.MsgError(Helpers.App.Msg0018);
                 }
+            }
+        }
+
+        private void PbxPrint_Click(object sender, EventArgs e)
+        {
+            if (DgvUsers.Rows.Count > 0)
+            {
+                FrmDefaultRpt frmGenericRpt = new FrmDefaultRpt();
+
+
+                DataTable dt = h.GetDataTableFromDataGridView(DgvUsers);
+
+                string pathRpt = @"..\..\Views\Reports\RDLC\ReportUsers.rdlc";
+
+                string dtsName = "DtsUsers";
+                frmGenericRpt.fillRpt(dt, pathRpt, dtsName);
+                frmGenericRpt.ShowDialog();
+            }
+            else
+            {
+                h.MsgError(Helpers.App.Msg0012);
             }
         }
 

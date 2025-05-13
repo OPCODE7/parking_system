@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DtsClients" targetNamespace="http://tempuri.org/DtsClients.xsd" xmlns:mstns="http://tempuri.org/DtsClients.xsd" xmlns="http://tempuri.org/DtsClients.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DtsClients" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DtsClients" msprop:Generator_DataSetName="DtsClients">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Clients" msprop:Generator_RowEvHandlerName="ClientsRowChangeEventHandler" msprop:Generator_RowDeletedName="ClientsRowDeleted" msprop:Generator_RowDeletingName="ClientsRowDeleting" msprop:Generator_RowEvArgName="ClientsRowChangeEvent" msprop:Generator_TablePropName="Clients" msprop:Generator_RowChangedName="ClientsRowChanged" msprop:Generator_RowChangingName="ClientsRowChanging" msprop:Generator_TableClassName="ClientsDataTable" msprop:Generator_RowClassName="ClientsRow" msprop:Generator_TableVarName="tableClients" msprop:Generator_UserTableName="Clients">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODIGO" msprop:Generator_ColumnPropNameInRow="CODIGO" msprop:Generator_ColumnPropNameInTable="CODIGOColumn" msprop:Generator_ColumnVarNameInTable="columnCODIGO" msprop:Generator_UserColumnName="CODIGO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBRE" msprop:Generator_ColumnPropNameInRow="NOMBRE" msprop:Generator_ColumnPropNameInTable="NOMBREColumn" msprop:Generator_ColumnVarNameInTable="columnNOMBRE" msprop:Generator_UserColumnName="NOMBRE" type="xs:string" minOccurs="0" />
+              <xs:element name="DIRECCION" msprop:Generator_ColumnPropNameInRow="DIRECCION" msprop:Generator_ColumnPropNameInTable="DIRECCIONColumn" msprop:Generator_ColumnVarNameInTable="columnDIRECCION" msprop:Generator_UserColumnName="DIRECCION" type="xs:string" minOccurs="0" />
+              <xs:element name="TELEFONO" msprop:Generator_ColumnPropNameInRow="TELEFONO" msprop:Generator_ColumnPropNameInTable="TELEFONOColumn" msprop:Generator_ColumnVarNameInTable="columnTELEFONO" msprop:Generator_UserColumnName="TELEFONO" type="xs:string" minOccurs="0" />
+              <xs:element name="DNI" msprop:Generator_ColumnPropNameInRow="DNI" msprop:Generator_ColumnPropNameInTable="DNIColumn" msprop:Generator_ColumnVarNameInTable="columnDNI" msprop:Generator_UserColumnName="DNI" type="xs:string" minOccurs="0" />
+              <xs:element name="REGISTRO" msprop:Generator_ColumnPropNameInRow="REGISTRO" msprop:Generator_ColumnPropNameInTable="REGISTROColumn" msprop:Generator_ColumnVarNameInTable="columnREGISTRO" msprop:Generator_UserColumnName="REGISTRO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -16,6 +16,8 @@ using parking.DTO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Runtime.Remoting;
 using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using parking.Views.Reports.DataSets;
+using parking.Views.Reports;
 
 namespace parking.Views.Administration.Clients
 {
@@ -55,6 +57,7 @@ namespace parking.Views.Administration.Clients
             BtnDelete.Enabled = false;
             BtnNew.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            PbxPrint.Enabled = PermissionManager.HasPermission("RPT", "Crear");
             PbxRecovery.Visible = false;
             PbxDestroy.Visible = false;
             PbxDestroy.Enabled= false;
@@ -205,6 +208,28 @@ namespace parking.Views.Administration.Clients
             {
                 PbxSearch_Click(sender, e);
             }
+        }
+
+        private void PbxPrint_Click(object sender, EventArgs e)
+        {
+            if (DgvClients.Rows.Count > 0)
+            {
+                FrmDefaultRpt frmGenericRpt = new FrmDefaultRpt();
+
+
+                DataTable dt = h.GetDataTableFromDataGridView(DgvClients);
+
+                string pathRpt = @"..\..\Views\Reports\RDLC\ReportClients.rdlc";
+
+                string dtsName = "DtsClients";
+                frmGenericRpt.fillRpt(dt, pathRpt, dtsName);
+                frmGenericRpt.ShowDialog();
+            }
+            else
+            {
+                h.MsgError(Helpers.App.Msg0012);
+            }
+
         }
 
         private async void BtnDelete_Click(object sender, EventArgs e)
