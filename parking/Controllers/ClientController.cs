@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,9 +24,10 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    searchFilter = searchFilter.ToLower();
                     var query = from c in db.CLIENTS
                                 join u in db.USERS on c.USER_ID equals u.USER_CODE
-                                where c.IS_DEL == isDel
+                                where c.IS_DEL == isDel && c.CLIENT_CODE != "CLI000001"
                                 select new ClientDTO
                                 {
                                     CLIENT_CODE = c.CLIENT_CODE,
@@ -41,18 +43,21 @@ namespace parking.Controllers
                                     CLIENT_DNI = c.CLIENT_DNI
                                 };
 
+                    var result = query.ToList();
+
                     if (!string.IsNullOrEmpty(searchFilter))
                     {
-                        query = query.Where(c =>
-                            c.CLIENT_CODE.Contains(searchFilter) ||
-                            (c.CLIENT_NAME + " " + c.CLIENT_LASTNAME).Contains(searchFilter) ||
-                            c.CLIENT_PHONE.Contains(searchFilter) ||
-                            c.CLIENT_ADDRESS.Contains(searchFilter) ||
-                            c.CLIENT_CODE.Contains(searchFilter) ||
-                            c.INSERTED_AT.ToString().Contains(searchFilter));
+                        result = result.Where(c =>
+                            c.CLIENT_CODE.ToLower().Contains(searchFilter) ||
+                            (c.CLIENT_NAME + " " + c.CLIENT_LASTNAME).ToLower().Contains(searchFilter) ||
+                            c.CLIENT_DNI.ToLower().Contains(searchFilter) ||
+                            c.CLIENT_PHONE.ToLower().Contains(searchFilter) ||
+                            c.CLIENT_ADDRESS.ToLower().Contains(searchFilter) ||
+                            c.CLIENT_CODE.ToLower().Contains(searchFilter) ||
+                            h.DoesDateMatch(c.INSERTED_AT, searchFilter)).ToList();
                     }
 
-                    return query.OrderBy(c => c.CLIENT_CODE).ToList();
+                    return result.OrderBy(c => c.CLIENT_CODE).ToList();
                 }
             }
             catch (Exception ex)

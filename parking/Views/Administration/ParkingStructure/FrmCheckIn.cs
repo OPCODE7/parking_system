@@ -225,7 +225,7 @@ namespace parking.Views.Administration.ParkingStructure
             if (checkIn != null)
             {
 
-                if (checkIn.CHECK_IN_STATE == "FINALIZADO")
+                if (checkIn.CHECK_IN_STATE.ToLower() == "finalizado")
                 {
                     BtnEdit.Enabled = false;
                     BtnDelete.Enabled = false;
@@ -511,7 +511,7 @@ namespace parking.Views.Administration.ParkingStructure
                 return error;
             }
 
-            if (!Regex.Match(TxtObservations.Text, RegexPatterns.AlphanumericPattern).Success)
+            if (!Regex.Match(TxtObservations.Text, RegexPatterns.AlphanumericPatternWithAccentAndSpecialChars).Success)
             {
                 h.MsgError("OBSERVACIONES NO VÁLIDAS.");
                 error++;

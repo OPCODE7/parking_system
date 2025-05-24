@@ -40,18 +40,19 @@ namespace parking.Controllers
                                     INSERTED_AT = p.INSERTED_AT,
                                     IS_DEL = p.IS_DEL
                                 };
+                    var result= query.ToList();
 
                     if (!string.IsNullOrEmpty(searchFilter))
                     {
-                        query = query.Where(p =>
+                        result = result.Where(p =>
                             p.PERMISSION_DESCRIPTION.Contains(searchFilter) ||
                             p.MODULE_NAME.Contains(searchFilter) ||
                             p.ACTION.Contains(searchFilter) ||
                             p.PERMISSION_ID.ToString().Contains(searchFilter) ||
-                            p.INSERTED_AT.ToString().Contains(searchFilter));
+                            h.DoesDateMatch(p.INSERTED_AT,searchFilter)).ToList();
                     }
 
-                    return query.OrderBy(p => p.PERMISSION_ID).ToList();
+                    return result.OrderBy(p => p.PERMISSION_ID).ToList();
                 }
             }
             catch (Exception ex)

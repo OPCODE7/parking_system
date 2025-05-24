@@ -18,7 +18,7 @@ namespace parking.Views.Administration.Configuration
 {
     public partial class FrmCompany : Form
     {
-        string rtn, companyName, companyAddress, companyPhone, companyEmail,legaForm, moduleId= "COMP";
+        string lastRTN,rtn, companyName, companyAddress, companyPhone, companyEmail,legaForm, moduleId= "COMP";
         LogBookAppController lac= new LogBookAppController();
         bool exist= false;
 
@@ -32,55 +32,62 @@ namespace parking.Views.Administration.Configuration
                 setValues();
                 if (exist)
                 {
-                    COMPANY_DATA companyData= cdc.getCompanyData(rtn);
+                    COMPANY_DATA companyData = cdc.getCompanyData(lastRTN);
 
-                    string changes = "";
-                    var separator = ", ";
-
-                    if (companyData.COMPANY_RTN != rtn)
-                        changes += $"COMPANY_RTN: '{companyData.COMPANY_RTN}' → '{rtn}'{separator}";
-
-                    if (companyData.COMPANY_NAME != companyName)
-                        changes += $"COMPANY_NAME: '{companyData.COMPANY_NAME}' → '{companyName}'{separator}";
-
-                    if (companyData.COMPANY_ADDRESS != companyAddress)
-                        changes += $"COMPANY_ADDRESS: '{companyData.COMPANY_ADDRESS}' → '{companyAddress}'{separator}";
-
-                    if (companyData.COMPANY_PHONE != companyPhone)
-                        changes += $"COMPANY_PHONE: '{companyData.COMPANY_PHONE}' → '{companyPhone}'{separator}";
-
-                    if (companyData.COMPANY_EMAIL != companyEmail)
-                        changes += $"COMPANY_EMAIL: '{companyData.COMPANY_EMAIL}' → '{companyEmail}'{separator}";
-
-                    if (companyData.LEGAL_FORM != legaForm)
-                        changes += $"LEGAL_FORM: '{companyData.LEGAL_FORM}' → '{legaForm}'{separator}";
-
-
-                    // Limpiar coma final
-                    if (!string.IsNullOrEmpty(changes))
-                        changes = changes.TrimEnd(',', ' ');
-
-                    companyData.COMPANY_RTN = rtn;
-                    companyData.COMPANY_NAME = companyName;
-                    companyData.COMPANY_ADDRESS = companyAddress;
-                    companyData.COMPANY_PHONE = companyPhone;
-                    companyData.COMPANY_EMAIL = companyEmail;
-                    companyData.LEGAL_FORM = legaForm;
-
-                    if(cdc.updateCompanyData(companyData)>0)
+                    if (companyData != null)
                     {
+                        string changes = "";
+                        var separator = ", ";
+
+                        if (companyData.COMPANY_RTN != rtn)
+                            changes += $"COMPANY_RTN: '{companyData.COMPANY_RTN}' → '{rtn}'{separator}";
+
+                        if (companyData.COMPANY_NAME != companyName)
+                            changes += $"COMPANY_NAME: '{companyData.COMPANY_NAME}' → '{companyName}'{separator}";
+
+                        if (companyData.COMPANY_ADDRESS != companyAddress)
+                            changes += $"COMPANY_ADDRESS: '{companyData.COMPANY_ADDRESS}' → '{companyAddress}'{separator}";
+
+                        if (companyData.COMPANY_PHONE != companyPhone)
+                            changes += $"COMPANY_PHONE: '{companyData.COMPANY_PHONE}' → '{companyPhone}'{separator}";
+
+                        if (companyData.COMPANY_EMAIL != companyEmail)
+                            changes += $"COMPANY_EMAIL: '{companyData.COMPANY_EMAIL}' → '{companyEmail}'{separator}";
+
+                        if (companyData.LEGAL_FORM != legaForm)
+                            changes += $"LEGAL_FORM: '{companyData.LEGAL_FORM}' → '{legaForm}'{separator}";
+
+
+                        // Limpiar coma final
                         if (!string.IsNullOrEmpty(changes))
+                            changes = changes.TrimEnd(',', ' ');
+
+                        companyData.COMPANY_RTN = rtn;
+                        companyData.COMPANY_NAME = companyName;
+                        companyData.COMPANY_ADDRESS = companyAddress;
+                        companyData.COMPANY_PHONE = companyPhone;
+                        companyData.COMPANY_EMAIL = companyEmail;
+                        companyData.LEGAL_FORM = legaForm;
+
+                        if (cdc.updateCompanyData(companyData) > 0)
                         {
-                            string logDesc = $"El usuario {User.userName} modificó datos de la empresa {companyData.COMPANY_NAME}. Cambios: {changes}.";
-                            await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                            if (!string.IsNullOrEmpty(changes))
+                            {
+                                string logDesc = $"El usuario {User.userName} modificó datos de la empresa {companyData.COMPANY_NAME}. Cambios: {changes}.";
+                                await lac.saveLog(Config.User.userId, "Modificar", logDesc, moduleId, DateTime.Now);
+                            }
+                            h.MsgSuccess(App.Msg0003);
+                            startForm();
                         }
-                        h.MsgSuccess(App.Msg0003);
+                        else
+                        {
+                            h.MsgError(App.Msg0017);
+                        }
                     }
                     else
                     {
-                        h.MsgError(App.Msg0017);
+                        h.MsgError(App.Msg0011);
                     }
-
                 }
                 else
                 {
@@ -98,6 +105,7 @@ namespace parking.Views.Administration.Configuration
                     {
                         await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} creó los datos de la empresa {CompanyName}.", moduleId, DateTime.Now);
                         h.MsgSuccess(App.Msg0001);
+                        startForm();
                     }
                     else
                     {
@@ -205,6 +213,7 @@ namespace parking.Views.Administration.Configuration
 
             getInfoCompany(companies[0].COMPANY_RTN);
             exist = true;
+            lastRTN = companies[0].COMPANY_RTN;
             BtnSave.Enabled = PermissionManager.HasPermission(moduleId,"Crear");
 
         }

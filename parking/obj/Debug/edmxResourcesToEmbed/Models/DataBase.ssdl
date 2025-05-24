@@ -88,8 +88,9 @@
   </EntityType>
   <EntityType Name="COMPANY_DATA">
     <Key>
-      <PropertyRef Name="COMPANY_RTN" />
+      <PropertyRef Name="COMPANY_ID" />
     </Key>
+    <Property Name="COMPANY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="COMPANY_RTN" Type="varchar" MaxLength="14" Nullable="false" />
     <Property Name="COMPANY_NAME" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="COMPANY_ADDRESS" Type="text" Nullable="false" />
@@ -104,7 +105,7 @@
     <Key>
       <PropertyRef Name="CORRELATIVE_CODE" />
     </Key>
-    <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+    <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MODULE_ID" Type="varchar" MaxLength="4" Nullable="false" />
     <Property Name="CORRELATIVE_DESCRIPTION" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />

@@ -391,7 +391,7 @@ namespace parking.Views.Administration.Clients
                 return error;
             }
 
-            if(!Regex.Match(TxtAddress.Text, RegexPatterns.AddressPattern).Success)
+            if(!Regex.Match(TxtAddress.Text, RegexPatterns.AlphabeticPatternWithAccentAndSpecialChars).Success)
             {
                 h.MsgWarning("INGRESAR DIRECCIÓN CORRECTAMENTE. ¡SOLO LETRAS Y NÚMEROS!");
                 error++;
@@ -418,7 +418,7 @@ namespace parking.Views.Administration.Clients
 
             foreach(var client in clients)
             {
-                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.CLIENT_CODE,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
+                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME +" "+ client.CLIENT_LASTNAME,client.CLIENT_ADDRESS, client.CLIENT_PHONE,client.CLIENT_DNI,Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
             }
         }
     }

@@ -179,9 +179,9 @@
             this.LblFullCharge.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.LblFullCharge.Location = new System.Drawing.Point(19, 568);
             this.LblFullCharge.Name = "LblFullCharge";
-            this.LblFullCharge.Size = new System.Drawing.Size(132, 22);
+            this.LblFullCharge.Size = new System.Drawing.Size(137, 22);
             this.LblFullCharge.TabIndex = 166;
-            this.LblFullCharge.Text = "Total a pagar:";
+            this.LblFullCharge.Text = "Total a pagar: ";
             // 
             // label8
             // 
@@ -336,9 +336,9 @@
             this.TxtDiscount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtDiscount.Multiline = true;
             this.TxtDiscount.Name = "TxtDiscount";
-            this.TxtDiscount.ReadOnly = true;
             this.TxtDiscount.Size = new System.Drawing.Size(129, 36);
             this.TxtDiscount.TabIndex = 154;
+            this.TxtDiscount.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtDiscount_KeyUp);
             // 
             // TxtParkingFee
             // 

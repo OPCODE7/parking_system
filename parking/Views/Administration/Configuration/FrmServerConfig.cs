@@ -92,14 +92,10 @@ namespace parking.Views.Administration.Configuration
                         }
 
                         Application.Restart();
-                        Environment.Exit(0);
 
                     }
-
                 }
-
             }
-
         }
 
         public int validateData()
@@ -107,6 +103,7 @@ namespace parking.Views.Administration.Configuration
             int errors = 0;
             if (string.IsNullOrEmpty(TxtServerName.Text.Trim()))
             {
+                h.MsgWarning("EL CAMPO NOMBRE DEL SERVIDOR NO PUEDE ESTAR VACIO!");
                 errors++;
                 TxtServerName.Focus();
                 return errors;
@@ -114,6 +111,7 @@ namespace parking.Views.Administration.Configuration
 
             if (string.IsNullOrEmpty(TxtDbName.Text.Trim()))
             {
+                h.MsgWarning("EL CAMPO BASE DE DATOS NO PUEDE ESTAR VACIO!");
                 errors++;
                 TxtDbName.Focus();
                 return errors;
@@ -121,6 +119,7 @@ namespace parking.Views.Administration.Configuration
 
             if (string.IsNullOrEmpty(TxtUserDb.Text.Trim()))
             {
+                h.MsgWarning("EL CAMPO NOMBRE DE USUARIO NO PUEDE ESTAR VACIO!");
                 errors++;
                 TxtUserDb.Focus();
                 return errors;
@@ -128,8 +127,19 @@ namespace parking.Views.Administration.Configuration
 
             if (string.IsNullOrEmpty(TxtPwd.Text.Trim()))
             {
+                h.MsgWarning("EL CAMPO CONTRASEÑA NO PUEDE ESTAR VACIO!");
                 errors++;
                 TxtPwd.Focus();
+                return errors;
+            }
+
+            Boot boot= new Boot();
+            string connectionString = $"Server={TxtServerName.Text.Trim()};Database={TxtDbName.Text.Trim()};User Id={TxtUserDb.Text.Trim()};Password={TxtPwd.Text.Trim()};";
+            if (boot.TestConnection(connectionString) == false)
+            {
+                h.MsgError("NO SE PUEDE CONECTAR A LA BASE DE DATOS, VERIFIQUE LOS DATOS INGRESADOS!");
+                errors++;
+                TxtServerName.Focus();
                 return errors;
             }
 

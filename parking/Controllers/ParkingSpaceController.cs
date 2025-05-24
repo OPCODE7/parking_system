@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.SqlTypes;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace parking.Controllers
         public IEnumerable<ParkingSpaceDTO> getParkingSpaces(string searchFilter = "", bool isDel = false)
         {
             IEnumerable<ParkingSpaceDTO> parkingSpaces = new List<ParkingSpaceDTO>();
+            searchFilter = searchFilter.ToLower();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
@@ -31,11 +33,7 @@ namespace parking.Controllers
                     var query = from ps in db.PARKING_SPACE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                                where string.IsNullOrEmpty(searchFilter)
-                                    ? ps.DEL == isDel
-                                    : (ps.PARKING_SPACE_NUMBER.ToString().Contains(searchFilter) ||
-                                       pt.DESCRIPTION_PARKING_TYPE.Contains(searchFilter)) &&
-                                       ps.DEL == isDel
+                                where ps.DEL == isDel
                                 select new ParkingSpaceDTO
                                 {
                                     PARKING_SPACE_CODE = ps.PARKING_SPACE_CODE,
@@ -45,8 +43,15 @@ namespace parking.Controllers
                                     PARKING_TYPE_DESCRIPTION = pt.DESCRIPTION_PARKING_TYPE,
                                     IS_DEL = ps.DEL
                                 };
+                    var result = query.ToList();
 
-                    parkingSpaces = query.ToList();
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        result = result.Where(ps => ps.PARKING_SPACE_CODE.ToLower().Contains(searchFilter) || ps.PARKING_SPACE_NUMBER.ToString().Contains(searchFilter) ||ps.PARKING_TYPE_DESCRIPTION.ToLower().Contains(searchFilter) || h.DoesDateMatch(ps.INSERTED_AT, searchFilter)).ToList();
+
+                    }
+
+                    parkingSpaces = result.ToList();
                 }
             }
             catch (Exception ex)

@@ -655,6 +655,8 @@ namespace parking.Views.Reports.DataSets {
             
             private global::System.Data.DataColumn columnREGISTRO;
             
+            private global::System.Data.DataColumn columnSALARIONETO;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SalariesDataTable() {
@@ -730,6 +732,14 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SALARIONETOColumn {
+                get {
+                    return this.columnSALARIONETO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -765,14 +775,15 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SalariesRow AddSalariesRow(string ID, string EMPLEADO, string SALARIO_BASE, string AUMENTO, string REGISTRO) {
+            public SalariesRow AddSalariesRow(string ID, string EMPLEADO, string SALARIO_BASE, string AUMENTO, string REGISTRO, string SALARIONETO) {
                 SalariesRow rowSalariesRow = ((SalariesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
                         EMPLEADO,
                         SALARIO_BASE,
                         AUMENTO,
-                        REGISTRO};
+                        REGISTRO,
+                        SALARIONETO};
                 rowSalariesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalariesRow);
                 return rowSalariesRow;
@@ -800,6 +811,7 @@ namespace parking.Views.Reports.DataSets {
                 this.columnSALARIO_BASE = base.Columns["SALARIO_BASE"];
                 this.columnAUMENTO = base.Columns["AUMENTO"];
                 this.columnREGISTRO = base.Columns["REGISTRO"];
+                this.columnSALARIONETO = base.Columns["SALARIONETO"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -815,6 +827,8 @@ namespace parking.Views.Reports.DataSets {
                 base.Columns.Add(this.columnAUMENTO);
                 this.columnREGISTRO = new global::System.Data.DataColumn("REGISTRO", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnREGISTRO);
+                this.columnSALARIONETO = new global::System.Data.DataColumn("SALARIONETO", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSALARIONETO);
                 this.columnSALARIO_BASE.Caption = "SALARIO BASE";
             }
             
@@ -1249,6 +1263,22 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string SALARIONETO {
+                get {
+                    try {
+                        return ((string)(this[this.tableSalaries.SALARIONETOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'SALARIONETO\' de la tabla \'Salaries\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalaries.SALARIONETOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsIDNull() {
                 return this.IsNull(this.tableSalaries.IDColumn);
             }
@@ -1305,6 +1335,18 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetREGISTRONull() {
                 this[this.tableSalaries.REGISTROColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsSALARIONETONull() {
+                return this.IsNull(this.tableSalaries.SALARIONETOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetSALARIONETONull() {
+                this[this.tableSalaries.SALARIONETOColumn] = global::System.Convert.DBNull;
             }
         }
         

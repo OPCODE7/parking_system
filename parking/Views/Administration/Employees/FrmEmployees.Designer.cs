@@ -29,10 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEmployees));
             this.DgvEmployees = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IDENTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CARGO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HORARIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TELEFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -74,13 +81,7 @@
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.PbxPrint = new System.Windows.Forms.PictureBox();
             this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IDENTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CARGO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HORARIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TELEFONO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -97,11 +98,11 @@
             this.DgvEmployees.AllowUserToDeleteRows = false;
             this.DgvEmployees.AllowUserToResizeColumns = false;
             this.DgvEmployees.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvEmployees.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvEmployees.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -113,14 +114,14 @@
             this.HORARIO,
             this.TELEFONO,
             this.REGISTRO});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvEmployees.Location = new System.Drawing.Point(25, 321);
             this.DgvEmployees.Name = "DgvEmployees";
             this.DgvEmployees.ReadOnly = true;
@@ -130,7 +131,57 @@
             this.DgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvEmployees.Size = new System.Drawing.Size(813, 246);
             this.DgvEmployees.TabIndex = 77;
+            this.TlpSelectRow.SetToolTip(this.DgvEmployees, "Doble click para seleccionar registro.");
             this.DgvEmployees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEmployees_CellDoubleClick);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // IDENTIDAD
+            // 
+            this.IDENTIDAD.HeaderText = "IDENTIDAD";
+            this.IDENTIDAD.MinimumWidth = 8;
+            this.IDENTIDAD.Name = "IDENTIDAD";
+            this.IDENTIDAD.ReadOnly = true;
+            // 
+            // NOMBRE
+            // 
+            this.NOMBRE.HeaderText = "NOMBRE";
+            this.NOMBRE.MinimumWidth = 8;
+            this.NOMBRE.Name = "NOMBRE";
+            this.NOMBRE.ReadOnly = true;
+            // 
+            // CARGO
+            // 
+            this.CARGO.HeaderText = "CARGO";
+            this.CARGO.MinimumWidth = 8;
+            this.CARGO.Name = "CARGO";
+            this.CARGO.ReadOnly = true;
+            // 
+            // HORARIO
+            // 
+            this.HORARIO.HeaderText = "HORARIO";
+            this.HORARIO.MinimumWidth = 8;
+            this.HORARIO.Name = "HORARIO";
+            this.HORARIO.ReadOnly = true;
+            // 
+            // TELEFONO
+            // 
+            this.TELEFONO.HeaderText = "TELEFONO";
+            this.TELEFONO.MinimumWidth = 8;
+            this.TELEFONO.Name = "TELEFONO";
+            this.TELEFONO.ReadOnly = true;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
             // 
             // PbxSearch
             // 
@@ -176,7 +227,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label4.Location = new System.Drawing.Point(593, 127);
+            this.label4.Location = new System.Drawing.Point(593, 122);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(182, 22);
             this.label4.TabIndex = 71;
@@ -234,7 +285,7 @@
             this.CmbJobPosition.BackColor = System.Drawing.SystemColors.Control;
             this.CmbJobPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.CmbJobPosition.FormattingEnabled = true;
-            this.CmbJobPosition.Location = new System.Drawing.Point(596, 158);
+            this.CmbJobPosition.Location = new System.Drawing.Point(596, 153);
             this.CmbJobPosition.Name = "CmbJobPosition";
             this.CmbJobPosition.Size = new System.Drawing.Size(242, 28);
             this.CmbJobPosition.TabIndex = 7;
@@ -247,9 +298,8 @@
             this.TxtEmployeeName.Location = new System.Drawing.Point(25, 154);
             this.TxtEmployeeName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtEmployeeName.MaxLength = 50;
-            this.TxtEmployeeName.Multiline = true;
             this.TxtEmployeeName.Name = "TxtEmployeeName";
-            this.TxtEmployeeName.Size = new System.Drawing.Size(250, 30);
+            this.TxtEmployeeName.Size = new System.Drawing.Size(250, 26);
             this.TxtEmployeeName.TabIndex = 3;
             // 
             // TxtDni
@@ -260,9 +310,8 @@
             this.TxtDni.Location = new System.Drawing.Point(187, 89);
             this.TxtDni.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtDni.MaxLength = 15;
-            this.TxtDni.Multiline = true;
             this.TxtDni.Name = "TxtDni";
-            this.TxtDni.Size = new System.Drawing.Size(305, 30);
+            this.TxtDni.Size = new System.Drawing.Size(305, 26);
             this.TxtDni.TabIndex = 1;
             // 
             // toolStrip1
@@ -386,10 +435,9 @@
             this.TxtEmployeeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtEmployeeCode.Location = new System.Drawing.Point(24, 89);
             this.TxtEmployeeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtEmployeeCode.Multiline = true;
             this.TxtEmployeeCode.Name = "TxtEmployeeCode";
             this.TxtEmployeeCode.ReadOnly = true;
-            this.TxtEmployeeCode.Size = new System.Drawing.Size(144, 30);
+            this.TxtEmployeeCode.Size = new System.Drawing.Size(144, 26);
             this.TxtEmployeeCode.TabIndex = 60;
             // 
             // label7
@@ -411,9 +459,8 @@
             this.TxtLastName.Location = new System.Drawing.Point(314, 154);
             this.TxtLastName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtLastName.MaxLength = 50;
-            this.TxtLastName.Multiline = true;
             this.TxtLastName.Name = "TxtLastName";
-            this.TxtLastName.Size = new System.Drawing.Size(250, 30);
+            this.TxtLastName.Size = new System.Drawing.Size(250, 26);
             this.TxtLastName.TabIndex = 4;
             // 
             // label3
@@ -446,9 +493,8 @@
             this.TxtEmail.Location = new System.Drawing.Point(26, 225);
             this.TxtEmail.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtEmail.MaxLength = 200;
-            this.TxtEmail.Multiline = true;
             this.TxtEmail.Name = "TxtEmail";
-            this.TxtEmail.Size = new System.Drawing.Size(250, 30);
+            this.TxtEmail.Size = new System.Drawing.Size(203, 26);
             this.TxtEmail.TabIndex = 5;
             // 
             // label5
@@ -467,12 +513,11 @@
             this.TxtAddress.BackColor = System.Drawing.SystemColors.Control;
             this.TxtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtAddress.Location = new System.Drawing.Point(315, 225);
+            this.TxtAddress.Location = new System.Drawing.Point(242, 225);
             this.TxtAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtAddress.MaxLength = 255;
-            this.TxtAddress.Multiline = true;
             this.TxtAddress.Name = "TxtAddress";
-            this.TxtAddress.Size = new System.Drawing.Size(250, 30);
+            this.TxtAddress.Size = new System.Drawing.Size(322, 26);
             this.TxtAddress.TabIndex = 6;
             // 
             // label8
@@ -480,7 +525,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label8.Location = new System.Drawing.Point(311, 195);
+            this.label8.Location = new System.Drawing.Point(238, 194);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(101, 22);
             this.label8.TabIndex = 79;
@@ -491,7 +536,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label9.Location = new System.Drawing.Point(594, 199);
+            this.label9.Location = new System.Drawing.Point(594, 193);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(190, 22);
             this.label9.TabIndex = 84;
@@ -502,7 +547,7 @@
             this.CmbHorary.BackColor = System.Drawing.SystemColors.Control;
             this.CmbHorary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.CmbHorary.FormattingEnabled = true;
-            this.CmbHorary.Location = new System.Drawing.Point(597, 230);
+            this.CmbHorary.Location = new System.Drawing.Point(597, 224);
             this.CmbHorary.Name = "CmbHorary";
             this.CmbHorary.Size = new System.Drawing.Size(241, 28);
             this.CmbHorary.TabIndex = 8;
@@ -580,54 +625,10 @@
             // 
             this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
             // 
-            // ID
+            // TlpSelectRow
             // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // IDENTIDAD
-            // 
-            this.IDENTIDAD.HeaderText = "IDENTIDAD";
-            this.IDENTIDAD.MinimumWidth = 8;
-            this.IDENTIDAD.Name = "IDENTIDAD";
-            this.IDENTIDAD.ReadOnly = true;
-            // 
-            // NOMBRE
-            // 
-            this.NOMBRE.HeaderText = "NOMBRE";
-            this.NOMBRE.MinimumWidth = 8;
-            this.NOMBRE.Name = "NOMBRE";
-            this.NOMBRE.ReadOnly = true;
-            // 
-            // CARGO
-            // 
-            this.CARGO.HeaderText = "CARGO";
-            this.CARGO.MinimumWidth = 8;
-            this.CARGO.Name = "CARGO";
-            this.CARGO.ReadOnly = true;
-            // 
-            // HORARIO
-            // 
-            this.HORARIO.HeaderText = "HORARIO";
-            this.HORARIO.MinimumWidth = 8;
-            this.HORARIO.Name = "HORARIO";
-            this.HORARIO.ReadOnly = true;
-            // 
-            // TELEFONO
-            // 
-            this.TELEFONO.HeaderText = "TELEFONO";
-            this.TELEFONO.MinimumWidth = 8;
-            this.TELEFONO.Name = "TELEFONO";
-            this.TELEFONO.ReadOnly = true;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmEmployees
             // 
@@ -732,5 +733,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HORARIO;
         private System.Windows.Forms.DataGridViewTextBoxColumn TELEFONO;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

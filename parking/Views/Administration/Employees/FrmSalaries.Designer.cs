@@ -30,11 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSalaries));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PbxDestroy = new System.Windows.Forms.PictureBox();
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.DgvSalaries = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EMPLEADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SALARIO_BASE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AUMENTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SALARIONETO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,12 +71,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.CmbState = new System.Windows.Forms.ComboBox();
             this.PbxPrint = new System.Windows.Forms.PictureBox();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EMPLEADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SALARIO_BASE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AUMENTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvSalaries)).BeginInit();
@@ -87,7 +89,7 @@
             this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
             this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
-            this.PbxDestroy.Location = new System.Drawing.Point(543, 269);
+            this.PbxDestroy.Location = new System.Drawing.Point(560, 269);
             this.PbxDestroy.Name = "PbxDestroy";
             this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
             this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -102,7 +104,7 @@
             this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
             this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(507, 269);
+            this.PbxRecovery.Location = new System.Drawing.Point(524, 269);
             this.PbxRecovery.Name = "PbxRecovery";
             this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
             this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -117,11 +119,11 @@
             this.DgvSalaries.AllowUserToDeleteRows = false;
             this.DgvSalaries.AllowUserToResizeColumns = false;
             this.DgvSalaries.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvSalaries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvSalaries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvSalaries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvSalaries.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -130,15 +132,16 @@
             this.EMPLEADO,
             this.SALARIO_BASE,
             this.AUMENTO,
+            this.SALARIONETO,
             this.REGISTRO});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvSalaries.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvSalaries.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvSalaries.Location = new System.Drawing.Point(12, 314);
             this.DgvSalaries.Name = "DgvSalaries";
             this.DgvSalaries.ReadOnly = true;
@@ -146,9 +149,52 @@
             this.DgvSalaries.RowHeadersWidth = 62;
             this.DgvSalaries.RowTemplate.Height = 28;
             this.DgvSalaries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvSalaries.Size = new System.Drawing.Size(650, 347);
+            this.DgvSalaries.Size = new System.Drawing.Size(670, 347);
             this.DgvSalaries.TabIndex = 133;
+            this.TlpSelectRow.SetToolTip(this.DgvSalaries, "Doble click para seleccionar registro.");
             this.DgvSalaries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSalaries_CellDoubleClick);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // EMPLEADO
+            // 
+            this.EMPLEADO.HeaderText = "EMPLEADO";
+            this.EMPLEADO.MinimumWidth = 8;
+            this.EMPLEADO.Name = "EMPLEADO";
+            this.EMPLEADO.ReadOnly = true;
+            // 
+            // SALARIO_BASE
+            // 
+            this.SALARIO_BASE.HeaderText = "SALARIO_BASE";
+            this.SALARIO_BASE.MinimumWidth = 8;
+            this.SALARIO_BASE.Name = "SALARIO_BASE";
+            this.SALARIO_BASE.ReadOnly = true;
+            // 
+            // AUMENTO
+            // 
+            this.AUMENTO.HeaderText = "AUMENTO";
+            this.AUMENTO.MinimumWidth = 8;
+            this.AUMENTO.Name = "AUMENTO";
+            this.AUMENTO.ReadOnly = true;
+            // 
+            // SALARIONETO
+            // 
+            this.SALARIONETO.HeaderText = "SALARIO NETO";
+            this.SALARIONETO.MinimumWidth = 8;
+            this.SALARIONETO.Name = "SALARIONETO";
+            this.SALARIONETO.ReadOnly = true;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
             // 
             // PbxSearch
             // 
@@ -156,7 +202,7 @@
             this.PbxSearch.BackColor = System.Drawing.Color.Transparent;
             this.PbxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxSearch.Image = ((System.Drawing.Image)(resources.GetObject("PbxSearch.Image")));
-            this.PbxSearch.Location = new System.Drawing.Point(606, 269);
+            this.PbxSearch.Location = new System.Drawing.Point(623, 269);
             this.PbxSearch.Name = "PbxSearch";
             this.PbxSearch.Size = new System.Drawing.Size(26, 27);
             this.PbxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -170,7 +216,7 @@
             this.PbxCancel.BackColor = System.Drawing.Color.Transparent;
             this.PbxCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxCancel.Image = ((System.Drawing.Image)(resources.GetObject("PbxCancel.Image")));
-            this.PbxCancel.Location = new System.Drawing.Point(639, 269);
+            this.PbxCancel.Location = new System.Drawing.Point(656, 269);
             this.PbxCancel.Name = "PbxCancel";
             this.PbxCancel.Size = new System.Drawing.Size(26, 27);
             this.PbxCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -196,9 +242,8 @@
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtSearch.Location = new System.Drawing.Point(94, 269);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSearch.Multiline = true;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(388, 30);
+            this.TxtSearch.Size = new System.Drawing.Size(388, 26);
             this.TxtSearch.TabIndex = 124;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -230,7 +275,7 @@
             this.PbxClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.PbxClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxClose.Image = ((System.Drawing.Image)(resources.GetObject("PbxClose.Image")));
-            this.PbxClose.Location = new System.Drawing.Point(646, 8);
+            this.PbxClose.Location = new System.Drawing.Point(663, 8);
             this.PbxClose.Name = "PbxClose";
             this.PbxClose.Size = new System.Drawing.Size(27, 26);
             this.PbxClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -246,9 +291,8 @@
             this.TxtBaseSalary.Location = new System.Drawing.Point(224, 96);
             this.TxtBaseSalary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtBaseSalary.MaxLength = 150;
-            this.TxtBaseSalary.Multiline = true;
             this.TxtBaseSalary.Name = "TxtBaseSalary";
-            this.TxtBaseSalary.Size = new System.Drawing.Size(211, 30);
+            this.TxtBaseSalary.Size = new System.Drawing.Size(211, 26);
             this.TxtBaseSalary.TabIndex = 0;
             // 
             // toolStrip1
@@ -270,7 +314,7 @@
             this.BtnPaperbin});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(677, 42);
+            this.toolStrip1.Size = new System.Drawing.Size(706, 42);
             this.toolStrip1.TabIndex = 126;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -372,10 +416,9 @@
             this.TxtSalaryCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtSalaryCode.Location = new System.Drawing.Point(13, 96);
             this.TxtSalaryCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSalaryCode.Multiline = true;
             this.TxtSalaryCode.Name = "TxtSalaryCode";
             this.TxtSalaryCode.ReadOnly = true;
-            this.TxtSalaryCode.Size = new System.Drawing.Size(181, 30);
+            this.TxtSalaryCode.Size = new System.Drawing.Size(181, 26);
             this.TxtSalaryCode.TabIndex = 125;
             // 
             // label3
@@ -397,9 +440,8 @@
             this.TxtIncrease.Location = new System.Drawing.Point(453, 96);
             this.TxtIncrease.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtIncrease.MaxLength = 150;
-            this.TxtIncrease.Multiline = true;
             this.TxtIncrease.Name = "TxtIncrease";
-            this.TxtIncrease.Size = new System.Drawing.Size(211, 30);
+            this.TxtIncrease.Size = new System.Drawing.Size(229, 26);
             this.TxtIncrease.TabIndex = 1;
             // 
             // label4
@@ -440,13 +482,12 @@
             this.TxtTotalSalary.BackColor = System.Drawing.SystemColors.Control;
             this.TxtTotalSalary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtTotalSalary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtTotalSalary.Location = new System.Drawing.Point(453, 164);
+            this.TxtTotalSalary.Location = new System.Drawing.Point(453, 166);
             this.TxtTotalSalary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtTotalSalary.MaxLength = 150;
-            this.TxtTotalSalary.Multiline = true;
             this.TxtTotalSalary.Name = "TxtTotalSalary";
             this.TxtTotalSalary.ReadOnly = true;
-            this.TxtTotalSalary.Size = new System.Drawing.Size(211, 30);
+            this.TxtTotalSalary.Size = new System.Drawing.Size(229, 26);
             this.TxtTotalSalary.TabIndex = 140;
             // 
             // label5
@@ -479,7 +520,7 @@
             this.PbxPrint.BackColor = System.Drawing.Color.Transparent;
             this.PbxPrint.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PbxPrint.Image = ((System.Drawing.Image)(resources.GetObject("PbxPrint.Image")));
-            this.PbxPrint.Location = new System.Drawing.Point(573, 269);
+            this.PbxPrint.Location = new System.Drawing.Point(590, 269);
             this.PbxPrint.Name = "PbxPrint";
             this.PbxPrint.Size = new System.Drawing.Size(26, 27);
             this.PbxPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -488,50 +529,20 @@
             this.TlpGenerateRpt.SetToolTip(this.PbxPrint, "Reporte de salarios");
             this.PbxPrint.Click += new System.EventHandler(this.PbxPrint_Click);
             // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // EMPLEADO
-            // 
-            this.EMPLEADO.HeaderText = "EMPLEADO";
-            this.EMPLEADO.MinimumWidth = 8;
-            this.EMPLEADO.Name = "EMPLEADO";
-            this.EMPLEADO.ReadOnly = true;
-            // 
-            // SALARIO_BASE
-            // 
-            this.SALARIO_BASE.HeaderText = "SALARIO_BASE";
-            this.SALARIO_BASE.MinimumWidth = 8;
-            this.SALARIO_BASE.Name = "SALARIO_BASE";
-            this.SALARIO_BASE.ReadOnly = true;
-            // 
-            // AUMENTO
-            // 
-            this.AUMENTO.HeaderText = "AUMENTO";
-            this.AUMENTO.MinimumWidth = 8;
-            this.AUMENTO.Name = "AUMENTO";
-            this.AUMENTO.ReadOnly = true;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            // 
             // TlpGenerateRpt
             // 
             this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmSalaries
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(677, 673);
+            this.ClientSize = new System.Drawing.Size(706, 673);
             this.Controls.Add(this.PbxPrint);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.CmbState);
@@ -608,11 +619,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox CmbState;
         private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn EMPLEADO;
         private System.Windows.Forms.DataGridViewTextBoxColumn SALARIO_BASE;
         private System.Windows.Forms.DataGridViewTextBoxColumn AUMENTO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SALARIONETO;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
-        private System.Windows.Forms.ToolTip TlpGenerateRpt;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

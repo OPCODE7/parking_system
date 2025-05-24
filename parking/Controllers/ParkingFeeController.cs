@@ -24,14 +24,11 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    searchFilter = searchFilter.ToLower();
                     var query = from pf in db.PARKING_FEE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
                                 join u in db.USERS on pf.USER_CODE equals u.USER_CODE
-                                where (string.IsNullOrEmpty(searchFilter) ?
-                                       pf.IS_DEL == isDel :
-                                       (pt.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) ||
-                                       pf.PRICE_FOR_HOUR.ToString().Contains(searchFilter)) &&
-                                       pf.IS_DEL == isDel)
+                                where pf.IS_DEL==isDel
                                 select new ParkingFeeDTO
                                 {
                                     PARKING_FEE_CODE = pf.PARKING_FEE_CODE,
@@ -44,7 +41,17 @@ namespace parking.Controllers
                                     USER_NAME = u.USER_NAME
                                 };
 
-                    parkingFees = query.ToList();
+                    var result = query.ToList();
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        result = result.Where(p => p.PARKING_FEE_CODE.ToLower().Contains(searchFilter) || p.USER_NAME.ToLower().Contains(searchFilter) 
+                        || p.PRICE_FOR_HOUR.ToString().Contains(searchFilter) ||
+                            p.PARKING_TYPE_CODE.ToLower().Contains(searchFilter)
+|| p.DESCRIPTION_PARKING_TYPE.ToLower().Contains(searchFilter) || h.DoesDateMatch(p.INSERTED_AT, searchFilter)).ToList();
+
+                    }
+
+                    parkingFees = result.ToList();
                 }
             }
             catch (Exception ex)

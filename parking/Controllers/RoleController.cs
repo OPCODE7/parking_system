@@ -25,7 +25,14 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    lst = db.USER_ROLES.Where(r => String.IsNullOrEmpty(searchFilter) ? (r.ROLE_ID.ToString().Contains(searchFilter) || r.ROLE_NAME.Contains(searchFilter) || r.DESCRIPTION_ROLE.Contains(searchFilter) || r.INSERTED_AT.ToString().Contains(searchFilter)) && r.IS_DEL==isDel : r.IS_DEL==isDel).ToList();
+                    var query = db.USER_ROLES.Where(r => r.IS_DEL == isDel).ToList();
+
+                    if (!string.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(r => r.ROLE_ID.ToString().ToLower().Contains(searchFilter) || r.ROLE_NAME.ToLower().Contains(searchFilter) || r.DESCRIPTION_ROLE.ToLower().Contains(searchFilter) || h.DoesDateMatch(r.INSERTED_AT,searchFilter)).ToList();
+                    }
+
+                    lst= query.OrderBy(r => r.ROLE_ID).ToList();    
                 }
             }
             

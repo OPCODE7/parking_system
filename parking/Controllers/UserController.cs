@@ -124,6 +124,7 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    searchFilter = searchFilter.ToLower();
                     var query = db.USERS
                         .Join(db.USER_ROLES, user => user.ROLE_ID, role => role.ROLE_ID, (user, role) => new UserDTO
                         {
@@ -134,14 +135,16 @@ namespace parking.Controllers
                             IS_DEL = user.IS_DEL,
                             INSERTED_AT = user.INSERTED_AT
                         })
-                        .Where(user => user.IS_DEL == isDel);
+                        .Where(user => user.IS_DEL == isDel && user.USER_CODE!="USR000001");
+
+                    var result = query.ToList();
 
                     if (!string.IsNullOrEmpty(searchFilter))
                     {
-                        query = query.Where(user => user.USER_NAME.Contains(searchFilter));
+                        result = result.Where(user => user.USER_NAME.ToLower().Contains(searchFilter) || user.USER_CODE.ToLower().Contains(searchFilter) || user.ROLE_NAME.ToLower().Contains(searchFilter) || h.DoesDateMatch(user.INSERTED_AT,searchFilter) || (user.USER_STATE ? "activo" : "inactivo").Contains(searchFilter) ).ToList();
                     }
 
-                    return query.OrderBy(user => user.USER_CODE).ToList();
+                    return result.OrderBy(user => user.USER_CODE).ToList();
                 }
             }
             catch (Exception ex)

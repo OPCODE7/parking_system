@@ -96,6 +96,7 @@
     <EntitySetMapping Name="COMPANY_DATA">
       <EntityTypeMapping TypeName="PARKINGModel.COMPANY_DATA">
         <MappingFragment StoreEntitySet="COMPANY_DATA">
+          <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
           <ScalarProperty Name="COMPANY_RTN" ColumnName="COMPANY_RTN" />
           <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
           <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />

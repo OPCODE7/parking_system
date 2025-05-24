@@ -25,12 +25,13 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    searchFilter = searchFilter.ToLower();
                     var query = from c in db.CHECK_IN
                                 join ps in db.PARKING_SPACE on c.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
                                 join cli in db.CLIENTS on c.CLIENT_CODE equals cli.CLIENT_CODE
-                                where c.IS_DEL == isDel
+                                where String.IsNullOrEmpty(state) ? c.IS_DEL==isDel : c.IS_DEL==isDel && c.CHECK_IN_STATE==state 
                                 select new CheckInDTO
                                 {
                                     CHECK_IN_CODE = c.CHECK_IN_CODE,
@@ -49,27 +50,21 @@ namespace parking.Controllers
                                     INSERTED_AT = c.INSERTED_AT
                                 };
 
-                    // Filtro por texto
+                    var result = query.ToList();
                     if (!string.IsNullOrEmpty(searchFilter))
                     {
-                        query = query.Where(c =>
-                            (c.CLIENT_NAME + " " + c.CLIENT_LASTNAME).Contains(searchFilter) ||
-                            c.VEHICLE_PLATE.Contains(searchFilter) ||
-                            c.OBSERVATIONS.Contains(searchFilter) ||
-                            c.CHECK_IN_CODE.Contains(searchFilter) ||
-                            c.CHECK_IN_STATE.Contains(searchFilter) ||
-                            c.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) ||
-                            c.PARKING_SPACE_NUMBER.ToString().Contains(searchFilter) ||
-                            c.CHECK_IN_TIME.ToString().Contains(searchFilter)
-                        );
+                        result = result.Where(c =>
+                            (c.CLIENT_NAME + " " + c.CLIENT_LASTNAME).ToLower().Contains(searchFilter) ||
+                            c.VEHICLE_PLATE.ToLower().Contains(searchFilter) ||
+                            c.CHECK_IN_CODE.ToLower().Contains(searchFilter) ||
+                            c.CHECK_IN_STATE.ToLower().Contains(searchFilter) ||
+                            c.DESCRIPTION_PARKING_TYPE.ToLower().Contains(searchFilter) ||
+                            c.PARKING_SPACE_NUMBER.ToString().ToLower().Contains(searchFilter) || h.DoesDateMatch(c.INSERTED_AT,searchFilter)
+                        ).ToList();
                     }
 
-                    if (!string.IsNullOrEmpty(state))
-                    {
-                        query = query.Where(c => c.CHECK_IN_STATE == state);
-                    }
 
-                    return query.ToList();
+                    return result.ToList();
                 }
             }
             catch (Exception ex)

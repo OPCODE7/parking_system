@@ -103,7 +103,7 @@
   </EntityType>
   <EntityType Name="COMPANY_DATA">
     <Key>
-      <PropertyRef Name="COMPANY_RTN" />
+      <PropertyRef Name="COMPANY_ID" />
     </Key>
     <Property Name="COMPANY_RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="COMPANY_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -115,6 +115,7 @@
     <Property Name="DEL" Type="Boolean" Nullable="false" />
     <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="USERS" Relationship="Self.FK__COMPANY_D__USER___1D9B5BB6" FromRole="COMPANY_DATA" ToRole="USERS" />
+    <Property Name="COMPANY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="CORRELATIVES">
     <Key>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,20 @@ namespace parking.Controllers
 
         public List<HORARY> getHoraries(string searchFilter,bool isDel= false)
         {
+            searchFilter = searchFilter.ToLower();
             List<HORARY> horaries = new List<HORARY>();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    horaries = db.HORARY.Where(h => !String.IsNullOrEmpty(searchFilter) ? (h.HORARY_CODE.Contains(searchFilter) || h.HORARY_DESCRIPTION.Contains(searchFilter) || h.INITIAL_HOUR.ToString().Contains(searchFilter) || h.FINAL_HOUR.ToString().Contains(searchFilter) || h.INSERTED_AT.ToString().Contains(searchFilter)) && h.IS_DEL==isDel : h.IS_DEL==isDel).ToList();
+                    var query = db.HORARY.Where(h => h.IS_DEL==isDel).ToList();
+
+                    if (!string.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(hor => hor.HORARY_CODE.ToLower().Contains(searchFilter) || hor.HORARY_DESCRIPTION.ToLower().Contains(searchFilter) || hor.INITIAL_HOUR.ToString().ToLower().Contains(searchFilter) || hor.FINAL_HOUR.ToString().ToLower().Contains(searchFilter) || h.DoesDateMatch(hor.INSERTED_AT,searchFilter)).ToList();
+                    }
+
+                    horaries = query.ToList();
                 }
             }
             catch (SqlException ex )

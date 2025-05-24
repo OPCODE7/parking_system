@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,19 @@ namespace parking.Controllers
         public List<PARKING_TYPES> getParkingTypes(string searchFilter, bool isDel)
         {
             List<PARKING_TYPES> parkingTypes = new List<PARKING_TYPES>();
+            searchFilter = searchFilter.ToLower();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    parkingTypes = db.PARKING_TYPES.Where(e => String.IsNullOrEmpty(searchFilter) ? e.IS_DEL == isDel : e.PARKING_TYPE_CODE.Contains(searchFilter) || e.DESCRIPTION_PARKING_TYPE.Contains(searchFilter) || e.INSERTED_AT.ToString().Contains(searchFilter)).ToList();
+                    var query = db.PARKING_TYPES.Where(p => p.IS_DEL == isDel).ToList();
+
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(p => p.PARKING_TYPE_CODE.ToLower().Contains(searchFilter) || p.DESCRIPTION_PARKING_TYPE.ToLower().Contains(searchFilter) ||h.DoesDateMatch(p.INSERTED_AT, searchFilter)).ToList();
+
+                    }
+                    parkingTypes = query.ToList();
                 }
             }
             catch (Exception ex)

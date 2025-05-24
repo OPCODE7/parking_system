@@ -364,7 +364,7 @@ namespace parking.Views.Administration.Employees
 
             foreach (var item in employess)
             {
-                DgvEmployees.Rows.Add(item.EMPLOYEE_CODE,item.EMPLOYEE_DNI,item.EMPLOYEE_NAME+" " +item.EMPLOYEE_LASTNAME,item.DESCRIPTION_JOB_POSITION,item.HORARY_DESCRIPTION,item.EMPLOYEE_PHONE,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvEmployees.Rows.Add(item.EMPLOYEE_CODE,item.EMPLOYEE_DNI,item.EMPLOYEE_NAME+" " +item.EMPLOYEE_LASTNAME,item.DESCRIPTION_JOB_POSITION,item.HORARY_DESCRIPTION,item.EMPLOYEE_PHONE,Convert.ToDateTime(item.INSERTED_AT));
             }
         }
 
@@ -385,7 +385,7 @@ namespace parking.Views.Administration.Employees
         {
             int error = 0;
 
-            if (!Regex.Match(TxtDni.Text, RegexPatterns.DNIPattern).Success)
+            if (!Regex.Match(TxtDni.Text.Trim(), RegexPatterns.DNIPattern).Success)
             {
                 h.MsgWarning("Ingresar DNI correctamente. ¡Solo letras y números!");
                 TxtDni.Focus();
@@ -418,7 +418,15 @@ namespace parking.Views.Administration.Employees
                 return error;
             }
 
-            if(!Regex.Match(TxtEmail.Text,RegexPatterns.EmailPattern).Success)
+            if (CmbJobPosition.SelectedValue == null)
+            {
+                h.MsgWarning("Seleccionar un cargo.");
+                CmbJobPosition.Focus();
+                error++;
+                return error;
+            }
+
+            if (!Regex.Match(TxtEmail.Text,RegexPatterns.EmailPattern).Success)
             {
                 h.MsgWarning("Ingresar correo electrónico correctamente.");
                 TxtEmail.Focus();
@@ -433,15 +441,7 @@ namespace parking.Views.Administration.Employees
                 error++;
                 return error;
             }
-
-            if(CmbJobPosition.SelectedValue == null)
-            {
-                h.MsgWarning("Seleccionar un cargo.");
-                CmbJobPosition.Focus();
-                error++;
-                return error;
-            }
-
+           
             if(CmbHorary.SelectedValue == null)
             {
                 h.MsgWarning("Seleccionar un horario.");

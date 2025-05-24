@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using parking.Models;
@@ -20,11 +22,18 @@ namespace parking.Controllers
         public List<JOB_POSITIONS> getJobPositions(string searchFilter,bool isDel)
         {
             List<JOB_POSITIONS> jobPositions = new List<JOB_POSITIONS>();
+            searchFilter = searchFilter.ToLower();
             try
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                   jobPositions= db.JOB_POSITIONS.Where(j => !String.IsNullOrEmpty(searchFilter) ? (j.JOB_POSITION_CODE.Contains(searchFilter) || j.DESCRIPTION_JOB_POSITION.Contains(searchFilter) || j.INSERTED_AT.ToString().Contains(searchFilter)) && j.IS_DEL == isDel : j.IS_DEL == isDel).ToList();
+                    var query = db.JOB_POSITIONS.Where(j => j.IS_DEL==isDel).ToList();
+
+                    if (!String.IsNullOrEmpty(searchFilter)){
+                        query = query.Where(j => j.JOB_POSITION_CODE.ToLower().Contains(searchFilter) || j.DESCRIPTION_JOB_POSITION.ToLower().Contains(searchFilter) || h.DoesDateMatch(j.INSERTED_AT,searchFilter)).ToList();
+                    }
+
+                    jobPositions = query.ToList();
                 }
             }
             catch (SqlException ex)

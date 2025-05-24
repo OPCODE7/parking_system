@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using parking.Models;
 using System.Data.Entity;
 using parking.DTO;
+using System.Globalization;
 
 namespace parking.Controllers
 {
@@ -26,16 +27,16 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
+                    searchFilter= searchFilter.ToLower();
+                    var query= db.LOGBOOK_APP.OrderByDescending(x=> x.INSERTED_AT).ToList();
                     
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        query = query.Where(x => x.LOG_DESCRIPTION.ToLower().Contains(searchFilter) || x.LOG_ID.ToString().ToLower().Contains(searchFilter) || h.DoesDateMatch(x.INSERTED_AT,searchFilter)).ToList();
 
-                    return String.IsNullOrEmpty(searchFilter) ?
-                        db.LOGBOOK_APP
-                        .OrderByDescending(x => x.INSERTED_AT)
-                        .ToList() :
-                        db.LOGBOOK_APP
-                        .Where(x => x.LOG_DESCRIPTION.Contains(searchFilter) || x.LOG_ID.ToString().Contains(searchFilter) || x.INSERTED_AT.ToString().Contains(searchFilter))
-                        .OrderByDescending(x => x.INSERTED_AT)
-                        .ToList();
+                    }
+
+                    return query.ToList();
                     
                 }
             }

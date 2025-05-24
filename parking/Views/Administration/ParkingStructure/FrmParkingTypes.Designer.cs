@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmParkingTypes));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
@@ -43,6 +43,8 @@
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -50,17 +52,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvParkingTypes = new System.Windows.Forms.DataGridView();
-            this.TxtParkingTypeDescription = new System.Windows.Forms.TextBox();
-            this.TxtParkingTypeCode = new System.Windows.Forms.TextBox();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
-            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
-            this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
-            this.PbxDestroy = new System.Windows.Forms.PictureBox();
-            this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TxtParkingTypeDescription = new System.Windows.Forms.TextBox();
+            this.TxtParkingTypeCode = new System.Windows.Forms.TextBox();
+            this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxDestroy = new System.Windows.Forms.PictureBox();
+            this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxRecovery = new System.Windows.Forms.PictureBox();
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -182,6 +183,22 @@
             this.BtnCancel.Text = "Cancelar";
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // PbxSearch
             // 
             this.PbxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -261,11 +278,11 @@
             this.DgvParkingTypes.AllowUserToDeleteRows = false;
             this.DgvParkingTypes.AllowUserToResizeColumns = false;
             this.DgvParkingTypes.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvParkingTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvParkingTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvParkingTypes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvParkingTypes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvParkingTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -273,14 +290,14 @@
             this.ID,
             this.DESCRIPCIÓN,
             this.REGISTRO});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvParkingTypes.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvParkingTypes.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvParkingTypes.Location = new System.Drawing.Point(12, 265);
             this.DgvParkingTypes.Name = "DgvParkingTypes";
             this.DgvParkingTypes.ReadOnly = true;
@@ -290,91 +307,8 @@
             this.DgvParkingTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvParkingTypes.Size = new System.Drawing.Size(643, 268);
             this.DgvParkingTypes.TabIndex = 89;
+            this.TlpSelectRow.SetToolTip(this.DgvParkingTypes, "Doble click para seleccionar registro.");
             this.DgvParkingTypes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvParkingTypes_CellDoubleClick);
-            // 
-            // TxtParkingTypeDescription
-            // 
-            this.TxtParkingTypeDescription.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingTypeDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingTypeDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingTypeDescription.Location = new System.Drawing.Point(14, 173);
-            this.TxtParkingTypeDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingTypeDescription.MaxLength = 50;
-            this.TxtParkingTypeDescription.Multiline = true;
-            this.TxtParkingTypeDescription.Name = "TxtParkingTypeDescription";
-            this.TxtParkingTypeDescription.Size = new System.Drawing.Size(470, 31);
-            this.TxtParkingTypeDescription.TabIndex = 2;
-            // 
-            // TxtParkingTypeCode
-            // 
-            this.TxtParkingTypeCode.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtParkingTypeCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtParkingTypeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingTypeCode.Location = new System.Drawing.Point(13, 104);
-            this.TxtParkingTypeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingTypeCode.Multiline = true;
-            this.TxtParkingTypeCode.Name = "TxtParkingTypeCode";
-            this.TxtParkingTypeCode.ReadOnly = true;
-            this.TxtParkingTypeCode.Size = new System.Drawing.Size(213, 30);
-            this.TxtParkingTypeCode.TabIndex = 86;
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
-            // 
-            // BtnPaperbin
-            // 
-            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
-            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPaperbin.Name = "BtnPaperbin";
-            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
-            this.BtnPaperbin.Text = "Papelera";
-            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
-            // 
-            // TtpDestroy
-            // 
-            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TtpDestroy.ToolTipTitle = "Destruir";
-            // 
-            // TtpRecovery
-            // 
-            this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TtpRecovery.ToolTipTitle = "Recuperar ";
-            // 
-            // PbxDestroy
-            // 
-            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
-            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
-            this.PbxDestroy.Location = new System.Drawing.Point(559, 219);
-            this.PbxDestroy.Name = "PbxDestroy";
-            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
-            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PbxDestroy.TabIndex = 173;
-            this.PbxDestroy.TabStop = false;
-            this.TtpDestroy.SetToolTip(this.PbxDestroy, "Destruir registro definitivamente de la base de datos");
-            this.PbxDestroy.Visible = false;
-            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
-            // 
-            // PbxRecovery
-            // 
-            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
-            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(523, 219);
-            this.PbxRecovery.Name = "PbxRecovery";
-            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
-            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PbxRecovery.TabIndex = 172;
-            this.PbxRecovery.TabStop = false;
-            this.TtpRecovery.SetToolTip(this.PbxRecovery, "Recuperar registro de papelera");
-            this.PbxRecovery.Visible = false;
-            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
             // 
             // ID
             // 
@@ -396,6 +330,78 @@
             this.REGISTRO.MinimumWidth = 8;
             this.REGISTRO.Name = "REGISTRO";
             this.REGISTRO.ReadOnly = true;
+            // 
+            // TxtParkingTypeDescription
+            // 
+            this.TxtParkingTypeDescription.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtParkingTypeDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtParkingTypeDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtParkingTypeDescription.Location = new System.Drawing.Point(14, 173);
+            this.TxtParkingTypeDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtParkingTypeDescription.MaxLength = 50;
+            this.TxtParkingTypeDescription.Name = "TxtParkingTypeDescription";
+            this.TxtParkingTypeDescription.Size = new System.Drawing.Size(470, 26);
+            this.TxtParkingTypeDescription.TabIndex = 2;
+            // 
+            // TxtParkingTypeCode
+            // 
+            this.TxtParkingTypeCode.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtParkingTypeCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtParkingTypeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.TxtParkingTypeCode.Location = new System.Drawing.Point(13, 104);
+            this.TxtParkingTypeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtParkingTypeCode.Multiline = true;
+            this.TxtParkingTypeCode.Name = "TxtParkingTypeCode";
+            this.TxtParkingTypeCode.ReadOnly = true;
+            this.TxtParkingTypeCode.Size = new System.Drawing.Size(213, 30);
+            this.TxtParkingTypeCode.TabIndex = 86;
+            // 
+            // TtpDestroy
+            // 
+            this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpDestroy.ToolTipTitle = "Destruir";
+            // 
+            // PbxDestroy
+            // 
+            this.PbxDestroy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxDestroy.BackColor = System.Drawing.Color.Transparent;
+            this.PbxDestroy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxDestroy.Image = ((System.Drawing.Image)(resources.GetObject("PbxDestroy.Image")));
+            this.PbxDestroy.Location = new System.Drawing.Point(559, 219);
+            this.PbxDestroy.Name = "PbxDestroy";
+            this.PbxDestroy.Size = new System.Drawing.Size(26, 27);
+            this.PbxDestroy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxDestroy.TabIndex = 173;
+            this.PbxDestroy.TabStop = false;
+            this.TtpDestroy.SetToolTip(this.PbxDestroy, "Destruir registro definitivamente de la base de datos");
+            this.PbxDestroy.Visible = false;
+            this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
+            // 
+            // TtpRecovery
+            // 
+            this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtpRecovery.ToolTipTitle = "Recuperar ";
+            // 
+            // PbxRecovery
+            // 
+            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
+            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
+            this.PbxRecovery.Location = new System.Drawing.Point(523, 219);
+            this.PbxRecovery.Name = "PbxRecovery";
+            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
+            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxRecovery.TabIndex = 172;
+            this.PbxRecovery.TabStop = false;
+            this.TtpRecovery.SetToolTip(this.PbxRecovery, "Recuperar registro de papelera");
+            this.PbxRecovery.Visible = false;
+            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmParkingTypes
             // 
@@ -464,5 +470,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCIÓN;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

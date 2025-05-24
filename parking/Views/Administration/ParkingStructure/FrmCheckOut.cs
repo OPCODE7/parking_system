@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -103,6 +104,8 @@ namespace parking.Views.Administration.ParkingStructure
             }
         }
 
+        
+
         private void BtnGenerateBill_Click(object sender, EventArgs e)
         {
             generateBill();
@@ -137,8 +140,6 @@ namespace parking.Views.Administration.ParkingStructure
             checkOutCode = _checkOutCode;
             
             BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
-            BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
-            BtnEdit.Enabled = flagIsPaperbin ? false : true;
             BtnDelete.Enabled = flagIsPaperbin ? false : true;
             PbxDestroy.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
             PbxRecovery.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
@@ -147,7 +148,6 @@ namespace parking.Views.Administration.ParkingStructure
             {
                 getInfoCheckOut(_checkOutCode);
                 BtnGenerateBill.Visible = false;
-                BtnEdit.Enabled= false; 
                 BtnDelete.Enabled= false;
             }
             else
@@ -193,7 +193,6 @@ namespace parking.Views.Administration.ParkingStructure
             flagIsPaperbin = false;
             BtnDelete.Enabled = false;
             BtnSave.Enabled = false;
-            BtnEdit.Enabled = false;
             BtnGenerateBill.Visible = false;
             TspBill.Visible = false;
             PbxRecovery.Visible = false;
@@ -296,12 +295,11 @@ namespace parking.Views.Administration.ParkingStructure
                 setValues();
                 BtnSave.Enabled = true;
 
-                TxtDiscount.Text = "L. " + finalDiscount.ToString();
+                TxtDiscount.Text = finalDiscount.ToString();
                 TxtTotalTime.Text = formatTime;
-                TxtSubtotal.Text = "L. " + subtotal;
+                TxtSubtotal.Text = subtotal.ToString();
                 TxtISV.Text = isvCharge.ToString();
-                TxtTotal.Text = "L. " + fullCharge;
-
+                TxtTotal.Text = fullCharge.ToString();
             }
             else
             {
@@ -327,10 +325,10 @@ namespace parking.Views.Administration.ParkingStructure
                 BtnSave.Enabled = true;
 
                 TxtTotalTime.Text = formatTime;
-                TxtDiscount.Text = "L. " + checkOut.DISCOUNT;
-                TxtSubtotal.Text = "L. " + checkOut.SUBTOTAL;
+                TxtDiscount.Text = checkOut.DISCOUNT.ToString();
+                TxtSubtotal.Text = checkOut.SUBTOTAL.ToString();
                 TxtISV.Text = checkOut.ISV.ToString();
-                TxtTotal.Text = "L. " + checkOut.TOTAL;
+                TxtTotal.Text = checkOut.TOTAL.ToString();
 
             }
             else
@@ -394,12 +392,12 @@ namespace parking.Views.Administration.ParkingStructure
             frmGenerateBill.TxtParkingType.Text = TxtParkingType.Text;
             frmGenerateBill.TxtCheckInDate.Text = DtpCheckInTime.Value.ToString();
             frmGenerateBill.TxtCheckOutDate.Text = DtpCheckOutTime.Value.ToString();
-            frmGenerateBill.TxtParkingFee.Text = "L. " + priceParkingFee;
-            frmGenerateBill.TxtSubtotal.Text = "L. " + subtotal;
+            frmGenerateBill.TxtParkingFee.Text = priceParkingFee.ToString();
+            frmGenerateBill.TxtSubtotal.Text = subtotal.ToString();
             frmGenerateBill.TxtTotalHours.Text = hours.ToString();
-            frmGenerateBill.TxtDiscount.Text = "L. " + finalDiscount;
+            frmGenerateBill.TxtDiscount.Text = finalDiscount.ToString();
             frmGenerateBill.TxtISV.Text = isvCharge.ToString();
-            frmGenerateBill.LblFullCharge.Text += " L. " + fullCharge;
+            frmGenerateBill.LblFullCharge.Text += fullCharge.ToString();
 
 
             frmGenerateBill.ShowDialog();

@@ -322,6 +322,8 @@ namespace parking.Views.Administration.Employees
             }
         }
 
+        
+
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) getHoraries(TxtSearch.Text.Trim(), flagIsPaperBin);

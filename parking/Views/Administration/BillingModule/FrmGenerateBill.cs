@@ -50,6 +50,27 @@ namespace parking.Views.Administration.BillingModule
             frmCheckOut.BtnGenerateBill.Visible = true;
         }
 
+        private void TxtDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(Regex.Match(TxtDiscount.Text.Trim(), Helpers.RegexPatterns.DecimalPattern).Success){
+                e.Handled = false;
+                if (TxtDiscount.Text.Trim() == "")
+                {
+                    LblFullCharge.Text = "Total a pagar: ";
+                }
+                else
+                {
+                    double subtotal = Convert.ToDouble(TxtSubtotal.Text.Trim());
+                    double discount = Convert.ToDouble(TxtDiscount.Text.Trim());
+                    LblFullCharge.Text = "Total a pagar: " + ((subtotal - discount) + Convert.ToDouble(TxtISV.Text.Trim()));
+                }
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
         private async void BtnGenerateBill_Click(object sender, EventArgs e)
         {
             if (validateData() == 0)
@@ -61,7 +82,7 @@ namespace parking.Views.Administration.BillingModule
                 newBill.DATE_OF_ISSUE = DateTime.Now;
                 newBill.BILL_NUMBER = nextBillNumber; 
                 newBill.SUBTOTAL = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
-                newBill.DISCOUNT = Convert.ToDecimal(Regex.Replace(LblFullCharge.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
+                newBill.DISCOUNT = Convert.ToDecimal(Regex.Replace(TxtDiscount.Text, @"^[^0-9]*|\s|[^0-9.]|(?<=\.\d)\./", ""));
                 newBill.ISV = Convert.ToDecimal(Regex.Replace(TxtISV.Text, "%", ""));
                 newBill.CHECK_OUT_CODE = TxtCheckOutCode.Text;
                 newBill.USER_CODE = Config.User.userId;
@@ -144,12 +165,22 @@ namespace parking.Views.Administration.BillingModule
                     return error;
                 }
             }
+
+            if(!Regex.Match(TxtDiscount.Text.Trim(), Helpers.RegexPatterns.DecimalPattern).Success)
+            {
+                h.MsgError("INGRESAR EL DESCUENTO CORRECTAMENTE. ¡SOLO NUMEROS ENTEROS O DECIMALES CON DOS CIFRAS DESPUES DEL PUNTO!");
+                error++;
+                return error;
+            }
+
+
             return error;
         }
 
         private void FrmGenerateBill_Load(object sender, EventArgs e)
         {
             BtnGenerateBill.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
+            TxtDiscount.Enabled = true;
         }
 
         

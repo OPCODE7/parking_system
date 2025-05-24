@@ -89,7 +89,7 @@ namespace parking.Views.Administration.Audit
                     TxtLogId.Text = log.LOG_ID.ToString();
                     TxtUser.Text = log.USER_CODE;
                     TxtAction.Text = log.ACTION_TYPE;
-                    TxtModule.Text = log.MODULE_ID;
+                    TxtModule.Text = log.MODULE_NAME;
                     TxtDescription.Text = log.LOG_DESCRIPTION;
 
                     BtnCancel.Enabled = true;

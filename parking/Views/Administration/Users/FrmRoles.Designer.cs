@@ -53,10 +53,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvRoles = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtRoleDescription = new System.Windows.Forms.TextBox();
             this.TxtRoleName = new System.Windows.Forms.TextBox();
             this.TxtRoleCode = new System.Windows.Forms.TextBox();
@@ -65,6 +61,11 @@
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOMBRE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -321,43 +322,8 @@
             this.DgvRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvRoles.Size = new System.Drawing.Size(628, 268);
             this.DgvRoles.TabIndex = 75;
+            this.TlpSelectRow.SetToolTip(this.DgvRoles, "Doble click para seleccionar registro.");
             this.DgvRoles.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvRoles_CellDoubleClick);
-            // 
-            // ID
-            // 
-            this.ID.FillWeight = 227.2728F;
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 150;
-            // 
-            // NOMBRE
-            // 
-            this.NOMBRE.FillWeight = 57.57574F;
-            this.NOMBRE.HeaderText = "NOMBRE";
-            this.NOMBRE.MinimumWidth = 8;
-            this.NOMBRE.Name = "NOMBRE";
-            this.NOMBRE.ReadOnly = true;
-            this.NOMBRE.Width = 180;
-            // 
-            // DESCRIPCIÓN
-            // 
-            this.DESCRIPCIÓN.FillWeight = 57.57574F;
-            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
-            this.DESCRIPCIÓN.MinimumWidth = 8;
-            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
-            this.DESCRIPCIÓN.ReadOnly = true;
-            this.DESCRIPCIÓN.Width = 250;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.FillWeight = 57.57574F;
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 95;
             // 
             // TxtRoleDescription
             // 
@@ -366,9 +332,8 @@
             this.TxtRoleDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtRoleDescription.Location = new System.Drawing.Point(21, 158);
             this.TxtRoleDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtRoleDescription.Multiline = true;
             this.TxtRoleDescription.Name = "TxtRoleDescription";
-            this.TxtRoleDescription.Size = new System.Drawing.Size(625, 35);
+            this.TxtRoleDescription.Size = new System.Drawing.Size(625, 26);
             this.TxtRoleDescription.TabIndex = 74;
             // 
             // TxtRoleName
@@ -378,9 +343,8 @@
             this.TxtRoleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtRoleName.Location = new System.Drawing.Point(183, 89);
             this.TxtRoleName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtRoleName.Multiline = true;
             this.TxtRoleName.Name = "TxtRoleName";
-            this.TxtRoleName.Size = new System.Drawing.Size(463, 30);
+            this.TxtRoleName.Size = new System.Drawing.Size(463, 26);
             this.TxtRoleName.TabIndex = 73;
             // 
             // TxtRoleCode
@@ -390,10 +354,9 @@
             this.TxtRoleCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtRoleCode.Location = new System.Drawing.Point(20, 89);
             this.TxtRoleCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtRoleCode.Multiline = true;
             this.TxtRoleCode.Name = "TxtRoleCode";
             this.TxtRoleCode.ReadOnly = true;
-            this.TxtRoleCode.Size = new System.Drawing.Size(118, 30);
+            this.TxtRoleCode.Size = new System.Drawing.Size(118, 26);
             this.TxtRoleCode.TabIndex = 72;
             // 
             // pictureBox1
@@ -451,6 +414,46 @@
             // 
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpDestroy.ToolTipTitle = "Destruir";
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
+            // 
+            // ID
+            // 
+            this.ID.FillWeight = 227.2728F;
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // NOMBRE
+            // 
+            this.NOMBRE.FillWeight = 57.57574F;
+            this.NOMBRE.HeaderText = "NOMBRE";
+            this.NOMBRE.MinimumWidth = 8;
+            this.NOMBRE.Name = "NOMBRE";
+            this.NOMBRE.ReadOnly = true;
+            this.NOMBRE.Width = 180;
+            // 
+            // DESCRIPCIÓN
+            // 
+            this.DESCRIPCIÓN.FillWeight = 57.57574F;
+            this.DESCRIPCIÓN.HeaderText = "DESCRIPCION";
+            this.DESCRIPCIÓN.MinimumWidth = 8;
+            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
+            this.DESCRIPCIÓN.ReadOnly = true;
+            this.DESCRIPCIÓN.Width = 250;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.FillWeight = 57.57574F;
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 95;
             // 
             // FrmRoles
             // 
@@ -523,6 +526,7 @@
         private System.Windows.Forms.ToolStripButton BtnPaperbin;
         private System.Windows.Forms.ToolTip TtpRecovery;
         private System.Windows.Forms.ToolTip TtpDestroy;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn NOMBRE;
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCIÓN;

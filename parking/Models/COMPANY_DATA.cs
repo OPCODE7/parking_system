@@ -23,6 +23,7 @@ namespace parking.Models
         public System.DateTime INSERTED_AT { get; set; }
         public bool DEL { get; set; }
         public string USER_ID { get; set; }
+        public int COMPANY_ID { get; set; }
     
         public virtual USERS USERS { get; set; }
     }

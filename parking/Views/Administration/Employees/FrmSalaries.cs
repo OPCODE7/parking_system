@@ -538,14 +538,14 @@ namespace parking.Views.Administration.Employees
                 h.MsgInfo(Helpers.App.Msg0012);
                 if (searchFilter != "")
                 {
-                    getSalaries(searchFilter, false);
+                    getSalaries("", false);
                 }
                 return;
             }
 
             foreach (var salary in salaries)
             {
-                DgvSalaries.Rows.Add(salary.SALARY_CODE, salary.EMPLOYEE_NAME, salary.BASE_SALARY, salary.INCREASE, salary.TOTAL_SALARY, salary.INSERTED_AT);
+                DgvSalaries.Rows.Add(salary.SALARY_CODE, salary.EMPLOYEE_NAME, salary.BASE_SALARY, salary.INCREASE, salary.TOTAL_SALARY, salary.INSERTED_AT.ToShortDateString());
             }
 
         }

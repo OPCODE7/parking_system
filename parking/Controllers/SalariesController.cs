@@ -28,8 +28,7 @@ namespace parking.Controllers
                     var query = from es in db.EMPLOYEE_SALARY
                                 join s in db.SALARIES on es.SALARY_CODE equals s.SALARY_CODE
                                 join e in db.EMPLOYEES on es.EMPLOYEE_CODE equals e.EMPLOYEE_CODE
-                                where (s.SALARY_CODE.Contains(searchFilter) || s.BASE_SALARY.ToString().Contains(searchFilter) || s.INCREASE.ToString().Contains(searchFilter) || s.TOTAL_SALARY.ToString().Contains(searchFilter) || s.INSERTED_AT.ToString().Contains(searchFilter) || (e.EMPLOYEE_NAME + " " + e.EMPLOYEE_LASTNAME).Contains(searchFilter)) 
-                                && s.IS_DEL == isDel
+                                where s.IS_DEL == isDel
                                 select new SalaryDTO
                                 {
                                     SALARY_CODE = s.SALARY_CODE,
@@ -41,18 +40,22 @@ namespace parking.Controllers
                                     EMPLOYEE_NAME = e.EMPLOYEE_NAME + " " + e.EMPLOYEE_LASTNAME
                                 };
 
-                    salaries = query.ToList();
+                    var result = query.ToList();
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        result = result.Where(s => s.SALARY_CODE.ToLower().Contains(searchFilter) || s.BASE_SALARY.ToString().ToLower().Contains(searchFilter) || s.INCREASE.ToString().ToLower().Contains(searchFilter) || s.TOTAL_SALARY.ToString().ToLower().Contains(searchFilter) || h.DoesDateMatch(s.INSERTED_AT,searchFilter) || s.EMPLOYEE_NAME.ToLower().Contains(searchFilter)).ToList();
+                    }
+
+                    salaries = result.ToList();
 
                 }
             }
             catch (Exception ex)
             {
                 h.MsgError("ERROR INESPERADO: " + ex.Message.ToUpper());
-
             }
 
             return salaries;
-           
         }
 
         public SALARIES getSalary(string salaryId)

@@ -128,20 +128,18 @@ namespace parking.Views.Administration.ParkingStructure
                 error++;
                 CmbParkingTypes.Focus();
                 return error;
-
             }
 
-            if (!isEditing)
+            if (CmbParkingTypes.SelectedValue != null && parkingFeeController.getParkingFees("", false).Any(pf => pf.PARKING_TYPE_CODE == CmbParkingTypes.SelectedValue.ToString()) == true)
             {
-                if (CmbParkingTypes.SelectedValue != null && parkingFeeController.getParkingFees("", false).Any(pf => pf.PARKING_TYPE_CODE == CmbParkingTypes.SelectedValue.ToString()) == true)
-                {
 
-                    h.MsgWarning("YA EXISTE UNA TARIFA ASOCIADA A ESTE TIPO DE PARQUEO!");
-                    error++;
-                    CmbParkingTypes.Focus();
-                    return error;
-                }
+                h.MsgWarning("YA EXISTE UNA TARIFA ASOCIADA A ESTE TIPO DE PARQUEO!");
+                error++;
+                CmbParkingTypes.Focus();
+                return error;
             }
+
+
             return error;
         }
 

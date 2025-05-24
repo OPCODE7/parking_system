@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -209,6 +210,7 @@ namespace parking.Helpers
 
 
 
+
         public DataTable GetDataTableFromDataGridView(DataGridView dgv)
         {
             DataTable dt = new DataTable();
@@ -240,6 +242,28 @@ namespace parking.Helpers
             }
 
             return dt;
+        }
+
+        public int NormalizeYear(int year)
+        {
+            return year < 100 ? 2000 + year : year; // e.g. 25 → 2025
+        }
+
+        public bool DoesDateMatch(DateTime dateTime, string searchFilter)
+        {
+            if (string.IsNullOrWhiteSpace(searchFilter))
+                return true;
+
+            // Convertimos la fecha a un formato completo y claro
+            var fullDateString = dateTime.ToString("d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture).ToLower();
+
+            // También quitamos ceros a la izquierda por si el usuario escribe 02 o 2
+            var compactDateString = fullDateString
+                .Replace(" 0", " ")   // 09 -> 9 en hora
+                .Replace("/0", "/");  // 01 -> 1 en día/mes
+
+            // Comparamos si la búsqueda está contenida en cualquiera de las dos versiones
+            return fullDateString.Contains(searchFilter.ToLower()) || compactDateString.Contains(searchFilter.ToLower());
         }
 
 

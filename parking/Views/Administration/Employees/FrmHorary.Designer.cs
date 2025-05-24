@@ -29,11 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmHorary));
             this.label7 = new System.Windows.Forms.Label();
             this.DgvHoraries = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HORA_INICIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HORA_FINAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -54,19 +59,15 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.TxtHoraryCode = new System.Windows.Forms.TextBox();
             this.DtpInitialHour = new System.Windows.Forms.DateTimePicker();
             this.DtpFinalHour = new System.Windows.Forms.DateTimePicker();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HORA_FINAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HORA_INICIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DESCRIPCIÓN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PbxDestroy = new System.Windows.Forms.PictureBox();
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
-            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DgvHoraries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -93,11 +94,11 @@
             this.DgvHoraries.AllowUserToDeleteRows = false;
             this.DgvHoraries.AllowUserToResizeColumns = false;
             this.DgvHoraries.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvHoraries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvHoraries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvHoraries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvHoraries.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvHoraries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -107,14 +108,14 @@
             this.HORA_INICIO,
             this.HORA_FINAL,
             this.REGISTRO});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvHoraries.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvHoraries.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvHoraries.Location = new System.Drawing.Point(14, 239);
             this.DgvHoraries.Name = "DgvHoraries";
             this.DgvHoraries.ReadOnly = true;
@@ -124,7 +125,43 @@
             this.DgvHoraries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvHoraries.Size = new System.Drawing.Size(645, 287);
             this.DgvHoraries.TabIndex = 105;
+            this.TlpSelectRow.SetToolTip(this.DgvHoraries, "Doble click para seleccionar registro.");
             this.DgvHoraries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvHoraries_CellDoubleClick);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // DESCRIPCIÓN
+            // 
+            this.DESCRIPCIÓN.HeaderText = "DESCRIPCIÓN";
+            this.DESCRIPCIÓN.MinimumWidth = 8;
+            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
+            this.DESCRIPCIÓN.ReadOnly = true;
+            // 
+            // HORA_INICIO
+            // 
+            this.HORA_INICIO.HeaderText = "HORA INICIO";
+            this.HORA_INICIO.MinimumWidth = 8;
+            this.HORA_INICIO.Name = "HORA_INICIO";
+            this.HORA_INICIO.ReadOnly = true;
+            // 
+            // HORA_FINAL
+            // 
+            this.HORA_FINAL.HeaderText = "HORA FINAL";
+            this.HORA_FINAL.MinimumWidth = 8;
+            this.HORA_FINAL.Name = "HORA_FINAL";
+            this.HORA_FINAL.ReadOnly = true;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
             // 
             // PbxSearch
             // 
@@ -172,9 +209,8 @@
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtSearch.Location = new System.Drawing.Point(93, 200);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSearch.Multiline = true;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(388, 27);
+            this.TxtSearch.Size = new System.Drawing.Size(388, 26);
             this.TxtSearch.TabIndex = 93;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -233,9 +269,8 @@
             this.TxtDescription.Location = new System.Drawing.Point(176, 91);
             this.TxtDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtDescription.MaxLength = 30;
-            this.TxtDescription.Multiline = true;
             this.TxtDescription.Name = "TxtDescription";
-            this.TxtDescription.Size = new System.Drawing.Size(386, 30);
+            this.TxtDescription.Size = new System.Drawing.Size(386, 26);
             this.TxtDescription.TabIndex = 85;
             // 
             // toolStrip1
@@ -341,6 +376,17 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 42);
             // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            // 
             // TxtHoraryCode
             // 
             this.TxtHoraryCode.BackColor = System.Drawing.SystemColors.Control;
@@ -348,10 +394,9 @@
             this.TxtHoraryCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtHoraryCode.Location = new System.Drawing.Point(13, 91);
             this.TxtHoraryCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtHoraryCode.Multiline = true;
             this.TxtHoraryCode.Name = "TxtHoraryCode";
             this.TxtHoraryCode.ReadOnly = true;
-            this.TxtHoraryCode.Size = new System.Drawing.Size(144, 30);
+            this.TxtHoraryCode.Size = new System.Drawing.Size(144, 26);
             this.TxtHoraryCode.TabIndex = 94;
             // 
             // DtpInitialHour
@@ -371,41 +416,6 @@
             this.DtpFinalHour.ShowUpDown = true;
             this.DtpFinalHour.Size = new System.Drawing.Size(141, 26);
             this.DtpFinalHour.TabIndex = 108;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            // 
-            // HORA_FINAL
-            // 
-            this.HORA_FINAL.HeaderText = "HORA FINAL";
-            this.HORA_FINAL.MinimumWidth = 8;
-            this.HORA_FINAL.Name = "HORA_FINAL";
-            this.HORA_FINAL.ReadOnly = true;
-            // 
-            // HORA_INICIO
-            // 
-            this.HORA_INICIO.HeaderText = "HORA INICIO";
-            this.HORA_INICIO.MinimumWidth = 8;
-            this.HORA_INICIO.Name = "HORA_INICIO";
-            this.HORA_INICIO.ReadOnly = true;
-            // 
-            // DESCRIPCIÓN
-            // 
-            this.DESCRIPCIÓN.HeaderText = "DESCRIPCIÓN";
-            this.DESCRIPCIÓN.MinimumWidth = 8;
-            this.DESCRIPCIÓN.Name = "DESCRIPCIÓN";
-            this.DESCRIPCIÓN.ReadOnly = true;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
             // 
             // PbxDestroy
             // 
@@ -439,17 +449,6 @@
             this.PbxRecovery.Visible = false;
             this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
             // 
-            // BtnPaperbin
-            // 
-            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
-            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPaperbin.Name = "BtnPaperbin";
-            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
-            this.BtnPaperbin.Text = "Papelera";
-            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
-            // 
             // TtpDestroy
             // 
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -459,6 +458,11 @@
             // 
             this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpRecovery.ToolTipTitle = "Recuperar ";
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmHorary
             // 
@@ -537,5 +541,6 @@
         private System.Windows.Forms.ToolStripButton BtnPaperbin;
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.ToolTip TtpRecovery;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

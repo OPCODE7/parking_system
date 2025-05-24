@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUsers));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TxtUserCode = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +72,7 @@
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
             this.PbxPrint = new System.Windows.Forms.PictureBox();
             this.TlpGenerateRpt = new System.Windows.Forms.ToolTip(this.components);
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -89,7 +90,6 @@
             this.TxtUserCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtUserCode.Location = new System.Drawing.Point(13, 87);
             this.TxtUserCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtUserCode.Multiline = true;
             this.TxtUserCode.Name = "TxtUserCode";
             this.TxtUserCode.ReadOnly = true;
             this.TxtUserCode.Size = new System.Drawing.Size(305, 30);
@@ -217,7 +217,6 @@
             this.TxtUserName.Location = new System.Drawing.Point(13, 156);
             this.TxtUserName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtUserName.MaxLength = 16;
-            this.TxtUserName.Multiline = true;
             this.TxtUserName.Name = "TxtUserName";
             this.TxtUserName.Size = new System.Drawing.Size(305, 30);
             this.TxtUserName.TabIndex = 2;
@@ -229,7 +228,6 @@
             this.TxtPwd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtPwd.Location = new System.Drawing.Point(335, 156);
             this.TxtPwd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtPwd.Multiline = true;
             this.TxtPwd.Name = "TxtPwd";
             this.TxtPwd.Size = new System.Drawing.Size(371, 30);
             this.TxtPwd.TabIndex = 3;
@@ -393,11 +391,11 @@
             this.DgvUsers.AllowUserToDeleteRows = false;
             this.DgvUsers.AllowUserToResizeColumns = false;
             this.DgvUsers.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvUsers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -407,14 +405,14 @@
             this.ROL,
             this.ESTADO,
             this.REGISTRO});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvUsers.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvUsers.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvUsers.Location = new System.Drawing.Point(14, 352);
             this.DgvUsers.Name = "DgvUsers";
             this.DgvUsers.ReadOnly = true;
@@ -424,6 +422,7 @@
             this.DgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvUsers.Size = new System.Drawing.Size(697, 268);
             this.DgvUsers.TabIndex = 59;
+            this.TlpSelectRow.SetToolTip(this.DgvUsers, "Doble click para seleccionar registro.");
             this.DgvUsers.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsers_CellDoubleClick);
             // 
             // ID
@@ -522,6 +521,11 @@
             // 
             this.TlpGenerateRpt.ToolTipTitle = "Generar reporte";
             // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
+            // 
             // FrmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
@@ -611,5 +615,6 @@
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.PictureBox PbxPrint;
         private System.Windows.Forms.ToolTip TlpGenerateRpt;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

@@ -41,11 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.DgvParkingFees = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PRECIO_POR_HORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.USUARIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TxtPrice = new System.Windows.Forms.TextBox();
             this.TxtParkingFeeCode = new System.Windows.Forms.TextBox();
             this.BtnCancel = new System.Windows.Forms.ToolStripButton();
@@ -62,16 +57,22 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
             this.PbxDestroy = new System.Windows.Forms.PictureBox();
-            this.PbxRecovery = new System.Windows.Forms.PictureBox();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PRECIO_POR_HORA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TIPO_PARQUEO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.USUARIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvParkingFees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).BeginInit();
             this.SuspendLayout();
             // 
             // label4
@@ -204,58 +205,18 @@
             this.DgvParkingFees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvParkingFees.Size = new System.Drawing.Size(708, 305);
             this.DgvParkingFees.TabIndex = 6;
+            this.TlpSelectRow.SetToolTip(this.DgvParkingFees, "Doble click para seleccionar registro.");
             this.DgvParkingFees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvParkingFees_CellDoubleClick);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 8;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 150;
-            // 
-            // PRECIO_POR_HORA
-            // 
-            this.PRECIO_POR_HORA.HeaderText = "PRECIO POR HORA";
-            this.PRECIO_POR_HORA.MinimumWidth = 8;
-            this.PRECIO_POR_HORA.Name = "PRECIO_POR_HORA";
-            this.PRECIO_POR_HORA.ReadOnly = true;
-            this.PRECIO_POR_HORA.Width = 70;
-            // 
-            // TIPO_PARQUEO
-            // 
-            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
-            this.TIPO_PARQUEO.MinimumWidth = 8;
-            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
-            this.TIPO_PARQUEO.ReadOnly = true;
-            this.TIPO_PARQUEO.Width = 220;
-            // 
-            // USUARIO
-            // 
-            this.USUARIO.HeaderText = "USUARIO";
-            this.USUARIO.MinimumWidth = 8;
-            this.USUARIO.Name = "USUARIO";
-            this.USUARIO.ReadOnly = true;
-            this.USUARIO.Width = 150;
-            // 
-            // REGISTRO
-            // 
-            this.REGISTRO.HeaderText = "REGISTRO";
-            this.REGISTRO.MinimumWidth = 8;
-            this.REGISTRO.Name = "REGISTRO";
-            this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
             // 
             // TxtPrice
             // 
             this.TxtPrice.BackColor = System.Drawing.SystemColors.Control;
             this.TxtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtPrice.Location = new System.Drawing.Point(210, 92);
+            this.TxtPrice.Location = new System.Drawing.Point(210, 94);
             this.TxtPrice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtPrice.Multiline = true;
             this.TxtPrice.Name = "TxtPrice";
-            this.TxtPrice.Size = new System.Drawing.Size(148, 28);
+            this.TxtPrice.Size = new System.Drawing.Size(148, 26);
             this.TxtPrice.TabIndex = 0;
             // 
             // TxtParkingFeeCode
@@ -263,12 +224,11 @@
             this.TxtParkingFeeCode.BackColor = System.Drawing.SystemColors.Control;
             this.TxtParkingFeeCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtParkingFeeCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.TxtParkingFeeCode.Location = new System.Drawing.Point(13, 92);
+            this.TxtParkingFeeCode.Location = new System.Drawing.Point(13, 94);
             this.TxtParkingFeeCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtParkingFeeCode.Multiline = true;
             this.TxtParkingFeeCode.Name = "TxtParkingFeeCode";
             this.TxtParkingFeeCode.ReadOnly = true;
-            this.TxtParkingFeeCode.Size = new System.Drawing.Size(179, 28);
+            this.TxtParkingFeeCode.Size = new System.Drawing.Size(179, 26);
             this.TxtParkingFeeCode.TabIndex = 117;
             // 
             // BtnCancel
@@ -404,6 +364,22 @@
             this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpRecovery.ToolTipTitle = "Recuperar ";
             // 
+            // PbxRecovery
+            // 
+            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
+            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
+            this.PbxRecovery.Location = new System.Drawing.Point(589, 133);
+            this.PbxRecovery.Name = "PbxRecovery";
+            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
+            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PbxRecovery.TabIndex = 170;
+            this.PbxRecovery.TabStop = false;
+            this.TtpRecovery.SetToolTip(this.PbxRecovery, "Recuperar registro de papelera");
+            this.PbxRecovery.Visible = false;
+            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
+            // 
             // TtpDestroy
             // 
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -425,21 +401,49 @@
             this.PbxDestroy.Visible = false;
             this.PbxDestroy.Click += new System.EventHandler(this.PbxDestroy_Click);
             // 
-            // PbxRecovery
+            // ID
             // 
-            this.PbxRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PbxRecovery.BackColor = System.Drawing.Color.Transparent;
-            this.PbxRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PbxRecovery.Image = ((System.Drawing.Image)(resources.GetObject("PbxRecovery.Image")));
-            this.PbxRecovery.Location = new System.Drawing.Point(589, 133);
-            this.PbxRecovery.Name = "PbxRecovery";
-            this.PbxRecovery.Size = new System.Drawing.Size(26, 27);
-            this.PbxRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PbxRecovery.TabIndex = 170;
-            this.PbxRecovery.TabStop = false;
-            this.TtpRecovery.SetToolTip(this.PbxRecovery, "Recuperar registro de papelera");
-            this.PbxRecovery.Visible = false;
-            this.PbxRecovery.Click += new System.EventHandler(this.PbxRecovery_Click);
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 8;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // PRECIO_POR_HORA
+            // 
+            this.PRECIO_POR_HORA.HeaderText = "PRECIO POR HORA";
+            this.PRECIO_POR_HORA.MinimumWidth = 8;
+            this.PRECIO_POR_HORA.Name = "PRECIO_POR_HORA";
+            this.PRECIO_POR_HORA.ReadOnly = true;
+            this.PRECIO_POR_HORA.Width = 80;
+            // 
+            // TIPO_PARQUEO
+            // 
+            this.TIPO_PARQUEO.HeaderText = "TIPO DE PARQUEO";
+            this.TIPO_PARQUEO.MinimumWidth = 8;
+            this.TIPO_PARQUEO.Name = "TIPO_PARQUEO";
+            this.TIPO_PARQUEO.ReadOnly = true;
+            this.TIPO_PARQUEO.Width = 220;
+            // 
+            // USUARIO
+            // 
+            this.USUARIO.HeaderText = "USUARIO";
+            this.USUARIO.MinimumWidth = 8;
+            this.USUARIO.Name = "USUARIO";
+            this.USUARIO.ReadOnly = true;
+            this.USUARIO.Width = 150;
+            // 
+            // REGISTRO
+            // 
+            this.REGISTRO.HeaderText = "REGISTRO";
+            this.REGISTRO.MinimumWidth = 8;
+            this.REGISTRO.Name = "REGISTRO";
+            this.REGISTRO.ReadOnly = true;
+            this.REGISTRO.Width = 150;
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmParkingFee
             // 
@@ -472,8 +476,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRecovery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxDestroy)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -503,16 +507,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PRECIO_POR_HORA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn USUARIO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton BtnPaperbin;
         private System.Windows.Forms.ToolTip TtpRecovery;
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.PictureBox PbxDestroy;
         private System.Windows.Forms.PictureBox PbxRecovery;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PRECIO_POR_HORA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn USUARIO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

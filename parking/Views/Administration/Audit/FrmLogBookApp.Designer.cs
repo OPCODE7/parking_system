@@ -108,7 +108,7 @@
             this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
-            this.ID.Width = 150;
+            this.ID.Width = 120;
             // 
             // DESCRIPCION
             // 
@@ -116,7 +116,7 @@
             this.DESCRIPCION.MinimumWidth = 8;
             this.DESCRIPCION.Name = "DESCRIPCION";
             this.DESCRIPCION.ReadOnly = true;
-            this.DESCRIPCION.Width = 400;
+            this.DESCRIPCION.Width = 410;
             // 
             // REGISTRO
             // 
@@ -124,7 +124,7 @@
             this.REGISTRO.MinimumWidth = 8;
             this.REGISTRO.Name = "REGISTRO";
             this.REGISTRO.ReadOnly = true;
-            this.REGISTRO.Width = 150;
+            this.REGISTRO.Width = 120;
             // 
             // PbxSearch
             // 
@@ -427,9 +427,9 @@
         private System.Windows.Forms.TextBox TxtModule;
         private System.Windows.Forms.ToolTip TlpSelectRow;
         private System.Windows.Forms.PictureBox PbxPrint;
+        private System.Windows.Forms.ToolTip TlpGenerateRpt;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRIPCION;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;
-        private System.Windows.Forms.ToolTip TlpGenerateRpt;
     }
 }

@@ -93,8 +93,9 @@
         </EntityType>
         <EntityType Name="COMPANY_DATA">
           <Key>
-            <PropertyRef Name="COMPANY_RTN" />
+            <PropertyRef Name="COMPANY_ID" />
           </Key>
+          <Property Name="COMPANY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="COMPANY_RTN" Type="varchar" MaxLength="14" Nullable="false" />
           <Property Name="COMPANY_NAME" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="COMPANY_ADDRESS" Type="text" Nullable="false" />
@@ -109,7 +110,7 @@
           <Key>
             <PropertyRef Name="CORRELATIVE_CODE" />
           </Key>
-          <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="CORRELATIVE_CODE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MODULE_ID" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="CORRELATIVE_DESCRIPTION" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CORRELATIVE_COUNTER" Type="int" Nullable="false" />
@@ -1138,7 +1139,7 @@
         </EntityType>
         <EntityType Name="COMPANY_DATA">
           <Key>
-            <PropertyRef Name="COMPANY_RTN" />
+            <PropertyRef Name="COMPANY_ID" />
           </Key>
           <Property Name="COMPANY_RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="COMPANY_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1150,6 +1151,7 @@
           <Property Name="DEL" Type="Boolean" Nullable="false" />
           <Property Name="USER_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="USERS" Relationship="Self.FK__COMPANY_D__USER___1D9B5BB6" FromRole="COMPANY_DATA" ToRole="USERS" />
+          <Property Name="COMPANY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="CORRELATIVES">
           <Key>
@@ -2327,6 +2329,7 @@
           <EntitySetMapping Name="COMPANY_DATA">
             <EntityTypeMapping TypeName="PARKINGModel.COMPANY_DATA">
               <MappingFragment StoreEntitySet="COMPANY_DATA">
+                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
                 <ScalarProperty Name="COMPANY_RTN" ColumnName="COMPANY_RTN" />
                 <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
                 <ScalarProperty Name="COMPANY_ADDRESS" ColumnName="COMPANY_ADDRESS" />

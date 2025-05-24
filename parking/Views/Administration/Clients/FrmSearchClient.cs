@@ -43,7 +43,7 @@ namespace parking.Views.Administration.Clients
 
             foreach (var client in clients)
             {
-                DgvClients.Rows.Add(client.CLIENT_CODE, client.CLIENT_NAME + " " + client.CLIENT_LASTNAME, client.CLIENT_ADDRESS, client.CLIENT_PHONE, client.USER_NAME, Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
+                DgvClients.Rows.Add(client.CLIENT_CODE,client.CLIENT_DNI, client.CLIENT_NAME + " " + client.CLIENT_LASTNAME, client.CLIENT_ADDRESS, client.CLIENT_PHONE, client.USER_NAME, Convert.ToDateTime(client.INSERTED_AT).ToShortDateString());
             }
 
         }
@@ -55,7 +55,7 @@ namespace parking.Views.Administration.Clients
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            getClients(TxtSearch.Text.Trim());
+            if(e.KeyCode==Keys.Enter) getClients(TxtSearch.Text.Trim());
         }
 
         private void PbxSearch_Click(object sender, EventArgs e)

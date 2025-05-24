@@ -28,7 +28,7 @@ namespace parking.Views.Administration.ParkingStructure
 
         string psCode,parkingFee,userId,moduleId= "PSP";
         int psNumber;
-        bool psState,flagIsPaperbin;
+        bool psState, flagIsPaperbin, isEdit = false;
         public FrmParkingSpace()
         {
             InitializeComponent();
@@ -50,6 +50,7 @@ namespace parking.Views.Administration.ParkingStructure
             getParkingSpaces("",false);
             flagIsPaperbin = false;
             BtnPaperbin.Enabled = PermissionManager.HasPermission("PAP", "Acceso");
+            isEdit = false;
             PbxRecovery.Enabled = false;
             PbxDestroy.Enabled = false;
             PbxRecovery.Visible = false;
@@ -86,7 +87,7 @@ namespace parking.Views.Administration.ParkingStructure
                 newPs.PARKING_SPACE_CODE = psCode;
                 newPs.PARKING_SPACE_NUMBER = psNumber;
                 newPs.PARKING_FEE_CODE = parkingFee;
-                newPs.STATE = psState;
+                newPs.STATE = false;
                 newPs.USER_CODE = userId;
                 newPs.INSERTED_AT = DateTime.Now;
                 
@@ -120,7 +121,7 @@ namespace parking.Views.Administration.ParkingStructure
             BtnCancel.Enabled = true;
             TxtPrice.Enabled = true;
             CmbParkingFee.Enabled = true;
-            ChkState.Enabled = true;
+            ChkState.Enabled = false;
             TxtNumberSpace.Enabled = true;
 
             TxtNumberSpace.Focus();
@@ -140,13 +141,16 @@ namespace parking.Views.Administration.ParkingStructure
                 return error;
             }
 
-            if (psc.isParkingNumberExists(Convert.ToInt32(TxtNumberSpace.Text.Trim())))
+            if (!isEdit)
             {
-                h.MsgError("EL NÚMERO DE PARQUEO YA EXISTE!");
-                error++;
-                TxtNumberSpace.Focus();
-                return error;
+                if (psc.isParkingNumberExists(Convert.ToInt32(TxtNumberSpace.Text.Trim())))
+                {
+                    h.MsgError("EL NÚMERO DE PARQUEO YA EXISTE!");
+                    error++;
+                    TxtNumberSpace.Focus();
+                    return error;
 
+                }
             }
 
             if (CmbParkingFee.SelectedValue == null)
@@ -172,8 +176,8 @@ namespace parking.Views.Administration.ParkingStructure
        
 
         private async void BtnEdit_Click(object sender, EventArgs e)
-        { 
-            
+        {
+            isEdit = true;
             if (h.MsgQuestion(Helpers.App.Msg0002)=="S")
             {
                 if (validateData() == 0)
@@ -369,7 +373,7 @@ namespace parking.Views.Administration.ParkingStructure
                     ps.PARKING_SPACE_CODE,
                     ps.PARKING_SPACE_NUMBER,
                     ps.PARKING_TYPE_DESCRIPTION,
-                    ps.STATE,
+                    ps.STATE ? "Ocupado" : "Disponible" ,
                     Convert.ToDateTime(ps.INSERTED_AT).ToShortDateString()
                 );
             }

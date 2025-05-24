@@ -139,7 +139,8 @@ namespace parking.Views.Administration.Configuration
                             {
                                 ROLE_ID = roleId,
                                 PERMISSION_ID = permissionId,
-                                INSERTED_AT = DateTime.Now
+                                INSERTED_AT = DateTime.Now,
+                                USER_CODE = Config.User.userId
                             };
 
                             int saved = rolePermissionController.saveRolePermission(newRolePermission);

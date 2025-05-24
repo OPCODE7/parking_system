@@ -98,6 +98,8 @@ namespace parking.Views.Administration.Configuration
 
                 BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
                 BtnCancel.Enabled = true;
+                BtnEdit.Enabled = flagIsPaperbin ? false : true;
+                BtnDelete.Enabled = flagIsPaperbin ? false : true;
 
                 if (billRange.BILL_RANGE_STATE == "ACTIVO")
                 {
@@ -113,8 +115,7 @@ namespace parking.Views.Administration.Configuration
                 }
 
                 MskInitialRange.Focus();
-                BtnEdit.Enabled = flagIsPaperbin ? false : true;
-                BtnDelete.Enabled = flagIsPaperbin ? false : true;
+             
                 PbxRecovery.Enabled = PermissionManager.HasPermission("PAP", "Modificar");
                 PbxDestroy.Enabled = PermissionManager.HasPermission("PAP", "Eliminar");
                 TxtBillRangeId.Text = billRange.BILL_RANGE_ID.ToString();
@@ -154,9 +155,6 @@ namespace parking.Views.Administration.Configuration
 
                     if(updateBillRange.LIMIT_DATE!=limitDate)
                         cambios += $"LIMIT_DATE: '{updateBillRange.LIMIT_DATE}' → '{limitDate}'{separator}";
-
-
-
 
                     // Limpiar coma final
                     if (!string.IsNullOrEmpty(cambios))
@@ -215,7 +213,6 @@ namespace parking.Views.Administration.Configuration
                 BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));
 
                 
-
                 if (brc.updateBillRange(br) > 0)
                 {
                     await lac.saveLog(Config.User.userId, "Recuperar", $"El usuario {Config.User.userName} restauró el rango de facturación con código  {brc.getLastIdBillRange(false)} de la papelera.", moduleId, DateTime.Now);

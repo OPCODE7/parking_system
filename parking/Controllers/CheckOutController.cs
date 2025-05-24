@@ -32,14 +32,7 @@ namespace parking.Controllers
                                 join ps in db.PARKING_SPACE on cin.PARKING_SPACE_CODE equals ps.PARKING_SPACE_CODE
                                 join pf in db.PARKING_FEE on ps.PARKING_FEE_CODE equals pf.PARKING_FEE_CODE
                                 join pt in db.PARKING_TYPES on pf.PARKING_TYPE_CODE equals pt.PARKING_TYPE_CODE
-                                where (string.IsNullOrEmpty(searchFilter) ?
-                                      cout.DEL == isDel :
-                                      (cout.CHECK_OUT_CODE.Contains(searchFilter) ||
-                                       cout.CHECK_IN_CODE.Contains(searchFilter) ||
-                                       cout.CHECK_OUT_TIME.ToString().Contains(searchFilter) ||
-                                       cout.CHECK_OUT_STATE.Contains(searchFilter) ||
-                                       cout.FULL_CHARGE.ToString().Contains(searchFilter)) &&
-                                      cout.DEL == isDel)
+                                where cout.DEL==isDel
                                 select new CheckOutDTO
                                 {
                                     CHECK_OUT_CODE = cout.CHECK_OUT_CODE,
@@ -53,8 +46,16 @@ namespace parking.Controllers
                                     PARKING_SPACE_NUMBER = ps.PARKING_SPACE_NUMBER,
                                     DESCRIPTION_PARKING_TYPE = pt.DESCRIPTION_PARKING_TYPE
                                 };
+                    var result = query.ToList();
 
-                    checkOuts = query.ToList();
+                    if (!String.IsNullOrEmpty(searchFilter))
+                    {
+                        result = result.Where(cout => cout.CHECK_OUT_CODE.ToLower().Contains(searchFilter) ||cout.CHECK_IN_CODE.ToLower().Contains(searchFilter) ||
+                       h.DoesDateMatch(cout.CHECK_OUT_TIME,searchFilter) || cout.CHECK_OUT_STATE.ToString().ToLower().Contains(searchFilter) ||cout.FULL_CHARGE.ToString().ToLower().Contains(searchFilter)).ToList();
+
+                    }
+
+                    checkOuts = result.ToList();
                 }
             }
             catch (Exception ex)

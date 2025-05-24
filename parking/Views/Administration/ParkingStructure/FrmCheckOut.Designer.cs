@@ -30,12 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheckOut));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PbxClose = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.BtnEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
@@ -45,6 +43,8 @@
             this.BtnSearchCheckIn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnGenerateBill = new System.Windows.Forms.ToolStripButton();
+            this.TspBill = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
             this.label9 = new System.Windows.Forms.Label();
             this.TxtClientName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -84,8 +84,7 @@
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
-            this.TspBill = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnPaperbin = new System.Windows.Forms.ToolStripButton();
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxClose)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
@@ -115,8 +114,6 @@
             this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnEdit,
-            this.toolStripSeparator2,
             this.BtnDelete,
             this.toolStripSeparator3,
             this.BtnSave,
@@ -133,21 +130,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(946, 42);
             this.toolStrip1.TabIndex = 126;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // BtnEdit
-            // 
-            this.BtnEdit.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnEdit.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnEdit.Image = ((System.Drawing.Image)(resources.GetObject("BtnEdit.Image")));
-            this.BtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnEdit.Name = "BtnEdit";
-            this.BtnEdit.Size = new System.Drawing.Size(80, 37);
-            this.BtnEdit.Text = "Editar";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 42);
             // 
             // BtnDelete
             // 
@@ -223,6 +205,22 @@
             this.BtnGenerateBill.Size = new System.Drawing.Size(101, 37);
             this.BtnGenerateBill.Text = "Facturar";
             this.BtnGenerateBill.Click += new System.EventHandler(this.BtnGenerateBill_Click);
+            // 
+            // TspBill
+            // 
+            this.TspBill.Name = "TspBill";
+            this.TspBill.Size = new System.Drawing.Size(6, 42);
+            // 
+            // BtnPaperbin
+            // 
+            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
+            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPaperbin.Name = "BtnPaperbin";
+            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
+            this.BtnPaperbin.Text = "Papelera";
+            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
             // 
             // label9
             // 
@@ -515,11 +513,11 @@
             this.DgvCheckOuts.AllowUserToDeleteRows = false;
             this.DgvCheckOuts.AllowUserToResizeColumns = false;
             this.DgvCheckOuts.AllowUserToResizeRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvCheckOuts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvCheckOuts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvCheckOuts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvCheckOuts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvCheckOuts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -529,14 +527,14 @@
             this.TIPO_PARQUEO,
             this.FECHAYHORA,
             this.ESTADO});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCheckOuts.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCheckOuts.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvCheckOuts.Location = new System.Drawing.Point(30, 350);
             this.DgvCheckOuts.Name = "DgvCheckOuts";
             this.DgvCheckOuts.ReadOnly = true;
@@ -546,6 +544,7 @@
             this.DgvCheckOuts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvCheckOuts.Size = new System.Drawing.Size(883, 313);
             this.DgvCheckOuts.TabIndex = 171;
+            this.TlpSelectRow.SetToolTip(this.DgvCheckOuts, "Doble click para seleccionar registro.");
             this.DgvCheckOuts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCheckOuts_CellDoubleClick);
             // 
             // ID
@@ -554,7 +553,7 @@
             this.ID.MinimumWidth = 8;
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
-            this.ID.Width = 130;
+            this.ID.Width = 110;
             // 
             // PLACA
             // 
@@ -562,7 +561,7 @@
             this.PLACA.MinimumWidth = 8;
             this.PLACA.Name = "PLACA";
             this.PLACA.ReadOnly = true;
-            this.PLACA.Width = 150;
+            this.PLACA.Width = 120;
             // 
             // NUMEROPARQUEO
             // 
@@ -594,7 +593,7 @@
             this.ESTADO.MinimumWidth = 8;
             this.ESTADO.Name = "ESTADO";
             this.ESTADO.ReadOnly = true;
-            this.ESTADO.Width = 150;
+            this.ESTADO.Width = 120;
             // 
             // TxtDiscount
             // 
@@ -690,21 +689,10 @@
             this.TtpDestroy.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpDestroy.ToolTipTitle = "Destruir";
             // 
-            // TspBill
+            // TlpSelectRow
             // 
-            this.TspBill.Name = "TspBill";
-            this.TspBill.Size = new System.Drawing.Size(6, 42);
-            // 
-            // BtnPaperbin
-            // 
-            this.BtnPaperbin.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPaperbin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BtnPaperbin.Image = ((System.Drawing.Image)(resources.GetObject("BtnPaperbin.Image")));
-            this.BtnPaperbin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPaperbin.Name = "BtnPaperbin";
-            this.BtnPaperbin.Size = new System.Drawing.Size(108, 37);
-            this.BtnPaperbin.Text = "Papelera";
-            this.BtnPaperbin.Click += new System.EventHandler(this.BtnPaperbin_Click);
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmCheckOut
             // 
@@ -766,8 +754,6 @@
 
         private System.Windows.Forms.PictureBox PbxClose;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton BtnEdit;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton BtnDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton BtnSave;
@@ -800,12 +786,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.DataGridView DgvCheckOuts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PLACA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NUMEROPARQUEO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FECHAYHORA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
         private System.Windows.Forms.TextBox TxtDiscount;
         private System.Windows.Forms.TextBox TxtTotalTime;
         private System.Windows.Forms.Label label11;
@@ -818,5 +798,12 @@
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.ToolStripSeparator TspBill;
         private System.Windows.Forms.ToolStripButton BtnPaperbin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PLACA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NUMEROPARQUEO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TIPO_PARQUEO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FECHAYHORA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

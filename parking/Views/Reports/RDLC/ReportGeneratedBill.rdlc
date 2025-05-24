@@ -964,7 +964,7 @@
                   <Style />
                 </TextRun>
                 <TextRun>
-                  <Value>=First(Fields!LIMIT_DATE.Value, "DtsGetActiveBillRange")</Value>
+                  <Value>=First(Fields!LIMIT_DATE.Value, "DtsGetActiveBillRange").ToShortDateString()</Value>
                   <Style />
                 </TextRun>
               </TextRuns>

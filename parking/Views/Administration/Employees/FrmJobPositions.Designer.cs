@@ -61,6 +61,7 @@
             this.PbxRecovery = new System.Windows.Forms.PictureBox();
             this.TtpDestroy = new System.Windows.Forms.ToolTip(this.components);
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
+            this.TlpSelectRow = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DgvJobPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxCancel)).BeginInit();
@@ -105,6 +106,7 @@
             this.DgvJobPositions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvJobPositions.Size = new System.Drawing.Size(650, 347);
             this.DgvJobPositions.TabIndex = 120;
+            this.TlpSelectRow.SetToolTip(this.DgvJobPositions, "Doble click para seleccionar registro.");
             this.DgvJobPositions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvJobPositions_CellDoubleClick);
             // 
             // ID
@@ -174,9 +176,8 @@
             this.TxtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtSearch.Location = new System.Drawing.Point(91, 139);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtSearch.Multiline = true;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(388, 30);
+            this.TxtSearch.Size = new System.Drawing.Size(388, 26);
             this.TxtSearch.TabIndex = 110;
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
             // 
@@ -224,9 +225,8 @@
             this.TxtDescription.Location = new System.Drawing.Point(224, 90);
             this.TxtDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtDescription.MaxLength = 150;
-            this.TxtDescription.Multiline = true;
             this.TxtDescription.Name = "TxtDescription";
-            this.TxtDescription.Size = new System.Drawing.Size(438, 30);
+            this.TxtDescription.Size = new System.Drawing.Size(438, 26);
             this.TxtDescription.TabIndex = 109;
             // 
             // toolStrip1
@@ -350,10 +350,9 @@
             this.TxtJPSCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
             this.TxtJPSCode.Location = new System.Drawing.Point(13, 90);
             this.TxtJPSCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TxtJPSCode.Multiline = true;
             this.TxtJPSCode.Name = "TxtJPSCode";
             this.TxtJPSCode.ReadOnly = true;
-            this.TxtJPSCode.Size = new System.Drawing.Size(181, 30);
+            this.TxtJPSCode.Size = new System.Drawing.Size(181, 26);
             this.TxtJPSCode.TabIndex = 111;
             // 
             // PbxDestroy
@@ -397,6 +396,11 @@
             // 
             this.TtpRecovery.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TtpRecovery.ToolTipTitle = "Recuperar ";
+            // 
+            // TlpSelectRow
+            // 
+            this.TlpSelectRow.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TlpSelectRow.ToolTipTitle = "Seleccionar";
             // 
             // FrmJobPositions
             // 
@@ -465,5 +469,6 @@
         private System.Windows.Forms.PictureBox PbxRecovery;
         private System.Windows.Forms.ToolTip TtpDestroy;
         private System.Windows.Forms.ToolTip TtpRecovery;
+        private System.Windows.Forms.ToolTip TlpSelectRow;
     }
 }

@@ -51,7 +51,7 @@
             this.PbxClose.Image = ((System.Drawing.Image)(resources.GetObject("PbxClose.Image")));
             this.PbxClose.Location = new System.Drawing.Point(877, 4);
             this.PbxClose.Name = "PbxClose";
-            this.PbxClose.Size = new System.Drawing.Size(27, 24);
+            this.PbxClose.Size = new System.Drawing.Size(27, 23);
             this.PbxClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxClose.TabIndex = 138;
             this.PbxClose.TabStop = false;

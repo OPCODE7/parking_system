@@ -41,7 +41,7 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    companyData = db.COMPANY_DATA.Find(rtn);
+                    companyData = db.COMPANY_DATA.Where(c=>c.COMPANY_RTN==rtn).FirstOrDefault();
                 }
             }
             catch(Exception ex)
@@ -79,7 +79,7 @@ namespace parking.Controllers
             {
                 using (PARKINGEntities db = new PARKINGEntities())
                 {
-                    db.Entry(companyData).State = System.Data.Entity.EntityState.Modified;
+                    db.Entry(companyData).State= System.Data.Entity.EntityState.Modified;
                     result = db.SaveChanges();
                 }
 
