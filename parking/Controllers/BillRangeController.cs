@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using parking.DTO;
 using parking.Models;
@@ -42,7 +43,8 @@ namespace parking.Controllers
                             BILL_RANGE_START = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.INITIAL_RANGE,
                             BILL_RANGE_END = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.FINAL_RANGE,
                             DEL = br.DEL,
-                            LIMIT_DATE= br.LIMIT_DATE
+                            LIMIT_DATE= br.LIMIT_DATE,
+                            CAI= br.CAI
                         });
 
                     // Aplicar filtro de búsqueda si se proporciona
@@ -53,6 +55,7 @@ namespace parking.Controllers
                             br.BILL_RANGE_START.Contains(searchFilter) ||
                             br.BILL_RANGE_END.Contains(searchFilter) ||
                             br.BILL_RANGE_STATE.Contains(searchFilter) ||
+                            br.CAI.Contains(searchFilter)||
                             br.INSERTED_AT.ToString().Contains(searchFilter)
                            );
                     }
@@ -96,7 +99,8 @@ namespace parking.Controllers
                             BILL_RANGE_START = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.INITIAL_RANGE,
                             BILL_RANGE_END = br.ESTABLISHMENT + "-" + br.EMISSION_POINT + "-" + br.DOC_TYPE + "-" + br.FINAL_RANGE,
                             DEL = br.DEL,
-                            LIMIT_DATE= br.LIMIT_DATE
+                            LIMIT_DATE= br.LIMIT_DATE,
+                            CAI= br.CAI
                         })
                         .FirstOrDefault();
 

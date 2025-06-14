@@ -26,6 +26,7 @@ namespace parking.Models
         public bool DEL { get; set; }
         public string USER_CODE { get; set; }
         public System.DateTime LIMIT_DATE { get; set; }
+        public string CAI { get; set; }
     
         public virtual USERS USERS { get; set; }
     }

@@ -47,6 +47,7 @@
           <Property Name="DEL" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="LIMIT_DATE" Type="date" Nullable="false" />
+          <Property Name="CAI" Type="varchar" MaxLength="55" Nullable="false" />
         </EntityType>
         <EntityType Name="CHECK_IN">
           <Key>
@@ -132,8 +133,9 @@
             <PropertyRef Name="DISCOUNT_ID" />
           </Key>
           <Property Name="DISCOUNT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DISCOUNT_VALUE" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="DISCOUNT_VALUE" Type="varchar" MaxLength="4" />
           <Property Name="DISCOUNT_STATE" Type="bit" Nullable="false" />
+          <Property Name="DISCOUNT_DESCRIPTION" Type="varchar" MaxLength="255" />
           <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="DEL" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" Nullable="false" />
@@ -152,6 +154,7 @@
           <Property Name="INSERTED_AT" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="BIT" Type="bit" Nullable="false" />
           <Property Name="USER_CODE" Type="varchar" MaxLength="15" />
+          <Property Name="DISCOUNT_DESCRIPTION" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="EMPLOYEE_SALARY">
           <Key>
@@ -391,18 +394,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DISCOUNTS__DISCO__3E723F9C">
-          <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="1" />
-          <End Role="DISCOUNTS_BILL" Type="Self.DISCOUNTS_BILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DISCOUNTS">
-              <PropertyRef Name="DISCOUNT_ID" />
-            </Principal>
-            <Dependent Role="DISCOUNTS_BILL">
-              <PropertyRef Name="DISCOUNT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__DISCOUNTS__USER___68336F3E">
           <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
           <End Role="DISCOUNTS_BILL" Type="Self.DISCOUNTS_BILL" Multiplicity="*" />
@@ -580,6 +571,18 @@
             </Principal>
             <Dependent Role="BILL">
               <PropertyRef Name="CHECK_OUT_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISCOUNTS_BILL_DISCOUNTS">
+          <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="1" />
+          <End Role="DISCOUNTS_BILL" Type="Self.DISCOUNTS_BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISCOUNTS">
+              <PropertyRef Name="DISCOUNT_ID" />
+            </Principal>
+            <Dependent Role="DISCOUNTS_BILL">
+              <PropertyRef Name="DISCOUNT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -903,10 +906,6 @@
             <End Role="DISCOUNT_TYPE" EntitySet="DISCOUNT_TYPE" />
             <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
           </AssociationSet>
-          <AssociationSet Name="FK__DISCOUNTS__DISCO__3E723F9C" Association="Self.FK__DISCOUNTS__DISCO__3E723F9C">
-            <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
-            <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
-          </AssociationSet>
           <AssociationSet Name="FK__DISCOUNTS__USER___68336F3E" Association="Self.FK__DISCOUNTS__USER___68336F3E">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
@@ -966,6 +965,10 @@
           <AssociationSet Name="FK_CHECKOUTBILL" Association="Self.FK_CHECKOUTBILL">
             <End Role="CHECK_OUT" EntitySet="CHECK_OUT" />
             <End Role="BILL" EntitySet="BILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISCOUNTS_BILL_DISCOUNTS" Association="Self.FK_DISCOUNTS_BILL_DISCOUNTS">
+            <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
+            <End Role="DISCOUNTS_BILL" EntitySet="DISCOUNTS_BILL" />
           </AssociationSet>
           <AssociationSet Name="FK_EMP_SAL" Association="Self.FK_EMP_SAL">
             <End Role="USERS" EntitySet="USERS" />
@@ -1084,6 +1087,7 @@
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LIMIT_DATE" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="USERS" Relationship="Self.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
+          <Property Name="CAI" Type="String" Nullable="false" MaxLength="55" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CHECK_IN">
           <Key>
@@ -1182,7 +1186,7 @@
             <PropertyRef Name="DISCOUNT_ID" />
           </Key>
           <Property Name="DISCOUNT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DISCOUNT_VALUE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DISCOUNT_VALUE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="DISCOUNT_STATE" Type="Boolean" Nullable="false" />
           <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="DEL" Type="Boolean" Nullable="false" />
@@ -1193,6 +1197,7 @@
           <NavigationProperty Name="DISCOUNT_TYPE" Relationship="Self.FK__DISCOUNTS__DISCO__3AA1AEB8" FromRole="DISCOUNTS" ToRole="DISCOUNT_TYPE" />
           <NavigationProperty Name="DISCOUNTS_BILL" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS" ToRole="DISCOUNTS_BILL" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USER_DISCOUNT" FromRole="DISCOUNTS" ToRole="USERS" />
+          <Property Name="DISCOUNT_DESCRIPTION" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="DISCOUNTS_BILL">
           <Key>
@@ -1207,6 +1212,7 @@
           <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
           <NavigationProperty Name="USERS" Relationship="Self.FK__DISCOUNTS__USER___68336F3E" FromRole="DISCOUNTS_BILL" ToRole="USERS" />
+          <Property Name="DISCOUNT_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EMPLOYEE_SALARY">
           <Key>
@@ -2265,6 +2271,7 @@
           <EntitySetMapping Name="BILL_RANGE">
             <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
               <MappingFragment StoreEntitySet="BILL_RANGE">
+                <ScalarProperty Name="CAI" ColumnName="CAI" />
                 <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
                 <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
                 <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
@@ -2368,6 +2375,7 @@
           <EntitySetMapping Name="DISCOUNTS">
             <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS">
               <MappingFragment StoreEntitySet="DISCOUNTS">
+                <ScalarProperty Name="DISCOUNT_DESCRIPTION" ColumnName="DISCOUNT_DESCRIPTION" />
                 <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
                 <ScalarProperty Name="DISCOUNT_VALUE" ColumnName="DISCOUNT_VALUE" />
                 <ScalarProperty Name="DISCOUNT_STATE" ColumnName="DISCOUNT_STATE" />
@@ -2383,6 +2391,7 @@
           <EntitySetMapping Name="DISCOUNTS_BILL">
             <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
               <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+                <ScalarProperty Name="DISCOUNT_DESCRIPTION" ColumnName="DISCOUNT_DESCRIPTION" />
                 <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
                 <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
                 <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />

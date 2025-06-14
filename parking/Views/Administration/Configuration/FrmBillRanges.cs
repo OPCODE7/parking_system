@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Migrations.Sql;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace parking.Views.Administration.Configuration
         LogBookAppController lac= new LogBookAppController();
         BillController bc= new BillController();
 
-        string establishment, emissionPoint, doctype, userId, moduleId = "RFAC";
+        string establishment, emissionPoint, doctype, userId, moduleId = "RFAC",cai;
         DateTime limitDate;
         int initialRange, finalRange, lastUsed;
         bool flagIsPaperbin = false,flagIsUpdate= false;
@@ -53,8 +54,10 @@ namespace parking.Views.Administration.Configuration
             BtnDelete.Enabled = false;
             MskInitialRange.Enabled = false;
             MskFinalRange.Enabled = false;
+            MskCai.Enabled = false;
             MskInitialRange.Clear();
             MskFinalRange.Clear();
+            MskCai.Clear();
             TxtBillRangeId.Clear();
             PbxDestroy.Visible = false;
             PbxRecovery.Visible = false;
@@ -73,6 +76,7 @@ namespace parking.Views.Administration.Configuration
             BtnSave.Enabled = true;
             MskInitialRange.Enabled = true;
             MskFinalRange.Enabled = true;
+            MskCai.Enabled = true;
             MskInitialRange.Focus();
             DtpLimitDate.Enabled = true;
 
@@ -94,7 +98,6 @@ namespace parking.Views.Administration.Configuration
 
                 BtnNew.Enabled = false;
                 BtnSave.Enabled = false;
-                DtpLimitDate.Enabled = true;
 
                 BtnDelete.Enabled = PermissionManager.HasPermission(moduleId, "Eliminar");
                 BtnCancel.Enabled = true;
@@ -106,12 +109,16 @@ namespace parking.Views.Administration.Configuration
                     BtnEdit.Enabled = PermissionManager.HasPermission(moduleId, "Modificar");
                     MskInitialRange.Enabled = true;
                     MskFinalRange.Enabled = true;
+                    MskCai.Enabled = true;
+                    DtpLimitDate.Enabled = true;
                 }
                 else
                 {
                     BtnEdit.Enabled = false;
                     MskInitialRange.Enabled = false;
                     MskFinalRange.Enabled = false;
+                    MskCai.Enabled = false;
+                    DtpLimitDate.Enabled = false;
                 }
 
                 MskInitialRange.Focus();
@@ -121,6 +128,7 @@ namespace parking.Views.Administration.Configuration
                 TxtBillRangeId.Text = billRange.BILL_RANGE_ID.ToString();
                 MskInitialRange.Text = billRange.BILL_RANGE_START;
                 MskFinalRange.Text = billRange.BILL_RANGE_END;
+                MskCai.Text = billRange.CAI;
                 DtpLimitDate.Value = billRange.LIMIT_DATE;
             }
         }
@@ -156,6 +164,9 @@ namespace parking.Views.Administration.Configuration
                     if(updateBillRange.LIMIT_DATE!=limitDate)
                         cambios += $"LIMIT_DATE: '{updateBillRange.LIMIT_DATE}' → '{limitDate}'{separator}";
 
+                    if (updateBillRange.CAI != cai)
+                        cambios += $"CAI: '{updateBillRange.CAI}' → '{cai}'{separator}";
+
                     // Limpiar coma final
                     if (!string.IsNullOrEmpty(cambios))
                         cambios = cambios.TrimEnd(',', ' ');
@@ -166,6 +177,7 @@ namespace parking.Views.Administration.Configuration
                     updateBillRange.INITIAL_RANGE = initialRange;
                     updateBillRange.FINAL_RANGE = finalRange;
                     updateBillRange.LIMIT_DATE = limitDate;
+                    updateBillRange.CAI = cai;
 
                     if (brc.updateBillRange(updateBillRange) > 0)
                     {
@@ -346,7 +358,7 @@ namespace parking.Views.Administration.Configuration
 
             foreach (var item in billRanges)
             {
-                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END, item.BILL_RANGE_STATE,Convert.ToDateTime(item.LIMIT_DATE).ToShortDateString() ,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
+                DgvBillRanges.Rows.Add(item.BILL_RANGE_ID, item.BILL_RANGE_START, item.BILL_RANGE_END,item.CAI, item.BILL_RANGE_STATE,Convert.ToDateTime(item.LIMIT_DATE).ToShortDateString() ,Convert.ToDateTime(item.INSERTED_AT).ToShortDateString());
             }
         }
 
@@ -367,6 +379,14 @@ namespace parking.Views.Administration.Configuration
             {
                 h.MsgWarning("DEBE INGRESAR EL RANGO FINAL EN FORMATO CORRECTO.");
                 MskFinalRange.Focus();
+                error++;
+                return error;
+            }
+
+            if (!MskCai.MaskFull)
+            {
+                h.MsgWarning("DEBE INGRESAR EL CAI EN FORMATO CORRECTO.");
+                MskCai.Focus();
                 error++;
                 return error;
             }
@@ -393,6 +413,7 @@ namespace parking.Views.Administration.Configuration
             {
                 if (Convert.ToInt32(MskInitialRange.Text.Split('-')[3]) <= lastBillRange.FINAL_RANGE)
                 {
+                    h.MsgInfo(MskInitialRange.Text.Split('-')[3]);
                     h.MsgWarning("EL RANGO DE FACTURA INICIAL NO PUEDE SER MENOR O IGUAL QUE EL ÚLTIMO RANGO CONFIGURADO.");
                     error++;
                     return error;
@@ -420,7 +441,7 @@ namespace parking.Views.Administration.Configuration
             limitDate = DtpLimitDate.Value;
             lastUsed = initialRange - 1;
             userId = Config.User.userId;
-
+            cai = MskCai.Text;
 
         }
 
@@ -439,6 +460,7 @@ namespace parking.Views.Administration.Configuration
                 newBillRange.INSERTED_AT = DateTime.Now;
                 newBillRange.LIMIT_DATE = limitDate;
                 newBillRange.BILL_RANGE_STATE = true;
+                newBillRange.CAI = cai;
 
                 newBillRange.USER_CODE = userId;
                 BILL_RANGE lastBillRange = brc.getBillRange(brc.getLastIdBillRange(false));

@@ -25,12 +25,14 @@ namespace parking.Views.Administration.BillingModule
         Helpers.Helpers h = new Helpers.Helpers();
         CheckOutController checkOutController = new CheckOutController();
         DiscountsBillController discountsBillController= new DiscountsBillController();
+        DiscountsController dc = new DiscountsController();
         ParkingSpaceController pspController = new ParkingSpaceController();
         LogBookAppController lac = new LogBookAppController();
 
         public int discountIdFT,discountIdFF;
         public double amountDiscountFT,amountDiscountFF;
         public string psCode, moduleId= "FAC";
+        private double amountClaimDiscount = 0;
         public FrmGenerateBill()
         {
             InitializeComponent();
@@ -68,6 +70,34 @@ namespace parking.Views.Administration.BillingModule
             else
             {
                 e.Handled = true;
+            }
+        }
+
+        private void ChkClaim_CheckedChanged(object sender, EventArgs e)
+        {
+            double subtotal = Convert.ToDouble(TxtSubtotal.Text.Trim());
+            if (ChkClaim.Checked)
+            {
+                DISCOUNTS claim = dc.getDiscount(3);
+                ChkClaim.Text += " " + claim.DISCOUNT_VALUE;
+
+                amountClaimDiscount = subtotal * (Convert.ToDouble(claim.DISCOUNT_VALUE.Replace("%",""))/100);
+
+                double discount = Convert.ToDouble(TxtDiscount.Text.Trim()) + amountClaimDiscount;
+                TxtDiscount.Text = discount.ToString();
+                LblFullCharge.Text = "Total a pagar: " + ((subtotal - discount) + Convert.ToDouble(TxtISV.Text.Trim()));
+            }
+            else
+            {
+                
+                DISCOUNTS claim = dc.getDiscount(10);
+                ChkClaim.Text = "Reclamo";
+                amountClaimDiscount = 0; 
+
+                TxtDiscount.Text = (amountDiscountFF + amountDiscountFT).ToString();
+                double discount = Convert.ToDouble(TxtDiscount.Text.Trim()) - amountClaimDiscount;
+                LblFullCharge.Text = "Total a pagar: " + ((subtotal - discount) + Convert.ToDouble(TxtISV.Text.Trim()));
+               
             }
         }
 
@@ -109,6 +139,7 @@ namespace parking.Views.Administration.BillingModule
                         discountBillFF.DISCOUNT_ID = discountIdFF;
                         discountBillFF.DISCOUNT_AMOUNT = Convert.ToDecimal(amountDiscountFF);
                         discountBillFF.INSERTED_AT = DateTime.Now;
+                        discountBillFF.USER_CODE= Config.User.userId;
 
                         if(discountsBillController.saveDiscountsBill(discountBillFF) <= 0)
                         {
@@ -123,6 +154,7 @@ namespace parking.Views.Administration.BillingModule
                         discountBillFT.DISCOUNT_ID = discountIdFT;
                         discountBillFT.DISCOUNT_AMOUNT = Convert.ToDecimal(amountDiscountFT);
                         discountBillFT.INSERTED_AT = DateTime.Now;
+                        discountBillFT.USER_CODE = Config.User.userId;
 
                         if (discountsBillController.saveDiscountsBill(discountBillFT) <= 0)
                         {
@@ -130,6 +162,25 @@ namespace parking.Views.Administration.BillingModule
                             return;
                         }
                     }
+
+                    if (ChkClaim.Checked)
+                    {
+                        DISCOUNTS_BILL claimDiscount= new DISCOUNTS_BILL();
+
+                        claimDiscount.BILL_CODE = nextBillCode;
+                        claimDiscount.DISCOUNT_ID = 3;
+                        claimDiscount.DISCOUNT_AMOUNT = Convert.ToDecimal(amountClaimDiscount);
+                        claimDiscount.INSERTED_AT = DateTime.Now;
+                        claimDiscount.USER_CODE = Config.User.userId;
+
+                        if (discountsBillController.saveDiscountsBill(claimDiscount) <= 0)
+                        {
+                            h.MsgError("HA OCURRIDO UN ERROR AL GUARDAR EL DESCUENTO POR TIEMPO");
+                            return;
+                        }
+
+                    }
+
 
                     await lac.saveLog(Config.User.userId, "Insertar", $"El usuario {User.userName} generó la factura No. {nextBillNumber} con código {nextBillCode}.", moduleId, DateTime.Now);
                     h.MsgSuccess("LA FACTURA SE HA GENERADO CORRECTAMENTE");
@@ -181,8 +232,26 @@ namespace parking.Views.Administration.BillingModule
         {
             BtnGenerateBill.Enabled = PermissionManager.HasPermission(moduleId, "Crear");
             TxtDiscount.Enabled = true;
+            
+            if (discountIdFF != 0) {
+                ChkClientFrequently.Checked = true;
+                DISCOUNTS discountFF = dc.getDiscount(discountIdFF);
+                if (discountFF != null)
+                {
+                    ChkClientFrequently.Text += " " + discountFF.DISCOUNT_VALUE;
+                }
+                
+            }
+            if (discountIdFT != 0){
+                ChkLengthOfStay.Checked = true;
+                DISCOUNTS discountFT = dc.getDiscount(discountIdFT);
+                if (discountFT != null)
+                {
+                    ChkLengthOfStay.Text += " " + discountFT.DISCOUNT_VALUE;
+                }
+            }
+            
         }
 
-        
     }
 }

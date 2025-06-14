@@ -21,6 +21,7 @@ namespace parking.Models
         public System.DateTime INSERTED_AT { get; set; }
         public bool BIT { get; set; }
         public string USER_CODE { get; set; }
+        public string DISCOUNT_DESCRIPTION { get; set; }
     
         public virtual DISCOUNTS DISCOUNTS { get; set; }
         public virtual USERS USERS { get; set; }

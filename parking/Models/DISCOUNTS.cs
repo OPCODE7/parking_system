@@ -29,6 +29,7 @@ namespace parking.Models
         public int DISCOUNT_TYPE_ID { get; set; }
         public int HOURS { get; set; }
         public int FREQUENCY_DAYS { get; set; }
+        public string DISCOUNT_DESCRIPTION { get; set; }
     
         public virtual DISCOUNT_TYPE DISCOUNT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

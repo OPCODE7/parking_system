@@ -245,6 +245,8 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
         {
             SYSTEM_LICENSE systemL= slc.getSystemLicense();
             string serialNumber= sl.GetMotherboardSerial();
+
+            h.MsgInfo("Obteniendo serie de placa...");
             
             if (serialNumber == null)
             {
@@ -253,6 +255,9 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
                 return;
             }
 
+            h.MsgInfo("Serie de placa obtenida: " + serialNumber);
+
+            h.MsgInfo("Verificando licencia del sistema...");
 
             if (systemL != null && !hasher.VerifyPassword(serialNumber,systemL.MACHINE_SIGNATURE))
             {
@@ -260,6 +265,10 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
                 Application.Exit();
                 return;
             }
+
+            h.MsgInfo("Licencia del sistema verificada correctamente.");
+
+            
 
             if (systemL == null) {
                 SYSTEM_LICENSE newSL = new SYSTEM_LICENSE
@@ -274,6 +283,8 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
                 }
                 
             }
+
+            h.MsgInfo("Leyendo archivo de configuración...");
 
             if (ReadFileData())
             {

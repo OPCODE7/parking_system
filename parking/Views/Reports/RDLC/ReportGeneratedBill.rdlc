@@ -769,7 +769,7 @@
   <Width>6.68414in</Width>
   <Page>
     <PageHeader>
-      <Height>4.16278cm</Height>
+      <Height>5.04472cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -898,7 +898,7 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
             <Paragraph>
@@ -913,7 +913,7 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
             <Paragraph>
@@ -924,7 +924,7 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
             <Paragraph>
@@ -939,7 +939,7 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
             <Paragraph>
@@ -954,7 +954,22 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
+              </Style>
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>CAI: </Value>
+                  <Style />
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!CAI.Value, "DtsGetActiveBillRange")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
             <Paragraph>
@@ -969,14 +984,14 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <LineHeight>3pt</LineHeight>
+                <LineHeight>5pt</LineHeight>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
           <Top>1.09319cm</Top>
           <Left>0.64064cm</Left>
-          <Height>2.76958cm</Height>
+          <Height>3.3693cm</Height>
           <Width>10.34894cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
@@ -1248,6 +1263,10 @@
         <Field Name="LIMIT_DATE">
           <DataField>LIMIT_DATE</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CAI">
+          <DataField>CAI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

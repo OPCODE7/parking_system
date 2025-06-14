@@ -291,6 +291,8 @@ namespace parking.Views.Reports.DataSets {
             
             private global::System.Data.DataColumn columnLIMIT_DATE;
             
+            private global::System.Data.DataColumn columnCAI;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SP_GET_ACTIVE_BILL_RANGEDataTable() {
@@ -374,6 +376,14 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn CAIColumn {
+                get {
+                    return this.columnCAI;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -409,7 +419,7 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SP_GET_ACTIVE_BILL_RANGERow AddSP_GET_ACTIVE_BILL_RANGERow(string ESTABLISHMENT, string EMISSION_POINT, string DOC_TYPE, int LAST_USED, int FINAL_RANGE, System.DateTime LIMIT_DATE) {
+            public SP_GET_ACTIVE_BILL_RANGERow AddSP_GET_ACTIVE_BILL_RANGERow(string ESTABLISHMENT, string EMISSION_POINT, string DOC_TYPE, int LAST_USED, int FINAL_RANGE, System.DateTime LIMIT_DATE, string CAI) {
                 SP_GET_ACTIVE_BILL_RANGERow rowSP_GET_ACTIVE_BILL_RANGERow = ((SP_GET_ACTIVE_BILL_RANGERow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ESTABLISHMENT,
@@ -417,7 +427,8 @@ namespace parking.Views.Reports.DataSets {
                         DOC_TYPE,
                         LAST_USED,
                         FINAL_RANGE,
-                        LIMIT_DATE};
+                        LIMIT_DATE,
+                        CAI};
                 rowSP_GET_ACTIVE_BILL_RANGERow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSP_GET_ACTIVE_BILL_RANGERow);
                 return rowSP_GET_ACTIVE_BILL_RANGERow;
@@ -446,6 +457,7 @@ namespace parking.Views.Reports.DataSets {
                 this.columnLAST_USED = base.Columns["LAST_USED"];
                 this.columnFINAL_RANGE = base.Columns["FINAL_RANGE"];
                 this.columnLIMIT_DATE = base.Columns["LIMIT_DATE"];
+                this.columnCAI = base.Columns["CAI"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -463,6 +475,8 @@ namespace parking.Views.Reports.DataSets {
                 base.Columns.Add(this.columnFINAL_RANGE);
                 this.columnLIMIT_DATE = new global::System.Data.DataColumn("LIMIT_DATE", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLIMIT_DATE);
+                this.columnCAI = new global::System.Data.DataColumn("CAI", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCAI);
                 this.columnESTABLISHMENT.AllowDBNull = false;
                 this.columnESTABLISHMENT.MaxLength = 3;
                 this.columnEMISSION_POINT.AllowDBNull = false;
@@ -471,6 +485,9 @@ namespace parking.Views.Reports.DataSets {
                 this.columnDOC_TYPE.MaxLength = 2;
                 this.columnLAST_USED.AllowDBNull = false;
                 this.columnFINAL_RANGE.AllowDBNull = false;
+                this.columnLIMIT_DATE.AllowDBNull = false;
+                this.columnCAI.AllowDBNull = false;
+                this.columnCAI.MaxLength = 55;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -670,13 +687,7 @@ namespace parking.Views.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public System.DateTime LIMIT_DATE {
                 get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSP_GET_ACTIVE_BILL_RANGE.LIMIT_DATEColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'LIMIT_DATE\' de la tabla \'SP_GET_ACTIVE_BILL_RANGE\' es DBN" +
-                                "ull.", e);
-                    }
+                    return ((global::System.DateTime)(this[this.tableSP_GET_ACTIVE_BILL_RANGE.LIMIT_DATEColumn]));
                 }
                 set {
                     this[this.tableSP_GET_ACTIVE_BILL_RANGE.LIMIT_DATEColumn] = value;
@@ -685,14 +696,13 @@ namespace parking.Views.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsLIMIT_DATENull() {
-                return this.IsNull(this.tableSP_GET_ACTIVE_BILL_RANGE.LIMIT_DATEColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetLIMIT_DATENull() {
-                this[this.tableSP_GET_ACTIVE_BILL_RANGE.LIMIT_DATEColumn] = global::System.Convert.DBNull;
+            public string CAI {
+                get {
+                    return ((string)(this[this.tableSP_GET_ACTIVE_BILL_RANGE.CAIColumn]));
+                }
+                set {
+                    this[this.tableSP_GET_ACTIVE_BILL_RANGE.CAIColumn] = value;
+                }
             }
         }
         
@@ -861,6 +871,7 @@ namespace parking.Views.Reports.DataSets.DtsGetActiveBillRangeTableAdapters {
             tableMapping.ColumnMappings.Add("LAST_USED", "LAST_USED");
             tableMapping.ColumnMappings.Add("FINAL_RANGE", "FINAL_RANGE");
             tableMapping.ColumnMappings.Add("LIMIT_DATE", "LIMIT_DATE");
+            tableMapping.ColumnMappings.Add("CAI", "CAI");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

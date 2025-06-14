@@ -103,9 +103,6 @@ namespace parking.Views.Administration.ParkingStructure
                 }
             }
         }
-
-        
-
         private void BtnGenerateBill_Click(object sender, EventArgs e)
         {
             generateBill();
@@ -238,18 +235,15 @@ namespace parking.Views.Administration.ParkingStructure
             int totalVisits = checkOutController.getTotalVisitsClient(checkIn.CLIENT_CODE);
             discountFT = discountsController.getDiscountForTime(hours);
 
-
-
-            if (discountFT != null) discountForTime = subtotal * (Convert.ToDouble(discountFT.DISCOUNT_VALUE.Replace("%", "")) / 100);
+            if (discountFT != null && discountFT.DISCOUNT_STATE) discountForTime = subtotal * (Convert.ToDouble(discountFT.DISCOUNT_VALUE.Replace("%", "")) / 100);
 
             if (checkIn.CLIENT_CODE != "CLI000001")
             {
                 discountFF = discountsController.getDiscountForFrequency(totalVisits);
 
-                if (discountFF != null)
+                if (discountFF != null && discountFF.DISCOUNT_STATE)
                     discountForFrequency = subtotal * (Convert.ToDouble(discountFF.DISCOUNT_VALUE.Replace("%", "")) / 100);
             }
-
 
             finalDiscount = discountForTime + discountForFrequency;
             subtotalWithDiscount = subtotal - finalDiscount;

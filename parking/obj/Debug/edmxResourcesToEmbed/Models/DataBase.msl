@@ -32,6 +32,7 @@
     <EntitySetMapping Name="BILL_RANGE">
       <EntityTypeMapping TypeName="PARKINGModel.BILL_RANGE">
         <MappingFragment StoreEntitySet="BILL_RANGE">
+          <ScalarProperty Name="CAI" ColumnName="CAI" />
           <ScalarProperty Name="BILL_RANGE_ID" ColumnName="BILL_RANGE_ID" />
           <ScalarProperty Name="ESTABLISHMENT" ColumnName="ESTABLISHMENT" />
           <ScalarProperty Name="EMISSION_POINT" ColumnName="EMISSION_POINT" />
@@ -135,6 +136,7 @@
     <EntitySetMapping Name="DISCOUNTS">
       <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS">
         <MappingFragment StoreEntitySet="DISCOUNTS">
+          <ScalarProperty Name="DISCOUNT_DESCRIPTION" ColumnName="DISCOUNT_DESCRIPTION" />
           <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
           <ScalarProperty Name="DISCOUNT_VALUE" ColumnName="DISCOUNT_VALUE" />
           <ScalarProperty Name="DISCOUNT_STATE" ColumnName="DISCOUNT_STATE" />
@@ -150,6 +152,7 @@
     <EntitySetMapping Name="DISCOUNTS_BILL">
       <EntityTypeMapping TypeName="PARKINGModel.DISCOUNTS_BILL">
         <MappingFragment StoreEntitySet="DISCOUNTS_BILL">
+          <ScalarProperty Name="DISCOUNT_DESCRIPTION" ColumnName="DISCOUNT_DESCRIPTION" />
           <ScalarProperty Name="DISCOUNTS_BILL_ID" ColumnName="DISCOUNTS_BILL_ID" />
           <ScalarProperty Name="DISCOUNT_AMOUNT" ColumnName="DISCOUNT_AMOUNT" />
           <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />

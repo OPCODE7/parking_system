@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBillRanges));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label5 = new System.Windows.Forms.Label();
             this.PbxSearch = new System.Windows.Forms.PictureBox();
             this.PbxCancel = new System.Windows.Forms.PictureBox();
@@ -62,9 +62,12 @@
             this.TtpRecovery = new System.Windows.Forms.ToolTip(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.DtpLimitDate = new System.Windows.Forms.DateTimePicker();
+            this.MskCai = new System.Windows.Forms.MaskedTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RANGOINICIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RANGO_FINAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CODIGO_CAI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ESTADO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FECHA_LIMITE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.REGISTRO = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -156,11 +159,11 @@
             this.DgvBillRanges.AllowUserToDeleteRows = false;
             this.DgvBillRanges.AllowUserToResizeColumns = false;
             this.DgvBillRanges.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.DgvBillRanges.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.DgvBillRanges.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.DgvBillRanges.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvBillRanges.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.DgvBillRanges.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -168,17 +171,18 @@
             this.ID,
             this.RANGOINICIAL,
             this.RANGO_FINAL,
+            this.CODIGO_CAI,
             this.ESTADO,
             this.FECHA_LIMITE,
             this.REGISTRO});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvBillRanges.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvBillRanges.DefaultCellStyle = dataGridViewCellStyle10;
             this.DgvBillRanges.Location = new System.Drawing.Point(18, 312);
             this.DgvBillRanges.Name = "DgvBillRanges";
             this.DgvBillRanges.ReadOnly = true;
@@ -337,7 +341,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label2.Location = new System.Drawing.Point(299, 124);
+            this.label2.Location = new System.Drawing.Point(302, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(117, 22);
             this.label2.TabIndex = 163;
@@ -357,7 +361,7 @@
             // 
             this.MskFinalRange.BackColor = System.Drawing.SystemColors.Control;
             this.MskFinalRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MskFinalRange.Location = new System.Drawing.Point(303, 158);
+            this.MskFinalRange.Location = new System.Drawing.Point(306, 158);
             this.MskFinalRange.Mask = "000-000-00-00000000";
             this.MskFinalRange.Name = "MskFinalRange";
             this.MskFinalRange.Size = new System.Drawing.Size(275, 26);
@@ -410,7 +414,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
-            this.label3.Location = new System.Drawing.Point(14, 193);
+            this.label3.Location = new System.Drawing.Point(302, 196);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(242, 22);
             this.label3.TabIndex = 167;
@@ -418,10 +422,31 @@
             // 
             // DtpLimitDate
             // 
-            this.DtpLimitDate.Location = new System.Drawing.Point(15, 218);
+            this.DtpLimitDate.Location = new System.Drawing.Point(303, 227);
             this.DtpLimitDate.Name = "DtpLimitDate";
             this.DtpLimitDate.Size = new System.Drawing.Size(278, 26);
             this.DtpLimitDate.TabIndex = 168;
+            // 
+            // MskCai
+            // 
+            this.MskCai.BackColor = System.Drawing.SystemColors.Control;
+            this.MskCai.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MskCai.Location = new System.Drawing.Point(18, 227);
+            this.MskCai.Mask = "CCCCCC-CCCCCC-CCCCCC-CCCCCC-CCCCCC-CC";
+            this.MskCai.Name = "MskCai";
+            this.MskCai.Size = new System.Drawing.Size(275, 26);
+            this.MskCai.TabIndex = 169;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.label4.Location = new System.Drawing.Point(14, 193);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 22);
+            this.label4.TabIndex = 170;
+            this.label4.Text = "CAI:";
             // 
             // ID
             // 
@@ -443,6 +468,13 @@
             this.RANGO_FINAL.MinimumWidth = 8;
             this.RANGO_FINAL.Name = "RANGO_FINAL";
             this.RANGO_FINAL.ReadOnly = true;
+            // 
+            // CODIGO_CAI
+            // 
+            this.CODIGO_CAI.HeaderText = "CAI";
+            this.CODIGO_CAI.MinimumWidth = 8;
+            this.CODIGO_CAI.Name = "CODIGO_CAI";
+            this.CODIGO_CAI.ReadOnly = true;
             // 
             // ESTADO
             // 
@@ -470,6 +502,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(694, 620);
+            this.Controls.Add(this.MskCai);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.DtpLimitDate);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.PbxDestroy);
@@ -537,9 +571,12 @@
         private System.Windows.Forms.ToolTip TtpRecovery;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker DtpLimitDate;
+        private System.Windows.Forms.MaskedTextBox MskCai;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn RANGOINICIAL;
         private System.Windows.Forms.DataGridViewTextBoxColumn RANGO_FINAL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CODIGO_CAI;
         private System.Windows.Forms.DataGridViewTextBoxColumn ESTADO;
         private System.Windows.Forms.DataGridViewTextBoxColumn FECHA_LIMITE;
         private System.Windows.Forms.DataGridViewTextBoxColumn REGISTRO;

@@ -25,5 +25,6 @@ namespace parking.Helpers
         public static string AlphabeticPatternWithAccentAndSpecialChars = @"^([a-zA-Z\sáéíóúÁÉÍÓÚñÑ,.]+)$";
         public static string RTNPattern = @"^\d{14}$";
         public static string DNIPattern= @"^[A-Z\d]{13,15}$";
+        public static string Percentage= @"^(\d{1,2}|100)(\.\d+)?%$"; 
     }
 }

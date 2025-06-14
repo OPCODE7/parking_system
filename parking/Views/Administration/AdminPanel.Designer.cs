@@ -72,6 +72,7 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.PbxLogout = new System.Windows.Forms.PictureBox();
             this.PbxLeave = new System.Windows.Forms.PictureBox();
+            this.BtnDiscounts = new System.Windows.Forms.Button();
             this.PnlAdminSideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TstPrincipal.SuspendLayout();
@@ -92,12 +93,13 @@
             this.PnlAdminSideBar.Controls.Add(this.BtnClients);
             this.PnlAdminSideBar.Controls.Add(this.BtnLogBookApp);
             this.PnlAdminSideBar.Controls.Add(this.BtnSalaries);
+            this.PnlAdminSideBar.Controls.Add(this.BtnDiscounts);
             this.PnlAdminSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.PnlAdminSideBar.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.PnlAdminSideBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.PnlAdminSideBar.Location = new System.Drawing.Point(0, 0);
             this.PnlAdminSideBar.Name = "PnlAdminSideBar";
-            this.PnlAdminSideBar.Size = new System.Drawing.Size(226, 676);
+            this.PnlAdminSideBar.Size = new System.Drawing.Size(226, 711);
             this.PnlAdminSideBar.TabIndex = 1;
             // 
             // pictureBox1
@@ -465,7 +467,7 @@
             this.toolStripSeparator7,
             this.LblRole,
             this.toolStripSeparator8});
-            this.StPrincipal.Location = new System.Drawing.Point(226, 640);
+            this.StPrincipal.Location = new System.Drawing.Point(226, 675);
             this.StPrincipal.Name = "StPrincipal";
             this.StPrincipal.Size = new System.Drawing.Size(1024, 36);
             this.StPrincipal.TabIndex = 43;
@@ -541,11 +543,25 @@
             this.PbxLeave.TabStop = false;
             this.PbxLeave.Click += new System.EventHandler(this.PbxLeave_Click);
             // 
+            // BtnDiscounts
+            // 
+            this.BtnDiscounts.BackColor = System.Drawing.Color.Teal;
+            this.BtnDiscounts.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnDiscounts.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnDiscounts.Location = new System.Drawing.Point(3, 637);
+            this.BtnDiscounts.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.BtnDiscounts.Name = "BtnDiscounts";
+            this.BtnDiscounts.Size = new System.Drawing.Size(211, 54);
+            this.BtnDiscounts.TabIndex = 11;
+            this.BtnDiscounts.Text = "Descuentos";
+            this.BtnDiscounts.UseVisualStyleBackColor = false;
+            this.BtnDiscounts.Click += new System.EventHandler(this.BtnDiscounts_Click);
+            // 
             // AdminPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1250, 676);
+            this.ClientSize = new System.Drawing.Size(1250, 711);
             this.Controls.Add(this.PbxLeave);
             this.Controls.Add(this.StPrincipal);
             this.Controls.Add(this.PbxLogout);
@@ -615,5 +631,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnCheckOutReport;
         private System.Windows.Forms.Button BtnSalaries;
         private System.Windows.Forms.PictureBox PbxLeave;
+        private System.Windows.Forms.Button BtnDiscounts;
     }
 }

@@ -51,6 +51,7 @@ namespace parking.Views.Administration
             BtnLogBookApp.Enabled = PermissionManager.HasPermission("LOG", "Acceso");
             BtnConfigServer.Enabled = Config.User.roleName.ToLower() == "super usuario" ? true : false;
             BtnSalaries.Enabled = PermissionManager.HasPermission("SAL","Acceso");
+            BtnDiscounts.Enabled = PermissionManager.HasPermission("DIS", "Acceso");
 
 
         }
@@ -298,6 +299,16 @@ namespace parking.Views.Administration
         private void PbxLeave_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void BtnDiscounts_Click(object sender, EventArgs e)
+        {
+            HideForms();
+
+            BillingModule.FrmManageDiscounts frmManageDiscounts = new BillingModule.FrmManageDiscounts();
+            frmManageDiscounts.MdiParent = this;
+            frmManageDiscounts.Show();
+
         }
     }
 }

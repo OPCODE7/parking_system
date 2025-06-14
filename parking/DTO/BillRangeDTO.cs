@@ -23,5 +23,7 @@ namespace parking.DTO
 
         public DateTime LIMIT_DATE { get; set; }
         public bool DEL { get; set; }
+
+        public string CAI { get; set; }
     }
 }

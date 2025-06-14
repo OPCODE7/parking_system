@@ -139,6 +139,7 @@
     <Compile Include="DTO\CheckInDTO.cs" />
     <Compile Include="DTO\CheckOutDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\DiscountDTO.cs" />
     <Compile Include="DTO\EmployeeDTO.cs" />
     <Compile Include="DTO\LogBookDTO.cs" />
     <Compile Include="DTO\ParkingFeeDTO.cs" />
@@ -296,6 +297,12 @@
     </Compile>
     <Compile Include="Views\Administration\BillingModule\FrmGenerateBill.Designer.cs">
       <DependentUpon>FrmGenerateBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administration\BillingModule\FrmManageDiscounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Administration\BillingModule\FrmManageDiscounts.Designer.cs">
+      <DependentUpon>FrmManageDiscounts.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Administration\Clients\FrmClient.cs">
       <SubType>Form</SubType>
@@ -541,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\BillingModule\FrmGenerateBill.resx">
       <DependentUpon>FrmGenerateBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Administration\BillingModule\FrmManageDiscounts.resx">
+      <DependentUpon>FrmManageDiscounts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Clients\FrmClient.resx">
       <DependentUpon>FrmClient.cs</DependentUpon>

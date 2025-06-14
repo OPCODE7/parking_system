@@ -48,6 +48,7 @@
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="LIMIT_DATE" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="USERS" Relationship="Self.LAYOUT" FromRole="BILL_RANGE" ToRole="USERS" />
+    <Property Name="CAI" Type="String" Nullable="false" MaxLength="55" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="CHECK_IN">
     <Key>
@@ -146,7 +147,7 @@
       <PropertyRef Name="DISCOUNT_ID" />
     </Key>
     <Property Name="DISCOUNT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DISCOUNT_VALUE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DISCOUNT_VALUE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="DISCOUNT_STATE" Type="Boolean" Nullable="false" />
     <Property Name="INSERTED_AT" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="DEL" Type="Boolean" Nullable="false" />
@@ -157,6 +158,7 @@
     <NavigationProperty Name="DISCOUNT_TYPE" Relationship="Self.FK__DISCOUNTS__DISCO__3AA1AEB8" FromRole="DISCOUNTS" ToRole="DISCOUNT_TYPE" />
     <NavigationProperty Name="DISCOUNTS_BILL" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS" ToRole="DISCOUNTS_BILL" />
     <NavigationProperty Name="USERS" Relationship="Self.FK_USER_DISCOUNT" FromRole="DISCOUNTS" ToRole="USERS" />
+    <Property Name="DISCOUNT_DESCRIPTION" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="DISCOUNTS_BILL">
     <Key>
@@ -171,6 +173,7 @@
     <Property Name="USER_CODE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DISCOUNTS" Relationship="Self.FK__DISCOUNTS__DISCO__3E723F9C" FromRole="DISCOUNTS_BILL" ToRole="DISCOUNTS" />
     <NavigationProperty Name="USERS" Relationship="Self.FK__DISCOUNTS__USER___68336F3E" FromRole="DISCOUNTS_BILL" ToRole="USERS" />
+    <Property Name="DISCOUNT_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="EMPLOYEE_SALARY">
     <Key>
