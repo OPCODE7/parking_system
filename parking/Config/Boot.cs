@@ -62,43 +62,48 @@ namespace parking.Config
         {
             bool exist = CheckFileExist(path);
             bool containsData = false;
-            if (exist)
+
+            if (!exist)
             {
-                try
-                {
-                    command = new OleDbCommand("SELECT * FROM SERVER_PARKING", connectionAccessDB);
-
-                    connectionAccessDB.Open();
-
-                    reader = command.ExecuteReader();
-
-                    if (!reader.Read())
-                    {
-                        h.MsgWarning(Helpers.App.Msg0020);
-                        containsData = false;
-                    }
-                    else
-                    {
-                        containsData = true;
-                        Env.SERVER = reader["SERVER"].ToString();
-                        Env.DBNAME = reader["DBNAME"].ToString();
-                        Env.USERDB = reader["USERNAME"].ToString();
-                        Env.PWD = reader["PWD"].ToString();
-                        setEfConnection();
-
-                    }
-
-
-                    reader.Close();
-                    command.Dispose();
-                    connectionAccessDB.Close();
-
-                }
-                catch (OleDbException error)
-                {
-                    h.MsgError("ERROR INESPERADO: " + error.ToString().ToUpper());
-                }
+                h.MsgError("ERROR FATAL: EL ARCHIVO DE CONFIGURACION NO EXISTE!");
+                Application.Exit();
             }
+
+            try
+            {
+                command = new OleDbCommand("SELECT * FROM SERVER_PARKING", connectionAccessDB);
+
+                connectionAccessDB.Open();
+
+                reader = command.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    h.MsgWarning(Helpers.App.Msg0020);
+                    containsData = false;
+                }
+                else
+                {
+                    containsData = true;
+                    Env.SERVER = reader["SERVER"].ToString();
+                    Env.DBNAME = reader["DBNAME"].ToString();
+                    Env.USERDB = reader["USERNAME"].ToString();
+                    Env.PWD = reader["PWD"].ToString();
+                    setEfConnection();
+
+                }
+
+
+                reader.Close();
+                command.Dispose();
+                connectionAccessDB.Close();
+
+            }
+            catch (OleDbException error)
+            {
+                h.MsgError("ERROR INESPERADO: " + error.ToString().ToUpper());
+            }
+
             return containsData;
         }
 
@@ -243,49 +248,6 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
         /// </summary>
         public void initApp()
         {
-            SYSTEM_LICENSE systemL= slc.getSystemLicense();
-            string serialNumber= sl.GetMotherboardSerial();
-
-            h.MsgInfo("Obteniendo serie de placa...");
-            
-            if (serialNumber == null)
-            {
-                h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
-                Application.Exit();
-                return;
-            }
-
-            h.MsgInfo("Serie de placa obtenida: " + serialNumber);
-
-            h.MsgInfo("Verificando licencia del sistema...");
-
-            if (systemL != null && !hasher.VerifyPassword(serialNumber,systemL.MACHINE_SIGNATURE))
-            {
-                h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
-                Application.Exit();
-                return;
-            }
-
-            h.MsgInfo("Licencia del sistema verificada correctamente.");
-
-            
-
-            if (systemL == null) {
-                SYSTEM_LICENSE newSL = new SYSTEM_LICENSE
-                {
-                    MACHINE_SIGNATURE = hasher.MakeHash(serialNumber),
-                    INSERTED_AT = DateTime.Now
-                };
-
-                if (slc.saveSystemLicense(newSL) == 0) {
-                    Application.Exit();
-                    return;
-                }
-                
-            }
-
-            h.MsgInfo("Leyendo archivo de configuración...");
-
             if (ReadFileData())
             {
                 string connectionString = $"Server={Env.SERVER};Database={Env.DBNAME};User Id={Env.USERDB};Password={Env.PWD};";
@@ -297,6 +259,41 @@ Persist Security Info=True;User ID={Env.USERDB};Password={Env.PWD};Encrypt=True;
                 }
                 else
                 {
+                    SYSTEM_LICENSE systemL = slc.getSystemLicense();
+                    string serialNumber = sl.GetMotherboardSerial();
+
+                    if (serialNumber == null)
+                    {
+                        h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
+                        Application.Exit();
+                        return;
+                    }
+
+
+                    if (systemL != null && !hasher.VerifyPassword(serialNumber, systemL.MACHINE_SIGNATURE))
+                    {
+                        h.MsgError("ERROR INESPERADO NO SE PUDO INICIAR LA APLICACIÓN");
+                        Application.Exit();
+                        return;
+                    }
+
+
+                    if (systemL == null)
+                    {
+                        SYSTEM_LICENSE newSL = new SYSTEM_LICENSE
+                        {
+                            MACHINE_SIGNATURE = hasher.MakeHash(serialNumber),
+                            INSERTED_AT = DateTime.Now
+                        };
+
+                        if (slc.saveSystemLicense(newSL) == 0)
+                        {
+                            Application.Exit();
+                            return;
+                        }
+
+                    }
+
                     Application.Run(new Views.Auth.Login());
                 }
             }
